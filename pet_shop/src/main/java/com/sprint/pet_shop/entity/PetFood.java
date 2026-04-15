@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="pet_food")
@@ -18,17 +20,22 @@ public class PetFood {
 	@Column(name="food_id")
 	private long foodId;
 	
-	@Column(nullable=false, length=255)
+    @NotBlank(message = "Food name cannot be empty")
+	@Column(length=255)
 	private String name;
 	
+    @NotBlank(message = "Brand cannot be empty")
 	@Column(length=100)
 	private String brand;
 	
+    @NotBlank(message = "Type cannot be empty")
 	@Column(length=50)
 	private String type;
 	
+    @NotNull(message = "Quantity cannot be null")
 	private int quantity;
 	
+    @NotNull(message = "Price cannot be null")
 	@Column(precision=10, scale=2)
 	private BigDecimal price;
 

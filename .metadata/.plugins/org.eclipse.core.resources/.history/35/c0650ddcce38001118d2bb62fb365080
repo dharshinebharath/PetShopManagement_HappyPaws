@@ -1,0 +1,17 @@
+package com.sprint.pet_shop.service.interfaces;
+
+import java.util.List;
+
+import com.sprint.pet_shop.entity.GroomingServices;
+
+public interface GroomingServicesInterface {
+
+	List<GroomingServices> saveAllGroomingServices(List<GroomingServices> groomingServices);
+
+	List<GroomingServices> getAllGroomingServices();
+
+	GroomingServices getGroomingServiceById(long serviceId);
+
+	void deleteGroomingServiceById(long serviceId);
+
+}

@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sprint.pet_shop.entity.GroomingServices;
 import com.sprint.pet_shop.service.GroomingServicesService;
+
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -23,7 +26,7 @@ public class GroomingServicesController {
 	private GroomingServicesService groomingServicesService;
 	
 	@PostMapping
-	public List<GroomingServices> saveAllGroomingServices(@RequestBody List<GroomingServices> groomingServices)
+	public List<GroomingServices> saveAllGroomingServices(@Valid @RequestBody List<GroomingServices> groomingServices)
 	{
 		return groomingServicesService.saveAllGroomingServices(groomingServices);
 	}
@@ -45,5 +48,13 @@ public class GroomingServicesController {
 	{
 		groomingServicesService.deleteGroomingServiceById(serviceId);
 		return "Vaccination Deleted Successfully";
+	}
+	
+	@PutMapping("/{serviceId}")
+	public GroomingServices updateGroomingService(
+	        @PathVariable long serviceId,
+	        @Valid @RequestBody GroomingServices service) {
+
+	    return groomingServicesService.updateGroomingService(serviceId, service);
 	}
 }

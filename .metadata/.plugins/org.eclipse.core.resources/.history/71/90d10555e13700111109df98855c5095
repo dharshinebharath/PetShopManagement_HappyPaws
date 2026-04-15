@@ -1,0 +1,5 @@
+package com.sprint.pet_shop.entity;
+
+public class PetFood {
+
+}

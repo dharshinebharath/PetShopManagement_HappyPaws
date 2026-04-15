@@ -9,32 +9,51 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.sprint.pet_shop.entity.Vaccinations;
 import com.sprint.pet_shop.repository.VaccinationsRepository;
+import com.sprint.pet_shop.service.interfaces.VaccinationsInterface;
 
 @Service
-public class VaccinationsService {
+public class VaccinationsService implements VaccinationsInterface {
 
 	@Autowired
 	private VaccinationsRepository vaccinationsRepository;
 	
+	@Override
 	public List<Vaccinations> saveAllVaccinations(List<Vaccinations> vaccinations) {
 		return vaccinationsRepository.saveAll(vaccinations);
 	}
 	
+	@Override	
 	public List<Vaccinations> getAllVaccinations()
 	{
 		return vaccinationsRepository.findAll();
 	}
 	
+	@Override
 	public Vaccinations getVaccinationsById(long id)
 	{
 		return vaccinationsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vaccination Not Found"));
 	}
 	
+	@Override	
 	public void deleteVaccinationsById(long id)
 	{
 		Vaccinations existing=vaccinationsRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vaccination Not Found"));
 		vaccinationsRepository.delete(existing);
 	}
+	
+	@Override
+	public Vaccinations updateVaccinationById(long id, Vaccinations vaccination) {
+		Vaccinations existing=vaccinationsRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vaccination Not Found"));
+		
+		existing.setName(vaccination.getName());
+		existing.setDescription(vaccination.getDescription());
+		existing.setPrice(vaccination.getPrice());
+		existing.setAvailable(vaccination.getAvailable());
+		
+		return vaccinationsRepository.save(existing);
+	}
+
+
 
 	
 }

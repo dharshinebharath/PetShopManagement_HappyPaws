@@ -1,0 +1,17 @@
+package com.sprint.pet_shop.service.interfaces;
+
+import java.util.List;
+
+import com.sprint.pet_shop.entity.Vaccinations;
+
+public interface VaccinationsInterface {
+
+	List<Vaccinations> saveAllVaccinations(List<Vaccinations> vaccinations);
+
+	List<Vaccinations> getAllVaccinations();
+
+	Vaccinations getVaccinationsById(long id);
+
+	void deleteVaccinationsById(long id);
+
+}

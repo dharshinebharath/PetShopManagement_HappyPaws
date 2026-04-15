@@ -1,0 +1,5 @@
+package com.sprint.pet_shop.service.interfaces;
+
+public interface VaccinationsInterface {
+
+}

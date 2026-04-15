@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
  
 @Entity
 @Table(name="grooming_services")
@@ -17,17 +19,19 @@ public class GroomingServices {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="service_id")
 	private long serviceId;
-	
-	@Column(nullable=false, length=100)
+
+    @NotBlank(message = "Service name cannot be empty")
+	@Column(length=100)
 	private String name;
 	
 	@Column(columnDefinition="TEXT")
 	private String description;
 	
+    @NotNull(message = "Price cannot be null")
 	@Column(precision =10, scale=2)
 	private BigDecimal price;
 	
-	@Column(nullable=false)
+    @NotNull(message = "Availability cannot be null")
 	private boolean available=true;
 
 	public long getServiceId() {
@@ -62,7 +66,7 @@ public class GroomingServices {
 		this.price = price;
 	}
 
-	public boolean isAvailable() {
+	public boolean getAvailable() {
 		return available;
 	}
 
