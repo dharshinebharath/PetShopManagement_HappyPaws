@@ -1,5 +1,0 @@
-package com.sprint.pet_shop.repository;
-
-public interface GroomingServicesRepository {
-
-}
