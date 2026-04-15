@@ -1,5 +1,49 @@
 package com.sprint.pet_shop.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sprint.pet_shop.entity.GroomingServices;
+import com.sprint.pet_shop.service.GroomingServicesService;
+
+
+@RestController
+@RequestMapping("/api/v1/grooming-services")
 public class GroomingServicesController {
 
+	@Autowired 
+	private GroomingServicesService groomingServicesService;
+	
+	@PostMapping
+	public List<GroomingServices> saveAllGroomingServices(@RequestBody List<GroomingServices> groomingServices)
+	{
+		return groomingServicesService.saveAllGroomingServices(groomingServices);
+	}
+	
+	@GetMapping
+	public List<GroomingServices> getAllGroomingServices()
+	{
+		return groomingServicesService.getAllGroomingServices();
+	}
+	
+	@GetMapping("/{serviceId}")
+	public GroomingServices getGroomingServicesById(@PathVariable long serviceId)
+	{
+		return groomingServicesService.getGroomingServiceById(serviceId);
+	}
+	
+	@DeleteMapping("/{serviceId}")
+	public String deleteGroomingServiceById(@PathVariable long serviceId)
+	{
+		groomingServicesService.deleteGroomingServiceById(serviceId);
+		return "Vaccination Deleted Successfully";
+	}
 }

@@ -8,15 +8,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
- 
+
 @Entity
-@Table(name="grooming_services")
-public class GroomingServices {
+@Table(name="vaccinations")
+public class Vaccinations {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="service_id")
-	private long serviceId;
+	@Column(name="vaccination_id")
+	private long vaccinationId;
 	
 	@Column(nullable=false, length=100)
 	private String name;
@@ -24,18 +24,18 @@ public class GroomingServices {
 	@Column(columnDefinition="TEXT")
 	private String description;
 	
-	@Column(precision =10, scale=2)
+	@Column(precision=10, scale=2)
 	private BigDecimal price;
 	
 	@Column(nullable=false)
 	private boolean available=true;
 
-	public long getServiceId() {
-		return serviceId;
+	public long getVaccinationId() {
+		return vaccinationId;
 	}
 
-	public void setServiceId(long serviceId) {
-		this.serviceId = serviceId;
+	public void setVaccinationId(long vaccinationId) {
+		this.vaccinationId = vaccinationId;
 	}
 
 	public String getName() {
@@ -69,7 +69,6 @@ public class GroomingServices {
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
-	
 	
 	
 	
