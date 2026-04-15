@@ -25,7 +25,7 @@ public class PetFoodService {
 	
 	public List<PetFood> getAllPetFood()
 	{
-		return petFoodRepository.findAll();
+		return petFoodRepository.getAllPetFood();
 	}
 
 	public PetFood getPetFoodById(long id) {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.sprint.pet_shop.entity.PetFood;
-import com.sprint.pet_shop.entity.Vaccinations;
 import com.sprint.pet_shop.service.PetFoodService;
 
 @RestController
