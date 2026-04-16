@@ -10,17 +10,21 @@ import org.springframework.web.server.ResponseStatusException;
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.repository.CustomersRepository;
+import com.sprint.pet_shop.service.interfaces.CustomersInterface;
 
 @Service
-public class CustomersService {
+public class CustomersService implements CustomersInterface{
 @Autowired
 private CustomersRepository customersRepository;
+@Override
 public List<Customers> savecustomers(List<Customers> customers){
 	 return customersRepository.saveAll(customers);
 }
+@Override
 public List<Customers> getcustomers(){
 	return customersRepository.getAll();
 }
+@Override
 public void deletecustomer(long id) {
     if (!customersRepository.existsById(id)) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, 
@@ -28,10 +32,11 @@ public void deletecustomer(long id) {
     }
     customersRepository.deleteById(id);
 }
-
+@Override
 public Customers getcustomerByID(long id){
 	return customersRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with id: " + id));
 }
+@Override
 public Customers updatecustomer(long id,Customers updatedcustomer) {
 	Customers existing=customersRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with id" +id));
 	existing.setFirstName(updatedcustomer.getFirstName());
