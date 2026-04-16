@@ -11,6 +11,8 @@ public interface PetFoodRepository extends JpaRepository<PetFood, Long> {
 
 	 @Query("SELECT p FROM PetFood p")
 	List<PetFood> getAllPetFood();
+
+	 boolean existsByNameAndBrand(String name, String brand);
 	 
 	 
 

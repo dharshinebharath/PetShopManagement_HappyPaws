@@ -8,4 +8,7 @@ import com.sprint.pet_shop.entity.GroomingServices;
 @Repository
 public interface GroomingServicesRepository extends JpaRepository <GroomingServices, Long> {
 
+
+	boolean existsByName(String name);
+
 }

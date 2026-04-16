@@ -6,4 +6,6 @@ import com.sprint.pet_shop.entity.Vaccinations;
 
 public interface VaccinationsRepository extends JpaRepository<Vaccinations, Long> {
 
+	boolean existsByName(String name);
+
 }
