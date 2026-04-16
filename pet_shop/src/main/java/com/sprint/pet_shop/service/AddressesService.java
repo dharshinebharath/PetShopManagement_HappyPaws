@@ -24,4 +24,18 @@ public List<Addresses> getaddresses(){
 public Addresses getaddressesByID(long id){
 	return addressesRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with id: " + id));
 }
+public void deleteaddress(long id) {
+    if (!addressesRepository.existsById(id)) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, 
+                "Address not found with id: " + id);
+    }
+    addressesRepository.deleteById(id);
 }
+public Addresses updateaddress(long id,Addresses updatedaddress) {
+	Addresses existing=addressesRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found with id"));
+	existing.setCity(updatedaddress.getCity());
+	existing.setState(updatedaddress.getState());
+	existing.setStreet(updatedaddress.getStreet());
+	existing.setZipCode(updatedaddress.getZipCode());
+	return addressesRepository.save(existing);
+}}
