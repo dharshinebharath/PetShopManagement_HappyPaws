@@ -13,20 +13,40 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
 @Table(name = "transactions") 
 public class TransactionsEntity {
 	@Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name = "transaction_id")
 	private Long transactionId;
-	@JsonIgnoreProperties(ignoreUnknown = true)
 	
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	@NotNull(message = "Customer ID cannot be null")
 	@JsonProperty("customerId")
-	@Column(name = "customer_id")
-	private Integer customerId; 
+	@Column(name = "customer_id",nullable = false)
+	private Integer customerId;
+	
+	@NotNull(message = "Pet ID cannot be null")
+	@JsonProperty("petId")
+	@Column(name = "pet_id",nullable = false)
+	private Integer petId;
+	
+	@NotNull(message = "Transaction date cannot be null")
+	@Column(name = "transaction_date",nullable = false)
+	private Date transactionDate; 
+	
+	@NotNull(message = "Amount cannot be null")
+    @Column(nullable = false)
+	private double amount;
+	
+	@NotNull(message = "Transaction status cannot be null")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "transaction_status",nullable = false)
+	    private TransactionStatus transactionStatus;
 
 	public Integer getCustomerId() {
 		return customerId;
@@ -40,17 +60,6 @@ public class TransactionsEntity {
 	public void setPetId(Integer petId) {
 		this.petId = petId;
 	}
-	@JsonProperty("petId")
-	@Column(name = "pet_id")
-	
-	private Integer petId;
-
-	@Column(name = "transaction_date")
-	private Date transactionDate; 
-	private double amount;
-	 @Enumerated(EnumType.STRING)
-	    @Column(name = "transaction_status")
-	    private TransactionStatus transactionStatus;
 
 	public Long getTransactionId() {
 		return transactionId;
