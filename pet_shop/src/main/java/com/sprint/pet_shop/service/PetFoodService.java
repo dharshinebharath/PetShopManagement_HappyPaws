@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.sprint.pet_shop.entity.PetFood;
+import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.PetFoodRepository;
@@ -25,6 +26,8 @@ public class PetFoodService implements PetFoodInterface {
 	public List<PetFood> saveAllPetFood(@RequestBody List<PetFood> petFoods)
 	{
 		for (PetFood food : petFoods) {
+			
+			
 
 	        if (food.getQuantity() < 0) {
 	            throw new InvalidDataException("Quantity cannot be negative");
@@ -36,6 +39,13 @@ public class PetFoodService implements PetFoodInterface {
 
 	        if (food.getName() == null || food.getName().isBlank()) {
 	            throw new InvalidDataException("Food name cannot be empty");
+	        }
+	        
+	        if (petFoodRepository.existsByNameAndBrand(
+	                food.getName(), food.getBrand())) {
+
+	            throw new DuplicateResourceException(
+	                "Food already exists: " + food.getName() + " (" + food.getBrand() + ")");
 	        }
 	    }
 
