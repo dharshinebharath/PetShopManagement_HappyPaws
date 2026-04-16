@@ -9,6 +9,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
+import com.sprint.pet_shop.entity.GroomingServices;
+import com.sprint.pet_shop.exception.DuplicateResourceException;
+import com.sprint.pet_shop.exception.InvalidDataException;
+import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.service.interfaces.AddressesInterface;
 
@@ -18,6 +22,19 @@ public class AddressesService implements AddressesInterface {
 private AddressesRepository addressesRepository;
 @Override
 public List<Addresses> saveaddresses(List<Addresses> addresses){
+	for (Addresses addr : addresses) {
+        if (addr.getStreet() == null || addr.getStreet().trim().isEmpty()) {
+            throw new InvalidDataException("Street cannot be empty");
+        }
+        if (addr.getCity() == null || addr.getCity().trim().isEmpty()) {
+            throw new InvalidDataException("City cannot be empty");
+        }
+        if (addr.getState() == null || addr.getState().trim().isEmpty()) {
+            throw new InvalidDataException("State cannot be empty");
+        }
+        if (addr.getZipCode() == null || addr.getZipCode().trim().isEmpty()) {
+            throw new InvalidDataException("Zip code cannot be empty");
+        }}
 	return addressesRepository.saveAll(addresses);
 }
 @Override
@@ -26,19 +43,30 @@ public List<Addresses> getaddresses(){
 }
 @Override
 public Addresses getaddressesByID(long id){
-	return addressesRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with id: " + id));
+	return addressesRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Customer not found with id: " + id));
 }
 @Override
 public void deleteaddress(long id) {
     if (!addressesRepository.existsById(id)) {
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, 
-                "Address not found with id: " + id);
+        throw new ResourceNotFoundException("Address not found with id: " + id);
     }
     addressesRepository.deleteById(id);
 }
 @Override
 public Addresses updateaddress(long id,Addresses updatedaddress) {
-	Addresses existing=addressesRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found with id"));
+	Addresses existing=addressesRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Address not found with id"));
+	if (updatedaddress.getStreet() == null || updatedaddress.getStreet().trim().isEmpty()) {
+        throw new InvalidDataException("Street cannot be empty");
+    }
+    if (updatedaddress.getCity() == null || updatedaddress.getCity().trim().isEmpty()) {
+        throw new InvalidDataException("City cannot be empty");
+    }
+    if (updatedaddress.getState() == null || updatedaddress.getState().trim().isEmpty()) {
+        throw new InvalidDataException("State cannot be empty");
+    }
+    if (updatedaddress.getZipCode() == null || updatedaddress.getZipCode().trim().isEmpty()) {
+        throw new InvalidDataException("Zip code cannot be empty");
+    }
 	existing.setCity(updatedaddress.getCity());
 	existing.setState(updatedaddress.getState());
 	existing.setStreet(updatedaddress.getStreet());
