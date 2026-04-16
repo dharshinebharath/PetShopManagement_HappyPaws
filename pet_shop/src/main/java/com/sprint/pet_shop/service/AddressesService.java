@@ -39,6 +39,7 @@ public void deleteaddress(long id) {
 @Override
 public Addresses updateaddress(long id,Addresses updatedaddress) {
 	Addresses existing=addressesRepository.findById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found with id"));
+	
 	existing.setCity(updatedaddress.getCity());
 	existing.setState(updatedaddress.getState());
 	existing.setStreet(updatedaddress.getStreet());

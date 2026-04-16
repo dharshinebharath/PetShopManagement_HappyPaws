@@ -16,13 +16,15 @@ import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.service.AddressesService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/addresses")
 public class AddressesController {
 @Autowired
 private AddressesService addressesService;
 @PostMapping
-public List<Addresses> saveaddresses(@RequestBody List<Addresses> addresses){
+public List<Addresses> saveaddresses(@Valid @RequestBody List<Addresses> addresses){
 	return addressesService.saveaddresses(addresses);
 }
 @GetMapping
@@ -39,7 +41,7 @@ public String delete(@PathVariable long id) {
     return "Deleted successfully";
 }
 @PutMapping("/{id}")
-public Addresses updateaddresses(@PathVariable long id,@RequestBody Addresses address) {
+public Addresses updateaddresses(@PathVariable long id,@Valid @RequestBody Addresses address) {
 	return addressesService.updateaddress(id,address);
 }
 

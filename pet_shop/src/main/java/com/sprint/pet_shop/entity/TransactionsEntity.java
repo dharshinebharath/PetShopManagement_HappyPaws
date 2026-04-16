@@ -19,6 +19,7 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "transactions") 
 public class TransactionsEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	@Column(name = "transaction_id")
@@ -51,12 +52,15 @@ public class TransactionsEntity {
 	public Integer getCustomerId() {
 		return customerId;
 	}
+	
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
+	
 	public Integer getPetId() {
 		return petId;
 	}
+	
 	public void setPetId(Integer petId) {
 		this.petId = petId;
 	}
@@ -64,18 +68,23 @@ public class TransactionsEntity {
 	public Long getTransactionId() {
 		return transactionId;
 	}
+	
 	 public void setTransactionId(Long transactionId) {
 		 this.transactionId = transactionId;
 	 }
+	 
 	 public Date getTransactionDate() {
 		 return transactionDate;
 	 }
+	 
 	 public void setTransactionDate(Date transactionDate) {
 		 this.transactionDate = transactionDate;
 	 }
+	 
 	 public TransactionStatus getTransactionStatus() {
 		 return transactionStatus;
 	 }
+	 
 	 public void setTransactionStatus(TransactionStatus transactionStatus) {
 		 this.transactionStatus = transactionStatus;
 	 }
@@ -83,6 +92,7 @@ public class TransactionsEntity {
 	public double getAmount() {
 		return amount;
 	}
+	
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
