@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -25,17 +27,6 @@ public class TransactionsEntity {
 	@Column(name = "transaction_id")
 	private Long transactionId;
 	
-	@JsonIgnoreProperties(ignoreUnknown = true)
-	@NotNull(message = "Customer ID cannot be null")
-	@JsonProperty("customerId")
-	@Column(name = "customer_id",nullable = false)
-	private Integer customerId;
-	
-	@NotNull(message = "Pet ID cannot be null")
-	@JsonProperty("petId")
-	@Column(name = "pet_id",nullable = false)
-	private Integer petId;
-	
 	@NotNull(message = "Transaction date cannot be null")
 	@Column(name = "transaction_date",nullable = false)
 	private Date transactionDate; 
@@ -44,26 +35,17 @@ public class TransactionsEntity {
     @Column(nullable = false)
 	private double amount;
 	
+	@ManyToOne
+	@JoinColumn(name = "pet_id")
+	private Pets pet;
+	
 	@NotNull(message = "Transaction status cannot be null")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction_status",nullable = false)
 	    private TransactionStatus transactionStatus;
 
-	public Integer getCustomerId() {
-		return customerId;
-	}
+
 	
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
-	}
-	
-	public Integer getPetId() {
-		return petId;
-	}
-	
-	public void setPetId(Integer petId) {
-		this.petId = petId;
-	}
 
 	public Long getTransactionId() {
 		return transactionId;
@@ -96,5 +78,13 @@ public class TransactionsEntity {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	public Pets getPet() {
+		return pet;
+	}
+	public void setPet(Pets pet) {
+		this.pet = pet;
+	}
+	
+	
 
 }
