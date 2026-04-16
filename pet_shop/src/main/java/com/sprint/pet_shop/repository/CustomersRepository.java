@@ -10,4 +10,5 @@ import com.sprint.pet_shop.entity.Customers;
 public interface CustomersRepository extends JpaRepository<Customers,Long> {
 @Query("SELECT c FROM Customers c")
 List<Customers> getAll();
+boolean existsByEmail(String email);
 }
