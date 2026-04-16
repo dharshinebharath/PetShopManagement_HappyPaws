@@ -1,0 +1,91 @@
+package com.sprint.pet_shop.entity;
+
+import java.math.BigDecimal;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name="pet_food")
+public class PetFood {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="food_id")
+	private long foodId;
+	
+    @NotBlank(message = "Food name cannot be empty")
+	@Column(length=255)
+	private String name;
+	
+    @NotBlank(message = "Brand cannot be empty")
+	@Column(length=100)
+	private String brand;
+	
+    @NotBlank(message = "Type cannot be empty")
+	@Column(length=50)
+	private String type;
+	
+    @NotNull(message = "Quantity cannot be null")
+	private int quantity;
+	
+    @NotNull(message = "Price cannot be null")
+	@Column(precision=10, scale=2)
+	private BigDecimal price;
+
+	public long getFood_id() {
+		return foodId;
+	}
+
+	public void setFood_id(long foodId) {
+		this.foodId = foodId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	
+	
+}
