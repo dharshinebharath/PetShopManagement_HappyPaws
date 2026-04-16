@@ -23,7 +23,7 @@ public class TransactionsEntity {
 	@Column(name = "transaction_id")
 	private Long transactionId;
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	@NotNull(message = "Customer ID cannot be null")
+	
 	@JsonProperty("customerId")
 	@Column(name = "customer_id")
 	private Integer customerId; 
