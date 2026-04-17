@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.sprint.pet_shop.dto.requestDto.GroomingServicesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
@@ -145,10 +143,10 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    response.setSuccess(true);
 	    response.setData(toDto(updated));
 
-
-
 	    return response;
 	}
+
+
 
 
 	public GroomingServices updateGroomingService(long id, @Valid GroomingServices service) {
