@@ -3,16 +3,14 @@ package com.sprint.pet_shop.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.sprint.pet_shop.entity.PetFood;
-import com.sprint.pet_shop.service.PetFoodService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.sprint.pet_shop.dto.requestDto.PetFoodRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
+import com.sprint.pet_shop.service.interfaces.PetFoodInterface;
 
 import jakarta.validation.Valid;
 
@@ -20,39 +18,42 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/food")
 public class PetFoodController {
 
-	@Autowired
-	private PetFoodService petFoodService;
-	
-	@PostMapping
-	public List<PetFood> addPetFood(@RequestBody List<PetFood> petFoods)
-	{
-		return petFoodService.saveAllPetFood(petFoods);
-	}
-	
-	@GetMapping
-	public List<PetFood> getPetFood()
-	{
-		return petFoodService.getAllPetFood();
-	}
-	
-	@GetMapping("/{foodId}")
-	public PetFood getPetFoodById(@PathVariable long foodId)
-	{
-		return petFoodService.getPetFoodById(foodId);
-	}
-	
-	@DeleteMapping("/{foodId}")
-	public String deletePetFoodById(@PathVariable long foodId)
-	{
-		petFoodService.deletePetFoodById(foodId);
-		return "Food Deleted Successfully";
-	}
-	
-	@PutMapping("/{foodId}")
-	public PetFood updatePetFood(
-	        @PathVariable long foodId,
-	        @Valid @RequestBody PetFood petFood) {
+    @Autowired
+    private PetFoodInterface petFoodService;
 
-	    return petFoodService.updatePetFood(foodId, petFood);
-	}
+    // 🔹 CREATE
+    @PostMapping
+    public ResponseEntity<ApiResponse<List<PetFoodResponseDTO>>> saveAll(
+            @Valid @RequestBody List<PetFoodRequestDTO> dtos) {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(petFoodService.saveAllPetFood(dtos));
+    }
+
+    // 🔹 GET ALL
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<PetFoodResponseDTO>>> getAll() {
+        return ResponseEntity.ok(petFoodService.getAllPetFood());
+    }
+
+    // 🔹 GET BY ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<PetFoodResponseDTO>> getById(@PathVariable long id) {
+        return ResponseEntity.ok(petFoodService.getPetFoodById(id));
+    }
+
+    // 🔹 UPDATE
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<PetFoodResponseDTO>> update(
+            @PathVariable long id,
+            @Valid @RequestBody PetFoodRequestDTO dto) {
+
+        return ResponseEntity.ok(petFoodService.updatePetFood(id, dto));
+    }
+
+    // 🔹 DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
+        return ResponseEntity.ok(petFoodService.deletePetFoodById(id));
+    }
 }
