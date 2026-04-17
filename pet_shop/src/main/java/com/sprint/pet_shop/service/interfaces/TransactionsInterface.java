@@ -2,21 +2,21 @@ package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
+import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
 import com.sprint.pet_shop.entity.TransactionsEntity;
 
 public interface TransactionsInterface {
 
-	TransactionsEntity saveTransactionsEntity(TransactionsEntity transactionsEntity);
+	ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto);
 
-	List<TransactionsEntity> TransactionsEntityAll(List<TransactionsEntity> transactionsEntity);
+    ApiResponse<List<TransactionsResponseDTO>> getAll();
 
-	List<TransactionsEntity> getAllTransactions();
+    ApiResponse<TransactionsResponseDTO> getById(Long id);
 
-	TransactionsEntity getTransactionById(Long id);
+    ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto);
 
-	TransactionsEntity updateTransaction(Long id, TransactionsEntity newData);
-
-	String deleteTransaction(Long id);
+    ApiResponse<String> delete(Long id);
 	
-
 }

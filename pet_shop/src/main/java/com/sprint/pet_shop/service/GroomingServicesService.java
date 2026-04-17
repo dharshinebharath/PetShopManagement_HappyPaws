@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.sprint.pet_shop.dto.requestDto.GroomingServicesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
@@ -18,147 +16,129 @@ import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.GroomingServicesRepository;
 import com.sprint.pet_shop.service.interfaces.GroomingServicesInterface;
 
-import jakarta.validation.Valid;
-
 @Service
 public class GroomingServicesService implements GroomingServicesInterface {
 
-	@Autowired
-	private GroomingServicesRepository groomingServicesRepository;
-	
-	private GroomingServicesResponseDTO toDto(GroomingServices entity) {
+    @Autowired
+    private GroomingServicesRepository groomingServicesRepository;
 
-	    GroomingServicesResponseDTO dto = new GroomingServicesResponseDTO();
+    private GroomingServicesResponseDTO toDto(GroomingServices entity) {
+        GroomingServicesResponseDTO dto = new GroomingServicesResponseDTO();
+        dto.setServiceId(entity.getServiceId());
+        dto.setName(entity.getName());
+        dto.setDescription(entity.getDescription());
+        dto.setPrice(entity.getPrice());
+        dto.setAvailable(entity.isAvailable());
+        return dto;
+    }
 
-	    dto.setServiceId(entity.getServiceId());
-	    dto.setName(entity.getName());
-	    dto.setDescription(entity.getDescription());
-	    dto.setPrice(entity.getPrice());
-	    dto.setAvailable(entity.isAvailable());
+    @Override
+    public ApiResponse<List<GroomingServicesResponseDTO>> saveAllGroomingServices(List<GroomingServicesRequestDTO> dtos) {
 
-	    return dto;
-	}
-	@Override
-	public ApiResponse<List<GroomingServicesResponseDTO>> saveAllGroomingServices(List<GroomingServicesRequestDTO> dtos) {
+        List<GroomingServices> entities = new ArrayList<>();
 
-	    List<GroomingServices> entities = new ArrayList<>();
+        for (GroomingServicesRequestDTO dto : dtos) {
 
-	    for (GroomingServicesRequestDTO dto : dtos) {
+            if (dto.getPrice().doubleValue() < 0) {
+                throw new InvalidDataException("Invalid price for service: " + dto.getName());
+            }
 
-	        if (dto.getPrice().doubleValue() < 0) {
-	            throw new InvalidDataException("Invalid price for service: " + dto.getName());
-	        }
+            if (groomingServicesRepository.existsByName(dto.getName())) {
+                throw new DuplicateResourceException("Service already exists: " + dto.getName());
+            }
 
-	        if (groomingServicesRepository.existsByName(dto.getName())) {
-	            throw new DuplicateResourceException("Service already exists: " + dto.getName());
-	        }
+            GroomingServices entity = new GroomingServices();
+            entity.setName(dto.getName());
+            entity.setDescription(dto.getDescription());
+            entity.setPrice(dto.getPrice());
+            entity.setAvailable(dto.isAvailable());
 
-	        GroomingServices entity = new GroomingServices();
-	        entity.setName(dto.getName());
-	        entity.setDescription(dto.getDescription());
-	        entity.setPrice(dto.getPrice());
-	        entity.setAvailable(dto.isAvailable());
+            entities.add(entity);
+        }
 
-	        entities.add(entity);
-	    }
+        List<GroomingServices> saved = groomingServicesRepository.saveAll(entities);
 
-	    List<GroomingServices> saved = groomingServicesRepository.saveAll(entities);
+        List<GroomingServicesResponseDTO> responseList =
+                saved.stream().map(this::toDto).toList();
 
-	    List<GroomingServicesResponseDTO> responseList =
-	            saved.stream().map(this::toDto).toList();
+        ApiResponse<List<GroomingServicesResponseDTO>> response = new ApiResponse<>();
+        response.setMessage("Grooming services saved successfully");
+        response.setSuccess(true);
+        response.setData(responseList);
 
-	    ApiResponse<List<GroomingServicesResponseDTO>> response = new ApiResponse<>();
-	    response.setMessage("Grooming services saved successfully");
-	    response.setSuccess(true);
-	    response.setData(responseList);
+        return response;
+    }
 
-	    return response;
-	
-	}
+    @Override
+    public ApiResponse<List<GroomingServicesResponseDTO>> getAllGroomingServices() {
 
-	@Override
-	public ApiResponse<List<GroomingServicesResponseDTO>> getAllGroomingServices() {
+        List<GroomingServicesResponseDTO> data =
+                groomingServicesRepository.findAll()
+                        .stream()
+                        .map(this::toDto)
+                        .toList();
 
-	    List<GroomingServicesResponseDTO> data =
-	            groomingServicesRepository.findAll()
-	                    .stream()
-	                    .map(this::toDto)
-	                    .toList();
+        ApiResponse<List<GroomingServicesResponseDTO>> response = new ApiResponse<>();
+        response.setMessage("Fetched all grooming services");
+        response.setSuccess(true);
+        response.setData(data);
 
-	    ApiResponse<List<GroomingServicesResponseDTO>> response = new ApiResponse<>();
-	    response.setMessage("Fetched all grooming services");
-	    response.setSuccess(true);
-	    response.setData(data);
+        return response;
+    }
 
-	    return response;
-	}
+    @Override
+    public ApiResponse<GroomingServicesResponseDTO> getGroomingServiceById(long id) {
 
-	@Override
-	public ApiResponse<GroomingServicesResponseDTO> getGroomingServiceById(long id) {
+        GroomingServices entity = groomingServicesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
 
-	    GroomingServices entity = groomingServicesRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
+        ApiResponse<GroomingServicesResponseDTO> response = new ApiResponse<>();
+        response.setMessage("Service fetched successfully");
+        response.setSuccess(true);
+        response.setData(toDto(entity));
 
-	    ApiResponse<GroomingServicesResponseDTO> response = new ApiResponse<>();
-	    response.setMessage("Service fetched successfully");
-	    response.setSuccess(true);
-	    response.setData(toDto(entity));
+        return response;
+    }
 
-	    return response;
-	}
-	
-	@Override
-	public ApiResponse<String> deleteGroomingServiceById(long id) {
+    @Override
+    public ApiResponse<String> deleteGroomingServiceById(long id) {
 
-	    GroomingServices existing = groomingServicesRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException(
-	                    "Grooming Services Not Found with id: " + id));
+        GroomingServices existing = groomingServicesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Grooming Services Not Found with id: " + id));
 
-	    groomingServicesRepository.delete(existing);
+        groomingServicesRepository.delete(existing);
 
-	    ApiResponse<String> response = new ApiResponse<>();
-	    response.setMessage("Deleted successfully");
-	    response.setSuccess(true);
-	    response.setData("Deleted service id: " + id);
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setMessage("Deleted successfully");
+        response.setSuccess(true);
+        response.setData("Deleted service id: " + id);
 
-	    return response;
-	}
-	@Override
-	public ApiResponse<GroomingServicesResponseDTO> updateGroomingService(long id, GroomingServicesRequestDTO dto) {
+        return response;
+    }
 
-	    GroomingServices existing = groomingServicesRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
+    @Override
+    public ApiResponse<GroomingServicesResponseDTO> updateGroomingService(long id, GroomingServicesRequestDTO dto) {
 
-	    if (dto.getPrice().doubleValue() < 0) {
-	        throw new InvalidDataException("Price must be positive");
-	    }
+        GroomingServices existing = groomingServicesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
 
-	    existing.setName(dto.getName());
-	    existing.setDescription(dto.getDescription());
-	    existing.setPrice(dto.getPrice());
-	    existing.setAvailable(dto.isAvailable());
+        if (dto.getPrice().doubleValue() < 0) {
+            throw new InvalidDataException("Price must be positive");
+        }
 
-	    GroomingServices updated = groomingServicesRepository.save(existing);
+        existing.setName(dto.getName());
+        existing.setDescription(dto.getDescription());
+        existing.setPrice(dto.getPrice());
+        existing.setAvailable(dto.isAvailable());
 
-	    ApiResponse<GroomingServicesResponseDTO> response = new ApiResponse<>();
-	    response.setMessage("Updated successfully");
-	    response.setSuccess(true);
-	    response.setData(toDto(updated));
+        GroomingServices updated = groomingServicesRepository.save(existing);
 
-	    return response;}
+        ApiResponse<GroomingServicesResponseDTO> response = new ApiResponse<>();
+        response.setMessage("Updated successfully");
+        response.setSuccess(true);
+        response.setData(toDto(updated));
 
-	public GroomingServices updateGroomingService(long id, @Valid GroomingServices service) {
-		GroomingServices existing = groomingServicesRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Services Not Found with id:"+id));
-
-		if (service.getPrice().doubleValue() < 0) {
-		    throw new InvalidDataException("Price must be positive");
-		}
-	    existing.setName(service.getName());
-	    existing.setDescription(service.getDescription());
-	    existing.setPrice(service.getPrice());
-	    existing.setAvailable(service.isAvailable());
-
-	    return groomingServicesRepository.save(existing);
-	}
+        return response;
+    }
 }
