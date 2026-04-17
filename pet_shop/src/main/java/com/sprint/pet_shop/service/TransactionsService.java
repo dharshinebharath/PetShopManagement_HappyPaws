@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.entity.Pets;
@@ -16,9 +17,10 @@ import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.CustomersRepository;
 import com.sprint.pet_shop.repository.PetsRepository;
 import com.sprint.pet_shop.repository.TransactionsRepository;
+import com.sprint.pet_shop.service.interfaces.TransactionsInterface;
 
 @Service
-public class TransactionsService {
+public class TransactionsService implements TransactionsInterface{
 
     @Autowired
     private TransactionsRepository transactionsRepository;

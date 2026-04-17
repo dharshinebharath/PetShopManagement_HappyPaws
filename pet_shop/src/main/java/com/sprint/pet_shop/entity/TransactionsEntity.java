@@ -25,7 +25,7 @@ public class TransactionsEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
-	@Column(name = "tranSsaction_id")
+	@Column(name = "transaction_id")
 	private Long transactionId;
 	
 	@NotNull(message = "Transaction date cannot be null")
@@ -37,11 +37,11 @@ public class TransactionsEntity {
 	private BigDecimal amount;
 	
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id",nullable=false)
     private Customers customer;
 
     @ManyToOne
-    @JoinColumn(name = "pet_id")
+    @JoinColumn(name = "pet_id",nullable=false)
     private Pets pet;
 	
 	@NotNull(message = "Transaction status cannot be null")
