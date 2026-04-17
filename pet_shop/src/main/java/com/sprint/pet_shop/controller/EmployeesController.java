@@ -1,11 +1,14 @@
-
 package com.sprint.pet_shop.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.sprint.pet_shop.entity.Employees;
+import com.sprint.pet_shop.dto.requestDto.EmployeesRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.service.EmployeesService;
 
 import jakarta.validation.Valid;
@@ -14,41 +17,44 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/employees")
 public class EmployeesController {
 
-    private final EmployeesService employeesService;
+	@Autowired
+    private EmployeesService employeesService;
 
-    public EmployeesController(EmployeesService employeesService) {
-        this.employeesService = employeesService;
-    }
-
-    // POST ALL
+    // CREATE
     @PostMapping
-    public List<Employees> saveAll(@Valid @RequestBody List<Employees> employees) {
-        return employeesService.saveAll(employees);
+    public ResponseEntity<ApiResponse<List<EmployeesResponseDTO>>> saveAll(
+            @Valid @RequestBody List<EmployeesRequestDTO> employees) {
+
+        return ResponseEntity.ok(employeesService.saveAll(employees));
     }
 
     // GET ALL
     @GetMapping
-    public List<Employees> getAllEmployees() {
-        return employeesService.getAll();
+    public ResponseEntity<ApiResponse<List<EmployeesResponseDTO>>> getAll() {
+
+        return ResponseEntity.ok(employeesService.getAll());
     }
 
     // GET BY ID
-    @GetMapping("/{employeesId}")
-    public Employees getEmployeesById(@PathVariable long employeesId) {
-        return employeesService.getEmployeesById(employeesId);
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<EmployeesResponseDTO>> getById(@PathVariable long id) {
+
+        return ResponseEntity.ok(employeesService.getEmployeesById(id));
     }
 
-    // DELETE BY ID
-    @DeleteMapping("/{employeesId}")
-    public String deleteEmployee(@PathVariable long employeesId) {
-        employeesService.deleteEmployee(employeesId);
-        return "Employee deleted successfully with id: " + employeesId;
+    // UPDATE
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<EmployeesResponseDTO>> update(
+            @PathVariable long id,
+            @RequestBody EmployeesRequestDTO dto) {
+
+        return ResponseEntity.ok(employeesService.updateEmployee(id, dto));
     }
 
-    // PUT BY ID
-    @PutMapping("/{employeesId}")
-    public Employees updateEmployee(@PathVariable long employeesId,
-                                    @Valid @RequestBody Employees employee) {
-        return employeesService.updateEmployee(employeesId, employee);
+    // DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
+
+        return ResponseEntity.ok(employeesService.deleteEmployee(id));
     }
 }

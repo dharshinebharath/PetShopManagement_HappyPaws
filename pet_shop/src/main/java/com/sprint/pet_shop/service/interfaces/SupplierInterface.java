@@ -2,16 +2,19 @@ package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
-import com.sprint.pet_shop.entity.Supplier;
+import com.sprint.pet_shop.dto.requestDto.SupplierRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 
 public interface SupplierInterface {
-	List<Supplier> supplierAll(List<Supplier> supplier);
 
-    List<Supplier> getAll();
+    ApiResponse<List<SupplierResponseDTO>> saveAll(List<SupplierRequestDTO> suppliers);
 
-    Supplier getSupplierById(long supplierId);
+    ApiResponse<List<SupplierResponseDTO>> getAll();
 
-    void deleteSupplier(long supplierId);
+    ApiResponse<SupplierResponseDTO> getSupplierById(long supplierId);
 
-    Supplier updateSupplier(Long id, Supplier supplier);
+    ApiResponse<String> deleteSupplier(long supplierId);
+
+    ApiResponse<SupplierResponseDTO> updateSupplier(Long id, SupplierRequestDTO supplier);
 }

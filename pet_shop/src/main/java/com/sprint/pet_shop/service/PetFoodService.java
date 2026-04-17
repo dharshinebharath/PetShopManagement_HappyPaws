@@ -1,13 +1,14 @@
 package com.sprint.pet_shop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.sprint.pet_shop.dto.requestDto.PetFoodRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.entity.PetFood;
 import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
@@ -18,80 +19,144 @@ import com.sprint.pet_shop.service.interfaces.PetFoodInterface;
 @Service
 public class PetFoodService implements PetFoodInterface {
 
-	@Autowired
-	private PetFoodRepository petFoodRepository;
-	
-	
-	@Override
-	public List<PetFood> saveAllPetFood(@RequestBody List<PetFood> petFoods)
-	{
-		for (PetFood food : petFoods) {
-			
-			
+    @Autowired
+    private PetFoodRepository petFoodRepository;
 
-	        if (food.getQuantity() < 0) {
-	            throw new InvalidDataException("Quantity cannot be negative");
-	        }
+    private PetFoodResponseDTO toDto(PetFood entity) {
+        PetFoodResponseDTO dto = new PetFoodResponseDTO();
 
-	        if (food.getPrice().doubleValue() < 0) {
-	            throw new InvalidDataException("Price must be positive");
-	        }
+        dto.setFoodId(entity.getFoodId());
+        dto.setName(entity.getName());
+        dto.setBrand(entity.getBrand());
+        dto.setType(entity.getType());
+        dto.setQuantity(entity.getQuantity());
+        dto.setPrice(entity.getPrice());
 
-	        if (food.getName() == null || food.getName().isBlank()) {
-	            throw new InvalidDataException("Food name cannot be empty");
-	        }
-	        
-	        if (petFoodRepository.existsByNameAndBrand(
-	                food.getName(), food.getBrand())) {
+        return dto;
+    }
 
-	            throw new DuplicateResourceException(
-	                "Food already exists: " + food.getName() + " (" + food.getBrand() + ")");
-	        }
-	    }
+    @Override
+    public ApiResponse<List<PetFoodResponseDTO>> saveAllPetFood(List<PetFoodRequestDTO> dtos) {
 
-		return petFoodRepository.saveAll(petFoods);
-	}
-	
-	@Override
-	public List<PetFood> getAllPetFood()
-	{
-		return petFoodRepository.getAllPetFood();
-	}
+        List<PetFood> entities = new ArrayList<>();
 
-	@Override
-	public PetFood getPetFoodById(long id) {
-		return petFoodRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Food Not Found with id:" +id));
+        for (PetFoodRequestDTO dto : dtos) {
 
-	}
-	
-	@Override
-	public void deletePetFoodById(long id) {
+            if (dto.getQuantity() < 0) {
+                throw new InvalidDataException("Quantity cannot be negative");
+            }
 
-		PetFood existing=petFoodRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Food Not Found with id:"+id));
-		petFoodRepository.delete(existing);
-	}
-	
-	@Override
-	public PetFood updatePetFood(long id, PetFood petFood) {
+            if (dto.getPrice().doubleValue() < 0) {
+                throw new InvalidDataException("Price must be positive");
+            }
 
-	    PetFood existing = petFoodRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Food Not Found with id:"+ id));
+            if (dto.getName() == null || dto.getName().isBlank()) {
+                throw new InvalidDataException("Food name cannot be empty");
+            }
 
-	    if (petFood.getQuantity() < 0) {
-	        throw new InvalidDataException("Quantity cannot be negative");
-	    }
+            if (petFoodRepository.existsByNameAndBrand(dto.getName(), dto.getBrand())) {
+                throw new DuplicateResourceException(
+                        "Food already exists: " + dto.getName() + " (" + dto.getBrand() + ")");
+            }
 
-	    if (petFood.getPrice().doubleValue() < 0) {
-	        throw new InvalidDataException("Price must be positive");
-	    }
-	    existing.setName(petFood.getName());
-	    existing.setBrand(petFood.getBrand());
-	    existing.setType(petFood.getType());
-	    existing.setQuantity(petFood.getQuantity());
-	    existing.setPrice(petFood.getPrice());
+            PetFood entity = new PetFood();
+            entity.setName(dto.getName());
+            entity.setBrand(dto.getBrand());
+            entity.setType(dto.getType());
+            entity.setQuantity(dto.getQuantity());
+            entity.setPrice(dto.getPrice());
 
-	    return petFoodRepository.save(existing);
-	}
-	
-	
+            entities.add(entity);
+        }
+
+        List<PetFoodResponseDTO> data =
+                petFoodRepository.saveAll(entities)
+                        .stream()
+                        .map(this::toDto)
+                        .toList();
+
+        ApiResponse<List<PetFoodResponseDTO>> response = new ApiResponse<>();
+        response.setMessage("Pet food saved successfully");
+        response.setSuccess(true);
+        response.setData(data);
+
+        return response;
+    }
+
+    @Override
+    public ApiResponse<List<PetFoodResponseDTO>> getAllPetFood() {
+
+        List<PetFoodResponseDTO> data =
+                petFoodRepository.findAll()
+                        .stream()
+                        .map(this::toDto)
+                        .toList();
+
+        ApiResponse<List<PetFoodResponseDTO>> response = new ApiResponse<>();
+        response.setMessage("Fetched all pet food");
+        response.setSuccess(true);
+        response.setData(data);
+
+        return response;
+    }
+
+    @Override
+    public ApiResponse<PetFoodResponseDTO> getPetFoodById(long id) {
+
+        PetFood entity = petFoodRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Food Not Found with id: " + id));
+
+        ApiResponse<PetFoodResponseDTO> response = new ApiResponse<>();
+        response.setMessage("Pet food fetched successfully");
+        response.setSuccess(true);
+        response.setData(toDto(entity));
+
+        return response;
+    }
+
+    @Override
+    public ApiResponse<PetFoodResponseDTO> updatePetFood(long id, PetFoodRequestDTO dto) {
+
+        PetFood existing = petFoodRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Food Not Found with id: " + id));
+
+        if (dto.getQuantity() < 0) {
+            throw new InvalidDataException("Quantity cannot be negative");
+        }
+
+        if (dto.getPrice().doubleValue() < 0) {
+            throw new InvalidDataException("Price must be positive");
+        }
+
+        existing.setName(dto.getName());
+        existing.setBrand(dto.getBrand());
+        existing.setType(dto.getType());
+        existing.setQuantity(dto.getQuantity());
+        existing.setPrice(dto.getPrice());
+
+        PetFood updated = petFoodRepository.save(existing);
+
+        ApiResponse<PetFoodResponseDTO> response = new ApiResponse<>();
+        response.setMessage("Updated successfully");
+        response.setSuccess(true);
+        response.setData(toDto(updated));
+
+        return response;
+    }
+
+    @Override
+    public ApiResponse<String> deletePetFoodById(long id) {
+
+        PetFood existing = petFoodRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Food Not Found with id: " + id));
+
+        petFoodRepository.delete(existing);
+
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setMessage("Deleted successfully");
+        response.setSuccess(true);
+        response.setData("Deleted food id: " + id);
+
+        return response;
+    }
 }
