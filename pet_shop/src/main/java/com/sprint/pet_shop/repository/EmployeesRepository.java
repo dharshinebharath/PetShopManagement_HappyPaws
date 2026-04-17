@@ -6,4 +6,6 @@ import com.sprint.pet_shop.entity.Employees;
 
 public interface EmployeesRepository extends JpaRepository<Employees , Long>{
 
+	boolean existsByEmail(String email);
+
 }

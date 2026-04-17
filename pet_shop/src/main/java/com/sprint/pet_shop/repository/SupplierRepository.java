@@ -7,4 +7,6 @@ import com.sprint.pet_shop.entity.Supplier;
 
 public interface SupplierRepository extends JpaRepository<Supplier , Long> {
 
+	boolean existsByEmail(String email);
+
 }

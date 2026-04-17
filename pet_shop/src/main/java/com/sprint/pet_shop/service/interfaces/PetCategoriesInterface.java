@@ -2,17 +2,22 @@ package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
+import com.sprint.pet_shop.dto.requestDto.PetCategoriesRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.PetCategoriesResponseDTO;
 import com.sprint.pet_shop.entity.PetCategories;
 
 public interface PetCategoriesInterface {
 
-	List<PetCategories> getAllCategories();
+	ApiResponse<List<PetCategoriesResponseDTO>> addAll(
+            List<PetCategoriesRequestDTO> dtos);
 
-	List<PetCategories> addAll(List<PetCategories> categories);
+    ApiResponse<List<PetCategoriesResponseDTO>> getAllCategories();
 
-	PetCategories getCategoryById(long id);
+    ApiResponse<PetCategoriesResponseDTO> getCategoryById(long id);
 
-	PetCategories updatePetCategories(long id, PetCategories petCategories);
+    ApiResponse<PetCategoriesResponseDTO> updateCategory(
+            long id, PetCategoriesRequestDTO dto);
 
-	void deleteCategory(long id);
+    ApiResponse<String> deleteCategory(long id);
 }
