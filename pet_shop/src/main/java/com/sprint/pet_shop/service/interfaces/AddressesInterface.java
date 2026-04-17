@@ -1,18 +1,22 @@
 package com.sprint.pet_shop.service.interfaces;
-import java.util.List;
-import java.util.Optional;
 
-import com.sprint.pet_shop.entity.Addresses;
-import com.sprint.pet_shop.entity.GroomingServices;
+import java.util.List;
+
+import com.sprint.pet_shop.dto.requestDto.AddressesRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.AddressesResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 
 import jakarta.validation.Valid;
 
 public interface AddressesInterface {
-	List<Addresses> saveaddresses(@Valid List<Addresses> addresses);
-	List<Addresses> getaddresses();
-	Addresses getaddressesByID(long id);
-	void deleteaddress(long id);
-	Addresses updateaddress(long id,@Valid Addresses updatedaddress);
-	
-	
+
+    ApiResponse<List<AddressesResponseDTO>> saveaddresses(@Valid List<AddressesRequestDTO> addresses);
+
+    ApiResponse<List<AddressesResponseDTO>> getaddresses();
+
+    ApiResponse<AddressesResponseDTO> getaddressesByID(long id);
+
+    ApiResponse<String> deleteaddress(long id);
+
+    ApiResponse<AddressesResponseDTO> updateaddress(long id, @Valid AddressesRequestDTO updatedaddress);
 }
