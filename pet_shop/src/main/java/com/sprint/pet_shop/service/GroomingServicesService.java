@@ -146,5 +146,19 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    response.setData(toDto(updated));
 
 	    return response;
+
+	public GroomingServices updateGroomingService(long id, @Valid GroomingServices service) {
+		GroomingServices existing = groomingServicesRepository.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Services Not Found with id:"+id));
+
+		if (service.getPrice().doubleValue() < 0) {
+		    throw new InvalidDataException("Price must be positive");
+		}
+	    existing.setName(service.getName());
+	    existing.setDescription(service.getDescription());
+	    existing.setPrice(service.getPrice());
+	    existing.setAvailable(service.isAvailable());
+
+	    return groomingServicesRepository.save(existing);
 	}
 }

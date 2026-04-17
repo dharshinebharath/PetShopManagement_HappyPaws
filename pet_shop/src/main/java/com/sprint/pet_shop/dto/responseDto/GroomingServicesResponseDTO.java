@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.dto.responseDto;
 
+
 import java.math.BigDecimal;
 
 public class GroomingServicesResponseDTO {
@@ -49,4 +50,5 @@ public class GroomingServicesResponseDTO {
 	    public void setAvailable(boolean available) {
 	        this.available = available;
 	    }
+
 }
