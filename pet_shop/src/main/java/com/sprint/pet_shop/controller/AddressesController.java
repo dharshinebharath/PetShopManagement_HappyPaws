@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sprint.pet_shop.dto.requestDto.AddressesRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.AddressesResponseDTO;
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.service.AddressesService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/addresses")
@@ -22,15 +26,15 @@ public class AddressesController {
 @Autowired
 private AddressesService addressesService;
 @PostMapping
-public List<Addresses> saveaddresses(@RequestBody List<Addresses> addresses){
+public List<AddressesResponseDTO> saveaddresses(@Valid @RequestBody List<AddressesRequestDTO> addresses){
 	return addressesService.saveaddresses(addresses);
 }
 @GetMapping
-public List<Addresses> getaddresses(){
+public List<AddressesResponseDTO> getaddresses(){
 	return addressesService.getaddresses();
 }
 @GetMapping("/{id}")
-public Addresses getaddressesbyId(@PathVariable long id){
+public AddressesResponseDTO getaddressesbyId(@PathVariable long id){
 	return addressesService.getaddressesByID(id);
 }
 @DeleteMapping("/{id}")
@@ -39,7 +43,7 @@ public String delete(@PathVariable long id) {
     return "Deleted successfully";
 }
 @PutMapping("/{id}")
-public Addresses updateaddresses(@PathVariable long id,@RequestBody Addresses address) {
+public AddressesResponseDTO updateaddresses(@PathVariable long id,@Valid @RequestBody AddressesRequestDTO address) {
 	return addressesService.updateaddress(id,address);
 }
 

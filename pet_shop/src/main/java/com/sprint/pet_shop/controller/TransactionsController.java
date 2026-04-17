@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sprint.pet_shop.entity.TransactionsEntity;
 import com.sprint.pet_shop.service.TransactionsService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/transactions")
 
@@ -23,11 +25,11 @@ public class TransactionsController {
 	private TransactionsService transactionsService;
 	
 	
-	public TransactionsEntity saveTransactionsEntity(@RequestBody TransactionsEntity transactionsEntity) {
+	public TransactionsEntity saveTransactionsEntity(@Valid @RequestBody TransactionsEntity transactionsEntity) {
 		return transactionsService.saveTransactionsEntity(transactionsEntity);
 	}
 	@PostMapping
-	public List<TransactionsEntity> saveAll(@RequestBody List<TransactionsEntity> transactionsEntity){
+	public List<TransactionsEntity> saveAll(@Valid @RequestBody List<TransactionsEntity> transactionsEntity){
 		return transactionsService.TransactionsEntityAll(transactionsEntity);
 	}
 	//getall
@@ -42,7 +44,7 @@ public class TransactionsController {
 	    }
 	 @PutMapping("/{id}")
 	 public TransactionsEntity updateTransaction(@PathVariable Long id,
-	                                             @RequestBody TransactionsEntity transactionsEntity) {
+	                                             @Valid @RequestBody TransactionsEntity transactionsEntity) {
 	     return transactionsService.updateTransaction(id, transactionsEntity);
 	 }
 

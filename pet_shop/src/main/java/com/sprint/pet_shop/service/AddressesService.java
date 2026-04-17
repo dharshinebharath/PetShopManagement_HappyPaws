@@ -1,16 +1,14 @@
 package com.sprint.pet_shop.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.sprint.pet_shop.dto.requestDto.AddressesRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.AddressesResponseDTO;
 import com.sprint.pet_shop.entity.Addresses;
-import com.sprint.pet_shop.entity.Customers;
-import com.sprint.pet_shop.entity.GroomingServices;
-import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.AddressesRepository;
@@ -18,58 +16,110 @@ import com.sprint.pet_shop.service.interfaces.AddressesInterface;
 
 @Service
 public class AddressesService implements AddressesInterface {
-@Autowired
-private AddressesRepository addressesRepository;
-@Override
-public List<Addresses> saveaddresses(List<Addresses> addresses){
-	for (Addresses addr : addresses) {
-        if (addr.getStreet() == null || addr.getStreet().trim().isEmpty()) {
+
+    @Autowired
+    private AddressesRepository addressesRepository;
+
+    //CREATE
+    @Override
+    public List<AddressesResponseDTO> saveaddresses(List<AddressesRequestDTO> addresses) {
+
+        List<Addresses> entities = addresses.stream().map(dto -> {
+
+            if (dto.getStreet() == null || dto.getStreet().trim().isEmpty()) {
+                throw new InvalidDataException("Street cannot be empty");
+            }
+            if (dto.getCity() == null || dto.getCity().trim().isEmpty()) {
+                throw new InvalidDataException("City cannot be empty");
+            }
+            if (dto.getState() == null || dto.getState().trim().isEmpty()) {
+                throw new InvalidDataException("State cannot be empty");
+            }
+            if (dto.getZipCode() == null || dto.getZipCode().trim().isEmpty()) {
+                throw new InvalidDataException("Zip code cannot be empty");
+            }
+
+            Addresses entity = new Addresses();
+            entity.setStreet(dto.getStreet());
+            entity.setCity(dto.getCity());
+            entity.setState(dto.getState());
+            entity.setZipCode(dto.getZipCode());
+
+            return entity;
+
+        }).collect(Collectors.toList());
+
+        return addressesRepository.saveAll(entities)
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    //GET ALL
+    @Override
+    public List<AddressesResponseDTO> getaddresses() {
+        return addressesRepository.findAll()
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    //GET BY ID
+    @Override
+    public AddressesResponseDTO getaddressesByID(long id) {
+        Addresses address = addressesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Address not found with id: " + id));
+
+        return toDto(address);
+    }
+
+    //DELETE
+    @Override
+    public void deleteaddress(long id) {
+        if (!addressesRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Address not found with id: " + id);
+        }
+        addressesRepository.deleteById(id);
+    }
+
+    // UPDATE
+    @Override
+    public AddressesResponseDTO updateaddress(long id, AddressesRequestDTO updatedaddress) {
+
+        Addresses existing = addressesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Address not found with id: " + id));
+
+        if (updatedaddress.getStreet() == null || updatedaddress.getStreet().trim().isEmpty()) {
             throw new InvalidDataException("Street cannot be empty");
         }
-        if (addr.getCity() == null || addr.getCity().trim().isEmpty()) {
+        if (updatedaddress.getCity() == null || updatedaddress.getCity().trim().isEmpty()) {
             throw new InvalidDataException("City cannot be empty");
         }
-        if (addr.getState() == null || addr.getState().trim().isEmpty()) {
+        if (updatedaddress.getState() == null || updatedaddress.getState().trim().isEmpty()) {
             throw new InvalidDataException("State cannot be empty");
         }
-        if (addr.getZipCode() == null || addr.getZipCode().trim().isEmpty()) {
+        if (updatedaddress.getZipCode() == null || updatedaddress.getZipCode().trim().isEmpty()) {
             throw new InvalidDataException("Zip code cannot be empty");
-        }}
-	return addressesRepository.saveAll(addresses);
+        }
+
+        existing.setCity(updatedaddress.getCity());
+        existing.setState(updatedaddress.getState());
+        existing.setStreet(updatedaddress.getStreet());
+        existing.setZipCode(updatedaddress.getZipCode());
+
+        Addresses saved = addressesRepository.save(existing);
+
+        return toDto(saved);
+    }
+
+    // ENTITY → DTO
+    private AddressesResponseDTO toDto(Addresses entity) {
+        AddressesResponseDTO dto = new AddressesResponseDTO();
+        dto.setAddressId(entity.getAddressId());
+        dto.setStreet(entity.getStreet());
+        dto.setCity(entity.getCity());
+        dto.setState(entity.getState());
+        dto.setZipCode(entity.getZipCode());
+        return dto;
+    }
 }
-@Override
-public List<Addresses> getaddresses(){
-	return addressesRepository.findAll();
-}
-@Override
-public Addresses getaddressesByID(long id){
-	return addressesRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Customer not found with id: " + id));
-}
-@Override
-public void deleteaddress(long id) {
-    if (!addressesRepository.existsById(id)) {
-        throw new ResourceNotFoundException("Address not found with id: " + id);
-    }
-    addressesRepository.deleteById(id);
-}
-@Override
-public Addresses updateaddress(long id,Addresses updatedaddress) {
-	Addresses existing=addressesRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Address not found with id"));
-	if (updatedaddress.getStreet() == null || updatedaddress.getStreet().trim().isEmpty()) {
-        throw new InvalidDataException("Street cannot be empty");
-    }
-    if (updatedaddress.getCity() == null || updatedaddress.getCity().trim().isEmpty()) {
-        throw new InvalidDataException("City cannot be empty");
-    }
-    if (updatedaddress.getState() == null || updatedaddress.getState().trim().isEmpty()) {
-        throw new InvalidDataException("State cannot be empty");
-    }
-    if (updatedaddress.getZipCode() == null || updatedaddress.getZipCode().trim().isEmpty()) {
-        throw new InvalidDataException("Zip code cannot be empty");
-    }
-	existing.setCity(updatedaddress.getCity());
-	existing.setState(updatedaddress.getState());
-	existing.setStreet(updatedaddress.getStreet());
-	existing.setZipCode(updatedaddress.getZipCode());
-	return addressesRepository.save(existing);
-}}

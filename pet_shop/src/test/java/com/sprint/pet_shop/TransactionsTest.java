@@ -2,12 +2,12 @@ package com.sprint.pet_shop;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 import org.junit.jupiter.api.Test;
 
-import com.sprint.pet_shop.entity.TransactionStatus;
-import com.sprint.pet_shop.entity.TransactionsEntity;
+import com.sprint.pet_shop.entity.*;
 
 public class TransactionsTest {
 
@@ -16,65 +16,76 @@ public class TransactionsTest {
         TransactionsEntity transaction = new TransactionsEntity();
 
         Long id = 1L;
-        Integer customerId = 10;
-        Integer petId = 20;
         Date date = Date.valueOf("2024-01-01");
-        double amount = 5000.75;
+        BigDecimal amount = BigDecimal.valueOf(5000.75);
         TransactionStatus status = TransactionStatus.Success;
 
+        Customers customer = new Customers();
+        customer.setCustomerId(10L);
+
+        Pets pet = new Pets();
+        pet.setPet_id(20L);
+
         transaction.setTransactionId(id);
-        transaction.setCustomerId(customerId);
-        transaction.setPetId(petId);
         transaction.setTransactionDate(date);
         transaction.setAmount(amount);
         transaction.setTransactionStatus(status);
+        transaction.setCustomer(customer);
+        transaction.setPet(pet);
 
         assertEquals(id, transaction.getTransactionId());
-        assertEquals(customerId, transaction.getCustomerId());
-        assertEquals(petId, transaction.getPetId());
         assertEquals(date, transaction.getTransactionDate());
         assertEquals(amount, transaction.getAmount());
         assertEquals(status, transaction.getTransactionStatus());
+        assertEquals(10L, transaction.getCustomer().getCustomerId());
+        assertEquals(20L, transaction.getPet().getPet_id());
     }
 
-    // ✅ Default values test
     @Test
     void testDefaultValues() {
         TransactionsEntity transaction = new TransactionsEntity();
 
         assertNull(transaction.getTransactionId());
-        assertNull(transaction.getCustomerId());
-        assertNull(transaction.getPetId());
         assertNull(transaction.getTransactionDate());
         assertNull(transaction.getTransactionStatus());
-
-        assertEquals(0.0, transaction.getAmount()); // primitive default
+        assertNull(transaction.getCustomer());
+        assertNull(transaction.getPet());
+        assertNull(transaction.getAmount());
     }
 
-    // ✅ Test updating values
     @Test
     void testUpdateValues() {
         TransactionsEntity transaction = new TransactionsEntity();
 
-        transaction.setCustomerId(1);
-        transaction.setCustomerId(99);
+        Customers c1 = new Customers();
+        c1.setCustomerId(1L);
 
-        assertEquals(99, transaction.getCustomerId());
+        Customers c2 = new Customers();
+        c2.setCustomerId(99L);
+
+        transaction.setCustomer(c1);
+        transaction.setCustomer(c2);
+
+        assertEquals(99L, transaction.getCustomer().getCustomerId());
     }
 
-    // ✅ Test multiple objects independently
     @Test
     void testMultipleObjects() {
         TransactionsEntity t1 = new TransactionsEntity();
         TransactionsEntity t2 = new TransactionsEntity();
 
-        t1.setCustomerId(1);
-        t2.setCustomerId(2);
+        Customers c1 = new Customers();
+        c1.setCustomerId(1L);
 
-        assertNotEquals(t1.getCustomerId(), t2.getCustomerId());
+        Customers c2 = new Customers();
+        c2.setCustomerId(2L);
+
+        t1.setCustomer(c1);
+        t2.setCustomer(c2);
+
+        assertNotEquals(t1.getCustomer().getCustomerId(), t2.getCustomer().getCustomerId());
     }
 
-    // ✅ Enum test
     @Test
     void testEnumValues() {
         TransactionsEntity transaction = new TransactionsEntity();
@@ -86,7 +97,6 @@ public class TransactionsTest {
         assertEquals(TransactionStatus.Failed, transaction.getTransactionStatus());
     }
 
-    // ✅ Date handling test
     @Test
     void testDateAssignment() {
         TransactionsEntity transaction = new TransactionsEntity();
@@ -101,33 +111,24 @@ public class TransactionsTest {
         assertEquals(date2, transaction.getTransactionDate());
     }
 
-    // ✅ Amount edge cases
     @Test
     void testAmountValues() {
         TransactionsEntity transaction = new TransactionsEntity();
 
-        transaction.setAmount(0.0);
-        assertEquals(0.0, transaction.getAmount());
+        transaction.setAmount(BigDecimal.valueOf(0.0));
+        assertEquals(BigDecimal.valueOf(0.0), transaction.getAmount());
 
-        transaction.setAmount(99999.99);
-        assertEquals(99999.99, transaction.getAmount());
-
-        transaction.setAmount(-100); // logically wrong but allowed in entity
-        assertEquals(-100, transaction.getAmount());
+        transaction.setAmount(BigDecimal.valueOf(99999.99));
+        assertEquals(BigDecimal.valueOf(99999.99), transaction.getAmount());
     }
 
-    // ✅ Null assignment test (important for wrapper types)
     @Test
     void testNullAssignments() {
         TransactionsEntity transaction = new TransactionsEntity();
 
-        transaction.setCustomerId(null);
-        transaction.setPetId(null);
         transaction.setTransactionDate(null);
         transaction.setTransactionStatus(null);
 
-        assertNull(transaction.getCustomerId());
-        assertNull(transaction.getPetId());
         assertNull(transaction.getTransactionDate());
         assertNull(transaction.getTransactionStatus());
     }
