@@ -2,21 +2,19 @@ package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
-import com.sprint.pet_shop.entity.Vaccinations;
-
-import jakarta.validation.Valid;
+import com.sprint.pet_shop.dto.requestDto.VaccinationsRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
 
 public interface VaccinationsInterface {
 
-	List<Vaccinations> saveAllVaccinations(@Valid List<Vaccinations> vaccinations);
+    ApiResponse<List<VaccinationsResponseDTO>> saveAllVaccinations(List<VaccinationsRequestDTO> dtos);
 
-	List<Vaccinations> getAllVaccinations();
+    ApiResponse<List<VaccinationsResponseDTO>> getAllVaccinations();
 
-	Vaccinations getVaccinationsById(long id);
+    ApiResponse<VaccinationsResponseDTO> getVaccinationsById(long id);
 
-	void deleteVaccinationsById(long id);
+    ApiResponse<VaccinationsResponseDTO> updateVaccinationById(long id, VaccinationsRequestDTO dto);
 
-
-	Vaccinations updateVaccinationById(long id, @Valid Vaccinations vaccination);
-
+    ApiResponse<String> deleteVaccinationsById(long id);
 }
