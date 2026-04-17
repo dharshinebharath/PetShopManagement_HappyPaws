@@ -1,4 +1,4 @@
-package com.sprint.pet_shop.service;
+package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
@@ -15,5 +15,4 @@ public interface PetCategoriesInterface {
 	PetCategories updatePetCategories(long id, PetCategories petCategories);
 
 	void deleteCategory(long id);
-
 }

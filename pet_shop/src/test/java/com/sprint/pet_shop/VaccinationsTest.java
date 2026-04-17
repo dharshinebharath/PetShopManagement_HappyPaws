@@ -72,6 +72,6 @@ public class VaccinationsTest {
 	        Vaccinations v = new Vaccinations();
 	        v.setName("Rabies");
 	        v.setPrice(new BigDecimal("100.00"));
-	        assertTrue(v.getAvailable());
+	        assertTrue(v.isAvailable());
 	    }
 }

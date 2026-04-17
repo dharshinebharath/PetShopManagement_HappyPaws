@@ -66,7 +66,7 @@ public class VaccinationsService implements VaccinationsInterface {
 		existing.setName(vaccination.getName());
 		existing.setDescription(vaccination.getDescription());
 		existing.setPrice(vaccination.getPrice());
-		existing.setAvailable(vaccination.getAvailable());
+		existing.setAvailable(vaccination.isAvailable());
 		
 		return vaccinationsRepository.save(existing);
 	}

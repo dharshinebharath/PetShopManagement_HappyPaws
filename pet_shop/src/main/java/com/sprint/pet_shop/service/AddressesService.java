@@ -3,18 +3,13 @@ package com.sprint.pet_shop.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.sprint.pet_shop.entity.Addresses;
-import com.sprint.pet_shop.entity.Customers;
-import com.sprint.pet_shop.entity.GroomingServices;
-import com.sprint.pet_shop.exception.DuplicateResourceException;
-import com.sprint.pet_shop.exception.InvalidDataException;
-import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.service.interfaces.AddressesInterface;
+import com.sprint.pet_shop.exception.ResourceNotFoundException;
+import com.sprint.pet_shop.exception.InvalidDataException;
 
 @Service
 public class AddressesService implements AddressesInterface {

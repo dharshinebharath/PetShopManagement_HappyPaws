@@ -29,25 +29,31 @@ public class PetCategories {
 	    @OneToMany(mappedBy = "category")
 	    @JsonIgnore
 	    private List<Pets> pets;
+
+		public Long getCategory_id() {
+			return category_id;
+		}
+
+		public void setCategory_id(Long category_id) {
+			this.category_id = category_id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public List<Pets> getPets() {
+			return pets;
+		}
+
+		public void setPets(List<Pets> pets) {
+			this.pets = pets;
+		}
 	    
-	public Long getCategory_id() {
-		return category_id;
-	}
-	public void setCategory_id(Long category_id) {
-		this.category_id = category_id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public List<Pets> getPets() {
-		return pets;
-	}
-	public void setPets(List<Pets> pets) {
-		this.pets = pets;
-	}
 	
 	
 	

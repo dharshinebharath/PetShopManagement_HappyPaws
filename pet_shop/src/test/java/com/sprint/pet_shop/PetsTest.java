@@ -34,7 +34,6 @@ public class PetsTest {
         pet.setImage_url("url");
 
         PetCategories category = new PetCategories();
-//        category.setCategory_id(1);
         pet.setCategory(category);
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
@@ -54,7 +53,6 @@ public class PetsTest {
         pet.setImage_url("url");
 
         PetCategories category = new PetCategories();
-//        category.setCategory_id(1);
         pet.setCategory(category);
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
@@ -74,7 +72,6 @@ public class PetsTest {
         pet.setImage_url("url");
 
         PetCategories category = new PetCategories();
-//        category.setCategory_id(1);
         pet.setCategory(category);
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
@@ -92,11 +89,12 @@ public class PetsTest {
         pet.setPrice(new BigDecimal("10000"));
         pet.setDescription("Good dog");
         pet.setImage_url("url");
-        pet.setCategory(null);
+
+        pet.setCategory(null); // ❌ invalid
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
-        assertFalse(violations.isEmpty());
+        assertFalse(violations.isEmpty()); // ✅ should fail validation
     }
 
     // ✅ 5. Valid pet (should pass)
@@ -111,11 +109,10 @@ public class PetsTest {
         pet.setImage_url("url");
 
         PetCategories category = new PetCategories();
-//        category.setCategory_id(1);
         pet.setCategory(category);
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
-        assertTrue(violations.isEmpty());
+        assertTrue(violations.isEmpty()); // ✅ no errors
     }
 }

@@ -1,77 +1,14 @@
-//package com.sprint.pet_shop.entity;
-//
-//import jakarta.persistence.Column;
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
-//import jakarta.persistence.JoinColumn;
-//import jakarta.persistence.ManyToOne;
-//
-//@Entity
-//public class Supplier {
-//
-//	    @Id
-//	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//	    @Column(name = "supplier_id")
-//	    private long supplierId;
-//	    @Column(nullable = false , length=100)
-//	    private String name;
-//	    @Column(nullable = false , length=50 , name = "contact_person")
-//	    private String contactPerson;
-//	    @Column(nullable = false , length=20 , name = "phone_number")
-//	    private String phoneNumber;
-//	    @Column(nullable = false , length=100)
-//	    private String email;
-////	    @ManyToOne
-////	    @JoinColumn(name = "address_id") 
-////	    private Address address;
-////		public Address getAddress() {
-////			return address;
-////		}
-////		public void setAddress(Address address) {
-////			this.address = address;
-////		}
-//		public long getSupplierId() {
-//			return supplierId;
-//		}
-//		public void setSupplierId(long supplierId) {
-//			this.supplierId = supplierId;
-//		}
-//		public String getName() {
-//			return name;
-//		}
-//		public void setName(String name) {
-//			this.name = name;
-//		}
-//		public String getContactPerson() {
-//			return contactPerson;
-//		}
-//		public void setContactPerson(String contactPerson) {
-//			this.contactPerson = contactPerson;
-//		}
-//		public String getPhoneNumber() {
-//			return phoneNumber;
-//		}
-//		public void setPhoneNumber(String phoneNumber) {
-//			this.phoneNumber = phoneNumber;
-//		}
-//		public String getEmail() {
-//			return email;
-//		}
-//		public void setEmail(String email) {
-//			this.email = email;
-//		}
-//		
-//
-//}
+
 package com.sprint.pet_shop.entity;
+
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 
@@ -81,7 +18,7 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "supplier_id")
-    private long supplierId;
+    private Long supplierId;
 
     @Column(length = 100)
     @NotNull(message = "Name cannot be null")
@@ -103,45 +40,56 @@ public class Supplier {
     @NotBlank(message = "Email cannot be empty")
     private String email;
 
-    // Getters and Setters
+    @ManyToMany(mappedBy = "suppliers")
+    private List<Pets> pets;
 
-    public long getSupplierId() {
-        return supplierId;
-    }
+    
+	public Long getSupplierId() {
+		return supplierId;
+	}
 
-    public void setSupplierId(long supplierId) {
-        this.supplierId = supplierId;
-    }
+	public void setSupplierId(Long supplierId) {
+		this.supplierId = supplierId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getContactPerson() {
-        return contactPerson;
-    }
+	public String getContactPerson() {
+		return contactPerson;
+	}
 
-    public void setContactPerson(String contactPerson) {
-        this.contactPerson = contactPerson;
-    }
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Pets> getPets() {
+		return pets;
+	}
+
+	public void setPets(List<Pets> pets) {
+		this.pets = pets;
+	}
+    
 }
