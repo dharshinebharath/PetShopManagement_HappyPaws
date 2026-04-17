@@ -1,116 +1,156 @@
 package com.sprint.pet_shop.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.entity.Pets;
 import com.sprint.pet_shop.entity.TransactionsEntity;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
-<<<<<<< HEAD
-=======
 import com.sprint.pet_shop.repository.CustomersRepository;
 import com.sprint.pet_shop.repository.PetsRepository;
->>>>>>> 618339db897ec2d74e949f7e9303cc84c5044c36
 import com.sprint.pet_shop.repository.TransactionsRepository;
-import com.sprint.pet_shop.service.interfaces.TransactionsInterface;
 
 @Service
-public class TransactionsService implements TransactionsInterface{
-	@Autowired 
-	private TransactionsRepository transactionsRepository;
-<<<<<<< HEAD
-=======
-	
-	@Autowired 
-	private CustomersRepository customersRepository;
-	@Autowired 
-	private PetsRepository petsRepository;
->>>>>>> 618339db897ec2d74e949f7e9303cc84c5044c36
-	//save
-	@Override
-	public TransactionsEntity saveTransactionsEntity(TransactionsEntity entity) {
+public class TransactionsService {
 
-	    if (entity.getCustomerId() == null || entity.getPetId() == null) {
-	        throw new InvalidDataException("Customer ID and Pet ID cannot be null");
-	    }
+    @Autowired
+    private TransactionsRepository transactionsRepository;
 
+    @Autowired
+    private CustomersRepository customersRepository;
 
-		if (entity.getCustomer() == null || entity.getCustomer().getCustomerId() == null) {
-	        throw new InvalidDataException("Customer ID cannot be null");
-	    }
+    @Autowired
+    private PetsRepository petsRepository;
 
-	    if (entity.getPet() == null || entity.getPet().getPet_id() == null) {
-	        throw new InvalidDataException("Pet ID cannot be null");
-	    }
+    // CREATE
+    @Override
+    public ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto) {
 
-	    // 🔥 FETCH MANAGED ENTITY (IMPORTANT)
-	    Customers customer = customersRepository.findById(entity.getCustomer().getCustomerId())
-	            .orElseThrow(() -> new RuntimeException("Customer not found"));
-
-	        Pets pet = petsRepository.findById(entity.getPet().getPet_id())
-	            .orElseThrow(() -> new RuntimeException("Pet not found"));
-
-	        entity.setCustomer(customer);
-	        entity.setPet(pet);
-
-
-	    return transactionsRepository.save(entity);
-	}
-	//saveall
-	@Override
-	public List<TransactionsEntity> TransactionsEntityAll(List<TransactionsEntity> transactionsEntity){
-		return transactionsRepository.saveAll(transactionsEntity);
-	}
-
-    // GET ALL
-	@Override
-    public List<TransactionsEntity> getAllTransactions() {
-        return transactionsRepository.findAll();
-    }
-    //get by id
-	@Override
-    public TransactionsEntity getTransactionById(Long id) {
-		return transactionsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
-    }
-	@Override
-    public TransactionsEntity updateTransaction(Long id, TransactionsEntity newData) {
-
-        TransactionsEntity existing = transactionsRepository.findById(id)
-        		.orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
-        
-
-        if (newData.getCustomerId() == null || newData.getPetId() == null) {
-
-        if (newData.getCustomer().getCustomerId() == null || newData.getPet().getPet_id() == null) {
-
+        if (dto.getCustomerId() == null || dto.getPetId() == null) {
             throw new InvalidDataException("Customer ID and Pet ID cannot be null");
         }
 
+        Customers customer = customersRepository.findById(dto.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        existing.setTransactionDate(newData.getTransactionDate());
-        existing.setAmount(newData.getAmount());
-        existing.setTransactionStatus(newData.getTransactionStatus());
-        
+        Pets pet = petsRepository.findById(dto.getPetId())
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-        return transactionsRepository.save(existing);
+        TransactionsEntity entity = new TransactionsEntity();
+        entity.setTransactionDate(dto.getTransactionDate());
+        entity.setAmount(dto.getAmount());
+        entity.setTransactionStatus(
+                com.sprint.pet_shop.entity.TransactionStatus.valueOf(dto.getTransactionStatus())
+        );
+        entity.setCustomer(customer);
+        entity.setPet(pet);
+
+        TransactionsEntity saved = transactionsRepository.save(entity);
+
+        ApiResponse<TransactionsResponseDTO> response = new ApiResponse<>();
+        response.setMessage("Transaction saved successfully");
+        response.setSuccess(true);
+        response.setData(toDto(saved));
+
+        return response;
+    }
+
+    // GET ALL
+    @Override
+    public ApiResponse<List<TransactionsResponseDTO>> getAll() {
+
+        List<TransactionsResponseDTO> data = transactionsRepository.findAll()
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+
+        ApiResponse<List<TransactionsResponseDTO>> response = new ApiResponse<>();
+        response.setMessage("Fetched all transactions");
+        response.setSuccess(true);
+        response.setData(data);
+
+        return response;
+    }
+
+    // GET BY ID
+    @Override
+    public ApiResponse<TransactionsResponseDTO> getById(Long id) {
+
+        TransactionsEntity entity = transactionsRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
+
+        ApiResponse<TransactionsResponseDTO> response = new ApiResponse<>();
+        response.setMessage("Transaction fetched successfully");
+        response.setSuccess(true);
+        response.setData(toDto(entity));
+
+        return response;
+    }
+
+    // UPDATE
+    @Override
+    public ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto) {
+
+        TransactionsEntity existing = transactionsRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
+
+        if (dto.getCustomerId() == null || dto.getPetId() == null) {
+            throw new InvalidDataException("Customer ID and Pet ID cannot be null");
+        }
+
+        existing.setTransactionDate(dto.getTransactionDate());
+        existing.setAmount(dto.getAmount());
+        existing.setTransactionStatus(
+                com.sprint.pet_shop.entity.TransactionStatus.valueOf(dto.getTransactionStatus())
+        );
+
+        TransactionsEntity updated = transactionsRepository.save(existing);
+
+        ApiResponse<TransactionsResponseDTO> response = new ApiResponse<>();
+        response.setMessage("Transaction updated successfully");
+        response.setSuccess(true);
+        response.setData(toDto(updated));
+
+        return response;
     }
 
     // DELETE
-	@Override
-	public String deleteTransaction(Long id) {
+    @Override
+    public ApiResponse<String> delete(Long id) {
 
-	    if (!transactionsRepository.existsById(id)) {
-	        throw new ResourceNotFoundException("Transaction not found with id: " + id);
-	    }
+        if (!transactionsRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Transaction not found with id: " + id);
+        }
 
-	    transactionsRepository.deleteById(id);
-	    return "Deleted successfully";
-	}
-    
+        transactionsRepository.deleteById(id);
+
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setMessage("Deleted successfully");
+        response.setSuccess(true);
+        response.setData("Deleted ID: " + id);
+
+        return response;
+    }
+
+    // ENTITY → DTO
+    private TransactionsResponseDTO toDto(TransactionsEntity entity) {
+
+        TransactionsResponseDTO dto = new TransactionsResponseDTO();
+
+        dto.setTransactionId(entity.getTransactionId());
+        dto.setTransactionDate(entity.getTransactionDate());
+        dto.setAmount(entity.getAmount());
+        dto.setCustomerId(entity.getCustomer().getCustomerId());
+        dto.setPetId(entity.getPet().getPet_id());
+        dto.setTransactionStatus(entity.getTransactionStatus().name());
+
+        return dto;
+    }
 }
-
-
