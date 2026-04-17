@@ -10,6 +10,7 @@ import com.sprint.pet_shop.entity.Pets;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.PetCategoriesRepository;
+import com.sprint.pet_shop.service.interfaces.PetCategoriesInterface;
 
 @Service
 public class PetCategoriesService implements PetCategoriesInterface{
@@ -33,7 +34,10 @@ public class PetCategoriesService implements PetCategoriesInterface{
 	            }
 	        }
 	    return petCategoryRepository.saveAll(categories);
-	}
+		
+	    }
+
+	    
 	
 	@Override
 	public PetCategories getCategoryById(long id)

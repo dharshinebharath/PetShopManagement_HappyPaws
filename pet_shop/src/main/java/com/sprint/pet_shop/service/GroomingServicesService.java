@@ -67,7 +67,7 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    existing.setName(service.getName());
 	    existing.setDescription(service.getDescription());
 	    existing.setPrice(service.getPrice());
-	    existing.setAvailable(service.getAvailable());
+	    existing.setAvailable(service.isAvailable());
 
 	    return groomingServicesRepository.save(existing);
 	}
