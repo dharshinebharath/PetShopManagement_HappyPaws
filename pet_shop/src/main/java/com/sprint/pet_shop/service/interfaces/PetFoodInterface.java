@@ -2,18 +2,19 @@ package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
-import com.sprint.pet_shop.entity.PetFood;
+import com.sprint.pet_shop.dto.requestDto.PetFoodRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 
 public interface PetFoodInterface {
 
-	List<PetFood> saveAllPetFood(List<PetFood> petFoods);
+    ApiResponse<List<PetFoodResponseDTO>> saveAllPetFood(List<PetFoodRequestDTO> dtos);
 
-	List<PetFood> getAllPetFood();
+    ApiResponse<List<PetFoodResponseDTO>> getAllPetFood();
 
-	PetFood getPetFoodById(long id);
+    ApiResponse<PetFoodResponseDTO> getPetFoodById(long id);
 
-	void deletePetFoodById(long id);
+    ApiResponse<PetFoodResponseDTO> updatePetFood(long id, PetFoodRequestDTO dto);
 
-	PetFood updatePetFood(long id, PetFood petFood);
-
+    ApiResponse<String> deletePetFoodById(long id);
 }
