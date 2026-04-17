@@ -1,17 +1,21 @@
+
 package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
-import com.sprint.pet_shop.entity.Employees;
+import com.sprint.pet_shop.dto.requestDto.EmployeesRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 
 public interface EmployeesInterface {
-	  List<Employees> saveAll(List<Employees> employees);
 
-	    List<Employees> getAll();
+    ApiResponse<List<EmployeesResponseDTO>> saveAll(List<EmployeesRequestDTO> employees);
 
-	    Employees getEmployeesById(long employeesId);
+    ApiResponse<List<EmployeesResponseDTO>> getAll();
 
-	    void deleteEmployee(long employeeId);
+    ApiResponse<EmployeesResponseDTO> getEmployeesById(long employeesId);
 
-	    Employees updateEmployee(Long id, Employees employee);
+    ApiResponse<String> deleteEmployee(long employeeId);
+
+    ApiResponse<EmployeesResponseDTO> updateEmployee(Long id, EmployeesRequestDTO employee);
 }
