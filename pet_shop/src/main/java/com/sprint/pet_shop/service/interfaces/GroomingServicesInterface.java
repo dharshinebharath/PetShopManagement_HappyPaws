@@ -2,20 +2,23 @@ package com.sprint.pet_shop.service.interfaces;
 
 import java.util.List;
 
+import com.sprint.pet_shop.dto.requestDto.GroomingServicesRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
 import com.sprint.pet_shop.entity.GroomingServices;
 
 import jakarta.validation.Valid;
 
 public interface GroomingServicesInterface {
 
-	List<GroomingServices> saveAllGroomingServices(@Valid List<GroomingServices> groomingServices);
 
-	List<GroomingServices> getAllGroomingServices();
+    ApiResponse<List<GroomingServicesResponseDTO>> saveAllGroomingServices(List<GroomingServicesRequestDTO> dtos);
 
-	GroomingServices getGroomingServiceById(long id);
+    ApiResponse<List<GroomingServicesResponseDTO>> getAllGroomingServices();
 
-	void deleteGroomingServiceById(long id);
+    ApiResponse<GroomingServicesResponseDTO> getGroomingServiceById(long id);
 
-	GroomingServices updateGroomingService(long id, @Valid GroomingServices service);
+    ApiResponse<GroomingServicesResponseDTO> updateGroomingService(long id, GroomingServicesRequestDTO dto);
 
+    ApiResponse<String> deleteGroomingServiceById(long id);
 }
