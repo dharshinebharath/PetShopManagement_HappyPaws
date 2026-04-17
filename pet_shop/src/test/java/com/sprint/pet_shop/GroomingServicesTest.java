@@ -67,6 +67,6 @@ public class GroomingServicesTest {
         GroomingServices service = new GroomingServices();
         service.setName("Bath");
         service.setPrice(new BigDecimal("100.00"));
-        assertTrue(service.getAvailable());
+        assertTrue(service.isAvailable());
     }
 }

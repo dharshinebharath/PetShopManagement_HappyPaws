@@ -1,12 +1,14 @@
 package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +20,7 @@ public class Vaccinations {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="vaccination_id")
-	private long vaccinationId;
+	private Long vaccinationId;
 	
     @NotBlank(message = "Vaccination name cannot be empty")
 	@Column(length=100)
@@ -34,11 +36,14 @@ public class Vaccinations {
     @NotNull(message = "Availability cannot be null")
 	private boolean available=true;
 
-	public long getVaccinationId() {
+    @ManyToMany(mappedBy = "vaccinations")
+    private List<Pets> pets;
+
+	public Long getVaccinationId() {
 		return vaccinationId;
 	}
 
-	public void setVaccinationId(long vaccinationId) {
+	public void setVaccinationId(Long vaccinationId) {
 		this.vaccinationId = vaccinationId;
 	}
 
@@ -66,15 +71,23 @@ public class Vaccinations {
 		this.price = price;
 	}
 
-	public boolean getAvailable() {
+	public boolean isAvailable() {
 		return available;
 	}
 
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
-	
-	
+
+	public List<Pets> getPets() {
+		return pets;
+	}
+
+	public void setPets(List<Pets> pets) {
+		this.pets = pets;
+	}
+
+    
 	
 	
 }

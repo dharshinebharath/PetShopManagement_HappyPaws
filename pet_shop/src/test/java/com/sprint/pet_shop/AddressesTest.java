@@ -18,7 +18,6 @@ public class AddressesTest {
         assertEquals("Tamil Nadu", address.getState());
         assertEquals("600001", address.getZipCode());
     }
-
     // Test 2: Null values
     @Test
     void testNullValues() {
