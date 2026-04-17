@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sprint.pet_shop.entity.Pets;
 import com.sprint.pet_shop.service.PetsService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/pets")
 public class PetsController {
@@ -28,7 +30,7 @@ public class PetsController {
 		return petsService.getAllPets();
 	}
 	@PostMapping("/saveAll")
-	public List<Pets> addAllPets(@RequestBody List<Pets> pets)
+	public List<Pets> addAllPets(@Valid @RequestBody List<Pets> pets)
 	{
 		return petsService.addAllPets(pets);
 	}

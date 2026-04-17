@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Employees;
+import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.EmployeesRepository;
 import com.sprint.pet_shop.service.interfaces.EmployeesInterface;
 
@@ -16,9 +18,34 @@ public class EmployeesService implements EmployeesInterface {
     @Autowired
     private EmployeesRepository employeesRepository;
 
+    @Autowired
+    private AddressesRepository addressesRepository;
+    
     @Override
     public List<Employees> saveAll(List<Employees> employees) {
-        return employeesRepository.saveAll(employees);
+    	for (Employees emp : employees) {
+
+            // 1. Validate basic fields (optional but good)
+            if (emp.getFirstName() == null || emp.getFirstName().isBlank()) {
+                throw new RuntimeException("First name cannot be empty");
+            }
+
+            // 2. Validate address exists in request
+            if (emp.getAddress() == null || emp.getAddress().getAddressId() == null) {
+                throw new RuntimeException("Address ID is required");
+            }
+
+            Long addressId = emp.getAddress().getAddressId();
+
+            // 3. Fetch REAL address from DB (IMPORTANT STEP)
+            Addresses address = addressesRepository.findById(addressId)
+                    .orElseThrow(() -> new RuntimeException("Address not found: " + addressId));
+
+            // 4. Replace with MANAGED entity
+            emp.setAddress(address);
+        }
+
+    	return employeesRepository.saveAll(employees);
     }
 
     @Override

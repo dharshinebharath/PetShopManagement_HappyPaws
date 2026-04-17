@@ -1,12 +1,14 @@
 package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +20,7 @@ public class PetFood {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="food_id")
-	private long foodId;
+	private Long foodId;
 	
     @NotBlank(message = "Food name cannot be empty")
 	@Column(length=255)
@@ -38,12 +40,15 @@ public class PetFood {
     @NotNull(message = "Price cannot be null")
 	@Column(precision=10, scale=2)
 	private BigDecimal price;
+    
+    @ManyToMany(mappedBy = "foods")
+    private List<Pets> pets;
 
-	public long getFood_id() {
+	public Long getFoodId() {
 		return foodId;
 	}
 
-	public void setFood_id(long foodId) {
+	public void setFoodId(Long foodId) {
 		this.foodId = foodId;
 	}
 
@@ -86,6 +91,15 @@ public class PetFood {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
+
+	public List<Pets> getPets() {
+		return pets;
+	}
+
+	public void setPets(List<Pets> pets) {
+		this.pets = pets;
+	}
+
 	
 	
 }
