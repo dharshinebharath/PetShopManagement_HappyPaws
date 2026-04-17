@@ -4,20 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.sprint.pet_shop.dto.requestDto.CustomerRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.CustomerResponseDTO;
-import com.sprint.pet_shop.entity.Addresses;
-import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.service.CustomersService;
 
 import jakarta.validation.Valid;
@@ -25,27 +17,56 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/customers")
 public class CustomersController {
-@Autowired
-public CustomersService customersService;
-@PostMapping
-public List<CustomerResponseDTO> savecustomers(@Valid @RequestBody List<CustomerRequestDTO> customers) {
-	return customersService.savecustomers(customers);
-}
-@GetMapping
-public List<CustomerResponseDTO> getcustomers(){
-	return customersService.getcustomers();
-}
-@GetMapping("/{id}")
-public CustomerResponseDTO getcustomerbyId(@PathVariable Long id){
-	return customersService.getcustomerByID(id);
-}
-@DeleteMapping("/{id}")
-public String deletecustomer(@PathVariable long id) {
-	customersService.deletecustomer(id);
-	return "deleted Successfully";
-}
-@PutMapping("/{id}")
-public CustomerResponseDTO updatecustomers(@PathVariable long id,@Valid @RequestBody CustomerRequestDTO customer) {
-	return customersService.updatecustomer(id,customer);
-}
+    @Autowired
+    private CustomersService customersService;
+
+    // CREATE
+    @PostMapping
+    public ResponseEntity<ApiResponse<List<CustomerResponseDTO>>> savecustomers(
+            @Valid @RequestBody List<CustomerRequestDTO> customers) {
+        ApiResponse<List<CustomerResponseDTO>> response =
+                customersService.savecustomers(customers);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    // GET ALL
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<CustomerResponseDTO>>> getcustomers() {
+
+        ApiResponse<List<CustomerResponseDTO>> response =
+                customersService.getcustomers();
+
+        return ResponseEntity.ok(response);
+    }
+    //GET BY ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<CustomerResponseDTO>> getcustomerbyId(
+            @PathVariable Long id) {
+
+        ApiResponse<CustomerResponseDTO> response =
+                customersService.getcustomerByID(id);
+
+        return ResponseEntity.ok(response);
+    }
+    //UPDATE
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<CustomerResponseDTO>> updatecustomers(
+            @PathVariable long id,
+            @Valid @RequestBody CustomerRequestDTO customer) {
+
+        ApiResponse<CustomerResponseDTO> response =
+                customersService.updatecustomer(id, customer);
+
+        return ResponseEntity.ok(response);
+    }
+    // DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> deletecustomer(
+            @PathVariable long id) {
+
+        ApiResponse<String> response =
+                customersService.deletecustomer(id);
+
+        return ResponseEntity.ok(response);
+    }
 }

@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sprint.pet_shop.dto.ApiResponse;
+
 import com.sprint.pet_shop.dto.requestDto.CustomerRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.CustomerResponseDTO;
-import com.sprint.pet_shop.dto.responseDto.AddressDTO;
+
 import com.sprint.pet_shop.dto.responseDto.AddressesResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.exception.*;

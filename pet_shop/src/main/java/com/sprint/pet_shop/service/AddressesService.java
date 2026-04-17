@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.sprint.pet_shop.dto.requestDto.AddressesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.AddressesResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
@@ -22,7 +22,7 @@ public class AddressesService implements AddressesInterface {
 
     //CREATE
     @Override
-    public List<AddressesResponseDTO> saveaddresses(List<AddressesRequestDTO> addresses) {
+    public ApiResponse<List<AddressesResponseDTO>> saveaddresses(List<AddressesRequestDTO> addresses) {
 
         List<Addresses> entities = addresses.stream().map(dto -> {
 
@@ -38,53 +38,60 @@ public class AddressesService implements AddressesInterface {
             if (dto.getZipCode() == null || dto.getZipCode().trim().isEmpty()) {
                 throw new InvalidDataException("Zip code cannot be empty");
             }
-
             Addresses entity = new Addresses();
             entity.setStreet(dto.getStreet());
             entity.setCity(dto.getCity());
             entity.setState(dto.getState());
             entity.setZipCode(dto.getZipCode());
-
             return entity;
-
         }).collect(Collectors.toList());
 
-        return addressesRepository.saveAll(entities)
+        List<AddressesResponseDTO> data = addressesRepository.saveAll(entities)
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
+
+        return new ApiResponse<>("Addresses created successfully", true, data);
     }
 
-    //GET ALL
+    // GET ALL
     @Override
-    public List<AddressesResponseDTO> getaddresses() {
-        return addressesRepository.findAll()
+    public ApiResponse<List<AddressesResponseDTO>> getaddresses() {
+
+        List<AddressesResponseDTO> data = addressesRepository.findAll()
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
+
+        return new ApiResponse<>("Addresses fetched successfully", true, data);
     }
 
-    //GET BY ID
+    //  GET BY ID
     @Override
-    public AddressesResponseDTO getaddressesByID(long id) {
+    public ApiResponse<AddressesResponseDTO> getaddressesByID(long id) {
+
         Addresses address = addressesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Address not found with id: " + id));
 
-        return toDto(address);
+        return new ApiResponse<>("Address found", true, toDto(address));
     }
 
-    //DELETE
+    // 🔹 DELETE
     @Override
-    public void deleteaddress(long id) {
+    public ApiResponse<String> deleteaddress(long id) {
+
         if (!addressesRepository.existsById(id)) {
             throw new ResourceNotFoundException("Address not found with id: " + id);
         }
+
         addressesRepository.deleteById(id);
+
+        return new ApiResponse<>("Address deleted successfully", true, "Deleted ID: " + id);
     }
 
-    // UPDATE
+    //  UPDATE
     @Override
-    public AddressesResponseDTO updateaddress(long id, AddressesRequestDTO updatedaddress) {
+    public ApiResponse<AddressesResponseDTO> updateaddress(long id, AddressesRequestDTO updatedaddress) {
 
         Addresses existing = addressesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Address not found with id: " + id));
@@ -109,10 +116,10 @@ public class AddressesService implements AddressesInterface {
 
         Addresses saved = addressesRepository.save(existing);
 
-        return toDto(saved);
+        return new ApiResponse<>("Address updated successfully", true, toDto(saved));
     }
 
-    // ENTITY → DTO
+    // 🔹 ENTITY → DTO
     private AddressesResponseDTO toDto(Addresses entity) {
         AddressesResponseDTO dto = new AddressesResponseDTO();
         dto.setAddressId(entity.getAddressId());
