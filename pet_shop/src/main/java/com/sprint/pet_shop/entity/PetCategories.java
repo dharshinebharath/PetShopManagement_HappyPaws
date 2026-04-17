@@ -26,8 +26,8 @@ public class PetCategories {
 	    @Column(length = 100)
 	    private String name;
 	    
-	    @OneToMany(mappedBy = "category")
 	    @JsonIgnore
+	    @OneToMany(mappedBy = "category")
 	    private List<Pets> pets;
 
 		public Long getCategory_id() {

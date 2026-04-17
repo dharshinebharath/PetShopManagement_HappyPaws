@@ -21,8 +21,7 @@ public class Addresses {
 	private String street;
 	
 	@Column(length=100)
-	private String city
-	;
+	private String city;
 	@Column(length=50)
 	private String state;
 	
@@ -32,15 +31,12 @@ public class Addresses {
 	public Long getAddressId() {
 		return addressId;
 	}
-
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
-
 	public String getStreet() {
 		return street;
 	}
-
 	public void setStreet(String street) {
 		this.street = street;
 	}
@@ -48,11 +44,9 @@ public class Addresses {
 	public String getCity() {
 		return city;
 	}
-
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 	public String getState() {
 		return state;
 	}
@@ -64,7 +58,6 @@ public class Addresses {
 	public String getZipCode() {
 		return zipCode;
 	}
-
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}

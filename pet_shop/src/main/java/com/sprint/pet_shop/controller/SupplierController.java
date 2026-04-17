@@ -1,54 +1,81 @@
+
 package com.sprint.pet_shop.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.sprint.pet_shop.entity.Supplier;
+import com.sprint.pet_shop.dto.requestDto.SupplierRequestDTO;
+import com.sprint.pet_shop.dto.responseDto.ApiResponse;
+import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 import com.sprint.pet_shop.service.SupplierService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/supplier")
+@RequestMapping("/api/v1/suppliers")
 public class SupplierController {
 
-    @Autowired
-    private SupplierService supplierService;
-// POST ALL
-    @PostMapping
-    public List<Supplier> savedAll(@Valid @RequestBody List<Supplier> supplier){ 
-        return supplierService.supplierAll(supplier);
-    }
- // GET ALL
-    @GetMapping
-    public List<Supplier> getAllSuppliers() {
-        return supplierService.getAll();
-    }
- // GET BY ID
-    @GetMapping("/{supplierId}")
-    public Supplier getSupplierById(@PathVariable long supplierId) {
-        return supplierService.getSupplierById(supplierId);
-    }
-    //DELETE BY ID
-    @DeleteMapping("/{supplierId}")
-    public String deleteSupplier(@PathVariable long supplierId) {
-        supplierService.deleteSupplier(supplierId);
-        return "Supplier deleted successfully with id: " + supplierId;
-    }
-    //PUT BY ID
-    @PutMapping("/{supplierId}")
-    public Supplier updateSupplier(@PathVariable long supplierId,
-                                   @Valid @RequestBody Supplier supplier) {
-        return supplierService.updateSupplier(supplierId, supplier);
+    private final SupplierService supplierService;
+
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
     }
 
+    // POST ALL
+    @PostMapping
+    public ResponseEntity<ApiResponse<List<SupplierResponseDTO>>> saveAll(
+            @Valid @RequestBody List<SupplierRequestDTO> suppliers) {
+
+        ApiResponse<List<SupplierResponseDTO>> response =
+                supplierService.saveAll(suppliers);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    // GET ALL
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<SupplierResponseDTO>>> getAll() {
+
+        ApiResponse<List<SupplierResponseDTO>> response =
+                supplierService.getAll();
+
+        return ResponseEntity.ok(response);
+    }
+
+    // GET BY ID
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<SupplierResponseDTO>> getById(
+            @PathVariable long id) {
+
+        ApiResponse<SupplierResponseDTO> response =
+                supplierService.getSupplierById(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // DELETE BY ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> deleteSupplier(
+            @PathVariable long id) {
+
+        ApiResponse<String> response =
+                supplierService.deleteSupplier(id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // UPDATE BY ID
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<SupplierResponseDTO>> updateSupplier(
+            @PathVariable long id,
+            @Valid @RequestBody SupplierRequestDTO dto) {
+
+        ApiResponse<SupplierResponseDTO> response =
+                supplierService.updateSupplier(id, dto);
+
+        return ResponseEntity.ok(response);
+    }
 }
