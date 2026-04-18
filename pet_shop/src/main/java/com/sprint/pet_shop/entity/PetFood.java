@@ -35,7 +35,7 @@ public class PetFood {
 	private String type;
 	
     @NotNull(message = "Quantity cannot be null")
-	private int quantity;
+	private Integer quantity;
 	
     @NotNull(message = "Price cannot be null")
 	@Column(precision=10, scale=2)
@@ -76,11 +76,11 @@ public class PetFood {
 		this.type = type;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
