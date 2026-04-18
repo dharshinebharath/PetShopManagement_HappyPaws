@@ -8,11 +8,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name="suppliers")
 public class Supplier {
 
     @Id
@@ -43,7 +47,18 @@ public class Supplier {
     @ManyToMany(mappedBy = "suppliers")
     private List<Pets> pets;
 
+    @ManyToOne
+    @JoinColumn(name = "address_id")  // 🔥 creates FK column
+    private Addresses address;
     
+	public Addresses getAddress() {
+		return address;
+	}
+
+	public void setAddress(Addresses address) {
+		this.address = address;
+	}
+
 	public Long getSupplierId() {
 		return supplierId;
 	}

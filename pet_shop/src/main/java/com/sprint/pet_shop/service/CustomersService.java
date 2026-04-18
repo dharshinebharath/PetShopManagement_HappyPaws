@@ -39,16 +39,18 @@ public class CustomersService implements CustomersInterface {
             if (customersRepository.existsByEmail(dto.getEmail())) {
                 throw new DuplicateResourceException("Customer already exists with email: " + dto.getEmail());
             }
-
-            Addresses address = addressesRepository.findById(dto.getAddressId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+            
 
             Customers entity = new Customers();
             entity.setFirstName(dto.getFirstName());
             entity.setLastName(dto.getLastName());
             entity.setEmail(dto.getEmail());
             entity.setPhoneNumber(dto.getPhoneNumber());
-            entity.setAddress(address);
+            if (dto.getAddressId() != null) {
+                Addresses address = addressesRepository.findById(dto.getAddressId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+                entity.setAddress(address);
+            }
 
             return entity;
 
@@ -93,19 +95,21 @@ public class CustomersService implements CustomersInterface {
 
         validate(dto);
 
-        boolean emailExists = customersRepository.existsByEmail(dto.getEmail());
-        if (emailExists && !existing.getEmail().equals(dto.getEmail())) {
+        if (customersRepository.existsByEmail(dto.getEmail())
+                && !existing.getEmail().equals(dto.getEmail())) {
             throw new DuplicateResourceException("Email already used");
         }
-
-        Addresses address = addressesRepository.findById(dto.getAddressId())
-                .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
 
         existing.setFirstName(dto.getFirstName());
         existing.setLastName(dto.getLastName());
         existing.setEmail(dto.getEmail());
         existing.setPhoneNumber(dto.getPhoneNumber());
-        existing.setAddress(address);
+        if (dto.getAddressId() != null) {
+            Addresses address = addressesRepository.findById(dto.getAddressId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+
+            existing.setAddress(address);
+        }
 
         Customers updated = customersRepository.save(existing);
 
@@ -156,17 +160,19 @@ public class CustomersService implements CustomersInterface {
         dto.setEmail(customer.getEmail());
         dto.setPhoneNumber(customer.getPhoneNumber());
 
-        AddressesResponseDTO addressDTO = new AddressesResponseDTO();
 
         if (customer.getAddress() != null) {
+            AddressesResponseDTO addressDTO = new AddressesResponseDTO();
+
             addressDTO.setAddressId(customer.getAddress().getAddressId());
             addressDTO.setStreet(customer.getAddress().getStreet());
             addressDTO.setCity(customer.getAddress().getCity());
             addressDTO.setState(customer.getAddress().getState());
             addressDTO.setZipCode(customer.getAddress().getZipCode());
+            dto.setAddress(addressDTO);
+
         }
 
-        dto.setAddress(addressDTO);
 
         return dto;
     }
