@@ -1,4 +1,4 @@
-package com.sprint.pet_shop;
+package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +16,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
-public class VaccinationsTest {
+public class VaccinationsRepoTest {
 
 	 private Validator validator;
 
