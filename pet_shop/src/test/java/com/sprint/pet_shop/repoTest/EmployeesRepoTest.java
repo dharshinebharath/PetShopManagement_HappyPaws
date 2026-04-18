@@ -14,63 +14,45 @@ import org.junit.jupiter.api.Test;
 import com.sprint.pet_shop.entity.Employees;
 
 public class EmployeesRepoTest {
-	// 1
+	// 1 - Positive
     @Test
-    void testEmployeeObject() {
+    void testEmployeeName() {
         Employees e = new Employees();
         e.setFirstName("John");
 
         assertEquals("John", e.getFirstName());
     }
 
-    // 2
+    // 2 - Negative (null check)
     @Test
-    void testNullCheck() {
+    void testEmailNull() {
         Employees e = new Employees();
 
         assertNull(e.getEmail());
     }
 
-    // 3
+    // 3 - Positive
     @Test
-    void testNotNull() {
+    void testEmailNotNull() {
         Employees e = new Employees();
         e.setEmail("test@gmail.com");
 
         assertNotNull(e.getEmail());
     }
 
-    // 4
+    // 4 - Positive condition
     @Test
-    void testListSize() {
-        List<Employees> list = new ArrayList<>();
-        list.add(new Employees());
-
-        assertEquals(1, list.size());
-    }
-
-    // 5
-    @Test
-    void testEmptyList() {
-        List<Employees> list = new ArrayList<>();
-
-        assertTrue(list.isEmpty());
-    }
-
-    // 6
-    @Test
-    void testBooleanCondition() {
+    void testSalaryCondition() {
         int salary = 5000;
 
         assertTrue(salary > 3000);
     }
 
-    // 7
+    // 5 - Negative (exception case)
     @Test
     void testException() {
-        assertThrows(ArithmeticException.class,
-                () -> {
-                    int x = 10 / 0;
-                });
+        assertThrows(ArithmeticException.class, () -> {
+            int x = 10 / 0;
+        });
     }
 }
