@@ -17,44 +17,68 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/employees")
 public class EmployeesController {
 
-	@Autowired
-    private EmployeesService employeesService;
+    private final EmployeesService employeesService;
 
-    // CREATE
+    public EmployeesController(EmployeesService employeesService) {
+        this.employeesService = employeesService;
+    }
+
+    // POST ALL
     @PostMapping
     public ResponseEntity<ApiResponse<List<EmployeesResponseDTO>>> saveAll(
             @Valid @RequestBody List<EmployeesRequestDTO> employees) {
 
-        return ResponseEntity.ok(employeesService.saveAll(employees));
+        ApiResponse<List<EmployeesResponseDTO>> response =
+                employeesService.saveAll(employees);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
 
     // GET ALL
     @GetMapping
-    public ResponseEntity<ApiResponse<List<EmployeesResponseDTO>>> getAll() {
+    public ResponseEntity<ApiResponse<List<EmployeesResponseDTO>>> getAllEmployees() {
 
-        return ResponseEntity.ok(employeesService.getAll());
+        ApiResponse<List<EmployeesResponseDTO>> response =
+                employeesService.getAll();
+
+        return ResponseEntity.ok(response);
     }
 
     // GET BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<EmployeesResponseDTO>> getById(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<EmployeesResponseDTO>> getEmployeesById(
+            @PathVariable long id) {
 
-        return ResponseEntity.ok(employeesService.getEmployeesById(id));
+        ApiResponse<EmployeesResponseDTO> response =
+                employeesService.getEmployeesById(id);
+
+        return ResponseEntity.ok(response);
     }
 
-    // UPDATE
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<EmployeesResponseDTO>> update(
-            @PathVariable long id,
-            @RequestBody EmployeesRequestDTO dto) {
-
-        return ResponseEntity.ok(employeesService.updateEmployee(id, dto));
-    }
-
-    // DELETE
+    // DELETE BY ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<String>> deleteEmployee(@PathVariable long id) {
 
-        return ResponseEntity.ok(employeesService.deleteEmployee(id));
+        employeesService.deleteEmployee(id);
+
+        ApiResponse<String> response = new ApiResponse<>();
+        response.setMessage("Deleted successfully");
+        response.setSuccess(true);
+        response.setData("Employee deleted successfully with id: " + id);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // UPDATE BY ID
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<EmployeesResponseDTO>> updateEmployee(
+            @PathVariable long id,
+            @Valid @RequestBody EmployeesRequestDTO employees) {
+
+        ApiResponse<EmployeesResponseDTO> response =
+                employeesService.updateEmployee(id, employees);
+
+        return ResponseEntity.ok(response);
     }
 }
