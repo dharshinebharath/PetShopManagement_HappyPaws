@@ -36,7 +36,7 @@ public class Customers {
 	@Column(length=20)
 	private String phoneNumber;
 	
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "address_id")
     private Addresses address;
 

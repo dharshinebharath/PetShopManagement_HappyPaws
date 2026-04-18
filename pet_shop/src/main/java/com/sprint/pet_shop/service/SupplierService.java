@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import com.sprint.pet_shop.dto.requestDto.SupplierRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
+import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Supplier;
 import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
+import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.SupplierRepository;
 import com.sprint.pet_shop.service.interfaces.SupplierInterface;
 
@@ -20,6 +22,8 @@ public class SupplierService implements SupplierInterface {
 
     @Autowired
     private SupplierRepository supplierRepository;
+    @Autowired
+    private AddressesRepository addressesRepository;
 
     // ENTITY → DTO
     private SupplierResponseDTO toDto(Supplier entity) {
@@ -30,7 +34,9 @@ public class SupplierService implements SupplierInterface {
         dto.setName(entity.getName());
         dto.setContactPerson(entity.getContactPerson());
         dto.setPhoneNumber(entity.getPhoneNumber());
-        dto.setEmail(entity.getEmail());
+        dto.setEmail(entity.getEmail()); 
+        dto.setAddressId(
+        		entity.getAddress() != null ? entity.getAddress().getAddressId() : null        	);
 
         return dto;
     }
@@ -55,6 +61,15 @@ public class SupplierService implements SupplierInterface {
             s.setContactPerson(dto.getContactPerson());
             s.setPhoneNumber(dto.getPhoneNumber());
             s.setEmail(dto.getEmail());
+            
+            if (dto.getAddressId() != null) {
+
+                Addresses address = addressesRepository.findById(dto.getAddressId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+
+                s.setAddress(address);
+            }
+
 
             return s;
 
@@ -134,9 +149,10 @@ public class SupplierService implements SupplierInterface {
                         "Supplier not found with id: " + id));
 
         if (dto.getEmail() != null &&
-                supplierRepository.existsByEmail(dto.getEmail())) {
-            throw new DuplicateResourceException("Email already exists");
-        }
+        	    supplierRepository.existsByEmail(dto.getEmail()) &&
+        	    !existing.getEmail().equals(dto.getEmail())) {
+        	    throw new DuplicateResourceException("Email already exists");
+        	}
 
         if (dto.getName() != null) {
             existing.setName(dto.getName());
@@ -150,6 +166,15 @@ public class SupplierService implements SupplierInterface {
         if (dto.getEmail() != null) {
             existing.setEmail(dto.getEmail());
         }
+        
+        if (dto.getAddressId() != null) {
+
+            Addresses address = addressesRepository.findById(dto.getAddressId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+
+            existing.setAddress(address);
+        }
+
 
         Supplier updated = supplierRepository.save(existing);
 
