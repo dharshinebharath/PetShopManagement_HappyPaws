@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.service.interfaces;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.sprint.pet_shop.dto.requestDto.GroomingServicesRequestDTO;
@@ -21,4 +22,6 @@ public interface GroomingServicesInterface {
     ApiResponse<GroomingServicesResponseDTO> updateGroomingService(long id, GroomingServicesRequestDTO dto);
 
     ApiResponse<String> deleteGroomingServiceById(long id);
+    
+    ApiResponse<List<GroomingServicesResponseDTO>> getServicesByPriceRange(BigDecimal min, BigDecimal max);
 }

@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.service.interfaces;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
@@ -18,5 +19,8 @@ public interface TransactionsInterface {
     ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto);
 
     ApiResponse<String> delete(Long id);
+    
+    ApiResponse<List<TransactionsResponseDTO>> getByDateRange(Date start, Date end);
+
 	
 }
