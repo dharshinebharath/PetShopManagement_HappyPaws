@@ -1,8 +1,8 @@
-package com.sprint.pet_shop;
+package com.sprint.pet_shop.repoTest;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import com.sprint.pet_shop.entity.Addresses;
-public class AddressesTest {
+public class AddressesRepoTest {
     //Test 1: Normal values
     @Test
     void testSetAndGetValues() {

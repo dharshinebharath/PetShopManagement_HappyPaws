@@ -1,4 +1,4 @@
-package com.sprint.pet_shop;
+package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import com.sprint.pet_shop.entity.Employees;
 
-public class EmployeesTest {
+public class EmployeesRepoTest {
 	// 1
     @Test
     void testEmployeeObject() {

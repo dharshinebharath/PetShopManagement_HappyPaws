@@ -1,4 +1,4 @@
-package com.sprint.pet_shop;
+package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.GroomingServices;
 import jakarta.validation.*;
@@ -11,7 +11,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GroomingServicesTest {
+public class GroomingServicesRepoTest {
 
     private Validator validator;
 
