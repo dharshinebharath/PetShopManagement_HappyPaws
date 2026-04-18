@@ -83,4 +83,9 @@ public class PetsController {
 
 	        return ResponseEntity.ok(response);
 	    }
+	    
+	    @GetMapping("/employee/{empId}")
+	    public ApiResponse<List<PetsResponseDTO>> getPetsByEmployeeId(@PathVariable Long empId) {
+	        return petsService.getPetsByEmployee(empId);
+	    }
 	}

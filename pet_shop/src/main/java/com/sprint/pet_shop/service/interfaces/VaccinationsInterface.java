@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.service.interfaces;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.sprint.pet_shop.dto.requestDto.VaccinationsRequestDTO;
@@ -17,4 +18,6 @@ public interface VaccinationsInterface {
     ApiResponse<VaccinationsResponseDTO> updateVaccinationById(long id, VaccinationsRequestDTO dto);
 
     ApiResponse<String> deleteVaccinationsById(long id);
+    
+    ApiResponse<List<VaccinationsResponseDTO>> getVaccinationsByPrice(BigDecimal min, BigDecimal max);
 }

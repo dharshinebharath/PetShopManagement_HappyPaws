@@ -78,4 +78,9 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/pet")
+    public ApiResponse<List<SupplierResponseDTO>> getByPet(
+            @RequestParam String petName) {
+        return supplierService.getSuppliersByPet(petName);
+    }
 }

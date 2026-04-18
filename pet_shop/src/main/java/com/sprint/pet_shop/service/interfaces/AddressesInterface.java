@@ -19,4 +19,6 @@ public interface AddressesInterface {
     ApiResponse<String> deleteaddress(long id);
 
     ApiResponse<AddressesResponseDTO> updateaddress(long id, @Valid AddressesRequestDTO updatedaddress);
+    
+    ApiResponse<List<AddressesResponseDTO>> getAddressesByCity(String city);
 }

@@ -185,4 +185,16 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
+    
+    @Override
+    public ApiResponse<List<SupplierResponseDTO>> getSuppliersByPet(String petName) {
+
+        List<SupplierResponseDTO> data = supplierRepository.findSuppliersByPetName(petName)
+                .stream()
+                .map(this::toDto)
+                .toList();
+
+        return new ApiResponse<>("Suppliers for pet", true, data);
+    }
+    
 }

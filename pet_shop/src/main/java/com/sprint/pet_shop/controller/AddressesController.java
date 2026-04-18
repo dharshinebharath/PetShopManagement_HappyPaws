@@ -65,4 +65,9 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/city")
+    public ApiResponse<List<AddressesResponseDTO>> getByCity(@RequestParam String city) {
+        return addressesService.getAddressesByCity(city);
+    }
 }

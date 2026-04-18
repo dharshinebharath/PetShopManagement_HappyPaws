@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -154,5 +155,16 @@ public class TransactionsService implements TransactionsInterface{
         dto.setTransactionStatus(entity.getTransactionStatus().name());
 
         return dto;
+    }
+    
+    @Override
+    public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(Date start, Date end) {
+
+        List<TransactionsResponseDTO> data = transactionsRepository.findByDateRange(start, end)
+                .stream()
+                .map(this::toDto)
+                .toList();
+
+        return new ApiResponse<>("Transactions by date range", true, data);
     }
 }

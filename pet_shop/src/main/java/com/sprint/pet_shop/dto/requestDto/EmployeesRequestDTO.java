@@ -6,21 +6,21 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class EmployeesRequestDTO {
-	@NotBlank(message = "First name is required")
+	
     private String firstName;
 
     private String lastName;
 
     private String position;
 
-    @NotNull(message = "Hire date is required")
+    
     private Date hireDate;
 
     private String phoneNumber;
 
     private String email;
 
-    @NotNull(message = "Address ID is required")
+    
     private Long addressId;
 
 	public String getFirstName() {
