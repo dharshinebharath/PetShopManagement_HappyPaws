@@ -14,6 +14,17 @@ public class SupplierRequestDTO {
     private String phoneNumber;
 
     private String email;
+    
+    @NotNull(message = "Address ID is required")
+    private Long addressId;
+
+	public Long getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
+	}
 
 	public String getName() {
 		return name;
