@@ -68,7 +68,7 @@ public class CustomersService implements CustomersInterface {
     @Override
     public ApiResponse<List<CustomerResponseDTO>> getcustomers() {
 
-        List<CustomerResponseDTO> data = customersRepository.findAll()
+        List<CustomerResponseDTO> data = customersRepository.getAll()
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -175,5 +175,17 @@ public class CustomersService implements CustomersInterface {
 
 
         return dto;
+    }
+    
+    @Override
+    public ApiResponse<List<CustomerResponseDTO>> getCustomersWithNoTransactions() {
+
+        List<CustomerResponseDTO> data =
+                customersRepository.findCustomersWithNoTransactions()
+                        .stream()
+                        .map(this::mapToResponse)
+                        .toList();
+
+        return new ApiResponse<>("Customers without transactions", true, data);
     }
 }

@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,6 +148,15 @@ public class VaccinationsService implements VaccinationsInterface {
         return response;
 	}
 
+	 @Override
+	    public ApiResponse<List<VaccinationsResponseDTO>> getVaccinationsByPrice(BigDecimal min, BigDecimal max) {
 
+	        List<VaccinationsResponseDTO> data = vaccinationsRepository.findByPriceRange(min, max)
+	                .stream()
+	                .map(this::toDto)
+	                .toList();
+
+	        return new ApiResponse<>("Vaccinations by price range", true, data);
+	    }
 	
 }

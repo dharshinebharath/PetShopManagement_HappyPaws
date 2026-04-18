@@ -17,4 +17,7 @@ public interface SupplierInterface {
     ApiResponse<String> deleteSupplier(long supplierId);
 
     ApiResponse<SupplierResponseDTO> updateSupplier(Long id, SupplierRequestDTO supplier);
+    
+    ApiResponse<List<SupplierResponseDTO>> getSuppliersByPet(String petName);
+
 }
