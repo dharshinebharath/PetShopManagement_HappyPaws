@@ -1,4 +1,4 @@
-package com.sprint.pet_shop;
+package com.sprint.pet_shop.repoTest;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,7 +8,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-public class CustomersTest {
+public class CustomersRepoTest {
     private static Validator validator;
     @BeforeAll
     static void setup() {

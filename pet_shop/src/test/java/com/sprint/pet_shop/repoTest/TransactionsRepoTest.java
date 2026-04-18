@@ -1,4 +1,4 @@
-package com.sprint.pet_shop;
+package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.sprint.pet_shop.entity.*;
 
-public class TransactionsTest {
+public class TransactionsRepoTest {
 
     @Test
     void testSettersAndGetters() {

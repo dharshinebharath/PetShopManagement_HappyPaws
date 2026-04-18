@@ -1,4 +1,4 @@
-package com.sprint.pet_shop;
+package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.Pets;
 import com.sprint.pet_shop.entity.PetCategories;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PetsTest {
+public class PetsRepoTest {
 
     private Validator validator;
 
