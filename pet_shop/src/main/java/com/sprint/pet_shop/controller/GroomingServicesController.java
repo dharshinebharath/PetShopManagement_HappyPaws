@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sprint.pet_shop.dto.requestDto.GroomingServicesRequestDTO;
@@ -74,5 +76,12 @@ public class GroomingServicesController {
                 groomingServicesService.updateGroomingService(id, dto);
 
         return ResponseEntity.ok(response);
+    }
+	
+	@GetMapping("/price-range")
+    public ApiResponse<List<GroomingServicesResponseDTO>> getByPrice(
+            @RequestParam BigDecimal min,
+            @RequestParam BigDecimal max) {
+        return groomingServicesService.getServicesByPriceRange(min, max);
     }
 }

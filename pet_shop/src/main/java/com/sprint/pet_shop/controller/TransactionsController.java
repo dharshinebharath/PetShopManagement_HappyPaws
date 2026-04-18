@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
@@ -75,6 +77,13 @@ public class TransactionsController {
 	                transactionsService.delete(id);
 
 	        return ResponseEntity.ok(response);
+	    }
+	    @GetMapping("/date-range")
+	    public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(
+	            @RequestParam Date start,
+	            @RequestParam Date end) {
+
+	        return transactionsService.getByDateRange(start, end);
 	    }
 	 
 

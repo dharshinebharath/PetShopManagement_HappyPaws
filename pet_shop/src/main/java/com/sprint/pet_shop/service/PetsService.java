@@ -298,4 +298,15 @@ public class PetsService implements PetsInterface {
 
         return response;
     }
+	
+	@Override
+    public ApiResponse<List<PetsResponseDTO>> getPetsByEmployee(Long employeeId) {
+
+        List<PetsResponseDTO> data = petsRepository.findPetsByEmployeeId(employeeId)
+                .stream()
+                .map(this::toDto)
+                .toList();
+
+        return new ApiResponse<>("Pets handled by employee", true, data);
+    }
 }

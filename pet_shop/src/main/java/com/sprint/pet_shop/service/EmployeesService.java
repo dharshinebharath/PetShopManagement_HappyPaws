@@ -203,4 +203,14 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-}
+    @Override
+    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPosition(String position) {
+
+        List<EmployeesResponseDTO> data =
+                employeesRepository.findEmployeesByPosition(position)
+                        .stream()
+                        .map(this::toDto)
+                        .toList();
+
+        return new ApiResponse<>("Employees fetched by position", true, data);
+    }}

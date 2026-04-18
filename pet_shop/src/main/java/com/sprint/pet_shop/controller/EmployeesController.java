@@ -80,4 +80,9 @@ public class EmployeesController {
 
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/position")
+    public ApiResponse<List<EmployeesResponseDTO>> getByPosition(@RequestParam String position) {
+        return employeesService.getEmployeesByPosition(position);
+    }
 }
