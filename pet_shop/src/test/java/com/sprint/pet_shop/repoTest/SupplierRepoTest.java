@@ -2,7 +2,9 @@ package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import java.util.Set;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import jakarta.validation.ValidatorFactory;
 
 public class SupplierRepoTest {
 
+
     private Validator validator;
 
     @BeforeEach
@@ -25,6 +28,7 @@ public class SupplierRepoTest {
     }
 
     // ✅ 1. Positive: valid supplier
+
     @Test
     void testValidSupplier() {
         Supplier s = new Supplier();
@@ -38,9 +42,14 @@ public class SupplierRepoTest {
         assertTrue(violations.isEmpty());
     }
 
+
+   
+   
+
     // ✅ 2. Positive: another valid supplier
     @Test
     void testAnotherValidSupplier() {
+
         Supplier s = new Supplier();
         s.setName("Animal Care Ltd");
         s.setContactPerson("Emily Johnson");
@@ -52,9 +61,11 @@ public class SupplierRepoTest {
         assertTrue(violations.isEmpty());
     }
 
+
     // ❌ 3. Negative: name null
     @Test
     void testNameNull() {
+
         Supplier s = new Supplier();
         s.setName(null);
         s.setContactPerson("John Smith");
@@ -66,6 +77,16 @@ public class SupplierRepoTest {
         assertFalse(violations.isEmpty());
     }
 
+    
+    // 4 - Positive condition
+    @Test
+    void testStockGreaterThanTen() {
+        int stock = 15;
+
+        assertTrue(stock > 10);
+    }
+
+    
     // ❌ 4. Negative: contact person blank
     @Test
     void testContactPersonBlank() {
@@ -92,5 +113,6 @@ public class SupplierRepoTest {
         Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
 
         assertFalse(violations.isEmpty());
+
     }
 }

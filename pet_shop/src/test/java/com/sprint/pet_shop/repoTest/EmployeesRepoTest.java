@@ -17,6 +17,8 @@ import jakarta.validation.ValidatorFactory;
 
 public class EmployeesRepoTest {
 
+
+
     private Validator validator;
 
     @BeforeEach
@@ -36,10 +38,12 @@ public class EmployeesRepoTest {
         emp.setPhoneNumber("9876543210");
         emp.setEmail("john@example.com");
 
+
         Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
 
         assertTrue(violations.isEmpty());
     }
+
 
     // ✅ 2. Positive: another valid employee (different data)
     @Test
@@ -52,10 +56,12 @@ public class EmployeesRepoTest {
         emp.setPhoneNumber("9123456780");
         emp.setEmail("emily@example.com");
 
+
         Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
 
         assertTrue(violations.isEmpty());
     }
+
 
     // ❌ 3. Negative: first name is null
     @Test
@@ -100,8 +106,11 @@ public class EmployeesRepoTest {
         emp.setPhoneNumber("9876543210");
         emp.setEmail(null);
 
+
         Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
 
+
         assertFalse(violations.isEmpty());
+
     }
 }
