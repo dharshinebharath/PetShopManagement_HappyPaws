@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import com.sprint.pet_shop.dto.requestDto.EmployeesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
+import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Employees;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
+import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.EmployeesRepository;
 import com.sprint.pet_shop.service.interfaces.EmployeesInterface;
 
@@ -22,6 +24,8 @@ public class EmployeesService implements EmployeesInterface {
     @Autowired
     private EmployeesRepository employeesRepository;
 
+    @Autowired
+    private AddressesRepository addressesRepository;
     // ENTITY → DTO
     private EmployeesResponseDTO toDto(Employees entity) {
 
@@ -35,6 +39,9 @@ public class EmployeesService implements EmployeesInterface {
         dto.setPhoneNumber(entity.getPhoneNumber());
         dto.setEmail(entity.getEmail());
 
+        dto.setAddressId(
+        	    entity.getAddress() != null ? entity.getAddress().getAddressId() : null
+        	);
         return dto;
     }
 
@@ -59,12 +66,22 @@ public class EmployeesService implements EmployeesInterface {
                 throw new DuplicateResourceException("Employee email already exists");
             }
 
+            // ✅ SET BASIC FIELDS
             emp.setFirstName(dto.getFirstName());
             emp.setLastName(dto.getLastName());
             emp.setPosition(dto.getPosition());
             emp.setHireDate(dto.getHireDate());
             emp.setPhoneNumber(dto.getPhoneNumber());
             emp.setEmail(dto.getEmail());
+
+            // 🔥🔥🔥 IMPORTANT PART (THIS IS YOUR FIX)
+            if (dto.getAddressId() != null) {
+
+                Addresses address = addressesRepository.findById(dto.getAddressId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+
+                emp.setAddress(address);
+            }
 
             return emp;
 
@@ -169,6 +186,12 @@ public class EmployeesService implements EmployeesInterface {
         }
         if (dto.getEmail() != null) {
             existing.setEmail(dto.getEmail());
+        }
+        if (dto.getAddressId() != null) {
+            Addresses address = addressesRepository.findById(dto.getAddressId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+
+            existing.setAddress(address);
         }
 
         Employees updated = employeesRepository.save(existing);
