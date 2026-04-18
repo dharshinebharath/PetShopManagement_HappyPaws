@@ -4,119 +4,123 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.sprint.pet_shop.entity.*;
+import com.sprint.pet_shop.entity.TransactionsEntity;
+import com.sprint.pet_shop.entity.TransactionStatus;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 
 public class TransactionsRepoTest {
-	@Test
-	void testValidTransactionCreation() {
-	    TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setTransactionDate(Date.valueOf("2024-03-01"));
-	    transaction.setAmount(BigDecimal.valueOf(1500));
-	    transaction.setTransactionStatus(TransactionStatus.Success);
+    private Validator validator;
 
-	    Customers customer = new Customers();
-	    customer.setCustomerId(5L);
+    @BeforeEach
+    void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
 
-	    Pets pet = new Pets();
-	    pet.setPet_id(8L);
+    // =========================
+    // ✅ POSITIVE TEST CASES (5)
+    // =========================
 
-	    transaction.setCustomer(customer);
-	    transaction.setPet(pet);
+    @Test
+    void testValidTransaction1() {
+        TransactionsEntity t = createValidTransaction();
+        assertTrue(validator.validate(t).isEmpty());
+    }
 
-	    assertNotNull(transaction.getCustomer());
-	    assertNotNull(transaction.getPet());
-	}
+    @Test
+    void testValidTransaction2() {
+        TransactionsEntity t = createValidTransaction();
+        t.setAmount(new BigDecimal("1000.00"));
+        assertTrue(validator.validate(t).isEmpty());
+    }
 
-	@Test
-	void testLargeAmountTransaction() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testValidTransaction3() {
+        TransactionsEntity t = createValidTransaction();
+        t.setTransactionStatus(TransactionStatus.Pending);
+        assertTrue(validator.validate(t).isEmpty());
+    }
 
-	    transaction.setAmount(BigDecimal.valueOf(9999999.99));
+    @Test
+    void testValidTransaction4() {
+        TransactionsEntity t = createValidTransaction();
+        t.setAmount(new BigDecimal("0.01"));
+        assertTrue(validator.validate(t).isEmpty());
+    }
 
-	    assertEquals(BigDecimal.valueOf(9999999.99), transaction.getAmount());
-	}
+    @Test
+    void testValidTransaction5() {
+        TransactionsEntity t = createValidTransaction();
+        t.setTransactionDate(new Date(System.currentTimeMillis()));
+        assertTrue(validator.validate(t).isEmpty());
+    }
 
-	@Test
-	void testSuccessfulStatusAssignment() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    // =========================
+    // ❌ NEGATIVE TEST CASES (5)
+    // =========================
 
-	    transaction.setTransactionStatus(TransactionStatus.Success);
+    @Test
+    void testTransactionDateNull() {
+        TransactionsEntity t = createValidTransaction();
+        t.setTransactionDate(null);
 
-	    assertEquals(TransactionStatus.Success, transaction.getTransactionStatus());
-	}
+        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
+        assertFalse(violations.isEmpty());
+    }
 
-	@Test
-	void testFailedStatusAssignment() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testAmountNull() {
+        TransactionsEntity t = createValidTransaction();
+        t.setAmount(null);
 
-	    transaction.setTransactionStatus(TransactionStatus.Failed);
+        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
+        assertFalse(violations.isEmpty());
+    }
 
-	    assertEquals(TransactionStatus.Failed, transaction.getTransactionStatus());
-	}
+    @Test
+    void testStatusNull() {
+        TransactionsEntity t = createValidTransaction();
+        t.setTransactionStatus(null);
 
-	@Test
-	void testCustomerAndPetAssignment() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
+        assertFalse(violations.isEmpty());
+    }
 
-	    Customers customer = new Customers();
-	    customer.setCustomerId(101L);
+    @Test
+    void testAllFieldsNull() {
+        TransactionsEntity t = new TransactionsEntity();
 
-	    Pets pet = new Pets();
-	    pet.setPet_id(202L);
+        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
+        assertFalse(violations.isEmpty());
+    }
 
-	    transaction.setCustomer(customer);
-	    transaction.setPet(pet);
+    @Test
+    void testMissingAmountOnly() {
+        TransactionsEntity t = createValidTransaction();
+        t.setAmount(null);
 
-	    assertEquals(101L, transaction.getCustomer().getCustomerId());
-	    assertEquals(202L, transaction.getPet().getPet_id());
-	}
-	@Test
-	void testNullCustomer() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
+        assertFalse(violations.isEmpty());
+    }
 
-	    transaction.setCustomer(null);
-
-	    assertNull(transaction.getCustomer());
-	}
-
-	@Test
-	void testNullPet() {
-	    TransactionsEntity transaction = new TransactionsEntity();
-
-	    transaction.setPet(null);
-
-	    assertNull(transaction.getPet());
-	}
-
-	@Test
-	void testNullTransactionStatus() {
-	    TransactionsEntity transaction = new TransactionsEntity();
-
-	    transaction.setTransactionStatus(null);
-
-	    assertNull(transaction.getTransactionStatus());
-	}
-
-	@Test
-	void testNegativeAmount() {
-	    TransactionsEntity transaction = new TransactionsEntity();
-
-	    transaction.setAmount(BigDecimal.valueOf(-500));
-
-	    assertEquals(BigDecimal.valueOf(-500), transaction.getAmount());
-	}
-
-	@Test
-	void testNullTransactionDate() {
-	    TransactionsEntity transaction = new TransactionsEntity();
-
-	    transaction.setTransactionDate(null);
-
-	    assertNull(transaction.getTransactionDate());
-	}
-
+    // =========================
+    // 🔧 Helper Method
+    // =========================
+    private TransactionsEntity createValidTransaction() {
+        TransactionsEntity t = new TransactionsEntity();
+        t.setTransactionDate(new Date(System.currentTimeMillis()));
+        t.setAmount(new BigDecimal("500.00"));
+        t.setTransactionStatus(TransactionStatus.Success);
+        return t;
+    }
 }

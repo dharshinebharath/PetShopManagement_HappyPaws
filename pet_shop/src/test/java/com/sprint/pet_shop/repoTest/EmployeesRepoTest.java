@@ -1,76 +1,107 @@
 package com.sprint.pet_shop.repoTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.sprint.pet_shop.entity.Employees;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+
 public class EmployeesRepoTest {
-	// 1
-    @Test
-    void testEmployeeObject() {
-        Employees e = new Employees();
-        e.setFirstName("John");
 
-        assertEquals("John", e.getFirstName());
+    private Validator validator;
+
+    @BeforeEach
+    void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
 
-    // 2
+    // ✅ 1. Positive: valid employee
     @Test
-    void testNullCheck() {
-        Employees e = new Employees();
+    void testValidEmployee() {
+        Employees emp = new Employees();
+        emp.setFirstName("John");
+        emp.setLastName("Smith");
+        emp.setPosition("Veterinarian");
+        emp.setHireDate(new Date());
+        emp.setPhoneNumber("9876543210");
+        emp.setEmail("john@example.com");
 
-        assertNull(e.getEmail());
+        Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
+
+        assertTrue(violations.isEmpty());
     }
 
-    // 3
+    // ✅ 2. Positive: another valid employee (different data)
     @Test
-    void testNotNull() {
-        Employees e = new Employees();
-        e.setEmail("test@gmail.com");
+    void testAnotherValidEmployee() {
+        Employees emp = new Employees();
+        emp.setFirstName("Emily");
+        emp.setLastName("Johnson");
+        emp.setPosition("Groomer");
+        emp.setHireDate(new Date());
+        emp.setPhoneNumber("9123456780");
+        emp.setEmail("emily@example.com");
 
-        assertNotNull(e.getEmail());
+        Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
+
+        assertTrue(violations.isEmpty());
     }
 
-    // 4
+    // ❌ 3. Negative: first name is null
     @Test
-    void testListSize() {
-        List<Employees> list = new ArrayList<>();
-        list.add(new Employees());
+    void testFirstNameNull() {
+        Employees emp = new Employees();
+        emp.setFirstName(null);
+        emp.setLastName("Smith");
+        emp.setPosition("Vet");
+        emp.setHireDate(new Date());
+        emp.setPhoneNumber("9876543210");
+        emp.setEmail("john@example.com");
 
-        assertEquals(1, list.size());
+        Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
+
+        assertFalse(violations.isEmpty());
     }
 
-    // 5
+    // ❌ 4. Negative: position blank
     @Test
-    void testEmptyList() {
-        List<Employees> list = new ArrayList<>();
+    void testPositionBlank() {
+        Employees emp = new Employees();
+        emp.setFirstName("John");
+        emp.setLastName("Smith");
+        emp.setPosition("");
+        emp.setHireDate(new Date());
+        emp.setPhoneNumber("9876543210");
+        emp.setEmail("john@example.com");
 
-        assertTrue(list.isEmpty());
+        Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
+
+        assertFalse(violations.isEmpty());
     }
 
-    // 6
+    // ❌ 5. Negative: email null
     @Test
-    void testBooleanCondition() {
-        int salary = 5000;
+    void testEmailNull() {
+        Employees emp = new Employees();
+        emp.setFirstName("John");
+        emp.setLastName("Smith");
+        emp.setPosition("Vet");
+        emp.setHireDate(new Date());
+        emp.setPhoneNumber("9876543210");
+        emp.setEmail(null);
 
-        assertTrue(salary > 3000);
-    }
+        Set<ConstraintViolation<Employees>> violations = validator.validate(emp);
 
-    // 7
-    @Test
-    void testException() {
-        assertThrows(ArithmeticException.class,
-                () -> {
-                    int x = 10 / 0;
-                });
+        assertFalse(violations.isEmpty());
     }
 }
