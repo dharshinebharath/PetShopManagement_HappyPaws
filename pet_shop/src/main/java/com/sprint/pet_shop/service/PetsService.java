@@ -237,6 +237,42 @@ public class PetsService implements PetsInterface {
         existing.setDescription(dto.getDescription());
         existing.setImage_url(dto.getImage_url());
 
+     // CATEGORY
+        if (dto.getCategory_id() != null) {
+            PetCategories category = categoryRepository.findById(dto.getCategory_id())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+            existing.setCategory(category);
+        }
+
+        // GROOMING
+        if (dto.getGroomingServiceIds() != null) {
+            existing.setGroomingServices(
+                    groomingRepo.findAllById(dto.getGroomingServiceIds()));
+        }
+
+        // FOOD
+        if (dto.getFoodIds() != null) {
+            existing.setFoods(
+                    foodRepo.findAllById(dto.getFoodIds()));
+        }
+
+        // VACCINATION
+        if (dto.getVaccinationIds() != null) {
+            existing.setVaccinations(
+                    vaccinationRepo.findAllById(dto.getVaccinationIds()));
+        }
+
+        // EMPLOYEE
+        if (dto.getEmployeeIds() != null) {
+            existing.setEmployees(
+                    employeeRepo.findAllById(dto.getEmployeeIds()));
+        }
+
+        // SUPPLIER
+        if (dto.getSupplierIds() != null) {
+            existing.setSuppliers(
+                    supplierRepo.findAllById(dto.getSupplierIds()));
+        }
         Pets updated = petsRepository.save(existing);
 
         ApiResponse<PetsResponseDTO> response = new ApiResponse<>();

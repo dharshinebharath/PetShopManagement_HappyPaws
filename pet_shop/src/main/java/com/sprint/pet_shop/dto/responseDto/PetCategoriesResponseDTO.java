@@ -7,8 +7,7 @@ public class PetCategoriesResponseDTO {
 	private Long category_id;
     private String name;
 
-    // List of pets under this category
-    private List<Long> pet_id;
+    
 
     public Long getCategory_id() {
 		return category_id;
@@ -18,13 +17,7 @@ public class PetCategoriesResponseDTO {
 		this.category_id = category_id;
 	}
 
-	public List<Long> getPet_id() {
-		return pet_id;
-	}
-
-	public void setPet_id(List<Long> pet_id) {
-		this.pet_id = pet_id;
-	}
+	
 
 	public String getName() {
         return name;
