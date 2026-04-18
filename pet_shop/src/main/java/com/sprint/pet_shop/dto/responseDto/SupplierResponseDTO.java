@@ -7,6 +7,14 @@ public class SupplierResponseDTO {
     private String contactPerson;
     private String phoneNumber;
     private String email;
+    private Long addressId;
+    
+	public Long getAddressId() {
+		return addressId;
+	}
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
+	}
 	public Long getSupplierId() {
 		return supplierId;
 	}

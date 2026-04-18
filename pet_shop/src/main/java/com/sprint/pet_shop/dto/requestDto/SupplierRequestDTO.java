@@ -19,6 +19,17 @@ public class SupplierRequestDTO {
     @NotNull(message = "Email cannot be null")
     @NotBlank(message = "Email cannot be empty")
     private String email;
+    
+    @NotNull(message = "Address ID is required")
+    private Long addressId;
+
+	public Long getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
+	}
 
 	public String getName() {
 		return name;
