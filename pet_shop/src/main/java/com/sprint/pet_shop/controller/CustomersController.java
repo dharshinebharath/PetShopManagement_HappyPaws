@@ -69,4 +69,9 @@ public class CustomersController {
 
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/no-transactions")
+    public ApiResponse<List<CustomerResponseDTO>> getCustomersWithNoTransactions() {
+        return customersService.getCustomersWithNoTransactions();
+    }
 }

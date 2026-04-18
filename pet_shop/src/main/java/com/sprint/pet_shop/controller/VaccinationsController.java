@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,12 @@ public class VaccinationsController {
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
         return ResponseEntity.ok(
                 vaccinationsService.deleteVaccinationsById(id));
+    }
+    @GetMapping("/price")
+    public ApiResponse<List<VaccinationsResponseDTO>> getVaccinationsByPrice(
+            @RequestParam BigDecimal min,
+            @RequestParam BigDecimal max) {
+
+        return vaccinationsService.getVaccinationsByPrice(min, max);
     }
 }

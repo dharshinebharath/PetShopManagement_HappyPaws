@@ -14,6 +14,6 @@ public interface PetFoodRepository extends JpaRepository<PetFood, Long> {
 
 	 boolean existsByNameAndBrand(String name, String brand);
 	 
-	 
+	   
 
 }

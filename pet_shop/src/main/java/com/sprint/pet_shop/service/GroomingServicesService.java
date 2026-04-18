@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,17 +148,6 @@ public class GroomingServicesService implements GroomingServicesInterface {
     }
 
 
-
-
-<<<<<<< HEAD
-=======
-
-
-	    return response;
-	}
-
->>>>>>> 4f85f111e138f8244a347cfaaf22ca8445405ff3
-
 	public GroomingServices updateGroomingService(long id, @Valid GroomingServices service) {
 		GroomingServices existing = groomingServicesRepository.findById(id)
 	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Services Not Found with id:"+id));
@@ -171,6 +161,17 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    existing.setAvailable(service.isAvailable());
 
 	    return groomingServicesRepository.save(existing);
+	}
+	@Override
+	public ApiResponse<List<GroomingServicesResponseDTO>> getServicesByPriceRange(BigDecimal min, BigDecimal max) {
+
+	    List<GroomingServicesResponseDTO> data =
+	            groomingServicesRepository.findServicesByPriceRange(min, max)
+	                    .stream()
+	                    .map(this::toDto)
+	                    .toList();
+
+	    return new ApiResponse<>("Services fetched by price range", true, data);
 	}
 }
 

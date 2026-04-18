@@ -6,6 +6,7 @@ import java.util.List;
 import com.sprint.pet_shop.dto.requestDto.EmployeesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
+import com.sprint.pet_shop.entity.Employees;
 
 public interface EmployeesInterface {
 
@@ -18,4 +19,8 @@ public interface EmployeesInterface {
     ApiResponse<String> deleteEmployee(long employeeId);
 
     ApiResponse<EmployeesResponseDTO> updateEmployee(Long id, EmployeesRequestDTO employee);
+    
+    ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPosition(String position);
+    
+
 }

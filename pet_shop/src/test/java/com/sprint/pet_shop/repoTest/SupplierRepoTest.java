@@ -2,38 +2,82 @@ package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+import java.util.Set;
+
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.sprint.pet_shop.entity.Supplier;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+
 public class SupplierRepoTest {
 
-    // 1 - Positive
-    @Test
-    void testSupplierName() {
-        Supplier s = new Supplier();
-        s.setName("ABC");
 
-        assertEquals("ABC", s.getName());
+    private Validator validator;
+
+    @BeforeEach
+    void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
     }
 
-    // 2 - Negative (null check)
-    @Test
-    void testEmailNull() {
-        Supplier s = new Supplier();
+    // ✅ 1. Positive: valid supplier
 
-        assertNull(s.getEmail());
+    @Test
+    void testValidSupplier() {
+        Supplier s = new Supplier();
+        s.setName("Pet Supply Co");
+        s.setContactPerson("John Smith");
+        s.setPhoneNumber("9876543210");
+        s.setEmail("petsupply@gmail.com");
+
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertTrue(violations.isEmpty());
     }
 
-    // 3 - Positive
-    @Test
-    void testEmailNotNull() {
-        Supplier s = new Supplier();
-        s.setEmail("abc@gmail.com");
 
-        assertNotNull(s.getEmail());
+   
+   
+
+    // ✅ 2. Positive: another valid supplier
+    @Test
+    void testAnotherValidSupplier() {
+
+        Supplier s = new Supplier();
+        s.setName("Animal Care Ltd");
+        s.setContactPerson("Emily Johnson");
+        s.setPhoneNumber("9123456780");
+        s.setEmail("animalcare@gmail.com");
+
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertTrue(violations.isEmpty());
     }
 
+
+    // ❌ 3. Negative: name null
+    @Test
+    void testNameNull() {
+
+        Supplier s = new Supplier();
+        s.setName(null);
+        s.setContactPerson("John Smith");
+        s.setPhoneNumber("9876543210");
+        s.setEmail("test@gmail.com");
+
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertFalse(violations.isEmpty());
+    }
+
+    
     // 4 - Positive condition
     @Test
     void testStockGreaterThanTen() {
@@ -42,12 +86,33 @@ public class SupplierRepoTest {
         assertTrue(stock > 10);
     }
 
-    // 5 - Negative condition
+    
+    // ❌ 4. Negative: contact person blank
     @Test
-    void testException() {
-        assertThrows(NullPointerException.class, () -> {
-            String str = null;
-            str.length();
-        });
+    void testContactPersonBlank() {
+        Supplier s = new Supplier();
+        s.setName("Pet Supply Co");
+        s.setContactPerson("");
+        s.setPhoneNumber("9876543210");
+        s.setEmail("test@gmail.com");
+
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertFalse(violations.isEmpty());
+    }
+
+    // ❌ 5. Negative: email null
+    @Test
+    void testEmailNull() {
+        Supplier s = new Supplier();
+        s.setName("Pet Supply Co");
+        s.setContactPerson("John Smith");
+        s.setPhoneNumber("9876543210");
+        s.setEmail(null);
+
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertFalse(violations.isEmpty());
+
     }
 }

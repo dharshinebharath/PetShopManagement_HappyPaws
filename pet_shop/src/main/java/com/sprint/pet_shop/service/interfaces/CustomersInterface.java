@@ -18,4 +18,6 @@ public interface CustomersInterface {
     ApiResponse<CustomerResponseDTO> updatecustomer(long id, CustomerRequestDTO updatedcustomer);
 
     ApiResponse<String> deletecustomer(long id);
+    
+    ApiResponse<List<CustomerResponseDTO>> getCustomersWithNoTransactions();
 }
