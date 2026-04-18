@@ -146,9 +146,6 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    return response;
 	}
 
-
-
-
 	public GroomingServices updateGroomingService(long id, @Valid GroomingServices service) {
 		GroomingServices existing = groomingServicesRepository.findById(id)
 	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Services Not Found with id:"+id));

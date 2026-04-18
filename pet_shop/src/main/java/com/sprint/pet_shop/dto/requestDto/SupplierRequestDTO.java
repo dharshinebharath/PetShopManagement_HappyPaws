@@ -4,20 +4,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class SupplierRequestDTO {
-	@NotNull(message = "Name cannot be null")
-    @NotBlank(message = "Name cannot be empty")
+	
     private String name;
 
-    @NotNull(message = "Contact person cannot be null")
-    @NotBlank(message = "Contact person cannot be empty")
+   
     private String contactPerson;
 
-    @NotNull(message = "Phone number cannot be null")
-    @NotBlank(message = "Phone number cannot be empty")
+   
     private String phoneNumber;
 
-    @NotNull(message = "Email cannot be null")
-    @NotBlank(message = "Email cannot be empty")
     private String email;
     
     @NotNull(message = "Address ID is required")

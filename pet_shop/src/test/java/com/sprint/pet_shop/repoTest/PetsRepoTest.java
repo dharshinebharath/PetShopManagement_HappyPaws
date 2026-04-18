@@ -12,6 +12,18 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.sprint.pet_shop.entity.Pets;
+import com.sprint.pet_shop.entity.PetCategories;
+
+import jakarta.validation.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 public class PetsRepoTest {
 
     private Validator validator;
@@ -22,84 +34,62 @@ public class PetsRepoTest {
         validator = factory.getValidator();
     }
 
-    // ✅ 1. Name should not be blank
+    // ❌ 1. Name should not be blank (Negative)
     @Test
     void testNameShouldNotBeBlank() {
-        Pets pet = new Pets();
-        pet.setName("");
-        pet.setBreed("Dog");
-        pet.setAge(2);
-        pet.setPrice(new BigDecimal("10000"));
-        pet.setDescription("Good dog");
-        pet.setImage_url("url");
-
-        PetCategories category = new PetCategories();
-        pet.setCategory(category);
+        Pets pet = getValidPet();
+        pet.setName(""); // invalid
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
         assertFalse(violations.isEmpty());
     }
 
-    // ✅ 2. Breed should not be blank
+    // ❌ 2. Breed should not be blank (Negative)
     @Test
     void testBreedShouldNotBeBlank() {
-        Pets pet = new Pets();
-        pet.setName("Dog");
-        pet.setBreed("");
-        pet.setAge(2);
-        pet.setPrice(new BigDecimal("10000"));
-        pet.setDescription("Good dog");
-        pet.setImage_url("url");
-
-        PetCategories category = new PetCategories();
-        pet.setCategory(category);
+        Pets pet = getValidPet();
+        pet.setBreed(""); // invalid
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
         assertFalse(violations.isEmpty());
     }
 
-    // ✅ 3. Price should not be null
+    // ❌ 3. Price should not be null (Negative)
     @Test
     void testPriceShouldNotBeNull() {
-        Pets pet = new Pets();
-        pet.setName("Dog");
-        pet.setBreed("Dog");
-        pet.setAge(2);
-        pet.setPrice(null);
-        pet.setDescription("Good dog");
-        pet.setImage_url("url");
-
-        PetCategories category = new PetCategories();
-        pet.setCategory(category);
+        Pets pet = getValidPet();
+        pet.setPrice(null); // invalid
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
         assertFalse(violations.isEmpty());
     }
 
-    // ✅ 4. Category should not be null
+    // ❌ 4. Category should not be null (Negative)
     @Test
     void testCategoryShouldNotBeNull() {
-        Pets pet = new Pets();
-        pet.setName("Dog");
-        pet.setBreed("Dog");
-        pet.setAge(2);
-        pet.setPrice(new BigDecimal("10000"));
-        pet.setDescription("Good dog");
-        pet.setImage_url("url");
-
-        pet.setCategory(null); // ❌ invalid
+        Pets pet = getValidPet();
+        pet.setCategory(null); // invalid
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
-        assertFalse(violations.isEmpty()); // ✅ should fail validation
+        assertFalse(violations.isEmpty());
     }
 
-    // ✅ 5. Valid pet (should pass)
+    // ✅ 5. Valid Pet (Positive)
     @Test
     void testValidPet() {
+        Pets pet = getValidPet();
+
+        Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
+
+        assertTrue(violations.isEmpty());
+    }
+
+    // 🔥 Helper Method (VERY CLEAN)
+    private Pets getValidPet() {
         Pets pet = new Pets();
         pet.setName("Dog");
         pet.setBreed("Labrador");
@@ -109,10 +99,9 @@ public class PetsRepoTest {
         pet.setImage_url("url");
 
         PetCategories category = new PetCategories();
+        category.setName("Dog");
         pet.setCategory(category);
 
-        Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
-
-        assertTrue(violations.isEmpty()); // ✅ no errors
+        return pet;
     }
 }
