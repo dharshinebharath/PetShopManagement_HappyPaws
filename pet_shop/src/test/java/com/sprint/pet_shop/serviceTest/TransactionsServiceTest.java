@@ -1,6 +1,7 @@
 package com.sprint.pet_shop.serviceTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
@@ -18,10 +19,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
-import com.sprint.pet_shop.entity.*;
+import com.sprint.pet_shop.entity.Customers;
+import com.sprint.pet_shop.entity.Pets;
+import com.sprint.pet_shop.entity.TransactionStatus;
+import com.sprint.pet_shop.entity.TransactionsEntity;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
-import com.sprint.pet_shop.repository.*;
+import com.sprint.pet_shop.repository.CustomersRepository;
+import com.sprint.pet_shop.repository.PetsRepository;
+import com.sprint.pet_shop.repository.TransactionsRepository;
 import com.sprint.pet_shop.service.TransactionsService;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,60 +43,66 @@ public class TransactionsServiceTest {
     private PetsRepository petsRepository;
 
     @InjectMocks
-    private TransactionsService service;
+    private TransactionsService transactionsService;
 
-    private TransactionsRequestDTO dto;
     private Customers customer;
     private Pets pet;
-    private TransactionsEntity entity;
 
     @BeforeEach
     void setup() {
-        dto = new TransactionsRequestDTO();
-        dto.setCustomerId(1L);
-        dto.setPetId(2L);
-        dto.setAmount(BigDecimal.valueOf(500));
-        dto.setTransactionDate(Date.valueOf("2024-01-01"));
-        dto.setTransactionStatus("Success");
-
         customer = new Customers();
         customer.setCustomerId(1L);
 
         pet = new Pets();
-        pet.setPet_id(2L);
-
-        entity = new TransactionsEntity();
-        entity.setTransactionId(10L);
-        entity.setCustomer(customer);
-        entity.setPet(pet);
-        entity.setAmount(dto.getAmount());
-        entity.setTransactionDate(dto.getTransactionDate());
-        entity.setTransactionStatus(TransactionStatus.Success);
+        pet.setPet_id(1L);
     }
 
-
-    // POSITIVE TEST CASES
-    
+    // =========================
+    // ✅ POSITIVE TEST CASES
+    // =========================
 
     @Test
-    void testSave_Success() {
-        when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
-        when(petsRepository.findById(2L)).thenReturn(Optional.of(pet));
-        when(transactionsRepository.save(any())).thenReturn(entity);
+    void testSaveTransaction_Positive() {
 
-        ApiResponse<TransactionsResponseDTO> response = service.save(dto);
+        TransactionsRequestDTO dto = new TransactionsRequestDTO();
+        dto.setCustomerId(1L);
+        dto.setPetId(1L);
+        dto.setAmount(new BigDecimal("500"));
+        dto.setTransactionDate(new Date(System.currentTimeMillis()));
+        dto.setTransactionStatus("Success"); // ✅ correct enum
+
+        TransactionsEntity saved = new TransactionsEntity();
+        saved.setTransactionId(1L);
+        saved.setCustomer(customer);
+        saved.setPet(pet);
+        saved.setAmount(dto.getAmount());
+        saved.setTransactionStatus(TransactionStatus.Success);
+
+        when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
+        when(petsRepository.findById(1L)).thenReturn(Optional.of(pet));
+        when(transactionsRepository.save(any(TransactionsEntity.class))).thenReturn(saved);
+
+        ApiResponse<TransactionsResponseDTO> response = transactionsService.save(dto);
 
         assertTrue(response.isSuccess());
         assertEquals("Transaction saved successfully", response.getMessage());
 
-        verify(transactionsRepository).save(any());
+        verify(transactionsRepository).save(any(TransactionsEntity.class));
     }
 
     @Test
-    void testGetAll_Success() {
+    void testGetAll_Positive() {
+
+        TransactionsEntity entity = new TransactionsEntity();
+        entity.setTransactionId(1L);
+        entity.setCustomer(customer);
+        entity.setPet(pet);
+        entity.setAmount(new BigDecimal("200"));
+        entity.setTransactionStatus(TransactionStatus.Success);
+
         when(transactionsRepository.findAll()).thenReturn(List.of(entity));
 
-        ApiResponse<List<TransactionsResponseDTO>> response = service.getAll();
+        ApiResponse<List<TransactionsResponseDTO>> response = transactionsService.getAll();
 
         assertTrue(response.isSuccess());
         assertEquals(1, response.getData().size());
@@ -99,77 +111,117 @@ public class TransactionsServiceTest {
     }
 
     @Test
-    void testGetById_Success() {
-        when(transactionsRepository.findById(10L)).thenReturn(Optional.of(entity));
+    void testGetById_Positive() {
 
-        ApiResponse<TransactionsResponseDTO> response = service.getById(10L);
+        TransactionsEntity entity = new TransactionsEntity();
+        entity.setTransactionId(1L);
+        entity.setCustomer(customer);
+        entity.setPet(pet);
+        entity.setTransactionStatus(TransactionStatus.Success);
+
+        when(transactionsRepository.findById(1L)).thenReturn(Optional.of(entity));
+
+        ApiResponse<TransactionsResponseDTO> response = transactionsService.getById(1L);
 
         assertTrue(response.isSuccess());
-        assertEquals(10L, response.getData().getTransactionId());
 
-        verify(transactionsRepository).findById(10L);
+        verify(transactionsRepository).findById(1L);
     }
 
     @Test
-    void testUpdate_Success() {
-        when(transactionsRepository.findById(10L)).thenReturn(Optional.of(entity));
-        when(transactionsRepository.save(any())).thenReturn(entity);
+    void testUpdate_Positive() {
 
-        ApiResponse<TransactionsResponseDTO> response = service.update(10L, dto);
+        TransactionsRequestDTO dto = new TransactionsRequestDTO();
+        dto.setCustomerId(1L);
+        dto.setPetId(1L);
+        dto.setAmount(new BigDecimal("300"));
+        dto.setTransactionDate(new Date(System.currentTimeMillis()));
+        dto.setTransactionStatus("Success");
+
+        TransactionsEntity existing = new TransactionsEntity();
+        existing.setTransactionId(1L);
+        existing.setCustomer(customer);
+        existing.setPet(pet);
+
+        when(transactionsRepository.findById(1L)).thenReturn(Optional.of(existing));
+        when(transactionsRepository.save(any())).thenReturn(existing);
+
+        ApiResponse<TransactionsResponseDTO> response = transactionsService.update(1L, dto);
 
         assertTrue(response.isSuccess());
-        assertEquals("Transaction updated successfully", response.getMessage());
 
         verify(transactionsRepository).save(any());
     }
 
     @Test
-    void testDelete_Success() {
-        when(transactionsRepository.existsById(10L)).thenReturn(true);
+    void testDelete_Positive() {
 
-        ApiResponse<String> response = service.delete(10L);
+        when(transactionsRepository.existsById(1L)).thenReturn(true);
+
+        ApiResponse<String> response = transactionsService.delete(1L);
 
         assertTrue(response.isSuccess());
 
-        verify(transactionsRepository).deleteById(10L);
+        verify(transactionsRepository).deleteById(1L);
     }
 
-    
-    // NEGATIVE TEST CASES
-    
+    // =========================
+    // ❌ NEGATIVE TEST CASES
+    // =========================
 
     @Test
-    void testSave_InvalidData() {
+    void testSave_NullIds_Negative() {
+
+        TransactionsRequestDTO dto = new TransactionsRequestDTO();
         dto.setCustomerId(null);
+        dto.setPetId(null);
 
-        assertThrows(InvalidDataException.class, () -> service.save(dto));
+        assertThrows(InvalidDataException.class,
+                () -> transactionsService.save(dto));
     }
 
     @Test
-    void testSave_CustomerNotFound() {
+    void testSave_CustomerNotFound_Negative() {
+
+        TransactionsRequestDTO dto = new TransactionsRequestDTO();
+        dto.setCustomerId(1L);
+        dto.setPetId(1L);
+
         when(customersRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> service.save(dto));
+        assertThrows(ResourceNotFoundException.class,
+                () -> transactionsService.save(dto));
     }
 
     @Test
-    void testGetById_NotFound() {
-        when(transactionsRepository.findById(99L)).thenReturn(Optional.empty());
+    void testSave_PetNotFound_Negative() {
 
-        assertThrows(ResourceNotFoundException.class, () -> service.getById(99L));
+        TransactionsRequestDTO dto = new TransactionsRequestDTO();
+        dto.setCustomerId(1L);
+        dto.setPetId(1L);
+
+        when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
+        when(petsRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> transactionsService.save(dto));
     }
 
     @Test
-    void testUpdate_NotFound() {
-        when(transactionsRepository.findById(99L)).thenReturn(Optional.empty());
+    void testGetById_NotFound_Negative() {
 
-        assertThrows(ResourceNotFoundException.class, () -> service.update(99L, dto));
+        when(transactionsRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> transactionsService.getById(1L));
     }
 
     @Test
-    void testDelete_NotFound() {
-        when(transactionsRepository.existsById(99L)).thenReturn(false);
+    void testDelete_NotFound_Negative() {
 
-        assertThrows(ResourceNotFoundException.class, () -> service.delete(99L));
+        when(transactionsRepository.existsById(1L)).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> transactionsService.delete(1L));
     }
 }

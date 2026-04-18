@@ -1,86 +1,96 @@
 package com.sprint.pet_shop.repoTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.sprint.pet_shop.entity.Supplier;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+
 public class SupplierRepoTest {
-	// 1
+
+    private Validator validator;
+
+    @BeforeEach
+    void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
+
+    // ✅ 1. Positive: valid supplier
     @Test
-    void testSupplierName() {
+    void testValidSupplier() {
         Supplier s = new Supplier();
-        s.setName("ABC");
+        s.setName("Pet Supply Co");
+        s.setContactPerson("John Smith");
+        s.setPhoneNumber("9876543210");
+        s.setEmail("petsupply@gmail.com");
 
-        assertEquals("ABC", s.getName());
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertTrue(violations.isEmpty());
     }
 
-    // 2
+    // ✅ 2. Positive: another valid supplier
     @Test
-    void testNull() {
+    void testAnotherValidSupplier() {
         Supplier s = new Supplier();
+        s.setName("Animal Care Ltd");
+        s.setContactPerson("Emily Johnson");
+        s.setPhoneNumber("9123456780");
+        s.setEmail("animalcare@gmail.com");
 
-        assertNull(s.getEmail());
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertTrue(violations.isEmpty());
     }
 
-    // 3
+    // ❌ 3. Negative: name null
     @Test
-    void testNotNull() {
+    void testNameNull() {
         Supplier s = new Supplier();
-        s.setEmail("abc@gmail.com");
+        s.setName(null);
+        s.setContactPerson("John Smith");
+        s.setPhoneNumber("9876543210");
+        s.setEmail("test@gmail.com");
 
-        assertNotNull(s.getEmail());
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertFalse(violations.isEmpty());
     }
 
-    // 4
+    // ❌ 4. Negative: contact person blank
     @Test
-    void testListSize() {
-        List<Supplier> list = new ArrayList<>();
-        list.add(new Supplier());
+    void testContactPersonBlank() {
+        Supplier s = new Supplier();
+        s.setName("Pet Supply Co");
+        s.setContactPerson("");
+        s.setPhoneNumber("9876543210");
+        s.setEmail("test@gmail.com");
 
-        assertEquals(1, list.size());
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
+
+        assertFalse(violations.isEmpty());
     }
 
-    // 5
+    // ❌ 5. Negative: email null
     @Test
-    void testEmptyList() {
-        List<Supplier> list = new ArrayList<>();
+    void testEmailNull() {
+        Supplier s = new Supplier();
+        s.setName("Pet Supply Co");
+        s.setContactPerson("John Smith");
+        s.setPhoneNumber("9876543210");
+        s.setEmail(null);
 
-        assertTrue(list.isEmpty());
-    }
+        Set<ConstraintViolation<Supplier>> violations = validator.validate(s);
 
-    // 6
-    @Test
-    void testCondition() {
-        int stock = 20;
-
-        assertTrue(stock > 10);
-    }
-
-    // 7
-    @Test
-    void testFalseCondition() {
-        int stock = 5;
-
-        assertFalse(stock > 10);
-    }
-
-    // 8
-    @Test
-    void testException() {
-        assertThrows(NullPointerException.class,
-                () -> {
-                    String str = null;
-                    str.length();
-                });
+        assertFalse(violations.isEmpty());
     }
 }
