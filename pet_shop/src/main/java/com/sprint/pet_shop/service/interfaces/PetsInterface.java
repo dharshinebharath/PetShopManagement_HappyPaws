@@ -23,4 +23,6 @@ public interface PetsInterface {
 
     // DELETE
     ApiResponse<String> deletePets(long id);
+    
+    ApiResponse<List<PetsResponseDTO>> getPetsByEmployee(Long employeeId);
 }

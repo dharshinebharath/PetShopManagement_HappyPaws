@@ -75,6 +75,27 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Address found", true, toDto(address));
     }
+    
+    //GET BY CITY
+    @Override
+    public ApiResponse<List<AddressesResponseDTO>> getAddressesByCity(String city) {
+
+        if (city == null || city.trim().isEmpty()) {
+            throw new InvalidDataException("City cannot be empty");
+        }
+
+        List<Addresses> addresses = addressesRepository.getAddressesByCity(city);
+
+        if (addresses.isEmpty()) {
+            throw new ResourceNotFoundException("No addresses found for city: " + city);
+        }
+
+        List<AddressesResponseDTO> data = addresses.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+
+        return new ApiResponse<>("Addresses fetched successfully", true, data);
+    }
 
     // 🔹 DELETE
     @Override

@@ -33,6 +33,7 @@ public class EmployeesController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
 
     // GET ALL
     @GetMapping
@@ -79,5 +80,10 @@ public class EmployeesController {
                 employeesService.updateEmployee(id, employees);
 
         return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/position")
+    public ApiResponse<List<EmployeesResponseDTO>> getByPosition(@RequestParam String position) {
+        return employeesService.getEmployeesByPosition(position);
     }
 }
