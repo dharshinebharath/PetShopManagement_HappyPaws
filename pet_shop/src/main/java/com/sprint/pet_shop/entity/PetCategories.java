@@ -17,10 +17,10 @@ import jakarta.validation.constraints.NotBlank;
 @Table(name = "pet_categories")
 public class PetCategories {
 
-	 @Id
+	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "category_id")
-	    private Long category_id;
+	    private Long categoryId;
 
 	    @NotBlank(message = "Category name cannot be empty")
 	    @Column(length = 100)
@@ -31,11 +31,11 @@ public class PetCategories {
 	    private List<Pets> pets;
 
 		public Long getCategory_id() {
-			return category_id;
+			return categoryId;
 		}
 
 		public void setCategory_id(Long category_id) {
-			this.category_id = category_id;
+			this.categoryId = category_id;
 		}
 
 		public String getName() {

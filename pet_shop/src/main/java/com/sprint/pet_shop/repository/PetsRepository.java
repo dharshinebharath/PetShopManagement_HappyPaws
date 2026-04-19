@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,14 @@ public interface PetsRepository extends JpaRepository<Pets, Long> {
 	// 🔹 Get pets handled by employee
     @Query("SELECT p FROM Pets p JOIN p.employees e WHERE e.employeeId = :empId")
     List<Pets> findPetsByEmployeeId(@Param("empId") Long empId);
+    
+    // 🔍 1. Filter by Category
+
+    List<Pets> findByCategory_CategoryId(Long categoryId);
+
+    // 🔍 2. Filter by Breed
+    List<Pets> findByBreedIgnoreCase(String breed);
+
+    // 🔍 3. Filter by Price Range
+    List<Pets> findByPriceBetween(BigDecimal min, BigDecimal max);
 }
