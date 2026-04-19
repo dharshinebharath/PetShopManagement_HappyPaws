@@ -1,6 +1,6 @@
 package com.sprint.pet_shop.service;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +12,7 @@ import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.entity.Pets;
+import com.sprint.pet_shop.entity.TransactionStatus;
 import com.sprint.pet_shop.entity.TransactionsEntity;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
@@ -21,7 +22,7 @@ import com.sprint.pet_shop.repository.TransactionsRepository;
 import com.sprint.pet_shop.service.interfaces.TransactionsInterface;
 
 @Service
-public class TransactionsService implements TransactionsInterface{
+public class TransactionsService implements TransactionsInterface {
 
     @Autowired
     private TransactionsRepository transactionsRepository;
@@ -31,8 +32,23 @@ public class TransactionsService implements TransactionsInterface{
 
     @Autowired
     private PetsRepository petsRepository;
+    
+    // ================= DTO MAPPING =================
+    private TransactionsResponseDTO toDto(TransactionsEntity entity) {
 
-    // CREATE
+        TransactionsResponseDTO dto = new TransactionsResponseDTO();
+
+        dto.setTransactionId(entity.getTransactionId());
+        dto.setTransactionDate(entity.getTransactionDate());
+        dto.setAmount(entity.getAmount());
+        dto.setCustomerId(entity.getCustomer().getCustomerId());
+        dto.setPetId(entity.getPet().getPet_id());
+        dto.setTransactionStatus(entity.getTransactionStatus().name());
+
+        return dto;
+    }
+
+    // ================= CREATE =================
     @Override
     public ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto) {
 
@@ -49,23 +65,18 @@ public class TransactionsService implements TransactionsInterface{
         TransactionsEntity entity = new TransactionsEntity();
         entity.setTransactionDate(dto.getTransactionDate());
         entity.setAmount(dto.getAmount());
-        entity.setTransactionStatus(
-                com.sprint.pet_shop.entity.TransactionStatus.valueOf(dto.getTransactionStatus())
-        );
+
+        // ✅ CLEAN ENUM HANDLING (NO STRING CONVERSION)
+        entity.setTransactionStatus(dto.getTransactionStatus());
+
         entity.setCustomer(customer);
         entity.setPet(pet);
 
         TransactionsEntity saved = transactionsRepository.save(entity);
 
-        ApiResponse<TransactionsResponseDTO> response = new ApiResponse<>();
-        response.setMessage("Transaction saved successfully");
-        response.setSuccess(true);
-        response.setData(toDto(saved));
-
-        return response;
+        return new ApiResponse<>("Transaction saved successfully", true, toDto(saved));
     }
-
-    // GET ALL
+    // ================= GET ALL =================
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getAll() {
 
@@ -74,57 +85,37 @@ public class TransactionsService implements TransactionsInterface{
                 .map(this::toDto)
                 .collect(Collectors.toList());
 
-        ApiResponse<List<TransactionsResponseDTO>> response = new ApiResponse<>();
-        response.setMessage("Fetched all transactions");
-        response.setSuccess(true);
-        response.setData(data);
-
-        return response;
+        return new ApiResponse<>("Fetched all transactions", true, data);
     }
 
-    // GET BY ID
+    // ================= GET BY ID =================
     @Override
     public ApiResponse<TransactionsResponseDTO> getById(Long id) {
 
         TransactionsEntity entity = transactionsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
 
-        ApiResponse<TransactionsResponseDTO> response = new ApiResponse<>();
-        response.setMessage("Transaction fetched successfully");
-        response.setSuccess(true);
-        response.setData(toDto(entity));
-
-        return response;
+        return new ApiResponse<>("Transaction fetched successfully", true, toDto(entity));
     }
 
-    // UPDATE
+    // ================= UPDATE =================
     @Override
     public ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto) {
 
         TransactionsEntity existing = transactionsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
 
-        if (dto.getCustomerId() == null || dto.getPetId() == null) {
-            throw new InvalidDataException("Customer ID and Pet ID cannot be null");
-        }
-
         existing.setTransactionDate(dto.getTransactionDate());
         existing.setAmount(dto.getAmount());
-        existing.setTransactionStatus(
-                com.sprint.pet_shop.entity.TransactionStatus.valueOf(dto.getTransactionStatus())
-        );
+
+        existing.setTransactionStatus(dto.getTransactionStatus());
 
         TransactionsEntity updated = transactionsRepository.save(existing);
 
-        ApiResponse<TransactionsResponseDTO> response = new ApiResponse<>();
-        response.setMessage("Transaction updated successfully");
-        response.setSuccess(true);
-        response.setData(toDto(updated));
-
-        return response;
+        return new ApiResponse<>("Transaction updated successfully", true, toDto(updated));
     }
-
-    // DELETE
+    
+    // ================= DELETE =================
     @Override
     public ApiResponse<String> delete(Long id) {
 
@@ -134,31 +125,14 @@ public class TransactionsService implements TransactionsInterface{
 
         transactionsRepository.deleteById(id);
 
-        ApiResponse<String> response = new ApiResponse<>();
-        response.setMessage("Deleted successfully");
-        response.setSuccess(true);
-        response.setData("Deleted ID: " + id);
-
-        return response;
+        return new ApiResponse<>("Deleted successfully", true, "Deleted ID: " + id);
     }
 
-    // ENTITY → DTO
-    private TransactionsResponseDTO toDto(TransactionsEntity entity) {
+   
 
-        TransactionsResponseDTO dto = new TransactionsResponseDTO();
-
-        dto.setTransactionId(entity.getTransactionId());
-        dto.setTransactionDate(entity.getTransactionDate());
-        dto.setAmount(entity.getAmount());
-        dto.setCustomerId(entity.getCustomer().getCustomerId());
-        dto.setPetId(entity.getPet().getPet_id());
-        dto.setTransactionStatus(entity.getTransactionStatus().name());
-
-        return dto;
-    }
-    
+    // ================= DATE RANGE =================
     @Override
-    public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(Date start, Date end) {
+    public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(LocalDate start, LocalDate end) {
 
         List<TransactionsResponseDTO> data = transactionsRepository.findByDateRange(start, end)
                 .stream()
@@ -166,5 +140,37 @@ public class TransactionsService implements TransactionsInterface{
                 .toList();
 
         return new ApiResponse<>("Transactions by date range", true, data);
+    }
+
+    // ================= BY CUSTOMER =================
+    @Override
+    public ApiResponse<List<TransactionsResponseDTO>> getByCustomer(Long customerId) {
+
+        if (!customersRepository.existsById(customerId)) {
+            throw new ResourceNotFoundException("Customer not found");
+        }
+
+        List<TransactionsResponseDTO> data =
+                transactionsRepository.findByCustomerCustomerId(customerId)
+                        .stream()
+                        .map(this::toDto)
+                        .toList();
+
+        return new ApiResponse<>("Transactions for customer", true, data);
+    }
+
+    // ================= BY STATUS =================
+    @Override
+    public ApiResponse<List<TransactionsResponseDTO>> getByStatus(String status) {
+
+        List<TransactionsResponseDTO> data =
+                transactionsRepository.findByTransactionStatus(
+                        TransactionStatus.valueOf(status.toUpperCase())
+                )
+                .stream()
+                .map(this::toDto)
+                .toList();
+
+        return new ApiResponse<>("Transactions by status", true, data);
     }
 }
