@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import com.sprint.pet_shop.dto.requestDto.CustomerRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.CustomerResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
 import com.sprint.pet_shop.service.CustomersService;
+import com.sprint.pet_shop.service.TransactionsService;
 
 import jakarta.validation.Valid;
 
@@ -20,6 +22,8 @@ public class CustomersController {
     @Autowired
     private CustomersService customersService;
 
+    @Autowired
+    private TransactionsService transactionsService;
     // CREATE
     @PostMapping
     public ResponseEntity<ApiResponse<List<CustomerResponseDTO>>> savecustomers(
@@ -73,5 +77,12 @@ public class CustomersController {
     @GetMapping("/no-transactions")
     public ApiResponse<List<CustomerResponseDTO>> getCustomersWithNoTransactions() {
         return customersService.getCustomersWithNoTransactions();
+    }
+    
+    @GetMapping("/{customerId}/transactions")
+    public ApiResponse<List<TransactionsResponseDTO>> getByCustomer(
+            @PathVariable Long customerId) {
+
+        return transactionsService.getByCustomer(customerId);
     }
 }

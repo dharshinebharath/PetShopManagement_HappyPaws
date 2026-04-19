@@ -1,6 +1,7 @@
 package com.sprint.pet_shop.service.interfaces;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
@@ -20,7 +21,13 @@ public interface TransactionsInterface {
 
     ApiResponse<String> delete(Long id);
     
-    ApiResponse<List<TransactionsResponseDTO>> getByDateRange(Date start, Date end);
+//    ApiResponse<List<TransactionsResponseDTO>> getByDateRange(Date start, Date end);
+
+	ApiResponse<List<TransactionsResponseDTO>> getByCustomer(Long customerId);
+
+	ApiResponse<List<TransactionsResponseDTO>> getByStatus(String status);
+
+	ApiResponse<List<TransactionsResponseDTO>> getByDateRange(LocalDate start, LocalDate end);
 
 	
 }

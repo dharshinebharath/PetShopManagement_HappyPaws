@@ -1,6 +1,7 @@
 package com.sprint.pet_shop.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,10 +81,20 @@ public class TransactionsController {
 	    }
 	    @GetMapping("/date-range")
 	    public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(
-	            @RequestParam Date start,
-	            @RequestParam Date end) {
+	            LocalDate start,
+	             LocalDate end) {
 
 	        return transactionsService.getByDateRange(start, end);
+	    }
+	    
+	   
+
+	    // ✅ STATUS FILTER
+	    @GetMapping("/status/{status}")
+	    public ApiResponse<List<TransactionsResponseDTO>> getByStatus(
+	            @PathVariable String status) {
+
+	        return transactionsService.getByStatus(status);
 	    }
 	 
 
