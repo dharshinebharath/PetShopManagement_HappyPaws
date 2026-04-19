@@ -69,14 +69,14 @@ public class TransactionsServiceTest {
         dto.setPetId(1L);
         dto.setAmount(new BigDecimal("500"));
         dto.setTransactionDate(new Date(System.currentTimeMillis()));
-        dto.setTransactionStatus("Success"); // ✅ correct enum
+        dto.setTransactionStatus(TransactionStatus.SUCCESS); // ✅ correct enum
 
         TransactionsEntity saved = new TransactionsEntity();
         saved.setTransactionId(1L);
         saved.setCustomer(customer);
         saved.setPet(pet);
         saved.setAmount(dto.getAmount());
-        saved.setTransactionStatus(TransactionStatus.Success);
+        saved.setTransactionStatus(TransactionStatus.SUCCESS);
 
         when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(petsRepository.findById(1L)).thenReturn(Optional.of(pet));
@@ -98,7 +98,7 @@ public class TransactionsServiceTest {
         entity.setCustomer(customer);
         entity.setPet(pet);
         entity.setAmount(new BigDecimal("200"));
-        entity.setTransactionStatus(TransactionStatus.Success);
+        entity.setTransactionStatus(TransactionStatus.SUCCESS);
 
         when(transactionsRepository.findAll()).thenReturn(List.of(entity));
 
@@ -117,7 +117,7 @@ public class TransactionsServiceTest {
         entity.setTransactionId(1L);
         entity.setCustomer(customer);
         entity.setPet(pet);
-        entity.setTransactionStatus(TransactionStatus.Success);
+        entity.setTransactionStatus(TransactionStatus.SUCCESS);
 
         when(transactionsRepository.findById(1L)).thenReturn(Optional.of(entity));
 
@@ -136,7 +136,7 @@ public class TransactionsServiceTest {
         dto.setPetId(1L);
         dto.setAmount(new BigDecimal("300"));
         dto.setTransactionDate(new Date(System.currentTimeMillis()));
-        dto.setTransactionStatus("Success");
+        dto.setTransactionStatus(TransactionStatus.SUCCESS);
 
         TransactionsEntity existing = new TransactionsEntity();
         existing.setTransactionId(1L);
