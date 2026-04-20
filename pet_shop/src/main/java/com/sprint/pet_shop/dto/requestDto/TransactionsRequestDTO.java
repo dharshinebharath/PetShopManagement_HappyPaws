@@ -3,38 +3,70 @@ package com.sprint.pet_shop.dto.requestDto;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sprint.pet_shop.entity.TransactionStatus;
+
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public class TransactionsRequestDTO {
 
-    @NotNull
+    @NotNull(message = "Transaction date cannot be null")
+    @JsonFormat(pattern = "yyyy-MM-dd") // ✅ ensures correct JSON format
     private Date transactionDate;
 
-    @NotNull
+    @NotNull(message = "Amount cannot be null")
+    @Positive(message = "Amount must be greater than 0")
     private BigDecimal amount;
 
-    @NotNull
+    @NotNull(message = "Customer ID cannot be null")
     private Long customerId;
 
-    @NotNull
+    @NotNull(message = "Pet ID cannot be null")
     private Long petId;
 
-    @NotNull
-    private String transactionStatus;
+    @NotNull(message = "Transaction status cannot be null")
+    private TransactionStatus transactionStatus;
+    // ================= GETTERS & SETTERS =================
 
-    // getters & setters
-    public Date getTransactionDate() { return transactionDate; }
-    public void setTransactionDate(Date transactionDate) { this.transactionDate = transactionDate; }
+    public Date getTransactionDate() {
+        return transactionDate;
+    }
 
-    public BigDecimal getAmount() { return amount; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
+    }
 
-    public Long getCustomerId() { return customerId; }
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-    public Long getPetId() { return petId; }
-    public void setPetId(Long petId) { this.petId = petId; }
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 
-    public String getTransactionStatus() { return transactionStatus; }
-    public void setTransactionStatus(String transactionStatus) { this.transactionStatus = transactionStatus; }
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+
+    public TransactionStatus getTransactionStatus() {
+		return transactionStatus;
+	}
+
+	public void setTransactionStatus(TransactionStatus transactionStatus) {
+		this.transactionStatus = transactionStatus;
+	}
+
+	public Long getPetId() {
+        return petId;
+    }
+
+    public void setPetId(Long petId) {
+        this.petId = petId;
+    }
+
 }
