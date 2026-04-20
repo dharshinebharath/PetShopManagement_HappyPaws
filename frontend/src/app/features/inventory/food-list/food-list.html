@@ -1,1 +1,49 @@
-<p>food-list works!</p>
+<div class="layout">
+
+  <!-- LEFT SIDE -->
+  <div class="left">
+
+    <div class="top-bar">
+      <input [(ngModel)]="searchText" placeholder="Search food..." />
+      <button (click)="openForm()">+ Add Food</button>
+    </div>
+
+    <table border="1" width="100%">
+      <tr>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Type</th>
+        <th>Qty</th>
+        <th>Price</th>
+      </tr>
+
+      <tr *ngFor="let f of filteredFoods">
+        <td>{{ f.name }}</td>
+        <td>{{ f.brand }}</td>
+        <td>{{ f.type }}</td>
+        <td>{{ f.quantity }}</td>
+        <td>{{ f.price }}</td>
+      </tr>
+    </table>
+
+  </div>
+
+  <!-- RIGHT SIDE FORM -->
+  <div class="right" *ngIf="showForm">
+
+    <h3>Add Food</h3>
+
+    <input [(ngModel)]="newFood.name" placeholder="Food Name" />
+    <input [(ngModel)]="newFood.brand" placeholder="Brand" />
+    <input [(ngModel)]="newFood.type" placeholder="Type" />
+    <input [(ngModel)]="newFood.quantity" placeholder="Quantity" />
+    <input [(ngModel)]="newFood.price" placeholder="Price" />
+
+    <div class="buttons">
+      <button (click)="saveFood()">Save</button>
+      <button (click)="closeForm()">Close</button>
+    </div>
+
+  </div>
+
+</div>

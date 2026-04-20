@@ -1,1 +1,28 @@
-<p>employee-form works!</p>
+<div class="form-container">
+
+  <h2>Add Employee</h2>
+
+  <form>
+
+    <div class="form-row">
+      <input type="text" placeholder="First Name" [(ngModel)]="employee.firstName" name="firstName">
+      <input type="text" placeholder="Last Name" [(ngModel)]="employee.lastName" name="lastName">
+    </div>
+
+    <input type="text" placeholder="Position" [(ngModel)]="employee.position" name="position">
+
+    <div class="form-row">
+      <input type="text" placeholder="Phone" [(ngModel)]="employee.phone" name="phone">
+      <input type="email" placeholder="Email" [(ngModel)]="employee.email" name="email">
+    </div>
+
+    <input type="text" placeholder="Address" [(ngModel)]="employee.address" name="address">
+
+    <div class="btn-group">
+      <button type="button" (click)="saveEmployee()">Save</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+
+  </form>
+
+</div>
