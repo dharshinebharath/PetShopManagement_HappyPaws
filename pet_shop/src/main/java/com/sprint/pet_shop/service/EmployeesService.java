@@ -1,6 +1,7 @@
 
 package com.sprint.pet_shop.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +10,16 @@ import org.springframework.stereotype.Service;
 import com.sprint.pet_shop.dto.requestDto.EmployeesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Employees;
+import com.sprint.pet_shop.entity.Pets;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.EmployeesRepository;
+import com.sprint.pet_shop.repository.PetsRepository;
 import com.sprint.pet_shop.service.interfaces.EmployeesInterface;
 
 @Service
@@ -27,6 +31,11 @@ public class EmployeesService implements EmployeesInterface {
     @Autowired
     private AddressesRepository addressesRepository;
     // ENTITY → DTO
+    
+    @Autowired
+    private PetsRepository petsRepository;
+    
+    
     private EmployeesResponseDTO toDto(Employees entity) {
 
         EmployeesResponseDTO dto = new EmployeesResponseDTO();
@@ -203,14 +212,96 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-    @Override
-    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPosition(String position) {
+	    @Override
+	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPosition(String position) {
+	
+	        List<EmployeesResponseDTO> data =
+	                employeesRepository.findEmployeesByPosition(position)
+	                        .stream()
+	                        .map(this::toDto)
+	                        .toList();
+	
+	        return new ApiResponse<>("Employees fetched by position", true, data);
+	    }
+	    
+	    @Override
+	    public ApiResponse<String> assignPetToEmployee(Long employeeId, Long petId) {
 
-        List<EmployeesResponseDTO> data =
-                employeesRepository.findEmployeesByPosition(position)
-                        .stream()
-                        .map(this::toDto)
-                        .toList();
+	        Employees emp = employeesRepository.findById(employeeId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-        return new ApiResponse<>("Employees fetched by position", true, data);
-    }}
+	        Pets pet = petsRepository.findById(petId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+
+	        List<Employees> employees = pet.getEmployees();
+
+	        if (!employees.contains(emp)) {
+	            employees.add(emp);
+	        }
+
+	        pet.setEmployees(employees);
+	        petsRepository.save(pet);
+
+	        return new ApiResponse<>("Pet assigned to employee", true, null);
+	    }
+	    
+	    
+	    @Override
+	    public ApiResponse<List<PetsResponseDTO>> getPetsByEmployee(Long employeeId) {
+
+	        Employees emp = employeesRepository.findById(employeeId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+
+	        List<PetsResponseDTO> data = emp.getPets()
+	                .stream()
+	                .map(pet -> {
+	                    PetsResponseDTO dto = new PetsResponseDTO();
+	                    dto.setPet_id(pet.getPet_id());
+	                    dto.setName(pet.getName());
+	                    return dto;
+	                })
+	                .toList();
+
+	        return new ApiResponse<>("Pets of employee", true, data);
+	    }
+	    
+	    @Override
+	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPet(Long petId) {
+
+	        Pets pet = petsRepository.findById(petId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+
+	        List<EmployeesResponseDTO> data = pet.getEmployees()
+	                .stream()
+	                .map(this::toDto)
+	                .toList();
+
+	        return new ApiResponse<>("Employees handling pet", true, data);
+	    }
+	    
+	    @Override
+	    public ApiResponse<String> removePetFromEmployee(Long employeeId, Long petId) {
+
+	        Employees emp = employeesRepository.findById(employeeId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+
+	        Pets pet = petsRepository.findById(petId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+
+	        pet.getEmployees().remove(emp);
+
+	        petsRepository.save(pet);
+
+	        return new ApiResponse<>("Pet removed from employee", true, null);
+	    }
+	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesHiredAfter(Date date) {
+
+	        List<EmployeesResponseDTO> data =
+	                employeesRepository.findByHireDateAfter(date)
+	                        .stream()
+	                        .map(this::toDto)
+	                        .toList();
+
+	        return new ApiResponse<>("Employees hired after date", true, data);
+	    }
+    }

@@ -159,7 +159,7 @@ public class TransactionsRepoTest {
     @Test
     void testValidTransaction3() {
         TransactionsEntity t = createValidTransaction();
-        t.setTransactionStatus(TransactionStatus.Pending);
+        t.setTransactionStatus(TransactionStatus.PENDING);
         assertTrue(validator.validate(t).isEmpty());
     }
 
@@ -232,7 +232,7 @@ public class TransactionsRepoTest {
         TransactionsEntity t = new TransactionsEntity();
         t.setTransactionDate(new Date(System.currentTimeMillis()));
         t.setAmount(new BigDecimal("500.00"));
-        t.setTransactionStatus(TransactionStatus.Success);
+        t.setTransactionStatus(TransactionStatus.SUCCESS);
         return t;
     }
 
