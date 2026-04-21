@@ -15,7 +15,7 @@ import com.sprint.pet_shop.service.CustomersService;
 import com.sprint.pet_shop.service.TransactionsService;
 
 import jakarta.validation.Valid;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/customers")
 public class CustomersController {

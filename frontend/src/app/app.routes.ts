@@ -1,68 +1,36 @@
 import { Routes } from '@angular/router';
-import { Dashboard } from './features/dashboard/dashboard';
-import { PetList } from './features/pets/pet-list/pet-list';
-import { CategoryList } from './features/categories/category-list/category-list';
+
+import { Home } from './features/home/home';
+import { Login } from './features/auth/login/login';
+import { PetServicesModule } from './features/modules/pet-services-module/pet-services-module';
+import { PetsDashboard } from './features/pets/pets-dashboard/pets-dashboard';
+import { GroomingDashboard } from './features/grooming/grooming-dashboard/grooming-dashboard';
+import { VaccinationDashboard } from './features/vaccinations/vaccination-dashboard/vaccination-dashboard';
+import { CustomersDashboard } from './features/customers/customers-dashboard/customers-dashboard';
+import { EmployeesDashboard } from './features/employees/employees-dashboard/employees-dashboard';
+import { CustomertransactionModule } from './features/modules/customertransaction-module/customertransaction-module';
 import { CustomerList } from './features/customers/customer-list/customer-list';
-import { TransactionList } from './features/transactions/transaction-list/transaction-list';
-import { Component } from '@angular/core';
-import { Grooming } from './core/services/grooming'
-
-import { GroomingList } from './features/grooming/grooming-list/grooming-list';
-import { VaccinationList } from './features/vaccinations/vaccination-list/vaccination-list';
-
-import { Assignment } from './features/assignment/assignment';
-import { SupplierList } from './features/inventory/supplier-list/supplier-list';
-import { FoodList } from './features/inventory/food-list/food-list';
-import { EmployeeForm } from './features/employees/employee-form/employee-form';
-import { EmployeeList } from './features/employees/employee-list/employee-list';
-
-// import { PetForm } from './features/pets/pet-form/pet-form';
-// import { CustomerForm } from './features/customers/customer-form/customer-form';
-// import { CategoryForm } from './features/categories/category-form/category-form';
-
-
-
-
-
-import { VaccinationForm } from './features/vaccinations/vaccination-form/vaccination-form';
-import { PetForm } from './features/pets/pet-form/pet-form';
 import { CustomerForm } from './features/customers/customer-form/customer-form';
-import { CategoryForm } from './features/categories/category-form/category-form';
-import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
+import { TransactionsDashboard } from './features/transactions/transactions-dashboard/transactions-dashboard';
+
 
 export const routes: Routes = [
 
-    {path:'', component:Dashboard},
-    {path:'pets',component:PetList},
+  // 🔹 HOME
+  { path: '', component: Home },
 
-  { path: 'pets/add', component: PetForm },
-  { path: 'pets/edit/:id', component: PetForm },
-      { path: 'categories', component: CategoryList },
-        { path: 'categories/add', component: CategoryForm },
+  // 🔹 LOGIN
+  { path: 'login/:module', component: Login },
 
-      { path: 'customers', component: CustomerList },
-        { path: 'customers/add', component: CustomerForm },
+{ path: 'pet-services-module', component: PetServicesModule },
 
-    {path:'transactions', component:TransactionList},
-    {path:'grooming', component:GroomingList},
-      { path: 'grooming/add', component: GroomingForm},
-
-    {path:'vaccinations', component:VaccinationList},
-    { path: 'vaccinations/add', component: VaccinationForm},
-
-  // Employees
-  { path: 'employees', component: EmployeeList },
-  { path: 'employees/add', component: EmployeeForm},
-
-  // Inventory
-  { path: 'food', component: FoodList },
-  { path: 'suppliers', component: SupplierList },
-
-  // Assignment
-  { path: 'assignment', component: Assignment },
-
-  { path: '**', redirectTo: '' }
-
+{ path: 'grooming-dashboard', component: GroomingDashboard },
+{ path: 'vaccination-dashboard', component: VaccinationDashboard },
+{path:'customertransaction-module',component:CustomertransactionModule},
+{ path: 'customers-dashboard', component: CustomersDashboard },
+  { path: 'customer/list', component: CustomerList },
+  { path: 'customer/add', component: CustomerForm },
+  { path: 'customer/edit/:id', component: CustomerForm },
+  {path:'transactions-dashboard',component:TransactionsDashboard}
 
 ];
-

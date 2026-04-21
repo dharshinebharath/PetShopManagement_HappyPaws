@@ -29,7 +29,7 @@ login() {
     const routeMap: any = {
       pets: 'pets-module',
       petservices: '/pet-services-module',
-      customers: 'customers-module',
+      customers: '/customertransaction-module',
       inventory: 'inventory-module',
       employees: 'employees-module'
     };
