@@ -1,0 +1,62 @@
+<!-- DASHBOARD -->
+<div *ngIf="view === 'dashboard'" class="main-container">
+
+  <div class="api-box">
+
+    <h1>🚚 Supplier API Dashboard</h1>
+
+    <!-- SEARCH BOX -->
+    <div class="search-box">
+
+      <input
+        type="number"
+        [(ngModel)]="supplierId"
+        placeholder="Enter Supplier ID"
+      />
+
+      <div class="button-group">
+
+        <button (click)="getAll()">📄 GET All</button>
+
+        <button (click)="getById()">🔍 GET By ID</button>
+
+        <button (click)="add()">➕ POST</button>
+
+        <button (click)="update()">✏️ PUT</button>
+
+        <button (click)="deleteById()">❌ DELETE By ID</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LIST VIEW -->
+<div *ngIf="view === 'list'">
+
+  <button (click)="back()">⬅ Back</button>
+
+  <app-supplier-list
+    [supplierList]="supplierList"
+    (deleteEvent)="deleteById()"
+    (editEvent)="editSupplier($event)">
+  </app-supplier-list>
+
+</div>
+
+<!-- FORM VIEW -->
+<div *ngIf="view === 'form'">
+
+  <button (click)="back()">⬅ Back</button>
+
+  <app-supplier-form
+    [type]="formType"
+    [supplier]="selectedSupplier"
+    (saveEvent)="saveSupplier($event)"
+    (updateEvent)="updateSupplier($event)">
+  </app-supplier-form>
+
+</div>

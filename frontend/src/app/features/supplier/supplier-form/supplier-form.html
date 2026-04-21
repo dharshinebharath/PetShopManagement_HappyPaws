@@ -1,0 +1,19 @@
+<div class="form-container">
+
+  <h2 *ngIf="type === 'add'">➕ Add Supplier</h2>
+  <h2 *ngIf="type === 'update'">✏️ Update Supplier</h2>
+
+  <div class="form-box">
+
+    <input [(ngModel)]="supplier.name" placeholder="Name" />
+    <input [(ngModel)]="supplier.contact_person" placeholder="Contact Person" />
+    <input [(ngModel)]="supplier.phone_number" placeholder="Phone Number" />
+    <input [(ngModel)]="supplier.email" placeholder="Email" />
+    <input [(ngModel)]="supplier.address_id" placeholder="Address ID" />
+
+    <button *ngIf="type === 'add'" (click)="save()">Save</button>
+    <button *ngIf="type === 'update'" (click)="update()">Update</button>
+
+  </div>
+
+</div>

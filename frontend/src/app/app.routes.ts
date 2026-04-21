@@ -1,9 +1,4 @@
 import { Routes } from '@angular/router';
-<<<<<<< HEAD
-import { InventoryComponent } from './features/inventory/inventory';
-import { FoodListComponent } from './features/inventory/food-list/food-list';
-import { FoodFormComponent} from './features/inventory/food-form/food-form';
-=======
 
 import { Home } from './features/home/home';
 import { Login } from './features/auth/login/login';
@@ -13,22 +8,13 @@ import { GroomingDashboard } from './features/grooming/grooming-dashboard/groomi
 import { VaccinationDashboard } from './features/vaccinations/vaccination-dashboard/vaccination-dashboard';
 import { CustomersDashboard } from './features/customers/customers-dashboard/customers-dashboard';
 import { EmployeesDashboard } from './features/employees/employees-dashboard/employees-dashboard';
+import { InventoryModule } from './features/modules/inventory-module/inventory-module';
+import { FoodDashboard } from './features/food/food-dashboard/food-dashboard';
+import { SupplierDashboard } from './features/supplier/supplier-dashboard/supplier-dashboard';
 
 
->>>>>>> b6ae5c2dade2e3b92eba78d3054823df8a3ae120
 export const routes: Routes = [
-  { path: 'inventory', component: InventoryComponent },
 
-<<<<<<< HEAD
-  { path: 'inventory/food/list', component: FoodListComponent },
-
-  { path: 'inventory/food/form', component: FoodFormComponent },
-
-  { path: '', redirectTo: 'inventory', pathMatch: 'full' }
-];
-
-
-=======
   // 🔹 HOME
   { path: '', component: Home },
 
@@ -39,7 +25,11 @@ export const routes: Routes = [
 
 { path: 'grooming-dashboard', component: GroomingDashboard },
 { path: 'vaccination-dashboard', component: VaccinationDashboard },
- 
+
+  { path: 'inventory-module', component: InventoryModule },
+  { path: 'food-dashboard', component: FoodDashboard },
+  { path: 'supplier-dashboard', component: SupplierDashboard }
+
+
 
 ];
->>>>>>> b6ae5c2dade2e3b92eba78d3054823df8a3ae120

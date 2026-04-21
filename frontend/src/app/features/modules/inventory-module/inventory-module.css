@@ -1,0 +1,45 @@
+.inventory-container {
+  height: 100vh;
+  background: linear-gradient(to right, #ffe6f0, #e6f7ff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.title {
+  font-size: 36px;
+  color: #ff66a3;
+  margin-bottom: 40px;
+}
+
+.card-container {
+  display: flex;
+  gap: 40px;
+}
+
+.card {
+  width: 220px;
+  height: 150px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  background: #fff0f5;
+}
+
+.card h2 {
+  color: #ff4d88;
+}
+
+.card p {
+  color: #666;
+}

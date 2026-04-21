@@ -1,0 +1,45 @@
+<div class="table-container">
+
+  <h2>🚚 Supplier List</h2>
+
+  <div class="table-wrapper">
+
+    <table class="supplier-table">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Contact Person</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Address ID</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let s of supplierList">
+
+          <td>{{ s.supplier_id }}</td>
+          <td>{{ s.name }}</td>
+          <td>{{ s.contact_person }}</td>
+          <td>{{ s.phone_number }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.address_id }}</td>
+
+          <td>
+            <button (click)="editSupplier(s)">✏️</button>
+            <button (click)="deleteSupplier(s.supplier_id)">❌</button>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

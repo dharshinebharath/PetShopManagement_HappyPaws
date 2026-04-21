@@ -18,7 +18,7 @@ public class TransactionsTest {
         Long id = 1L;
         Date date = Date.valueOf("2024-01-01");
         BigDecimal amount = BigDecimal.valueOf(5000.75);
-        TransactionStatus status = TransactionStatus.Success;
+        TransactionStatus status = TransactionStatus.SUCCESS;
 
         Customers customer = new Customers();
         customer.setCustomerId(10L);
@@ -90,11 +90,11 @@ public class TransactionsTest {
     void testEnumValues() {
         TransactionsEntity transaction = new TransactionsEntity();
 
-        transaction.setTransactionStatus(TransactionStatus.Success);
-        assertEquals(TransactionStatus.Success, transaction.getTransactionStatus());
+        transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+        assertEquals(TransactionStatus.SUCCESS, transaction.getTransactionStatus());
 
-        transaction.setTransactionStatus(TransactionStatus.Failed);
-        assertEquals(TransactionStatus.Failed, transaction.getTransactionStatus());
+        transaction.setTransactionStatus(TransactionStatus.FAILED);
+        assertEquals(TransactionStatus.FAILED, transaction.getTransactionStatus());
     }
 
     @Test

@@ -14,7 +14,7 @@ import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.service.interfaces.PetFoodInterface;
 
 import jakarta.validation.Valid;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/food")
 public class PetFoodController {

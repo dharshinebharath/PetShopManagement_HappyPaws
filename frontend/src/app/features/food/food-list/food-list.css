@@ -1,0 +1,52 @@
+.table-container {
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 22px;
+  color: #cc0000;
+  margin-bottom: 15px;
+}
+
+.table-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.food-table {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+thead {
+  background: linear-gradient(to right, #ff4d4d, #ff8080);
+  color: white;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+tr {
+  border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+  background: #fff5f5;
+}
+
+button {
+  margin: 2px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #ff6666;
+  color: white;
+}
