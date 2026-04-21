@@ -1,0 +1,32 @@
+<h2 style="text-align:center;">Food List</h2>
+
+<div style="text-align:center;">
+  <input type="number" [(ngModel)]="searchId" name="searchId" placeholder="Enter ID">
+  <button (click)="search()">Search</button>
+  <button (click)="getAll()">Reset</button>
+</div>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Brand</th>
+    <th>Type</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr *ngFor="let food of foods">
+    <td>{{food.food_id}}</td>
+    <td>{{food.name}}</td>
+    <td>{{food.brand}}</td>
+    <td>{{food.type}}</td>
+    <td>{{food.quantity}}</td>
+    <td>{{food.price}}</td>
+    <td>
+      <button (click)="edit(food.food_id!)">Edit</button>
+      <button (click)="delete(food.food_id!)">Delete</button>
+    </td>
+  </tr>
+</table>

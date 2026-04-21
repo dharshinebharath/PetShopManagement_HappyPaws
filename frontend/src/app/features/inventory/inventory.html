@@ -2,7 +2,6 @@
 
   <h1 class="title">INVENTORY</h1>
 
-  <!-- Tabs -->
   <div class="tabs">
     <button (click)="activeTab='food'" [class.active]="activeTab==='food'">
       Pet Food
@@ -13,15 +12,8 @@
     </button>
   </div>
 
-  <!-- CONTENT -->
   <div class="box">
-
-    <!-- FOOD FEATURE (SELF CONTAINED) -->
     <app-food-list *ngIf="activeTab==='food'"></app-food-list>
-
-    <!-- SUPPLIER FEATURE -->
-    <app-supplier-list *ngIf="activeTab==='supplier'"></app-supplier-list>
-
   </div>
 
 </div>

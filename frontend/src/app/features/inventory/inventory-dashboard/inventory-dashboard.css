@@ -1,0 +1,17 @@
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  margin: auto;
+}
+
+button {
+  margin: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}

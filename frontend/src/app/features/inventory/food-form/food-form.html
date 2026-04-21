@@ -1,1 +1,17 @@
-<p>food-form works!</p>
+<h2 style="text-align:center;">Food Form</h2>
+
+<div class="form-container">
+
+  <input [(ngModel)]="food.name" name="name" placeholder="Name" required>
+
+  <input [(ngModel)]="food.brand" name="brand" placeholder="Brand">
+
+  <input [(ngModel)]="food.type" name="type" placeholder="Type">
+
+  <input type="number" [(ngModel)]="food.quantity" name="quantity" placeholder="Quantity">
+
+  <input type="number" [(ngModel)]="food.price" name="price" placeholder="Price">
+
+  <button (click)="submit()">Submit</button>
+
+</div>
