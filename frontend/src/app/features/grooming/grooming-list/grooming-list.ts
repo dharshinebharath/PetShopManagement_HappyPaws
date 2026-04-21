@@ -1,3 +1,4 @@
+
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { GroomingService } from '../../../core/services/groomingService';
 import { CommonModule } from '@angular/common';
@@ -74,3 +75,14 @@ export class GroomingList {
     });
   }
 }
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-grooming-list',
+  imports: [],
+  templateUrl: './grooming-list.html',
+  styleUrl: './grooming-list.css',
+})
+export class GroomingList {}
+

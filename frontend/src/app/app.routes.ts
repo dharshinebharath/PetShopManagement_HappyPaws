@@ -8,8 +8,10 @@ import { GroomingDashboard } from './features/grooming/grooming-dashboard/groomi
 import { VaccinationDashboard } from './features/vaccinations/vaccination-dashboard/vaccination-dashboard';
 import { CustomersDashboard } from './features/customers/customers-dashboard/customers-dashboard';
 import { EmployeesDashboard } from './features/employees/employees-dashboard/employees-dashboard';
+
 import { GroomingList } from './features/grooming/grooming-list/grooming-list';
 import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
+
 
 
 export const routes: Routes = [
@@ -20,6 +22,7 @@ export const routes: Routes = [
   // 🔹 LOGIN
   { path: 'login/:module', component: Login },
 
+
 { path: 'pet-services-module', component: PetServicesModule },
 
 { path: 'grooming-dashboard', component: GroomingDashboard },
@@ -28,5 +31,13 @@ export const routes: Routes = [
 { path: 'grooming/list', component: GroomingList },
 
 {path: 'grooming/form', component:GroomingForm}
+
+
+{ path: 'pet-services-module', component: PetServicesModule },
+
+{ path: 'grooming-dashboard', component: GroomingDashboard },
+{ path: 'vaccination-dashboard', component: VaccinationDashboard },
+ 
+
 
 ];
