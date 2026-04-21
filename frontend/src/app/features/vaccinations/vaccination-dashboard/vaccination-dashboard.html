@@ -1,1 +1,65 @@
+
+<div class="min-h-screen flex items-center justify-center 
+            bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 p-6">
+
+    <div class="w-full max-w-md bg-white/90 backdrop-blur-md 
+              border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+
+        <!-- TITLE -->
+        <h2 class="text-2xl font-bold text-center text-blue-900 mb-4">
+            Vaccination API
+        </h2>
+
+        <!-- GET ALL -->
+        <button routerLink="/vaccinations/list" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 
+             hover:from-emerald-600 hover:to-teal-700 
+             text-white py-2 rounded-lg shadow">
+            GET All Vaccinations
+        </button>
+
+        <!-- GET BY ID -->
+        <div class="flex gap-2">
+            <input #vid placeholder="Enter Vaccination ID" class="border border-teal-200 p-2 rounded w-full 
+               focus:outline-none focus:ring-2 focus:ring-teal-400">
+
+            <button (click)="viewVaccination(vid.value)"
+                class="bg-teal-500 hover:bg-teal-600 text-white px-4 rounded-lg shadow">
+                GET
+            </button>
+        </div>
+
+        <!-- POST -->
+        <button routerLink="/vaccinations/add" class="w-full bg-gradient-to-r from-blue-500 to-teal-600 
+             hover:from-blue-600 hover:to-teal-700 
+             text-white py-2 rounded-lg shadow">
+            Add Vaccination (POST)
+        </button>
+
+        <!-- PUT -->
+        <div class="flex gap-2">
+            <input #uid placeholder="Enter Vaccination ID for Update" class="border border-slate-300 p-2 rounded w-full 
+               focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+            <button (click)="deleteVaccination(uid.value)"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-lg shadow">
+                UPDATE
+            </button>
+        </div>
+
+        <!-- DELETE -->
+        <div class="flex gap-2">
+            <input #did placeholder="Enter Vaccination ID to Delete" class="border border-slate-300 p-2 rounded w-full 
+               focus:outline-none focus:ring-2 focus:ring-red-400">
+
+            <button (click)="deleteVaccination(did.value)"
+                class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-lg shadow">
+                DELETE
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
 <p>vaccination-dashboard works!</p>
+
