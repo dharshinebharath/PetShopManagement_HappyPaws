@@ -1,20 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { GroomingService } from '../../../core/services/groomingService';
 
 @Component({
   selector: 'app-grooming-dashboard',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './grooming-dashboard.html'
 })
 export class GroomingDashboard {
 
-
   router = inject(Router);
-    groomingService = inject(GroomingService);
+  groomingService = inject(GroomingService);
 
   // GET ALL
   goToList() {
@@ -23,28 +21,69 @@ export class GroomingDashboard {
 
   // GET BY ID
   viewById(id: string) {
-    if (!id) return;
+  if (!id) {
+    alert('Please enter ID');
+    return;
+  }
 
-    this.router.navigate(['/grooming/list'], {
-      queryParams: { id: id }
+  // 🔥 CALL API HERE (NOT in list page)
+  this.groomingService.getById(Number(id)).subscribe({
+    next: (res: any) => {
+      // ✅ If found → go to list page
+      this.router.navigate(['/grooming/list'], {
+        queryParams: { id }
+      });
+    },
+    error: (err) => {
+      if (err.status === 404) {
+        alert('Service ID not found ❌');
+      } else {
+        alert('Something went wrong ⚠️');
+      }
+    }
+  });
+}
+
+  // ✅ UPDATE (CHECK ID FIRST)
+  updateService(id: string) {
+    if (!id) {
+      alert('Enter ID to update');
+      return;
+    }
+
+    this.groomingService.getById(Number(id)).subscribe({
+      next: () => {
+        // ✅ ID exists → go to form
+        this.router.navigate(['/grooming/form'], {
+          queryParams: { id }
+        });
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          alert('Cannot update ❌ ID not found');
+        } else {
+          alert('Error checking ID');
+        }
+      }
     });
   }
 
-  updateService(id: string) {
-    console.log('update', id);
-  }
-
-   deleteService(id: string) {
-    if (!id) return;
+  // DELETE
+  deleteService(id: string) {
+    if (!id) {
+      alert('Enter ID to delete');
+      return;
+    }
 
     this.groomingService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Service deleted successfully');
-        console.log('Deleted ID:', id);
+        alert('Service deleted successfully ✅');
+              this.router.navigate(['/grooming/list']);
+
       },
       error: (err) => {
-        console.error('Delete failed', err);
-        alert('Failed to delete service');
+        console.error(err);
+        alert('Delete failed ❌');
       }
     });
   }

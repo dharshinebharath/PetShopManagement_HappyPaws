@@ -8,26 +8,43 @@ export class GroomingService {
 private baseUrl='http://localhost:8081/api/v1/grooming-services'
 
 http:HttpClient=inject(HttpClient);
+  private getAuthHeaders() {
+    const username = 'Dharshine';
+    const password = 'Dharsh123';
 
+    const auth = btoa(`${username}:${password}`);
 
- getAll() {
-    return this.http.get(this.baseUrl);
+    return {
+      headers: {
+        Authorization: `Basic ${auth}`
+      }
+    };
   }
 
+   // GET ALL
+  getAll() {
+    return this.http.get(this.baseUrl, this.getAuthHeaders());
+  }
+
+  // GET BY ID
   getById(id: number) {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
 
+  // CREATE
   create(data: any) {
-    return this.http.post(this.baseUrl, data);
+    return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
 
+  // UPDATE
   update(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/${id}`, data);
+    return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
 
+  // DELETE
   delete(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+
 
 }

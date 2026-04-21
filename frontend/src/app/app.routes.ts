@@ -9,6 +9,7 @@ import { VaccinationDashboard } from './features/vaccinations/vaccination-dashbo
 import { CustomersDashboard } from './features/customers/customers-dashboard/customers-dashboard';
 import { EmployeesDashboard } from './features/employees/employees-dashboard/employees-dashboard';
 import { GroomingList } from './features/grooming/grooming-list/grooming-list';
+import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
 
 
 export const routes: Routes = [
@@ -25,5 +26,7 @@ export const routes: Routes = [
 { path: 'vaccination-dashboard', component: VaccinationDashboard },
  
 { path: 'grooming/list', component: GroomingList },
+
+{path: 'grooming/form', component:GroomingForm}
 
 ];
