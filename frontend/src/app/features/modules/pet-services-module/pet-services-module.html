@@ -1,2 +1,49 @@
-<button routerLink="/grooming-dashboard">Grooming</button>
-<button routerLink="/vaccination-dashboard">Vaccination</button>
+<div class="min-h-screen pt-[10px] 
+            bg-gradient-to-br from-green-100 via-green-50 to-blue-100">
+
+    <!-- TITLE -->
+    <h1 class="text-4xl bg-white/80 backdrop-blur-md shadow-md p-6 rounded-2xl text-center 
+             text-blue-900 font-extrabold tracking-wide mx-10">
+        Services & Medical Operations
+    </h1>
+
+    <!-- CARDS CONTAINER (CENTERED) -->
+    <div class="flex justify-center items-center gap-12 mt-20 flex-wrap">
+
+        <!-- Grooming Card -->
+        <div routerLink="/grooming-dashboard" class="w-[280px] h-[360px] flex flex-col justify-center 
+             bg-green-200 text-green-900 p-8 rounded-2xl shadow-md border border-green-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                ✂️ Grooming Services
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Manage pet grooming services like washing, haircut, and styling.
+                Perform CRUD operations and assign services to pets easily.
+            </p>
+
+        </div>
+
+        <!-- Vaccination Card -->
+        <div routerLink="/vaccination-dashboard" class="w-[280px] h-[360px] flex flex-col justify-center 
+             bg-blue-200 text-blue-900 p-8 rounded-2xl shadow-md border border-blue-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                💉 Vaccination
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Maintain vaccination records, track immunization schedules,
+                and manage pet health data efficiently.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
