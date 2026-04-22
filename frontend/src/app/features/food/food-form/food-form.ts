@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FoodService } from '../../../core/services/food';
+import {  FoodService } from '../../../core/services/food';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

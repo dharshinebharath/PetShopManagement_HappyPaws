@@ -3,6 +3,7 @@ package com.sprint.pet_shop.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,8 +37,8 @@ public class GroomingServices {
     @NotNull(message = "Availability cannot be null")
 	private boolean available=true;
 
-    @ManyToMany(mappedBy = "groomingServices")
-    private List<Pets> pets;
+    @ManyToMany(mappedBy = "groomingServices", cascade = CascadeType.ALL)
+	private List<Pets> pets;
 
 	public Long getServiceId() {
 		return serviceId;

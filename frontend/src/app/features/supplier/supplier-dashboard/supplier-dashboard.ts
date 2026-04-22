@@ -1,106 +1,64 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-
-
-import { SupplierForm } from '../supplier-form/supplier-form';
-import { SupplierList } from '../supplier-list/supplier-list';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { SupplierService } from '../../../core/services/supplier';
+
 
 @Component({
   selector: 'app-supplier-dashboard',
   standalone: true,
-  imports: [CommonModule, SupplierList, SupplierForm,FormsModule],
-  templateUrl: './supplier-dashboard.html',
-  styleUrl: './supplier-dashboard.css',
+  imports: [FormsModule, RouterModule],
+  templateUrl: './supplier-dashboard.html'
 })
 export class SupplierDashboard {
-  baseUrl = 'http://localhost:8082/api/v1';
 
-  // ✅ VIEW CONTROL
-  view: string = 'dashboard'; // dashboard | list | form
-  formType: string = '';
+  router = inject(Router);
+  supplierService = inject(SupplierService);
 
-  // ✅ DATA
-  supplierList: any[] = [];
-  selectedSupplier: any = {};
-
-  // ✅ SEARCH INPUT
-  supplierId: number | null = null;
-
-  constructor(private http: HttpClient) {}
-
-  // ---------------- GET ALL ----------------
-  getAll() {
-    this.view = 'list';
-
-    this.http.get<any[]>(`${this.baseUrl}/supplier`)
-      .subscribe(res => {
-        this.supplierList = res;
-      });
+  goToList() {
+    this.router.navigate(['/supplier/list']);
   }
 
-  // ---------------- GET BY ID ----------------
-  getById() {
-    if (!this.supplierId) return;
+  viewById(id: string) {
+    if (!id) {
+      alert('Enter ID');
+      return;
+    }
 
-    this.view = 'list';
-
-    this.http.get(`${this.baseUrl}/supplier/${this.supplierId}`)
-      .subscribe(res => {
-        this.supplierList = [res];
-      });
+    this.supplierService.getById(Number(id)).subscribe({
+      next: () => {
+        this.router.navigate(['/supplier/list'], { queryParams: { id } });
+      },
+      error: () => alert('Supplier not found ❌')
+    });
   }
 
-  // ---------------- ADD ----------------
-  add() {
-    this.view = 'form';
-    this.formType = 'add';
-    this.selectedSupplier = {};
+  updateSupplier(id: string) {
+    if (!id) {
+      alert('Enter ID');
+      return;
+    }
+
+    this.supplierService.getById(Number(id)).subscribe({
+      next: () => {
+        this.router.navigate(['/supplier/form'], { queryParams: { id } });
+      },
+      error: () => alert('ID not found ❌')
+    });
   }
 
-  // ---------------- UPDATE ----------------
-  update() {
-    this.view = 'form';
-    this.formType = 'update';
+  deleteSupplier(id: string) {
+    if (!id) {
+      alert('Enter ID');
+      return;
+    }
+
+    this.supplierService.delete(Number(id)).subscribe({
+      next: () => {
+        alert('Deleted ✅');
+        this.router.navigate(['/supplier/list']);
+      },
+      error: () => alert('Delete failed ❌')
+    });
   }
-
-  // ---------------- DELETE BY ID ----------------
-  deleteById() {
-    if (!this.supplierId) return;
-
-    this.http.delete(`${this.baseUrl}/supplier/${this.supplierId}`)
-      .subscribe(() => {
-        this.getAll();
-      });
-  }
-
-  // ---------------- EDIT ----------------
-  editSupplier(supplier: any) {
-    this.view = 'form';
-    this.formType = 'update';
-    this.selectedSupplier = { ...supplier };
-  }
-
-  // ---------------- SAVE (POST) ----------------
-  saveSupplier(data: any) {
-    this.http.post(`${this.baseUrl}/supplier`, data)
-      .subscribe(() => {
-        this.getAll();
-      });
-  }
-
-  // ---------------- UPDATE (PUT) ----------------
-  updateSupplier(data: any) {
-    this.http.put(`${this.baseUrl}/supplier/${data.supplier_id}`, data)
-      .subscribe(() => {
-        this.getAll();
-      });
-  }
-
-  // ---------------- BACK ----------------
-  back() {
-    this.view = 'dashboard';
-  }
-
 }

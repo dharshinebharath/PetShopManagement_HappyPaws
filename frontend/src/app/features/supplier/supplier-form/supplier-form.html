@@ -1,19 +1,17 @@
-<div class="form-container">
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
 
-  <h2 *ngIf="type === 'add'">➕ Add Supplier</h2>
-  <h2 *ngIf="type === 'update'">✏️ Update Supplier</h2>
+  <h2 class="text-xl font-bold mb-4">
+    {{ supplierId ? 'Update Supplier' : 'Add Supplier' }}
+  </h2>
 
-  <div class="form-box">
+  <input [(ngModel)]="formData.name" placeholder="Name" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.contactPerson" placeholder="Contact Person" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.phoneNumber" placeholder="Phone" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.email" placeholder="Email" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.addressId" type="number" placeholder="Address ID" class="border p-2 w-full mb-2">
 
-    <input [(ngModel)]="supplier.name" placeholder="Name" />
-    <input [(ngModel)]="supplier.contact_person" placeholder="Contact Person" />
-    <input [(ngModel)]="supplier.phone_number" placeholder="Phone Number" />
-    <input [(ngModel)]="supplier.email" placeholder="Email" />
-    <input [(ngModel)]="supplier.address_id" placeholder="Address ID" />
-
-    <button *ngIf="type === 'add'" (click)="save()">Save</button>
-    <button *ngIf="type === 'update'" (click)="update()">Update</button>
-
-  </div>
+  <button (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+    Submit
+  </button>
 
 </div>

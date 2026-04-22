@@ -3,6 +3,7 @@ package com.sprint.pet_shop.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,89 +18,52 @@ import jakarta.validation.constraints.NotNull;
 @Table(name="pet_food")
 public class PetFood {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="food_id")
-	private Long foodId;
-	
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="food_id")
+    private Long foodId;
+
     @NotBlank(message = "Food name cannot be empty")
-	@Column(length=255)
-	private String name;
-	
+    @Column(length=255)
+    private String name;
+
     @NotBlank(message = "Brand cannot be empty")
-	@Column(length=100)
-	private String brand;
-	
+    @Column(length=100)
+    private String brand;
+
     @NotBlank(message = "Type cannot be empty")
-	@Column(length=50)
-	private String type;
-	
+    @Column(length=50)
+    private String type;
+
     @NotNull(message = "Quantity cannot be null")
-	private Integer quantity;
-	
+    private Integer quantity;
+
     @NotNull(message = "Price cannot be null")
-	@Column(precision=10, scale=2)
-	private BigDecimal price;
-    
-    @ManyToMany(mappedBy = "foods")
+    @Column(precision=10, scale=2)
+    private BigDecimal price;
+
+    @ManyToMany(mappedBy = "foods", cascade = CascadeType.ALL)
     private List<Pets> pets;
 
-	public Long getFoodId() {
-		return foodId;
-	}
+    // Getters and Setters
+    public Long getFoodId() { return foodId; }
+    public void setFoodId(Long foodId) { this.foodId = foodId; }
 
-	public void setFoodId(Long foodId) {
-		this.foodId = foodId;
-	}
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-	public String getName() {
-		return name;
-	}
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 
-	public String getBrand() {
-		return brand;
-	}
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
+    public BigDecimal getPrice() { return price; }
+    public void setPrice(BigDecimal price) { this.price = price; }
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public List<Pets> getPets() {
-		return pets;
-	}
-
-	public void setPets(List<Pets> pets) {
-		this.pets = pets;
-	}
-
-	
-	
+    public List<Pets> getPets() { return pets; }
+    public void setPets(List<Pets> pets) { this.pets = pets; }
 }

@@ -1,29 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { FoodList } from '../food-list/food-list';
 import { FoodForm } from '../food-form/food-form';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { FoodService } from '../../../core/services/food';
 
 @Component({
   selector: 'app-food-dashboard',
   standalone: true,
-  imports: [CommonModule, FoodList, FoodForm,FormsModule],
+  imports: [
+    CommonModule,
+    FoodList,
+    FoodForm,
+    FormsModule,
+    RouterOutlet
+  ],
   templateUrl: './food-dashboard.html',
   styleUrl: './food-dashboard.css',
 })
 export class FoodDashboard {
 
-    router = inject(Router);
+  router = inject(Router);
   foodService = inject(FoodService);
 
+  // ✅ ADD FOOD (FIXED)
+  addFood() {
+    this.router.navigate(['/food/form']);
+  }
+
+  // VIEW ALL
   goToList() {
     this.router.navigate(['/food/list']);
   }
 
+  // VIEW BY ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -41,6 +53,7 @@ export class FoodDashboard {
     });
   }
 
+  // UPDATE
   updateFood(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -55,6 +68,7 @@ export class FoodDashboard {
     });
   }
 
+  // DELETE
   deleteFood(id: string) {
     if (!id) {
       alert('Enter ID to delete');

@@ -4,15 +4,13 @@ import { inject, Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class SupplierService {
+export class GroomingService {
+private baseUrl='http://localhost:8081/api/v1/grooming-services'
 
-  private baseUrl = 'http://localhost:8081/api/v1/suppliers';
-
-  http: HttpClient = inject(HttpClient);
-
+http:HttpClient=inject(HttpClient);
   private getAuthHeaders() {
-    const username = 'Shirlly';
-    const password = 'Shirl123';
+    const username = 'Dharshine';
+    const password = 'Dharsh123';
 
     const auth = btoa(`${username}:${password}`);
 
@@ -23,7 +21,7 @@ export class SupplierService {
     };
   }
 
-  // GET ALL
+   // GET ALL
   getAll() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
@@ -47,4 +45,6 @@ export class SupplierService {
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+
+
 }
