@@ -116,7 +116,7 @@ public class PetsService implements PetsInterface {
 	public ApiResponse<List<PetsResponseDTO>> getAllPets() {
 
         List<PetsResponseDTO> data =
-                petsRepository.findAll()
+                petsRepository.findAllSorted()
                         .stream()
                         .map(this::toDto)
                         .toList();
@@ -243,11 +243,16 @@ public class PetsService implements PetsInterface {
         existing.setImage_url(dto.getImage_url());
 
      // CATEGORY
-        if (dto.getCategory_id() != null) {
-            PetCategories category = categoryRepository.findById(dto.getCategory_id())
-                    .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-            existing.setCategory(category);
-        }
+      // CATEGORY (FIXED)
+if (dto.getCategory_id() != null && dto.getCategory_id() > 0) {
+
+    PetCategories category = categoryRepository
+            .findById(dto.getCategory_id())
+            .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+
+    existing.setCategory(category);
+
+}
 
         // GROOMING
         if (dto.getGroomingServiceIds() != null) {

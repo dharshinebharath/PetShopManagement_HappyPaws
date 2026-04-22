@@ -3,10 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import { Sidebar } from "./shared/components/sidebar/sidebar";
 import { Dashboard } from "./features/dashboard/dashboard";
 import { PetsDashboard } from './features/pets/pets-dashboard/pets-dashboard';
+import { Home } from './features/home/home';
+
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,PetsDashboard],
+  imports: [RouterOutlet, Sidebar, Dashboard, Home],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
