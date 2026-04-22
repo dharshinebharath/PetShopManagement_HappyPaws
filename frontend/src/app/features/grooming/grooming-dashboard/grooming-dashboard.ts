@@ -5,21 +5,38 @@ import { Router, RouterModule } from '@angular/router';
 import { GroomingService } from '../../../core/services/groomingService';
 
 
+
+
 import { HttpClient } from '@angular/common/http';
+
 
 
 
 @Component({
   selector: 'app-grooming-dashboard',
   standalone: true,
+
+
   imports: [FormsModule, RouterModule],
+
+
+
+  imports: [FormsModule, RouterModule],
+
   templateUrl: './grooming-dashboard.html'
 })
 export class GroomingDashboard {
 
 
+
   router = inject(Router);
   groomingService = inject(GroomingService);
+
+
+
+  router = inject(Router);
+  groomingService = inject(GroomingService);
+
 
   // GET ALL
   goToList() {

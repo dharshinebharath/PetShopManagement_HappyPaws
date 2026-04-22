@@ -1,5 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.html'
+
 import { Sidebar } from "./shared/components/sidebar/sidebar";
 import { Dashboard } from "./features/dashboard/dashboard";
 import { Home } from "./features/home/home";
@@ -13,7 +21,6 @@ import { HttpClient } from '@angular/common/http';
   imports: [RouterOutlet, Sidebar, Dashboard, Home,Login],
   templateUrl: './app.html',
   styleUrl: './app.css'
+
 })
-export class App {
-  protected readonly title = signal('frontend');
-}
+export class App {}

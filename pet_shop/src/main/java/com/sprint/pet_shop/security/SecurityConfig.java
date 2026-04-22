@@ -74,6 +74,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of("http://localhost:4200"));
+
         config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -94,6 +95,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
+
+
                 		.requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
 
                         // PUBLIC
@@ -101,6 +104,18 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**")
                         .permitAll()
+
+
+                        //MAPPINGS 
+                        
+                                        // EXACT MATCH
+                                        .requestMatchers("/api/v1/pets/*/grooming-services").hasRole("MEDICAL")
+
+                                        // WITH EXTRA PATH
+                                        .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
+                                        .requestMatchers("/api/v1/pets/*/vaccinations").hasRole("MEDICAL")
+                                        .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
+
 
                         // PETS
                         .requestMatchers("/api/v1/pets/**").hasRole("PET_ADMIN")
@@ -121,11 +136,19 @@ public class SecurityConfig {
 
                         // EMPLOYEES
                         .requestMatchers("/api/v1/employees/**").hasRole("HR_ADMIN")
+
+
+                        // PET MAPPINGS
+                        // .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
+                        // .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
+
+
                         
 
                         // PET MAPPINGS
                         .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
                         .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
+
                         .requestMatchers("/api/v1/pets/*/food/**").hasRole("INVENTORY_ADMIN")
                         .requestMatchers("/api/v1/pets/*/suppliers/**").hasRole("INVENTORY_ADMIN")
 

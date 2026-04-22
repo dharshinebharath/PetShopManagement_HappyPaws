@@ -22,6 +22,7 @@
             <input #sid placeholder="Enter Service ID" class="border border-teal-200 p-2 rounded w-full 
                focus:outline-none focus:ring-2 focus:ring-teal-400">
 
+
             <button (click)="viewById(sid.value)"
                 class="bg-teal-500 hover:bg-teal-600 text-white px-4 rounded-lg shadow">
                 GET
@@ -59,4 +60,44 @@
     </div>
 
 </div>
+
+
+            <button (click)="viewById(sid.value)"
+                class="bg-teal-500 hover:bg-teal-600 text-white px-4 rounded-lg shadow">
+                GET
+            </button>
+        </div>
+<!-- -- POST -->
+        <button routerLink="/grooming/form" class="w-full bg-gradient-to-r from-blue-500 to-teal-600 
+             hover:from-blue-600 hover:to-teal-700 
+             text-white py-2 rounded-lg shadow">
+            Add Grooming Service (POST)
+        </button>
+
+        <!-- PUT -->
+        <div class="flex gap-2">
+            <input #uid placeholder="Enter Service ID for Update" class="border border-slate-300 p-2 rounded w-full 
+               focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+            <button (click)="updateService(uid.value)"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-lg shadow">
+                UPDATE
+            </button>
+        </div>
+
+        <!-- DELETE -->
+        <div class="flex gap-2">
+            <input #did placeholder="Enter Service ID to Delete" class="border border-slate-300 p-2 rounded w-full 
+               focus:outline-none focus:ring-2 focus:ring-red-400">
+
+            <button (click)="deleteService(did.value)"
+                class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-lg shadow">
+                DELETE
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
 
