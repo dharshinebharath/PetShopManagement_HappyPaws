@@ -1,8 +1,13 @@
-
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { GroomingService } from '../../../core/services/groomingService';
+
+
+@Component({
+  selector: 'app-grooming-dashboard',
+  standalone: true,
+  imports: [FormsModule, RouterModule],
 
 
 
@@ -20,19 +25,13 @@ import { HttpClient } from '@angular/common/http';
   imports: [FormsModule, RouterModule],
 
 
-
-  imports: [FormsModule, RouterModule],
-
   templateUrl: './grooming-dashboard.html'
 })
 export class GroomingDashboard {
 
 
-
   router = inject(Router);
   groomingService = inject(GroomingService);
-
-
 
   router = inject(Router);
   groomingService = inject(GroomingService);

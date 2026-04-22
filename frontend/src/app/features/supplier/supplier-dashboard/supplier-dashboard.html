@@ -1,0 +1,41 @@
+<div class="min-h-screen flex items-center justify-center 
+ bg-gradient-to-br from-slate-50 via-teal-50 to-emerald-50 p-6">
+
+  <div class="w-full max-w-md bg-white/90 backdrop-blur-md 
+   border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+
+    <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
+      Supplier API
+    </h2>
+
+    <button (click)="goToList()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-2 rounded-lg">
+      GET All Suppliers
+    </button>
+
+    <div class="flex gap-2">
+      <input #sid placeholder="Enter Supplier ID" class="border p-2 rounded w-full">
+      <button (click)="viewById(sid.value)" class="bg-teal-500 text-white px-4 rounded-lg">
+        GET
+      </button>
+    </div>
+
+    <button routerLink="/supplier/form" class="w-full bg-gradient-to-r from-blue-500 to-teal-600 text-white py-2 rounded-lg">
+      Add Supplier (POST)
+    </button>
+
+    <div class="flex gap-2">
+      <input #uid placeholder="Enter Supplier ID for Update" class="border p-2 rounded w-full">
+      <button (click)="updateSupplier(uid.value)" class="bg-blue-500 text-white px-4 rounded-lg">
+        UPDATE
+      </button>
+    </div>
+
+    <div class="flex gap-2">
+      <input #did placeholder="Enter Supplier ID to Delete" class="border p-2 rounded w-full">
+      <button (click)="deleteSupplier(did.value)" class="bg-red-500 text-white px-4 rounded-lg">
+        DELETE
+      </button>
+    </div>
+
+  </div>
+</div>

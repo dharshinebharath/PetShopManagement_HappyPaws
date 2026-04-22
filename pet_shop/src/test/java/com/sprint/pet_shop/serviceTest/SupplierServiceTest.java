@@ -107,5 +107,10 @@ public class SupplierServiceTest {
 
 	        assertThrows(ResourceNotFoundException.class,
 	                () -> supplierService.getSupplierById(1L));
-	    }
+
 	}
+
+
+
+	}
+

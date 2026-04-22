@@ -1,0 +1,17 @@
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+
+  <h2 class="text-xl font-bold mb-4">
+    {{ supplierId ? 'Update Supplier' : 'Add Supplier' }}
+  </h2>
+
+  <input [(ngModel)]="formData.name" placeholder="Name" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.contactPerson" placeholder="Contact Person" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.phoneNumber" placeholder="Phone" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.email" placeholder="Email" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.addressId" type="number" placeholder="Address ID" class="border p-2 w-full mb-2">
+
+  <button (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+    Submit
+  </button>
+
+</div>

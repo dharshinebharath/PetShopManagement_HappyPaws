@@ -10,6 +10,9 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './employee-list.html',
   styleUrl: './employee-list.css',
 })
+
+export class EmployeeList {}
+
 export class EmployeeList {
 
   http = inject(HttpClient);
@@ -93,3 +96,4 @@ export class EmployeeList {
       });
   }
 }
+

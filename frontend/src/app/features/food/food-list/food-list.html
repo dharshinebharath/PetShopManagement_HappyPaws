@@ -1,0 +1,33 @@
+<div class="min-h-screen p-10">
+
+  <h2 class="text-3xl font-bold text-center mb-8">
+    Pet Food List
+  </h2>
+
+  <table class="w-full bg-white shadow rounded">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Type</th>
+        <th>Qty</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let f of foodList">
+        <td>{{ f.foodId }}</td>
+        <td>{{ f.name }}</td>
+        <td>{{ f.brand }}</td>
+        <td>{{ f.type }}</td>
+        <td>{{ f.quantity }}</td>
+        <td>₹ {{ f.price }}</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

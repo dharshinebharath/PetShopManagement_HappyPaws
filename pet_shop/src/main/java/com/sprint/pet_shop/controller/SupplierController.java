@@ -13,7 +13,7 @@ import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 import com.sprint.pet_shop.service.SupplierService;
 
 import jakarta.validation.Valid;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/suppliers")
 public class SupplierController {

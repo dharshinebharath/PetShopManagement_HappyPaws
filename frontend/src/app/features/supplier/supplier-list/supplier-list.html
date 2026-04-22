@@ -1,0 +1,33 @@
+<div class="min-h-screen p-10">
+
+  <h2 class="text-3xl font-bold text-center mb-8">
+    Suppliers
+  </h2>
+
+  <table class="w-full bg-white shadow rounded">
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Address ID</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let s of supplierList">
+        <td>{{ s.supplierId }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.contactPerson }}</td>
+        <td>{{ s.phoneNumber }}</td>
+        <td>{{ s.email }}</td>
+        <td>{{ s.addressId }}</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

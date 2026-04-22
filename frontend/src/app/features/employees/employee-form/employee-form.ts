@@ -10,6 +10,9 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule,CommonModule],
   templateUrl: './employee-form.html'
 })
+
+export class EmployeeForm {}
+
 export class EmployeeForm {
 
   http = inject(HttpClient);
@@ -156,3 +159,4 @@ export class EmployeeForm {
     }
   }
 }
+

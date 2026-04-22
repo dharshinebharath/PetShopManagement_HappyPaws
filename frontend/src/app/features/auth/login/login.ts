@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+
+
 
 import { Router, RouterModule } from '@angular/router';
-
 
 import { HttpClient } from '@angular/common/http';
 
@@ -11,6 +13,10 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule, RouterModule],
+
+  templateUrl: './login.html',
+  styleUrl: './login.css'
+
 
   templateUrl: './login.html'
 
@@ -22,6 +28,12 @@ export class Login {
 
   router = inject(Router);
 
+  route = inject(ActivatedRoute);
+  http = inject(HttpClient);
+
+  moduleName: string = '';
+
+
   http = inject(HttpClient);
 
   route = inject(ActivatedRoute);
@@ -29,31 +41,11 @@ export class Login {
 
   moduleName: string = '';
 
-
   loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
   });
 
-
-  login() {
-
-    const username = this.loginForm.value.username!;
-    const password = this.loginForm.value.password!;
-
-    // 🔐 Basic Auth header
-    const headers = {
-      Authorization: 'Basic ' + btoa(username + ':' + password)
-    };
-
-    this.http.get('http://localhost:8081/api/v1/me', { headers })
-      .subscribe({
-        next: (res: any) => {
-
-          const user = res.username;
-
-          // 🎯 ROLE BASED REDIRECT
-=======
 
   ngOnInit() {
     this.moduleName = this.route.snapshot.paramMap.get('module') || '';
@@ -75,7 +67,27 @@ export class Login {
 
           const user = res.username;
 
-          // 🎯 ROLE BASED ROUTING
+
+
+  ngOnInit() {
+    this.moduleName = this.route.snapshot.paramMap.get('module') || '';
+  }
+
+  login() {
+
+    const username = this.loginForm.value.username!;
+    const password = this.loginForm.value.password!;
+
+    // 🔐 Basic Auth
+    const headers = {
+      Authorization: 'Basic ' + btoa(username + ':' + password)
+    };
+
+    this.http.get('http://localhost:8081/api/v1/me', { headers })
+      .subscribe({
+        next: (res: any) => {
+
+          const user = res.username;
 
           const routeMap: any = {
             Mahakarpagam: '/pets-services-module',
@@ -86,10 +98,10 @@ export class Login {
             Priyadharshini: '/employees-module'
           };
 
+
           this.router.navigate([routeMap[user]]);
-=======
+
             Priyadharshini: '/employee-module'
-          };
 
           // if backend login works → use user-based routing
           if (routeMap[user]) {
@@ -100,6 +112,16 @@ export class Login {
 
         error: (err) => {
           console.log('Login failed', err);
+
+
+          // fallback: module-based login
+          const routeMap: any = {
+            pets: '/pets-module',
+            petservices: '/pet-services-module',
+            customers: '/customers-module',
+            inventory: '/inventory-module',
+            employees: '/employees-module'
+          };
 
           alert('Invalid credentials');
         }
@@ -127,4 +149,4 @@ export class Login {
         }
       });
   }
-}
+

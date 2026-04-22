@@ -1,0 +1,17 @@
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+
+  <h2 class="text-xl font-bold mb-4">
+    {{ foodId ? 'Update Food' : 'Add Food' }}
+  </h2>
+
+  <input [(ngModel)]="formData.name" placeholder="Name" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.brand" placeholder="Brand" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.type" placeholder="Type" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.quantity" type="number" placeholder="Quantity" class="border p-2 w-full mb-2">
+  <input [(ngModel)]="formData.price" type="number" placeholder="Price" class="border p-2 w-full mb-2">
+
+  <button (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+    Submit
+  </button>
+
+</div>

@@ -1,0 +1,48 @@
+<div class="min-h-screen pt-[10px] bg-gradient-to-br from-yellow-100 via-orange-50 to-blue-100">
+
+    <!-- TITLE -->
+    <h1 class="text-4xl bg-white/80 backdrop-blur-md shadow-md p-6 rounded-2xl text-center 
+             text-orange-900 font-extrabold tracking-wide mx-10">
+        Food & Supplier Management
+    </h1>
+
+    <!-- CARDS CONTAINER -->
+    <div class="flex justify-center items-center gap-12 mt-20 flex-wrap">
+
+        <!-- FOOD MODULE CARD -->
+        <div routerLink="/food-dashboard"
+            class="w-[280px] h-[360px] flex flex-col justify-center 
+            bg-yellow-200 text-yellow-900 p-8 rounded-2xl shadow-md border border-yellow-300
+            cursor-pointer hover:scale-105 hover:shadow-xl transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🍖 Food Module
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Manage food items, inventory, pricing, and categories.
+                Add, update, delete and track food stock easily.
+            </p>
+        </div>
+
+        <!-- SUPPLIER MODULE CARD -->
+        <div routerLink="/supplier-dashboard"
+            class="w-[280px] h-[360px] flex flex-col justify-center 
+            bg-blue-200 text-blue-900 p-8 rounded-2xl shadow-md border border-blue-300
+            cursor-pointer hover:scale-105 hover:shadow-xl transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🚚 Supplier Module
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Manage supplier details, orders, delivery tracking,
+                and maintain supply chain records efficiently.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+<button routerLink="/grooming-dashboard">Grooming</button>
+<button routerLink="/vaccination-dashboard">Vaccination</button>
