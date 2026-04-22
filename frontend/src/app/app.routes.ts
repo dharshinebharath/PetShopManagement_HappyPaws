@@ -9,6 +9,19 @@ import { VaccinationDashboard } from './features/vaccinations/vaccination-dashbo
 import { GroomingList } from './features/grooming/grooming-list/grooming-list';
 import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
 
+
+import { GroomingList } from './features/grooming/grooming-list/grooming-list';
+import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
+import { VaccinationList } from './features/vaccinations/vaccination-list/vaccination-list';
+import { VaccinationForm } from './features/vaccinations/vaccination-form/vaccination-form';
+
+
+import { PetGroomingDashboard } from './features/pet-mapping/pet-grooming-dashboard/pet-grooming-dashboard';
+import { PetGroomingList } from './features/pet-mapping/pet-grooming-list/pet-grooming-list';
+import { PetVaccinationDashboard } from './features/pet-mapping/pet-vaccination-dashboard/pet-vaccination-dashboard';
+import { PetVaccinationList } from './features/pet-mapping/pet-vaccination-list/pet-vaccination-list';
+
+
 import { EmployeeModule } from './features/modules/employee-module/employee-module';
 import { EmployeeDashboard } from './features/employees/employee-dashboard/employee-dashboard';
 import { EmployeeList } from './features/employees/employee-list/employee-list';
@@ -22,6 +35,38 @@ export const routes: Routes = [
   // LOGIN
   { path: 'login/:module', component: Login },
 
+
+{ path: 'pet-services-module', component: PetServicesModule },
+
+{ path: 'grooming-dashboard', component: GroomingDashboard },
+{ path: 'vaccination-dashboard', component: VaccinationDashboard },
+ 
+{ path: 'grooming/list', component: GroomingList },
+
+{path: 'grooming/form', component:GroomingForm},
+{
+  path: 'vaccination',
+  component: VaccinationDashboard
+},
+{
+  path: 'vaccination/list',
+  component: VaccinationList
+},
+{
+  path: 'vaccination/form',
+  component: VaccinationForm
+},
+{ path: 'pet-mapping/grooming', component: PetGroomingDashboard },
+{ path: 'pet-mapping/grooming/list', component: PetGroomingList },
+
+{ path: 'pet-mapping/vaccination', component: PetVaccinationDashboard },
+{ path: 'pet-mapping/vaccination/list', component: PetVaccinationList },
+
+
+{ path: 'pet-services-module', component: PetServicesModule },
+
+{ path: 'grooming-dashboard', component: GroomingDashboard },
+{ path: 'vaccination-dashboard', component: VaccinationDashboard },
   // PET SERVICES MODULE
   { path: 'pet-services-module', component: PetServicesModule },
   { path: 'grooming-dashboard', component: GroomingDashboard },

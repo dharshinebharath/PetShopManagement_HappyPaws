@@ -44,7 +44,7 @@ public interface PetsInterface {
 
     ApiResponse<String> addVaccinationToPet(Long petId, Long vaccinationId);
 
-    ApiResponse<List<Long>> getVaccinationsByPet(Long petId);
+    ApiResponse<List<GroomingServicesResponseDTO>> getVaccinationsByPet(Long petId);
 
     ApiResponse<String> removeVaccinationFromPet(Long petId, Long vaccinationId);
 
