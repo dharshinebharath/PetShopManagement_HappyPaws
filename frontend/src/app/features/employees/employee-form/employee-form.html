@@ -1,1 +1,50 @@
-<p>employee-form works!</p>
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+
+  <h2 class="text-xl font-bold mb-4">
+    {{ employeeId ? 'Update Employee' : 'Add Employee' }}
+  </h2>
+
+  <!-- First Name -->
+  <input [(ngModel)]="formData.firstName"
+    placeholder="First Name"
+    class="border p-2 w-full mb-2">
+
+  <!-- Last Name -->
+  <input [(ngModel)]="formData.lastName"
+    placeholder="Last Name"
+    class="border p-2 w-full mb-2">
+
+  <!-- Position -->
+  <input [(ngModel)]="formData.position"
+    placeholder="Position"
+    class="border p-2 w-full mb-2">
+
+  <!-- Hire Date -->
+  <input [(ngModel)]="formData.hireDate"
+    type="date"
+    class="border p-2 w-full mb-2">
+
+  <!-- Phone -->
+  <input [(ngModel)]="formData.phoneNumber"
+    placeholder="Phone Number"
+    class="border p-2 w-full mb-2">
+
+  <!-- Email -->
+  <input [(ngModel)]="formData.email"
+    placeholder="Email"
+    class="border p-2 w-full mb-2">
+
+  <!-- Address ID -->
+  <input [(ngModel)]="formData.addressId"
+    placeholder="Address ID"
+    type="number"
+    class="border p-2 w-full mb-2">
+
+  <!-- Submit -->
+  <button (click)="submit()"
+    class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+
+    Submit
+  </button>
+
+</div>

@@ -8,6 +8,8 @@ import { GroomingDashboard } from './features/grooming/grooming-dashboard/groomi
 import { VaccinationDashboard } from './features/vaccinations/vaccination-dashboard/vaccination-dashboard';
 import { CustomersDashboard } from './features/customers/customers-dashboard/customers-dashboard';
 import { EmployeesDashboard } from './features/employees/employees-dashboard/employees-dashboard';
+import { EmployeeModule } from './features/modules/employee-module/employee-module';
+import { EmployeeList } from './features/employees/employee-list/employee-list';
 
 
 export const routes: Routes = [
@@ -23,5 +25,10 @@ export const routes: Routes = [
 { path: 'grooming-dashboard', component: GroomingDashboard },
 { path: 'vaccination-dashboard', component: VaccinationDashboard },
  
+{ path: 'employee-dashboard', component: EmployeesDashboard },
+{ path: 'employee-module', component: EmployeeModule },
+{path: 'employee/getAll',component: EmployeeList},
+{ path: 'employee/:action', component: EmployeeList },
+
 
 ];

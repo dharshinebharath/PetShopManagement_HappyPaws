@@ -28,10 +28,10 @@ login() {
 
     const routeMap: any = {
       pets: 'pets-module',
-      petservices: '/pet-services-module',
+      petservices: 'pet-services-module',
       customers: 'customers-module',
       inventory: 'inventory-module',
-      employees: 'employees-module'
+      employee: 'employee-module'
     };
  
   this.router.navigate(['/'+ routeMap[this.moduleName]])

@@ -1,0 +1,150 @@
+/* Page background */
+:host {
+  display: block;
+  padding: 20px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Title */
+h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* Table container card */
+table {
+  width: 90%;
+  margin: auto;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Header */
+th {
+  background: linear-gradient(135deg, #3cb77c, #4fa58c);
+  color: white;
+  padding: 14px;
+  text-align: left;
+  font-size: 15px;
+}
+
+/* Table rows */
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+/* Row hover effect */
+tr:hover {
+  background-color: #f0f4ff;
+  transition: 0.2s ease-in-out;
+}
+
+/* Last row border removal */
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================
+   PAGE CONTAINER
+========================= */
+:host {
+  display: block;
+  padding: 20px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   TITLE
+========================= */
+h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
+.search-container {
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container input {
+  width: 60%;
+  padding: 12px 15px;
+  border: 2px solid #5c6bc0;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  background: #fff;
+  transition: 0.3s ease;
+}
+
+.search-container input:focus {
+  border-color: #3f51b5;
+  box-shadow: 0 0 8px rgba(63, 81, 181, 0.3);
+}
+
+.search-container input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* =========================
+   TABLE DESIGN
+========================= */
+table {
+  width: 90%;
+  margin: auto;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* TABLE HEADER */
+th {
+  background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+  color: white;
+  padding: 14px;
+  text-align: left;
+  font-size: 15px;
+}
+
+/* TABLE CELLS */
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+/* ROW HOVER */
+tr:hover {
+  background-color: #f0f4ff;
+  transition: 0.2s ease-in-out;
+}
+
+/* REMOVE LAST BORDER */
+tr:last-child td {
+  border-bottom: none;
+}

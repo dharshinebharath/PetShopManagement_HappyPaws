@@ -27,7 +27,7 @@ public class TransactionsRepoTest {
 
 	    transaction.setTransactionDate(Date.valueOf("2024-03-01"));
 	    transaction.setAmount(BigDecimal.valueOf(1500));
-	    transaction.setTransactionStatus(TransactionStatus.Success);
+	    transaction.setTransactionStatus(TransactionStatus.SUCCESS);
 
 	    Customers customer = new Customers();
 	    customer.setCustomerId(5L);
@@ -55,18 +55,18 @@ public class TransactionsRepoTest {
 	void testSuccessfulStatusAssignment() {
 	    TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setTransactionStatus(TransactionStatus.Success);
+	    transaction.setTransactionStatus(TransactionStatus.SUCCESS);
 
-	    assertEquals(TransactionStatus.Success, transaction.getTransactionStatus());
+	    assertEquals(TransactionStatus.SUCCESS, transaction.getTransactionStatus());
 	}
 
 	@Test
 	void testFailedStatusAssignment() {
 	    TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setTransactionStatus(TransactionStatus.Failed);
+	    transaction.setTransactionStatus(TransactionStatus.FAILED);
 
-	    assertEquals(TransactionStatus.Failed, transaction.getTransactionStatus());
+	    assertEquals(TransactionStatus.FAILED, transaction.getTransactionStatus());
 	}
 
 	@Test

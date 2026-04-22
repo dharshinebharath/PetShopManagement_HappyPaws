@@ -14,6 +14,7 @@ import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.service.EmployeesService;
 
 import jakarta.validation.Valid;
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/employees")
 public class EmployeesController {
