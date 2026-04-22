@@ -100,6 +100,15 @@ public class SecurityConfig {
                                 "/v3/api-docs/**")
                         .permitAll()
 
+                        //MAPPINGS 
+                        
+                                        // EXACT MATCH
+                                        .requestMatchers("/api/v1/pets/*/grooming-services").hasRole("MEDICAL")
+
+                                        // WITH EXTRA PATH
+                                        .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
+                                        .requestMatchers("/api/v1/pets/*/vaccinations").hasRole("MEDICAL")
+                                        .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
                         // PETS
                         .requestMatchers("/api/v1/pets/**").hasRole("PET_ADMIN")
                         .requestMatchers("/api/v1/categories/**").hasRole("PET_ADMIN")
@@ -121,8 +130,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/employees/**").hasRole("HR_ADMIN")
 
                         // PET MAPPINGS
-                        .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
-                        .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
+                        // .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
+                        // .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
+
                         .requestMatchers("/api/v1/pets/*/food/**").hasRole("INVENTORY_ADMIN")
                         .requestMatchers("/api/v1/pets/*/suppliers/**").hasRole("INVENTORY_ADMIN")
 

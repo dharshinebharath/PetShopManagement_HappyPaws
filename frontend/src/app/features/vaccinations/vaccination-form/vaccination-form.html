@@ -1,1 +1,52 @@
-<p>vaccination-form works!</p>
+<div class="min-h-screen flex items-center justify-center 
+            bg-gradient-to-br from-teal-50 via-slate-50 to-emerald-50 p-6">
+
+    <form [formGroup]="form" class="w-full max-w-md bg-white/90 backdrop-blur-md 
+              border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+
+        <!-- TITLE -->
+        <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
+            {{ serviceId ? 'Update Vaccination' : 'Add Vaccination' }}
+        </h2>
+
+        <!-- NAME -->
+        <input type="text" formControlName="name" placeholder="Vaccination Name" class="w-full p-3 border border-teal-200 rounded-lg 
+               focus:outline-none focus:ring-2 focus:ring-teal-400">
+
+        <p class="text-red-500 text-sm" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+            Name is required (min 3 characters)
+        </p>
+
+        <!-- DESCRIPTION -->
+        <input type="text" formControlName="description" placeholder="Description" class="w-full p-3 border border-teal-200 rounded-lg 
+               focus:outline-none focus:ring-2 focus:ring-teal-400">
+
+        <p class="text-red-500 text-sm" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+            Description is required (min 5 characters)
+        </p>
+
+        <!-- PRICE -->
+        <input type="number" formControlName="price" placeholder="Price" class="w-full p-3 border border-teal-200 rounded-lg 
+               focus:outline-none focus:ring-2 focus:ring-teal-400">
+
+        <p class="text-red-500 text-sm" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
+            Price must be greater than 0
+        </p>
+
+        <!-- AVAILABLE -->
+        <label class="flex items-center gap-2">
+            <input type="checkbox" formControlName="available">
+            <span class="text-slate-700">Available</span>
+        </label>
+
+        <!-- BUTTON -->
+        <button type="button" (click)="submit()" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600
+                text-white py-3 rounded-lg hover:from-teal-700 hover:to-emerald-700">
+
+            {{ serviceId ? 'Update' : 'Save' }}
+
+        </button>
+
+    </form>
+
+</div>
