@@ -1,1 +1,18 @@
-<p>pets-dashboard works!</p>
+<!-- Module Description -->
+<div *ngIf="!showApis">
+
+  <h2>Pet Management Module</h2>
+
+  <p>
+    This module is used to manage pets like adding,
+    updating, deleting and viewing pets.
+  </p>
+
+  <button (click)="openApis()">View Pets API's</button>
+
+</div>
+
+<!-- Show API Component -->
+<div *ngIf="showApis">
+  <app-pet-list></app-pet-list>
+</div>

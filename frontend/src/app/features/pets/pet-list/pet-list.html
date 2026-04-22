@@ -1,1 +1,7 @@
-<p>pet-list works!</p>
+<h3>Pets List</h3>
+
+<ul>
+  <li *ngFor="let pet of pets">
+    {{ pet.name }} - {{ pet.breed }} - {{ pet.price }}
+  </li>
+</ul>
