@@ -9,6 +9,7 @@ import { FormsModule } from "@angular/forms";
   imports: [FormsModule, RouterModule],
   templateUrl: './vaccination-dashboard.html'
 })
+
 export class VaccinationDashboard {
 
   router = inject(Router);
@@ -58,3 +59,4 @@ export class VaccinationDashboard {
     });
   }
 }
+
