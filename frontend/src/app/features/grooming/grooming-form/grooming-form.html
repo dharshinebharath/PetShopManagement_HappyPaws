@@ -1,10 +1,10 @@
-<<<<<<< HEAD
+
 <div class="min-h-screen flex items-center justify-center 
             bg-gradient-to-br from-green-50 via-slate-50 to-emerald-50 p-6">
-=======
+
 
 <div class="p-6 max-w-md mx-auto bg-white shadow rounded">
->>>>>>> ea4d543ee4f3ef1091c6b8cf712d0f4e23a8300b
+
 
     <form [formGroup]="form" class="w-full max-w-md bg-white/90 backdrop-blur-md 
           border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
@@ -56,6 +56,28 @@
         </button>
 
     </form>
+
+
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+
+    <h2 class="text-xl font-bold mb-4">
+        {{ serviceId ? 'Update Service' : 'Add Service' }}
+    </h2>
+
+    <input [(ngModel)]="formData.name" placeholder="Name" class="border p-2 w-full mb-2">
+
+    <input [(ngModel)]="formData.description" placeholder="Description" class="border p-2 w-full mb-2">
+
+    <input [(ngModel)]="formData.price" placeholder="Price" type="number" class="border p-2 w-full mb-2">
+
+    <label>
+        <input type="checkbox" [(ngModel)]="formData.available"> Available
+    </label>
+
+    <button (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+        Submit
+    </button>
+
 
 </div>
 
