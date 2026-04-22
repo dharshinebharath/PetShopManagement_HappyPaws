@@ -1,112 +1,132 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer } from '../../../core/services/customer';
-
+import { customer } from '../../../core/services/customer';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './customer-form.html',
-  styleUrl: './customer-form.css',
+  imports: [FormsModule],
+  templateUrl: './customer-form.html'
 })
-export class CustomerForm implements OnInit {
+export class CustomerForm {
 
-  customer: any = this.getEmptyCustomer();
-  customerId!: number;
-  isEdit = false;
+  customerService = inject(customer);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
 
-  constructor(
-    private customerService: Customer,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  customerId: number | null = null;
 
-  // ================= LOAD FOR EDIT =================
+  // ✅ SINGLE OBJECT (USED IN HTML)
+  customer: any = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    address: {
+      addressId: null
+    }
+  };
+
+  isLoading = true;
+
+  // ================= INIT =================
   ngOnInit() {
 
-    const idParam = this.route.snapshot.paramMap.get('id');
+    this.route.paramMap.subscribe(params => {
 
-    // 👉 STRICT CHECK
-    if (idParam) {
+      const id = params.get('id');
 
-      this.customerId = Number(idParam);
-      this.isEdit = true;
+      if (id) {
 
-      // STEP 1: validate ID exists from backend
-      this.customerService.getCustomerById(idParam).subscribe({
-        next: (data) => {
+        this.customerId = Number(id);
 
-          if (!data) {
-            alert("Customer ID not found");
-            this.router.navigate(['/customer/dashboard']);
-            return;
+        // ================= GET BY ID =================
+        this.customerService.getCustomerById(id).subscribe({
+          next: (res: any) => {
+
+            const data = res.data;
+
+            if (!data) {
+              alert('Customer not found ❌');
+              this.router.navigate(['/customer/list']);
+              return;
+            }
+
+            // ✅ FIX: assign to SAME object used in HTML
+            this.customer.firstName = data.firstName;
+            this.customer.lastName = data.lastName;
+            this.customer.email = data.email;
+            this.customer.phoneNumber = data.phoneNumber;
+
+            if (data.address) {
+              this.customer.address.addressId = data.address.addressId;
+            }
+
+            this.isLoading = false;
+          },
+          error: () => {
+            alert('Error fetching customer ❌');
+            this.router.navigate(['/customer/list']);
           }
+        });
 
-          // STEP 2: load data
-          this.customer = data;
-
-          if (!this.customer.address) {
-            this.customer.address = { addressId: null };
-          }
-        },
-        error: () => {
-          alert("Invalid Customer ID");
-          this.router.navigate(['/customer/dashboard']);
-        }
-      });
-
-    } else {
-      // if no ID → not allowed in edit page
-      alert("No Customer ID provided");
-      this.router.navigate(['/customer/dashboard']);
-    }
+      } else {
+        this.isLoading = false;
+      }
+    });
   }
 
   // ================= SUBMIT =================
   submitCustomer() {
 
-    // 🔴 STRICT RULE: only update allowed in edit mode
-    if (!this.isEdit || !this.customerId) {
-      alert("Invalid edit operation");
+    // validation
+    if (!this.customer.firstName || !this.customer.email) {
+      alert('Please fill required fields ⚠️');
       return;
     }
 
-    const updatePayload = {
-      firstName: this.customer.firstName,
-      lastName: this.customer.lastName,
-      email: this.customer.email,
-      phoneNumber: this.customer.phoneNumber
-    };
+    // ================= UPDATE =================
+    if (this.customerId) {
 
-    this.customerService.updateCustomer(String(this.customerId, updatePayload)).subscribe({
-      next: () => {
-        alert("Customer updated successfully");
-        this.router.navigate(['/customer/dashboard']);
-      },
-      error: (err) => {
-        console.log(err);
-        alert(err.error?.message || "Update failed");
-      }
-    });
-  }
+      this.customerService.updateCustomer(
+        this.customerId.toString(),
+        this.customer
+      ).subscribe({
+        next: () => {
+          alert('Customer updated successfully ✅');
+          this.router.navigate(['/customer/list']);
+        },
+        error: (err) => {
+          console.log(err);
+          alert(err.error?.message || 'Update failed ❌');
+        }
+      });
 
-  // ================= CLOSE =================
-  closeForm() {
-    this.router.navigate(['/customer/dashboard']);
-  }
+    }
 
-  // ================= EMPTY =================
-  getEmptyCustomer() {
-    return {
-      customerId: null,
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      address: { addressId: null }
-    };
+    // ================= CREATE =================
+   else {
+
+  const payload = {
+    firstName: this.customer.firstName,
+    lastName: this.customer.lastName,
+    email: this.customer.email,
+    phoneNumber: this.customer.phoneNumber,
+    addressId: this.customer.address.addressId
+  };
+
+  this.customerService.addCustomer([payload]).subscribe({
+    next: () => {
+      alert('Customer created successfully ✅');
+      this.router.navigate(['/customer/list']);
+    },
+    error: (err) => {
+      console.log(err);
+      alert(err.error?.message || 'Create failed ❌');
+    }
+  });
+
+    }
   }
 }

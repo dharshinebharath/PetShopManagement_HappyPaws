@@ -6,6 +6,10 @@ import { Dashboard } from "./features/dashboard/dashboard";
 import { CustomersDashboard } from "./features/customers/customers-dashboard/customers-dashboard";
 import { Home } from './features/home/home';
 
+import { HttpClient } from '@angular/common/http';
+
+
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Sidebar, Dashboard, Home, CustomersDashboard],

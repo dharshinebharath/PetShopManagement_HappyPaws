@@ -1,36 +1,51 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Customer {
-  private http=inject(HttpClient);
-   private baseUrl = 'http://localhost:8080/api/v1/customers';
-  // GET ALL
-  getAllCustomers(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl);
+export class customer {
+
+  private baseUrl = 'http://localhost:8081/api/v1/customers';
+
+  private http: HttpClient = inject(HttpClient);
+
+  // ================= AUTH HEADERS =================
+  private getAuthHeaders() {
+    const username = 'Revathi';
+    const password = 'Reva123';
+
+    const auth = btoa(`${username}:${password}`);
+
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Basic ${auth}`
+      })
+    };
   }
 
-  // GET BY ID
-  getCustomerById(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+  // ================= GET ALL =================
+  getAllCustomers() {
+    return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
 
-  // POST
-  addCustomer(data: any): Observable<any> {
-    return this.http.post(this.baseUrl, data);
+  // ================= GET BY ID =================
+  getCustomerById(id: string) {
+    return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
 
-  // PUT
-  updateCustomer(id: string, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, data);
+  // ================= CREATE =================
+  addCustomer(data: any) {
+    return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
 
-  // DELETE
-  deleteCustomer(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  // ================= UPDATE =================
+  updateCustomer(id: string, data: any) {
+    return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
 
+  // ================= DELETE =================
+  deleteCustomer(id: string) {
+    return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
+  }
 }

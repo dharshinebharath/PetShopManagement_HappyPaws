@@ -1,51 +1,50 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AddressService {
+export class GroomingService {
+private baseUrl='http://localhost:8081/api/v1/grooming-services'
 
-  private baseUrl = 'http://localhost:8081/api/v1/addresses';
-
-  http: HttpClient = inject(HttpClient);
-
-  // 🔐 AUTH HEADERS
+http:HttpClient=inject(HttpClient);
   private getAuthHeaders() {
-    const username = 'Revathi';   // CUSTOMER_ADMIN
-    const password = 'Reva123';
+    const username = 'Dharshine';
+    const password = 'Dharsh123';
 
     const auth = btoa(`${username}:${password}`);
 
     return {
-      headers: new HttpHeaders({
+      headers: {
         Authorization: `Basic ${auth}`
-      })
+      }
     };
   }
 
-  // ================= GET ALL =================
+   // GET ALL
   getAll() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
 
-  // ================= GET BY ID =================
+  // GET BY ID
   getById(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
 
-  // ================= CREATE =================
+  // CREATE
   create(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
 
-  // ================= UPDATE =================
+  // UPDATE
   update(id: number, data: any) {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
 
-  // ================= DELETE =================
+  // DELETE
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+
+
 }

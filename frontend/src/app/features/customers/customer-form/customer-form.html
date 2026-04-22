@@ -1,44 +1,41 @@
-<div class="p-6 bg-[#f6f8f6] rounded-xl shadow-md max-w-2xl mx-auto">
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
 
-  <!-- Header -->
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-2xl font-bold text-[#3a5a40]">
-      {{ customer.customerId ? 'Update Customer' : 'Add Customer' }}
+    <h2 class="text-xl font-bold mb-4">
+        {{ customer.customerId ? 'Update Customer' : 'Add Customer' }}
     </h2>
 
-    <button (click)="closeForm()" class="text-red-500 font-bold text-xl">
-      ✖
+    <input 
+        [(ngModel)]="customer.firstName" 
+        placeholder="First Name" 
+        class="border p-2 w-full mb-2">
+
+    <input 
+        [(ngModel)]="customer.lastName" 
+        placeholder="Last Name" 
+        class="border p-2 w-full mb-2">
+
+    <input 
+        [(ngModel)]="customer.email" 
+        placeholder="Email" 
+        class="border p-2 w-full mb-2">
+
+    <input 
+        [(ngModel)]="customer.phoneNumber" 
+        placeholder="Phone Number" 
+        class="border p-2 w-full mb-2">
+
+    <!-- Address (optional if you use it) -->
+    <input 
+        [(ngModel)]="customer.address.addressId" 
+        placeholder="Address ID" 
+        class="border p-2 w-full mb-2">
+
+    <button 
+        (click)="submitCustomer()" 
+        class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+
+        Submit
+
     </button>
-  </div>
-
-  <!-- Form -->
-  <div class="grid grid-cols-2 gap-4">
-
-    <input [(ngModel)]="customer.firstName"
-      placeholder="First Name"
-      class="p-2 border rounded" />
-
-    <input [(ngModel)]="customer.lastName"
-      placeholder="Last Name"
-      class="p-2 border rounded" />
-
-    <input [(ngModel)]="customer.email"
-      placeholder="Email"
-      class="p-2 border rounded" />
-
-    <input [(ngModel)]="customer.phoneNumber"
-      placeholder="Phone Number"
-      class="p-2 border rounded" />
-
-  </div>
-
-  <!-- Submit -->
-  <button
-    (click)="submitCustomer()"
-    class="mt-6 px-6 py-2 rounded text-white w-full bg-[#a3b18a]">
-
-    Add Customer
-
-  </button>
 
 </div>

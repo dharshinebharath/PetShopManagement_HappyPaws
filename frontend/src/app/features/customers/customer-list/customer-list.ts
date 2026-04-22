@@ -1,29 +1,87 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { Customer } from '../../../core/services/customer';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { customer } from '../../../core/services/customer';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-list',
+  standalone: true,
   imports: [CommonModule],
-    standalone: true,  
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.css',
 })
 export class CustomerList {
+
+  customerService = inject(customer);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+  cdr = inject(ChangeDetectorRef);
+
   customers: any[] = [];
 
-  constructor(private customerService: Customer,  private cdr: ChangeDetectorRef) {}
+  ngOnInit() {
 
-   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+
+      const id = params['id'];
+
+      if (id) {
+
+        // ================= GET BY ID =================
+        this.customerService.getCustomerById(id).subscribe({
+          next: (res: any) => {
+
+            console.log("GET BY ID RESPONSE:", res);
+
+            const data = res.data;
+
+            if (!data) {
+              alert('Customer not found ❌');
+              this.router.navigate(['/customers']);
+              return;
+            }
+
+            this.customers = [data]; // show single result
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+
+            console.log(err);
+
+            if (err.status === 404) {
+              alert('Customer ID not found ❌');
+            } else if (err.status === 401) {
+              alert('Unauthorized ❌');
+            } else {
+              alert('Something went wrong ⚠️');
+            }
+
+            this.router.navigate(['/customers']);
+          }
+        });
+
+      } else {
+
+        // ================= GET ALL =================
+        this.loadAll();
+      }
+    });
+  }
+
+  // ================= LOAD ALL =================
+  loadAll() {
+
     this.customerService.getAllCustomers().subscribe({
-      next: (response: any) => {
-        console.log("API Response:", response);
+      next: (res: any) => {
 
-        this.customers = response.data;  
+        console.log("ALL CUSTOMERS:", res);
+
+        this.customers = res.data;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error(err);
+        console.log(err);
+        alert('Failed to load customers ❌');
       }
     });
   }

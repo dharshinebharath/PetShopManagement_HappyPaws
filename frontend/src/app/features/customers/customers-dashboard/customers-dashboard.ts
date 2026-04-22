@@ -1,19 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Customer } from '../../../core/services/customer';
+import { customer } from '../../../core/services/customer';
+import { AddressService } from '../../../core/services/address';
+// import{address} from '../../../core/services/address';
+
 
 @Component({
   selector: 'app-customers-dashboard',
-  imports: [RouterModule,CommonModule],
+  standalone: true,
+  imports: [RouterModule, CommonModule],
   templateUrl: './customers-dashboard.html',
   styleUrl: './customers-dashboard.css',
 })
-
 export class CustomersDashboard {
-  constructor(private router: Router, private customerService:Customer) {}
-  
-activeTab: string = 'customer';
+
+  router = inject(Router);
+  customerService = inject(customer);
+  addressService = inject(AddressService);
+
+  activeTab: string = 'customer';
+
   // 🔹 Tab Switch
   selectTab(tab: string) {
     this.activeTab = tab;
@@ -26,24 +33,23 @@ activeTab: string = 'customer';
       alert('Enter Customer ID');
       return;
     }
+
     this.customerService.getCustomerById(id).subscribe({
-      next: (data) => {
-        console.log(data);
-        alert("Check console for data");
+      next: (res) => {
+        console.log(res);
+        alert('Check console for data');
       },
-      error: () => alert("Customer not found")
+      error: () => alert('Customer not found ❌')
     });
   }
 
-    
-
   editCustomer(id: string) {
-    error: (err: { error: { message: any; }; }) => {
-  console.log("ADD ERROR:", err);
-  alert(err?.error?.message || "Add failed");
-}
-    console.log('Edit Customer:', id);
- this.router.navigate(['/customer/edit', id]);
+    if (!id) {
+      alert('Enter Customer ID');
+      return;
+    }
+
+    this.router.navigate(['/customer/edit', id]);
   }
 
   deleteCustomer(id: string) {
@@ -51,39 +57,67 @@ activeTab: string = 'customer';
       alert('Enter Customer ID');
       return;
     }
+
     this.customerService.deleteCustomer(id).subscribe({
       next: () => {
-        alert("Deleted successfully");
+        alert('Deleted successfully ✅');
       },
-      error: () => alert("Delete failed")
+      error: () => alert('Delete failed ❌')
     });
   }
-    // Later you can call API here
-    // this.customerService.delete(id).subscribe(...)
 
   // ================= ADDRESS METHODS =================
 
+  // 🔹 GET BY ID
   viewAddress(id: string) {
-    if (!id) {
-      alert('Enter Address ID');
-      return;
-    }
-    console.log('View Address:', id);
+  if (!id) {
+    alert('Enter Address ID');
+    return;
   }
 
+  this.router.navigate(['/address/list'], {
+    queryParams: { id }
+  });
+}
+
+  // 🔹 UPDATE (check ID first)
   editAddress(id: string) {
-    if (!id) {
-      alert('Enter Address ID');
-      return;
-    }
-    console.log('Edit Address:', id);
+  if (!id) {
+    alert('Enter Address ID');
+    return;
   }
 
+  this.addressService.getById(Number(id)).subscribe({
+    next: () => {
+
+      // ✅ FIXED HERE
+      this.router.navigate(['/address/add'], {
+        queryParams: { id }
+      });
+
+    },
+    error: (err) => {
+      if (err.status === 404) {
+        alert('Cannot update ❌ ID not found');
+      } else {
+        alert('Error checking ID');
+      }
+    }
+  });
+}
+
+  // 🔹 DELETE
   deleteAddress(id: string) {
     if (!id) {
       alert('Enter Address ID');
       return;
     }
-    console.log('Delete Address:', id);
+
+    this.addressService.delete(Number(id)).subscribe({
+      next: () => {
+        alert('Address deleted successfully ✅');
+      },
+      error: () => alert('Delete failed ❌')
+    });
   }
 }
