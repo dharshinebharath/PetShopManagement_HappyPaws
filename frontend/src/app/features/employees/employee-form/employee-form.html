@@ -6,39 +6,97 @@
 
   <!-- First Name -->
   <input [(ngModel)]="formData.firstName"
+    name="firstName"
+    required
+    #firstName="ngModel"
     placeholder="First Name"
-    class="border p-2 w-full mb-2">
+    class="border p-2 w-full mb-1">
+
+  <div *ngIf="firstName.invalid && firstName.touched"
+       class="text-red-500 text-sm mb-2">
+    First name is required
+  </div>
 
   <!-- Last Name -->
   <input [(ngModel)]="formData.lastName"
+    name="lastName"
+    required
+    #lastName="ngModel"
     placeholder="Last Name"
-    class="border p-2 w-full mb-2">
+    class="border p-2 w-full mb-1">
+
+  <div *ngIf="lastName.invalid && lastName.touched"
+       class="text-red-500 text-sm mb-2">
+    Last name is required
+  </div>
 
   <!-- Position -->
   <input [(ngModel)]="formData.position"
+    name="position"
+    required
+    #position="ngModel"
     placeholder="Position"
-    class="border p-2 w-full mb-2">
+    class="border p-2 w-full mb-1">
+
+  <div *ngIf="position.invalid && position.touched"
+       class="text-red-500 text-sm mb-2">
+    Position is required
+  </div>
 
   <!-- Hire Date -->
   <input [(ngModel)]="formData.hireDate"
+    name="hireDate"
     type="date"
-    class="border p-2 w-full mb-2">
+    required
+    #hireDate="ngModel"
+    class="border p-2 w-full mb-1">
+
+  <div *ngIf="hireDate.invalid && hireDate.touched"
+       class="text-red-500 text-sm mb-2">
+    Hire date is required
+  </div>
 
   <!-- Phone -->
   <input [(ngModel)]="formData.phoneNumber"
+    name="phoneNumber"
+    required
+    pattern="^[0-9]{10}$"
+    #phone="ngModel"
     placeholder="Phone Number"
-    class="border p-2 w-full mb-2">
+    class="border p-2 w-full mb-1">
+
+  <div *ngIf="phone.invalid && phone.touched"
+       class="text-red-500 text-sm mb-2">
+    Enter valid 10-digit phone number
+  </div>
 
   <!-- Email -->
   <input [(ngModel)]="formData.email"
+    name="email"
+    required
+    email
+    #email="ngModel"
     placeholder="Email"
-    class="border p-2 w-full mb-2">
+    class="border p-2 w-full mb-1">
+
+  <div *ngIf="email.invalid && email.touched"
+       class="text-red-500 text-sm mb-2">
+    Enter valid email
+  </div>
 
   <!-- Address ID -->
   <input [(ngModel)]="formData.addressId"
-    placeholder="Address ID"
+    name="addressId"
     type="number"
-    class="border p-2 w-full mb-2">
+    required
+    #addressId="ngModel"
+    placeholder="Address ID"
+    class="border p-2 w-full mb-1">
+
+  <div *ngIf="addressId.invalid && addressId.touched"
+       class="text-red-500 text-sm mb-2">
+    Address ID is required
+  </div>
 
   <!-- Submit -->
   <button (click)="submit()"

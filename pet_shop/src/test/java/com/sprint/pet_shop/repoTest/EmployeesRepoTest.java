@@ -2,6 +2,7 @@ package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class EmployeesRepoTest {
         emp.setFirstName("John");
         emp.setLastName("Smith");
         emp.setPosition("Veterinarian");
-        emp.setHireDate(new Date());
+        emp.setHireDate(LocalDate.now());
         emp.setPhoneNumber("9876543210");
         emp.setEmail("john@example.com");
 
@@ -48,7 +49,7 @@ public class EmployeesRepoTest {
         emp.setFirstName("Emily");
         emp.setLastName("Johnson");
         emp.setPosition("Groomer");
-        emp.setHireDate(new Date());
+        emp.setHireDate(LocalDate.now());
         emp.setPhoneNumber("9123456780");
         emp.setEmail("emily@example.com");
 
@@ -64,7 +65,7 @@ public class EmployeesRepoTest {
         emp.setFirstName(null);
         emp.setLastName("Smith");
         emp.setPosition("Vet");
-        emp.setHireDate(new Date());
+        emp.setHireDate(LocalDate.now());
         emp.setPhoneNumber("9876543210");
         emp.setEmail("john@example.com");
 
@@ -80,7 +81,7 @@ public class EmployeesRepoTest {
         emp.setFirstName("John");
         emp.setLastName("Smith");
         emp.setPosition("");
-        emp.setHireDate(new Date());
+        emp.setHireDate(LocalDate.now());
         emp.setPhoneNumber("9876543210");
         emp.setEmail("john@example.com");
 
@@ -96,7 +97,7 @@ public class EmployeesRepoTest {
         emp.setFirstName("John");
         emp.setLastName("Smith");
         emp.setPosition("Vet");
-        emp.setHireDate(new Date());
+        emp.setHireDate(LocalDate.now());
         emp.setPhoneNumber("9876543210");
         emp.setEmail(null);
 

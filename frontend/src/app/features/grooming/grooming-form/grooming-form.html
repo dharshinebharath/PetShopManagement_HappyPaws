@@ -1,1 +1,24 @@
+
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+
+    <h2 class="text-xl font-bold mb-4">
+        {{ serviceId ? 'Update Service' : 'Add Service' }}
+    </h2>
+
+    <input [(ngModel)]="formData.name" placeholder="Name" class="border p-2 w-full mb-2">
+
+    <input [(ngModel)]="formData.description" placeholder="Description" class="border p-2 w-full mb-2">
+
+    <input [(ngModel)]="formData.price" placeholder="Price" type="number" class="border p-2 w-full mb-2">
+
+    <label>
+        <input type="checkbox" [(ngModel)]="formData.available"> Available
+    </label>
+
+    <button (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+        Submit
+    </button>
+
+</div>
+
 <p>grooming-form works!</p>

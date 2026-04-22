@@ -6,6 +6,8 @@ import { Home } from "./features/home/home";
 import { Login } from './features/auth/login/login';
 import { EmployeeModule } from './features/modules/employee-module/employee-module';
 
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Sidebar, Dashboard, Home,Login],

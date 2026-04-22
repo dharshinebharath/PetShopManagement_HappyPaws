@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-employee-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './employee-form.html'
 })
 export class EmployeeForm {
@@ -16,7 +17,7 @@ export class EmployeeForm {
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
 
-  private baseUrl = 'http://localhost:8082/api/employees';
+  private baseUrl = 'http://localhost:8081/api/v1/employees';
 
   employeeId: number | null = null;
 
@@ -34,8 +35,8 @@ export class EmployeeForm {
 
   // AUTH
   private getAuthHeaders() {
-    const username = 'Dharshine';
-    const password = 'Dharsh123';
+    const username = 'Priyadharshini';
+    const password = 'Priya123';
     const auth = btoa(`${username}:${password}`);
 
     return {
@@ -51,17 +52,18 @@ export class EmployeeForm {
       if (params['id']) {
         this.employeeId = Number(params['id']);
 
-        // GET BY ID
         this.http.get<any>(`${this.baseUrl}/${this.employeeId}`, this.getAuthHeaders())
           .subscribe({
             next: (res) => {
 
-              const data = res.data; // ⚠️ IMPORTANT (ApiResponse)
+              const data = res.data;
 
               this.formData.firstName = data.firstName;
               this.formData.lastName = data.lastName;
               this.formData.position = data.position;
-              this.formData.hireDate = data.hireDate;
+              this.formData.hireDate = data.hireDate
+                ? new Date(data.hireDate).toISOString().split('T')[0]
+                : '';
               this.formData.phoneNumber = data.phoneNumber;
               this.formData.email = data.email;
               this.formData.addressId = data.addressId;
@@ -83,14 +85,37 @@ export class EmployeeForm {
 
   submit() {
 
-    // validation
-    if (!this.formData.firstName || !this.formData.email) {
-      alert('Please fill required fields ⚠️');
+    // ✅ VALIDATION BLOCK
+    if (
+      !this.formData.firstName ||
+      !this.formData.lastName ||
+      !this.formData.position ||
+      !this.formData.hireDate ||
+      !this.formData.phoneNumber ||
+      !this.formData.email
+    ) {
+      alert('Please fill all required fields ⚠️');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.formData.email)) {
+      alert('Invalid email format ⚠️');
+      return;
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(this.formData.phoneNumber)) {
+      alert('Phone must be 10 digits ⚠️');
       return;
     }
 
     // UPDATE
     if (this.employeeId !== null && this.employeeId !== undefined) {
+
+      if (this.formData.hireDate) {
+        this.formData.hireDate = this.formData.hireDate.split('T')[0];
+      }
 
       this.http.put(
         `${this.baseUrl}/${this.employeeId}`,
@@ -102,6 +127,9 @@ export class EmployeeForm {
           this.router.navigate(['/employee/list']);
         },
         error: (err) => {
+          console.log("FULL ERROR:", err);
+          console.log("BACKEND MSG:", err.error);
+
           if (err.status === 404) {
             alert('Employee not found ❌');
           } else {
@@ -112,8 +140,7 @@ export class EmployeeForm {
 
     } else {
 
-      // CREATE
-      const payload = [this.formData]; // because backend expects List<EmployeesRequestDTO>
+      const payload = [this.formData];
 
       this.http.post(this.baseUrl, payload, this.getAuthHeaders())
         .subscribe({

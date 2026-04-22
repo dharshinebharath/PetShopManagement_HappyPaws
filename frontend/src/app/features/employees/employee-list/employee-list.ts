@@ -17,13 +17,13 @@ export class EmployeeList {
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
 
-  private baseUrl = 'http://localhost:8082/api/employees';
+  private baseUrl = 'http://localhost:8081/api/v1/employees';
 
   employeeList: any[] = [];
 
   private getAuthHeaders() {
-    const username = 'Dharshine';
-    const password = 'Dharsh123';
+    const username = 'Priyadharshini';
+    const password = 'Priya123';
     const auth = btoa(`${username}:${password}`);
 
     return {

@@ -4,22 +4,22 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-employees-dashboard',
+  selector: 'app-employee-dashboard',
   standalone: true,
   imports: [FormsModule, RouterModule],
-  templateUrl: './employees-dashboard.html'
+  templateUrl: './employee-dashboard.html'
 })
-export class EmployeesDashboard {
+export class EmployeeDashboard {
 
   router = inject(Router);
   http = inject(HttpClient);
 
-  private baseUrl = 'http://localhost:8082/api/employees';
+  private baseUrl = 'http://localhost:8081/api/v1/employees';
 
   // AUTH HEADERS
   private getAuthHeaders() {
-    const username = 'Dharshine';
-    const password = 'Dharsh123';
+    const username = 'Priyadharshini';
+    const password = 'Priya123';
 
     const auth = btoa(`${username}:${password}`);
 

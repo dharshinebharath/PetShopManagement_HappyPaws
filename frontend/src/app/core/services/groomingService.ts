@@ -4,15 +4,13 @@ import { inject, Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class EmployeeService {
+export class GroomingService {
+private baseUrl='http://localhost:8081/api/v1/grooming-services'
 
-  private baseUrl = 'http://localhost:8081/api/v1/employees';
-
-  http: HttpClient = inject(HttpClient);
-
+http:HttpClient=inject(HttpClient);
   private getAuthHeaders() {
-    const username = 'Priyadharshini';
-    const password = 'Priya123';
+    const username = 'Dharshine';
+    const password = 'Dharsh123';
 
     const auth = btoa(`${username}:${password}`);
 
@@ -23,28 +21,30 @@ export class EmployeeService {
     };
   }
 
-  // GET ALL EMPLOYEES
+   // GET ALL
   getAll() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
 
-  // GET EMPLOYEE BY ID
+  // GET BY ID
   getById(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
 
-  // CREATE EMPLOYEE
+  // CREATE
   create(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
 
-  // UPDATE EMPLOYEE
+  // UPDATE
   update(id: number, data: any) {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
 
-  // DELETE EMPLOYEE
+  // DELETE
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+
+
 }

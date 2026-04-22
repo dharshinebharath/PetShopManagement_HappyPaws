@@ -1,43 +1,92 @@
-<div class="home-container">
 
-    <h1 class="title">Pet Shop Management System</h1>
-    <p class="subtitle">Select a module to continue</p>
+<div class="min-h-screen bg-gradient-to-br from-slate-200 via-green-50 to-blue-100 p-10">
 
-    <div class="card-container">
+    <!-- TITLE -->
+    <h1 class="text-4xl text-center font-extrabold text-slate-800 mb-2">
+        Pet Shop Management System
+    </h1>
 
-        <!-- Pets Module -->
-        <div class="card" (click)="goToLogin('pets')">
-            <h2>Pets & Categories</h2>
-            <p>Manage pet details, categories, and basic pet information./p>
-            <span class="person">👤 Maha Karpagam</span>
+    <p class="text-center text-slate-600 mb-10">
+        Select a module to continue
+    </p>
+
+    <!-- MODULE CONTAINER -->
+    <div class="flex flex-col items-center gap-6">
+
+        <!-- Card 1 -->
+        <div (click)="goToLogin('pets')" class="w-[420px] bg-gradient-to-r from-emerald-200 to-green-100
+             border border-slate-300 rounded-2xl shadow-md p-6 
+             cursor-pointer hover:scale-105 transition">
+
+            <span class="block font-bold text-emerald-900 text-lg">
+                👤 Maha Karpagam
+            </span>
+
+            <h2 class="text-xl font-semibold text-slate-700 mt-2">
+                Pets & Categories
+            </h2>
+
         </div>
 
-        <!-- Services Module -->
-        <div class="card" (click)="goToLogin('petservices')">
-            <h2>Services & Medical</h2>
-            <p>Handle grooming services and vaccination records for pets.</p>
-            <span class="person">👤 Dharshine</span>
+        <!-- Card 2 -->
+        <div (click)="goToLogin('petservices')" class="w-[420px] bg-gradient-to-r from-teal-200 to-emerald-100
+             border border-slate-300 rounded-2xl shadow-md p-6 
+             cursor-pointer hover:scale-105 transition">
+
+            <span class="block font-bold text-teal-900 text-lg">
+                👤 Dharshine
+            </span>
+
+            <h2 class="text-xl font-semibold text-slate-700 mt-2">
+                Services & Medical
+            </h2>
+
         </div>
 
-        <div class="card" (click)="goToLogin('customers')">
-            <h2>Customers & Transactions</h2>
-            <p>Manage customer details and track all financial transactions.</p>
-            <span class="person">👤 Revathi</span>
+        <!-- Card 3 -->
+        <div (click)="goToLogin('customers')" class="w-[420px] bg-gradient-to-r from-blue-200 to-slate-100
+             border border-slate-300 rounded-2xl shadow-md p-6 
+             cursor-pointer hover:scale-105 transition">
+
+            <span class="block font-bold text-blue-900 text-lg">
+                👤 Revathi
+            </span>
+
+            <h2 class="text-xl font-semibold text-slate-700 mt-2">
+                Customers & Transactions
+            </h2>
+
         </div>
 
-        <!-- Inventory Module -->
-        <div class="card" (click)="goToLogin('inventory')">
-            <h2>Inventory & Suppliers</h2>
-            <p>Maintain pet food stock and manage supplier relationships.</p>
-            <span class="person">👤 Shirlly</span>
+        <!-- Card 4 -->
+        <div (click)="goToLogin('inventory')" class="w-[420px] bg-gradient-to-r from-emerald-100 to-slate-100
+             border border-slate-300 rounded-2xl shadow-md p-6 
+             cursor-pointer hover:scale-105 transition">
+
+            <span class="block font-bold text-emerald-900 text-lg">
+                👤 Shirlly
+            </span>
+
+            <h2 class="text-xl font-semibold text-slate-700 mt-2">
+                Inventory & Suppliers
+            </h2>
+
         </div>
 
-        <!-- Employees Module -->
-        <div class="card" (click)="goToLogin('employee')">
-            <h2>Employees & Operations</h2>
-            <p>Manage employees and assign them to pets and tasks.</p>
-            <span class="person">👤 Priyadharshini</span>
-        </div>
+        <!-- Card 5 -->
+        <div (click)="goToLogin('employee')" class="w-[420px] bg-gradient-to-r from-slate-200 to-blue-100
+             border border-slate-300 rounded-2xl shadow-md p-6 
+             cursor-pointer hover:scale-105 transition">
+
+            <span class="block font-bold text-slate-900 text-lg">
+                👤 Priyadharshini
+            </span>
+
+            <h2 class="text-xl font-semibold text-slate-700 mt-2">
+                Employees & Operations
+            </h2>
+
+
 
     </div>
 
