@@ -23,6 +23,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pets")
+
 public class Pets {
 
 	    @Id
@@ -98,6 +99,7 @@ public class Pets {
 	        joinColumns = @JoinColumn(name = "pet_id"),
 	        inverseJoinColumns = @JoinColumn(name = "employee_id")
 	    )
+	    @JsonIgnore
 	    private List<Employees> employees;
 
 	    // 🔗 Suppliers
