@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -173,7 +174,7 @@ public class TransactionsRepoTest {
     @Test
     void testValidTransaction5() {
         TransactionsEntity t = createValidTransaction();
-        t.setTransactionDate(new Date(System.currentTimeMillis()));
+        t.setTransactionDate(LocalDate.now());
         assertTrue(validator.validate(t).isEmpty());
     }
 
@@ -230,7 +231,7 @@ public class TransactionsRepoTest {
     // =========================
     private TransactionsEntity createValidTransaction() {
         TransactionsEntity t = new TransactionsEntity();
-        t.setTransactionDate(new Date(System.currentTimeMillis()));
+        t.setTransactionDate(LocalDate.now());
         t.setAmount(new BigDecimal("500.00"));
         t.setTransactionStatus(TransactionStatus.SUCCESS);
         return t;

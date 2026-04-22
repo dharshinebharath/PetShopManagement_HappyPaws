@@ -2,11 +2,12 @@ package com.sprint.pet_shop.dto.responseDto;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class TransactionsResponseDTO {
 
     private Long transactionId;
-    private Date transactionDate;
+    private LocalDate transactionDate;
     private BigDecimal amount;
     private Long customerId;
     private Long petId;
@@ -16,8 +17,8 @@ public class TransactionsResponseDTO {
     public Long getTransactionId() { return transactionId; }
     public void setTransactionId(Long transactionId) { this.transactionId = transactionId; }
 
-    public Date getTransactionDate() { return transactionDate; }
-    public void setTransactionDate(Date transactionDate) { this.transactionDate = transactionDate; }
+    public LocalDate getTransactionDate() { return transactionDate; }
+    public void setTransactionDate(LocalDate transactionDate) { this.transactionDate = transactionDate; }
 
     public BigDecimal getAmount() { return amount; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }

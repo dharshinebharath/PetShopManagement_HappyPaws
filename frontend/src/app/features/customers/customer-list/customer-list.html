@@ -1,1 +1,43 @@
-<p>customer-list works!</p>
+<div class="p-6 bg-[#f6f8f6] min-h-screen">
+
+  <h2 class="text-3xl font-bold text-[#3a5a40] mb-6">
+    Customers
+  </h2>
+
+  <div class="overflow-x-auto rounded-2xl shadow-lg border border-[#d8e2dc]">
+
+    <table class="w-full text-left border-collapse">
+
+      <!-- Header -->
+      <thead class="bg-[#a3b18a] text-white">
+        <tr>
+          <th class="p-3">ID</th>
+          <th class="p-3">First Name</th>
+          <th class="p-3">Last Name</th>
+          <th class="p-3">Email</th>
+          <th class="p-3">Phone</th>
+          <th class="p-3">Address ID</th>
+        </tr>
+      </thead>
+
+      <!-- Body -->
+      <tbody class="bg-white">
+
+        <tr 
+          *ngFor="let c of customers" 
+          class="border-b hover:bg-[#fefae0] transition duration-200"
+        >
+          <td class="p-3 text-[#344e41] font-medium">{{ c.customerId }}</td>
+          <td class="p-3">{{ c.firstName }}</td>
+          <td class="p-3">{{ c.lastName }}</td>
+          <td class="p-3 text-[#588157]">{{ c.email }}</td>
+          <td class="p-3">{{ c.phoneNumber }}</td>
+          <td class="p-3 text-[#bc6c25] font-semibold">
+            {{ c.address?.addressId }}
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,1 +1,137 @@
-<p>customers-dashboard works!</p>
+<div class="min-h-screen bg-gray-100 p-6">
+
+  <h1 class="text-3xl font-bold text-center mb-6">
+     👨‍💼CUSTOMER DASHBOARD
+  </h1>
+
+  <!-- Tabs -->
+  <div class="flex justify-center gap-4 mb-8">
+    <button 
+      (click)="selectTab('customer')"
+      [ngClass]="activeTab === 'customer' 
+        ? 'bg-blue-500 text-white' 
+        : 'bg-white text-black'"
+      class="px-6 py-2 rounded-lg shadow">
+      Customer
+    </button>
+
+    <button 
+      (click)="selectTab('address')"
+      [ngClass]="activeTab === 'address' 
+        ? 'bg-green-500 text-white' 
+        : 'bg-white text-black'"
+      class="px-6 py-2 rounded-lg shadow">
+      Address
+    </button>
+  </div>
+
+  <!-- ================= CUSTOMER API ================= -->
+  <div *ngIf="activeTab === 'customer'">
+
+    <h2 class="text-2xl font-bold text-center mb-6">Customer API</h2>
+
+    <div class="flex flex-col gap-4 max-w-md mx-auto">
+
+      <!-- GET ALL -->
+      <button 
+        routerLink="/customer/list"
+        class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg shadow">
+        GET All Customers
+      </button>
+
+      <!-- GET BY ID -->
+      <div class="flex gap-2">
+        <input #cid 
+          placeholder="Enter ID"
+          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-green-400">
+        <button 
+          (click)="viewCustomer(cid.value)"
+          class="bg-green-400 hover:bg-green-500 text-white px-4 rounded-lg shadow">
+          GET
+        </button>
+      </div>
+
+      <!-- POST -->
+      <button 
+        routerLink="/customer/add"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow">
+        Add Customer (POST)
+      </button>
+
+      <!-- PUT -->
+      <div class="flex gap-2">
+        <input #uid placeholder="Enter ID"
+          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        <button 
+          (click)="editCustomer(uid.value)"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 rounded-lg shadow">
+          UPDATE
+        </button>
+      </div>
+
+      <!-- DELETE -->
+      <div class="flex gap-2">
+        <input #did placeholder="Enter ID"
+          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-red-400">
+        <button 
+          (click)="deleteCustomer(did.value)"
+          class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-lg shadow">
+          DELETE
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= ADDRESS API ================= -->
+  <div *ngIf="activeTab === 'address'">
+
+    <h2 class="text-2xl font-bold text-center mb-6">Address API</h2>
+
+    <div class="flex flex-col gap-4 max-w-md mx-auto">
+
+      <!-- GET BY ID -->
+      <div class="flex gap-2">
+        <input #aid 
+          placeholder="Enter Address ID"
+          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-green-400">
+        <button 
+          (click)="viewAddress(aid.value)"
+          class="bg-green-400 hover:bg-green-500 text-white px-4 rounded-lg shadow">
+          GET
+        </button>
+      </div>
+
+      <!-- POST -->
+      <button 
+        routerLink="/address/add"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow">
+        Add Address (POST)
+      </button>
+
+      <!-- PUT -->
+      <div class="flex gap-2">
+        <input #auid placeholder="Enter Address ID"
+          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        <button 
+          (click)="editAddress(auid.value)"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 rounded-lg shadow">
+          UPDATE
+        </button>
+      </div>
+
+      <!-- DELETE -->
+      <div class="flex gap-2">
+        <input #adid placeholder="Enter Address ID"
+          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-red-400">
+        <button 
+          (click)="deleteAddress(adid.value)"
+          class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-lg shadow">
+          DELETE
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -80,7 +80,7 @@ export class Login {
           const routeMap: any = {
             Mahakarpagam: '/pets-services-module',
             Dharshine: '/pet-services-module',
-            Revathi: '/customers-module',
+            Revathi: '/customertransaction-module',
             Shirlly: '/inventory-module',
 
             Priyadharshini: '/employees-module'
@@ -105,6 +105,9 @@ export class Login {
         }
       });
   }
+
+}
+
 }
 
 
@@ -128,3 +131,4 @@ export class Login {
       });
   }
 }
+
