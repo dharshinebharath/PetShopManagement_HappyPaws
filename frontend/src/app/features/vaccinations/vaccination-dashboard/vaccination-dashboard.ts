@@ -16,5 +16,3 @@ throw new Error('Method not implemented.');
 }
 }
 
-export class VaccinationDashboard {}
-

@@ -1,0 +1,46 @@
+.module-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  background-color: #f6faf6;
+}
+
+/* Heading */
+h1 {
+  margin-bottom: 30px;
+  color: #2f4f2f;
+}
+
+/* Big Button */
+.description-btn {
+  background-color: #dbe7d8; /* sage green */
+  border: none;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover */
+.description-btn:hover {
+  background-color: #c8dcc4;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Text styling */
+.description-btn p {
+  color: #3e5c3e;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.description-btn ul {
+  padding-left: 20px;
+  color: #2f4f2f;
+}

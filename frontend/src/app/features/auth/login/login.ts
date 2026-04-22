@@ -1,31 +1,38 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule, RouterModule],
-  templateUrl: './login.html'
+  templateUrl: './login.html',
+  styleUrl: './login.css'
 })
 export class Login {
 
   router = inject(Router);
+  route = inject(ActivatedRoute);
   http = inject(HttpClient);
+
+  moduleName: string = '';
 
   loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl('')
   });
 
+  ngOnInit() {
+    this.moduleName = this.route.snapshot.paramMap.get('module') || '';
+  }
+
   login() {
 
     const username = this.loginForm.value.username!;
     const password = this.loginForm.value.password!;
 
-    // 🔐 Basic Auth header
+    // 🔐 Basic Auth
     const headers = {
       Authorization: 'Basic ' + btoa(username + ':' + password)
     };
@@ -36,66 +43,39 @@ export class Login {
 
           const user = res.username;
 
-          // 🎯 ROLE BASED REDIRECT
+          // 🎯 ROLE BASED ROUTING
           const routeMap: any = {
             Mahakarpagam: '/pets-services-module',
             Dharshine: '/pet-services-module',
             Revathi: '/customers-module',
             Shirlly: '/inventory-module',
-            Priyadharshini: '/employees-module'
+            Priyadharshini: '/employee-module'
           };
 
-          this.router.navigate([routeMap[user]]);
+          // if backend login works → use user-based routing
+          if (routeMap[user]) {
+            this.router.navigate([routeMap[user]]);
+          }
         },
 
         error: (err) => {
           console.log('Login failed', err);
-          alert('Invalid credentials');
+
+          // fallback: module-based login
+          const routeMap: any = {
+            pets: '/pets-module',
+            petservices: '/pet-services-module',
+            customers: '/customers-module',
+            inventory: '/inventory-module',
+            employees: '/employees-module'
+          };
+
+          if (routeMap[this.moduleName]) {
+            this.router.navigate([routeMap[this.moduleName]]);
+          } else {
+            alert('Invalid credentials');
+          }
         }
       });
   }
 }
-
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-
-@Component({
-  selector: 'app-login',
-  standalone:true,
-  imports: [ReactiveFormsModule, RouterModule],
-  templateUrl: './login.html',
-  styleUrl: './login.css',
-})
-export class Login {
-
-  route:ActivatedRoute=inject(ActivatedRoute);
-  router:Router=inject(Router);
-  moduleName:string='';
-loginForm: FormGroup=new FormGroup({
-  username: new FormControl(''),
-  password: new FormControl('')
-})
-
-  ngOnInit()
-  {
-    this.moduleName=this.route.snapshot.paramMap.get('module') || '';
-  }
-login() {
-  if (this.loginForm.value.username === 'admin' && this.loginForm.value.password === 'admin') {
-
-    const routeMap: any = {
-      pets: 'pets-module',
-      petservices: '/pet-services-module',
-      customers: 'customers-module',
-      inventory: 'inventory-module',
-      employees: 'employees-module'
-    };
- 
-  this.router.navigate(['/'+ routeMap[this.moduleName]])
-
-
-}
-
-}
-}
-
-

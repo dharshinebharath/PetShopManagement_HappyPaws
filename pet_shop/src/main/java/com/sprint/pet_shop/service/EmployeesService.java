@@ -1,6 +1,7 @@
 
 package com.sprint.pet_shop.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -114,7 +115,7 @@ public class EmployeesService implements EmployeesInterface {
     public ApiResponse<List<EmployeesResponseDTO>> getAll() {
 
         List<EmployeesResponseDTO> data =
-                employeesRepository.findAll()
+        		employeesRepository.findAllByOrderByEmployeeIdAsc()
                         .stream()
                         .map(this::toDto)
                         .toList();
@@ -144,12 +145,19 @@ public class EmployeesService implements EmployeesInterface {
     }
 
     // DELETE (NOW RETURN API RESPONSE LIKE GROOMING)
+
     @Override
     public ApiResponse<String> deleteEmployee(long employeeId) {
 
         Employees existing = employeesRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Employee not found with id: " + employeeId));
+
+        // 🔥 BREAK RELATION SAFELY (IMPORTANT)
+        if (existing.getPets() != null) {
+            existing.getPets().forEach(pet -> pet.getEmployees().remove(existing));
+            existing.getPets().clear();
+        }
 
         employeesRepository.delete(existing);
 
@@ -172,11 +180,12 @@ public class EmployeesService implements EmployeesInterface {
         if (dto.getFirstName() != null && dto.getFirstName().isEmpty()) {
             throw new InvalidDataException("First name cannot be empty");
         }
-
         if (dto.getEmail() != null &&
-                employeesRepository.existsByEmail(dto.getEmail())) {
-            throw new DuplicateResourceException("Employee email already exists");
-        }
+        	    employeesRepository.existsByEmail(dto.getEmail()) &&
+        	    !existing.getEmail().equals(dto.getEmail())) {
+
+        	    throw new DuplicateResourceException("Employee email already exists");
+        	}
 
         if (dto.getFirstName() != null) {
             existing.setFirstName(dto.getFirstName());
@@ -294,7 +303,7 @@ public class EmployeesService implements EmployeesInterface {
 
 	        return new ApiResponse<>("Pet removed from employee", true, null);
 	    }
-	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesHiredAfter(Date date) {
+	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesHiredAfter(LocalDate date) {
 
 	        List<EmployeesResponseDTO> data =
 	                employeesRepository.findByHireDateAfter(date)

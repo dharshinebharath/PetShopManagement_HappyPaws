@@ -74,6 +74,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
@@ -93,6 +94,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
+                		.requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
 
                         // PUBLIC
                         .requestMatchers(
@@ -119,6 +121,7 @@ public class SecurityConfig {
 
                         // EMPLOYEES
                         .requestMatchers("/api/v1/employees/**").hasRole("HR_ADMIN")
+                        
 
                         // PET MAPPINGS
                         .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")

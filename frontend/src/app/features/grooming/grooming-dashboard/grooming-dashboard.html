@@ -60,25 +60,3 @@
 
 </div>
 
-<h2>Grooming Services</h2>
-
-<!-- BASIC CRUD -->
-<button (click)="getAll()">GET ALL</button>
-<button (click)="getById()">GET BY ID</button>
-<button (click)="create()">POST</button>
-<button (click)="update()">PUT</button>
-<button (click)="delete()">DELETE</button>
-
-<br><br>
-
-<!-- RELATIONSHIP -->
-<h3>Pet ↔ Grooming Mapping</h3>
-
-<input [(ngModel)]="petId" placeholder="Pet ID">
-<input [(ngModel)]="serviceId" placeholder="Service ID">
-
-<button (click)="assignService()">Assign Service</button>
-<button (click)="getPetServices()">Get Pet Services</button>
-<button (click)="removeService()">Remove Service</button>
-
-<hr>
