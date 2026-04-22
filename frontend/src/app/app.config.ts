@@ -7,7 +7,14 @@ import { provideBrowserGlobalErrorListeners } from '@angular/core';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+
     provideHttpClient(),
     provideBrowserGlobalErrorListeners()
+
+
+
+    provideHttpClient()
+
+
   ]
 };

@@ -2,10 +2,11 @@ import { Routes } from '@angular/router';
 
 import { Home } from './features/home/home';
 import { Login } from './features/auth/login/login';
+
 import { PetServicesModule } from './features/modules/pet-services-module/pet-services-module';
-import { PetsDashboard } from './features/pets/pets-dashboard/pets-dashboard';
 import { GroomingDashboard } from './features/grooming/grooming-dashboard/grooming-dashboard';
 import { VaccinationDashboard } from './features/vaccinations/vaccination-dashboard/vaccination-dashboard';
+
 import { CustomersDashboard } from './features/customers/customers-dashboard/customers-dashboard';
 import { EmployeesDashboard } from './features/employees/employees-dashboard/employees-dashboard';
 import { InventoryModule } from './features/modules/inventory-module/inventory-module';
@@ -19,14 +20,34 @@ import { FoodForm } from './features/food/food-form/food-form';
 import { SupplierForm } from './features/supplier/supplier-form/supplier-form';
 import { SupplierList } from './features/supplier/supplier-list/supplier-list';
 
+import { GroomingList } from './features/grooming/grooming-list/grooming-list';
+import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
 
+
+import { GroomingList } from './features/grooming/grooming-list/grooming-list';
+import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
+import { VaccinationList } from './features/vaccinations/vaccination-list/vaccination-list';
+import { VaccinationForm } from './features/vaccinations/vaccination-form/vaccination-form';
+
+
+
+import { PetGroomingDashboard } from './features/pet-mapping/pet-grooming-dashboard/pet-grooming-dashboard';
+import { PetGroomingList } from './features/pet-mapping/pet-grooming-list/pet-grooming-list';
+import { PetVaccinationDashboard } from './features/pet-mapping/pet-vaccination-dashboard/pet-vaccination-dashboard';
+import { PetVaccinationList } from './features/pet-mapping/pet-vaccination-list/pet-vaccination-list';
+
+
+import { EmployeeModule } from './features/modules/employee-module/employee-module';
+import { EmployeeDashboard } from './features/employees/employee-dashboard/employee-dashboard';
+import { EmployeeList } from './features/employees/employee-list/employee-list';
+import { EmployeeForm } from './features/employees/employee-form/employee-form'; // ✅ ADD THIS
 
 export const routes: Routes = [
 
-  // 🔹 HOME
+  // HOME
   { path: '', component: Home },
 
-  // 🔹 LOGIN
+  // LOGIN
   { path: 'login/:module', component: Login },
 
 
@@ -38,6 +59,7 @@ export const routes: Routes = [
 { path: 'grooming/list', component: GroomingList },
 
 {path: 'grooming/form', component:GroomingForm},
+
 { path: 'food/list', component: FoodList },
 
 {path: 'food/form', component:FoodForm},
@@ -45,11 +67,31 @@ export const routes: Routes = [
 
 {path: 'supplier/form', component:SupplierForm},
 
+{
+  path: 'vaccination',
+  component: VaccinationDashboard
+},
+{
+  path: 'vaccination/list',
+  component: VaccinationList
+},
+{
+  path: 'vaccination/form',
+  component: VaccinationForm
+},
+{ path: 'pet-mapping/grooming', component: PetGroomingDashboard },
+{ path: 'pet-mapping/grooming/list', component: PetGroomingList },
+
+{ path: 'pet-mapping/vaccination', component: PetVaccinationDashboard },
+{ path: 'pet-mapping/vaccination/list', component: PetVaccinationList },
+
+
 
 { path: 'pet-services-module', component: PetServicesModule },
 
 { path: 'grooming-dashboard', component: GroomingDashboard },
 { path: 'vaccination-dashboard', component: VaccinationDashboard },
+
 
   { path: 'inventory-module', component: InventoryModule },
   { path: 'food-dashboard', component: FoodDashboard },
@@ -58,5 +100,17 @@ export const routes: Routes = [
 
 
 
+  // PET SERVICES MODULE
+  { path: 'pet-services-module', component: PetServicesModule },
+  { path: 'grooming-dashboard', component: GroomingDashboard },
+  { path: 'vaccination-dashboard', component: VaccinationDashboard },
+  { path: 'grooming/list', component: GroomingList },
+  { path: 'grooming/form', component: GroomingForm },
+
+  // EMPLOYEE MODULE
+  { path: 'employee-module', component: EmployeeModule },
+  { path: 'employee-dashboard', component: EmployeeDashboard },
+  { path: 'employee/list', component: EmployeeList },
+  { path: 'employee/form', component: EmployeeForm }, // ✅ IMPORTANT
 
 ];

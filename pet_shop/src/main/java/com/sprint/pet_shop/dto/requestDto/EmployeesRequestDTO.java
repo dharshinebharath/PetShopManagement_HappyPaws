@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.dto.requestDto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +15,7 @@ public class EmployeesRequestDTO {
     private String position;
 
     
-    private Date hireDate;
+    private LocalDate hireDate;
 
     private String phoneNumber;
 
@@ -47,11 +48,11 @@ public class EmployeesRequestDTO {
 		this.position = position;
 	}
 
-	public Date getHireDate() {
+	public LocalDate getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(LocalDate hireDate) {
 		this.hireDate = hireDate;
 	}
 

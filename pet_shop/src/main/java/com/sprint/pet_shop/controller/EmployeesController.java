@@ -1,8 +1,10 @@
 package com.sprint.pet_shop.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.service.EmployeesService;
 
 import jakarta.validation.Valid;
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/employees")
 public class EmployeesController {
@@ -89,8 +92,9 @@ public class EmployeesController {
     // ✅ ADD THIS (IMPORTANT FIX)
     @GetMapping("/hired-after/{date}")
     public ApiResponse<List<EmployeesResponseDTO>> getByHireDate(
-            @PathVariable @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE)
-            Date date) {
+        @PathVariable
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        LocalDate date) {
 
         return employeesService.getEmployeesHiredAfter(date);
     }
