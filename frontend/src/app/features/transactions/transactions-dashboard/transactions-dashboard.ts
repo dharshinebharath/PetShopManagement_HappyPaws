@@ -13,12 +13,10 @@ export class TransactionDashboard {
   router = inject(Router);
   transactionService = inject(transaction);
 
-  // ================= GET ALL =================
   goToList() {
     this.router.navigate(['/transactions/list']);
   }
 
-  // ================= GET BY ID =================
   viewTransaction(id: string) {
     if (!id) {
       alert('Please enter Transaction ID');
@@ -33,15 +31,14 @@ export class TransactionDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Transaction not found ❌');
+          alert('Transaction not found');
         } else {
-          alert('Something went wrong ⚠️');
+          alert('Something went wrong');
         }
       }
     });
   }
 
-  // ================= GET CUSTOMER TRANSACTIONS =================
   getCustomerTransactions(customerId: string) {
     if (!customerId) {
       alert('Enter Customer ID');
@@ -54,11 +51,10 @@ export class TransactionDashboard {
           queryParams: { customerId }
         });
       },
-      error: () => alert('Failed to fetch transactions ❌')
+      error: () => alert('Failed to fetch transactions')
     });
   }
 
-  // ================= GET BY STATUS =================
   getByStatus(status: string) {
     if (!status) {
       alert('Enter Status');
@@ -73,15 +69,14 @@ export class TransactionDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('No transactions found for status ❌');
+          alert('No transactions found for status');
         } else {
-          alert('Something went wrong ⚠️');
+          alert('Something went wrong');
         }
       }
     });
   }
 
-  // ================= GET BY DATE RANGE =================
   getByDateRange(fromDate: string, toDate: string) {
     if (!fromDate || !toDate) {
       alert('Select both dates');

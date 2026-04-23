@@ -13,6 +13,7 @@ import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
 import com.sprint.pet_shop.entity.Employees;
 import com.sprint.pet_shop.entity.GroomingServices;
 import com.sprint.pet_shop.entity.PetCategories;
@@ -34,570 +35,472 @@ import com.sprint.pet_shop.service.interfaces.PetsInterface;
 
 @Service
 public class PetsService implements PetsInterface {
-	
+
 	@Autowired
 	private PetsRepository petsRepository;
-	
-	 @Autowired
-	    private PetCategoriesRepository categoryRepository;
-	 @Autowired
-	 private GroomingServicesRepository groomingRepo;
 
-	 @Autowired
-	 private PetFoodRepository foodRepo;
+	@Autowired
+	private PetCategoriesRepository categoryRepository;
 
-	 @Autowired
-	 private VaccinationsRepository vaccinationRepo;
+	@Autowired
+	private GroomingServicesRepository groomingRepo;
 
-	 @Autowired
-	 private EmployeesRepository employeeRepo;
+	@Autowired
+	private PetFoodRepository foodRepo;
 
-	 @Autowired
-	 private SupplierRepository supplierRepo;
-	 private PetsResponseDTO toDto(Pets pet) {
+	@Autowired
+	private VaccinationsRepository vaccinationRepo;
 
-	        PetsResponseDTO dto = new PetsResponseDTO();
+	@Autowired
+	private EmployeesRepository employeeRepo;
 
-	        dto.setPet_id(pet.getPet_id());
-	        dto.setName(pet.getName());
-	        dto.setBreed(pet.getBreed());
-	        dto.setAge(pet.getAge());
-	        dto.setPrice(pet.getPrice());
-	        dto.setDescription(pet.getDescription());
-	        dto.setImage_url(pet.getImage_url());
+	@Autowired
+	private SupplierRepository supplierRepo;
 
-	        dto.setCategory_id(pet.getCategory().getCategory_id());
-	        dto.setCategoryName(pet.getCategory().getName());
+	private PetsResponseDTO toDto(Pets pet) {
+		PetsResponseDTO dto = new PetsResponseDTO();
 
-	        // Relationships → IDs
-	        if (pet.getGroomingServices() != null) {
-	            dto.setGroomingServiceIds(
-	                pet.getGroomingServices().stream()
-	                        .map(GroomingServices::getServiceId)
-	                        .toList()
-	            );
-	        }
+		dto.setPet_id(pet.getPet_id());
+		dto.setName(pet.getName());
+		dto.setBreed(pet.getBreed());
+		dto.setAge(pet.getAge());
+		dto.setPrice(pet.getPrice());
+		dto.setDescription(pet.getDescription());
+		dto.setImage_url(pet.getImage_url());
 
-	        if (pet.getFoods() != null) {
-	            dto.setFoodIds(
-	                pet.getFoods().stream()
-	                        .map(PetFood::getFoodId)
-	                        .toList()
-	            );
-	        }
+		dto.setCategory_id(pet.getCategory().getCategory_id());
+		dto.setCategoryName(pet.getCategory().getName());
 
-	        if (pet.getVaccinations() != null) {
-	            dto.setVaccinationIds(
-	                pet.getVaccinations().stream()
-	                        .map(Vaccinations::getVaccinationId)
-	                        .toList()
-	            );
-	        }
+		if (pet.getGroomingServices() != null) {
+			dto.setGroomingServiceIds(
+					pet.getGroomingServices().stream()
+							.map(GroomingServices::getServiceId)
+							.toList());
+		}
 
-	        if (pet.getEmployees() != null) {
-	            dto.setEmployeeIds(
-	                pet.getEmployees().stream()
-	                        .map(Employees::getEmployeeId)
-	                        .toList()
-	            );
-	        }
+		if (pet.getFoods() != null) {
+			dto.setFoodIds(
+					pet.getFoods().stream()
+							.map(PetFood::getFoodId)
+							.toList());
+		}
 
-	        if (pet.getSuppliers() != null) {
-	            dto.setSupplierIds(
-	                pet.getSuppliers().stream()
-	                        .map(Supplier::getSupplierId)
-	                        .toList()
-	            );
-	        }
+		if (pet.getVaccinations() != null) {
+			dto.setVaccinationIds(
+					pet.getVaccinations().stream()
+							.map(Vaccinations::getVaccinationId)
+							.toList());
+		}
 
-	        return dto;
-	    }
+		if (pet.getEmployees() != null) {
+			dto.setEmployeeIds(
+					pet.getEmployees().stream()
+							.map(Employees::getEmployeeId)
+							.toList());
+		}
+
+		if (pet.getSuppliers() != null) {
+			dto.setSupplierIds(
+					pet.getSuppliers().stream()
+							.map(Supplier::getSupplierId)
+							.toList());
+		}
+
+		return dto;
+	}
+
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getAllPets() {
+		List<PetsResponseDTO> data = petsRepository.findAllSorted()
+				.stream()
+				.map(this::toDto)
+				.toList();
 
-        List<PetsResponseDTO> data =
-                petsRepository.findAll()
-                        .stream()
-                        .map(this::toDto)
-                        .toList();
+		ApiResponse<List<PetsResponseDTO>> response = new ApiResponse<>();
+		response.setMessage("Fetched all pets");
+		response.setSuccess(true);
+		response.setData(data);
 
-        ApiResponse<List<PetsResponseDTO>> response = new ApiResponse<>();
-        response.setMessage("Fetched all pets");
-        response.setSuccess(true);
-        response.setData(data);
+		return response;
+	}
 
-        return response;
-    }
-	
 	@Override
-	 public ApiResponse<List<PetsResponseDTO>> addAllPets(List<PetsRequestDTO> dtos) {
+	public ApiResponse<List<PetsResponseDTO>> addAllPets(List<PetsRequestDTO> dtos) {
+		List<Pets> entities = new ArrayList<>();
 
-        List<Pets> entities = new ArrayList<>();
+		for (PetsRequestDTO dto : dtos) {
 
-        for (PetsRequestDTO dto : dtos) {
+			if (dto.getName() == null || dto.getName().isBlank()) {
+				throw new InvalidDataException("Pet name cannot be empty");
+			}
 
-            if (dto.getName() == null || dto.getName().isBlank()) {
-                throw new InvalidDataException("Pet name cannot be empty");
-            }
+			if (dto.getPrice() == null || dto.getPrice().doubleValue() < 0) {
+				throw new InvalidDataException("Price must be positive");
+			}
 
-            if (dto.getPrice() == null || dto.getPrice().doubleValue() < 0) {
-                throw new InvalidDataException("Price must be positive");
-            }
+			if (dto.getAge() == null || dto.getAge() < 0) {
+				throw new InvalidDataException("Age cannot be negative");
+			}
 
-            if (dto.getAge() == null || dto.getAge() < 0) {
-                throw new InvalidDataException("Age cannot be negative");
-            }
+			PetCategories category = categoryRepository.findById(dto.getCategory_id())
+					.orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
-            // CATEGORY
-            PetCategories category = categoryRepository.findById(dto.getCategory_id())
-                    .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+			Pets pet = new Pets();
+			pet.setName(dto.getName());
+			pet.setBreed(dto.getBreed());
+			pet.setAge(dto.getAge());
+			pet.setPrice(dto.getPrice());
+			pet.setDescription(dto.getDescription());
+			pet.setImage_url(dto.getImage_url());
+			pet.setCategory(category);
 
-            Pets pet = new Pets();
-            pet.setName(dto.getName());
-            pet.setBreed(dto.getBreed());
-            pet.setAge(dto.getAge());
-            pet.setPrice(dto.getPrice());
-            pet.setDescription(dto.getDescription());
-            pet.setImage_url(dto.getImage_url());
-            pet.setCategory(category);
+			if (dto.getGroomingServiceIds() != null) {
+				pet.setGroomingServices(groomingRepo.findAllById(dto.getGroomingServiceIds()));
+			}
 
-            // ---------------- GROOMING ----------------
-            if (dto.getGroomingServiceIds() != null) {
-                pet.setGroomingServices(
-                        groomingRepo.findAllById(dto.getGroomingServiceIds()));
-            }
+			if (dto.getFoodIds() != null) {
+				pet.setFoods(foodRepo.findAllById(dto.getFoodIds()));
+			}
 
-            // ---------------- FOOD ----------------
-            if (dto.getFoodIds() != null) {
-                pet.setFoods(
-                        foodRepo.findAllById(dto.getFoodIds()));
-            }
+			if (dto.getVaccinationIds() != null) {
+				pet.setVaccinations(vaccinationRepo.findAllById(dto.getVaccinationIds()));
+			}
 
-            // ---------------- VACCINATIONS ----------------
-            if (dto.getVaccinationIds() != null) {
-                pet.setVaccinations(
-                        vaccinationRepo.findAllById(dto.getVaccinationIds()));
-            }
+			if (dto.getEmployeeIds() != null) {
+				pet.setEmployees(employeeRepo.findAllById(dto.getEmployeeIds()));
+			}
 
-            // ---------------- EMPLOYEES ----------------
-            if (dto.getEmployeeIds() != null) {
-                pet.setEmployees(
-                        employeeRepo.findAllById(dto.getEmployeeIds()));
-            }
+			if (dto.getSupplierIds() != null) {
+				pet.setSuppliers(supplierRepo.findAllById(dto.getSupplierIds()));
+			}
 
-            // ---------------- SUPPLIERS ----------------
-            if (dto.getSupplierIds() != null) {
-                pet.setSuppliers(
-                        supplierRepo.findAllById(dto.getSupplierIds()));
-            }
+			entities.add(pet);
+		}
 
-            entities.add(pet);
-        }
+		List<PetsResponseDTO> responseList = petsRepository.saveAll(entities)
+				.stream()
+				.map(this::toDto)
+				.toList();
 
-        List<PetsResponseDTO> responseList =
-                petsRepository.saveAll(entities)
-                        .stream()
-                        .map(this::toDto)
-                        .toList();
+		ApiResponse<List<PetsResponseDTO>> response = new ApiResponse<>();
+		response.setMessage("Pets saved successfully");
+		response.setSuccess(true);
+		response.setData(responseList);
 
-        ApiResponse<List<PetsResponseDTO>> response = new ApiResponse<>();
-        response.setMessage("Pets saved successfully");
-        response.setSuccess(true);
-        response.setData(responseList);
+		return response;
+	}
 
-        return response;
-    }
-
-	
 	@Override
-	 public ApiResponse<PetsResponseDTO> getPetById(long id) {
+	public ApiResponse<PetsResponseDTO> getPetById(long id) {
+		Pets pet = petsRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-        Pets pet = petsRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		ApiResponse<PetsResponseDTO> response = new ApiResponse<>();
+		response.setMessage("Pet fetched successfully");
+		response.setSuccess(true);
+		response.setData(toDto(pet));
 
-        ApiResponse<PetsResponseDTO> response = new ApiResponse<>();
-        response.setMessage("Pet fetched successfully");
-        response.setSuccess(true);
-        response.setData(toDto(pet));
+		return response;
+	}
 
-        return response;
-    }
-
-  
-	
 	@Override
-	 public ApiResponse<PetsResponseDTO> updatePets(long id, PetsRequestDTO dto) {
+	public ApiResponse<PetsResponseDTO> updatePets(long id, PetsRequestDTO dto) {
+		Pets existing = petsRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-        Pets existing = petsRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		if (dto.getPrice().doubleValue() < 0) {
+			throw new InvalidDataException("Price must be positive");
+		}
 
-        if (dto.getPrice().doubleValue() < 0) {
-            throw new InvalidDataException("Price must be positive");
-        }
+		existing.setName(dto.getName());
+		existing.setBreed(dto.getBreed());
+		existing.setAge(dto.getAge());
+		existing.setPrice(dto.getPrice());
+		existing.setDescription(dto.getDescription());
+		existing.setImage_url(dto.getImage_url());
 
-        existing.setName(dto.getName());
-        existing.setBreed(dto.getBreed());
-        existing.setAge(dto.getAge());
-        existing.setPrice(dto.getPrice());
-        existing.setDescription(dto.getDescription());
-        existing.setImage_url(dto.getImage_url());
+		if (dto.getCategory_id() != null && dto.getCategory_id() > 0) {
+			PetCategories category = categoryRepository.findById(dto.getCategory_id())
+					.orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+			existing.setCategory(category);
+		}
 
-     // CATEGORY
-        if (dto.getCategory_id() != null) {
-            PetCategories category = categoryRepository.findById(dto.getCategory_id())
-                    .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-            existing.setCategory(category);
-        }
+		if (dto.getGroomingServiceIds() != null) {
+			existing.setGroomingServices(groomingRepo.findAllById(dto.getGroomingServiceIds()));
+		}
 
-        // GROOMING
-        if (dto.getGroomingServiceIds() != null) {
-            existing.setGroomingServices(
-                    groomingRepo.findAllById(dto.getGroomingServiceIds()));
-        }
+		if (dto.getFoodIds() != null) {
+			existing.setFoods(foodRepo.findAllById(dto.getFoodIds()));
+		}
 
-        // FOOD
-        if (dto.getFoodIds() != null) {
-            existing.setFoods(
-                    foodRepo.findAllById(dto.getFoodIds()));
-        }
+		if (dto.getVaccinationIds() != null) {
+			existing.setVaccinations(vaccinationRepo.findAllById(dto.getVaccinationIds()));
+		}
 
-        // VACCINATION
-        if (dto.getVaccinationIds() != null) {
-            existing.setVaccinations(
-                    vaccinationRepo.findAllById(dto.getVaccinationIds()));
-        }
+		if (dto.getEmployeeIds() != null) {
+			existing.setEmployees(employeeRepo.findAllById(dto.getEmployeeIds()));
+		}
 
-        // EMPLOYEE
-        if (dto.getEmployeeIds() != null) {
-            existing.setEmployees(
-                    employeeRepo.findAllById(dto.getEmployeeIds()));
-        }
+		if (dto.getSupplierIds() != null) {
+			existing.setSuppliers(supplierRepo.findAllById(dto.getSupplierIds()));
+		}
 
-        // SUPPLIER
-        if (dto.getSupplierIds() != null) {
-            existing.setSuppliers(
-                    supplierRepo.findAllById(dto.getSupplierIds()));
-        }
-        Pets updated = petsRepository.save(existing);
+		Pets updated = petsRepository.save(existing);
 
-        ApiResponse<PetsResponseDTO> response = new ApiResponse<>();
-        response.setMessage("Updated successfully");
-        response.setSuccess(true);
-        response.setData(toDto(updated));
+		ApiResponse<PetsResponseDTO> response = new ApiResponse<>();
+		response.setMessage("Updated successfully");
+		response.setSuccess(true);
+		response.setData(toDto(updated));
 
-        return response;
-    }
-	
+		return response;
+	}
+
 	@Override
 	public ApiResponse<String> deletePets(long id) {
+		Pets existing = petsRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-        Pets existing = petsRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		petsRepository.delete(existing);
 
-        petsRepository.delete(existing);
+		ApiResponse<String> response = new ApiResponse<>();
+		response.setMessage("Deleted successfully");
+		response.setSuccess(true);
+		response.setData("Deleted pet id: " + id);
 
-        ApiResponse<String> response = new ApiResponse<>();
-        response.setMessage("Deleted successfully");
-        response.setSuccess(true);
-        response.setData("Deleted pet id: " + id);
+		return response;
+	}
 
-        return response;
-    }
-	
 	@Override
-    public ApiResponse<List<PetsResponseDTO>> getPetsByEmployee(Long employeeId) {
+	public ApiResponse<List<PetsResponseDTO>> getPetsByEmployee(Long employeeId) {
+		List<PetsResponseDTO> data = petsRepository.findPetsByEmployeeId(employeeId)
+				.stream()
+				.map(this::toDto)
+				.toList();
 
-        List<PetsResponseDTO> data = petsRepository.findPetsByEmployeeId(employeeId)
-                .stream()
-                .map(this::toDto)
-                .toList();
+		return new ApiResponse<>("Pets handled by employee", true, data);
+	}
 
-        return new ApiResponse<>("Pets handled by employee", true, data);
-        
-        
-    }
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getPetsByCategory(Long categoryId) {
+		List<PetsResponseDTO> data = petsRepository
+				.findByCategory_CategoryId(categoryId)
+				.stream()
+				.map(this::toDto)
+				.toList();
 
-	    List<PetsResponseDTO> data = petsRepository
-	            .findByCategory_CategoryId(categoryId)
-	            .stream()
-	            .map(this::toDto)
-	            .toList();
-
-	    return new ApiResponse<>("Pets by category", true, data);
+		return new ApiResponse<>("Pets by category", true, data);
 	}
-	
+
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getPetsByBreed(String breed) {
+		List<PetsResponseDTO> data = petsRepository
+				.findByBreedIgnoreCase(breed)
+				.stream()
+				.map(this::toDto)
+				.toList();
 
-	    List<PetsResponseDTO> data = petsRepository
-	            .findByBreedIgnoreCase(breed)
-	            .stream()
-	            .map(this::toDto)
-	            .toList();
-
-	    return new ApiResponse<>("Pets by breed", true, data);
+		return new ApiResponse<>("Pets by breed", true, data);
 	}
-	
+
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getPetsByPriceRange(BigDecimal min, BigDecimal max) {
+		if (min.compareTo(max) > 0) {
+			throw new InvalidDataException("Min price cannot be greater than max price");
+		}
 
-	    if (min.compareTo(max) > 0) {
-	        throw new InvalidDataException("Min price cannot be greater than max price");
-	    }
+		List<PetsResponseDTO> data = petsRepository
+				.findByPriceBetween(min, max)
+				.stream()
+				.map(this::toDto)
+				.toList();
 
-	    List<PetsResponseDTO> data = petsRepository
-	            .findByPriceBetween(min, max)
-	            .stream()
-	            .map(this::toDto)
-	            .toList();
-
-	    return new ApiResponse<>("Pets by price range", true, data);
+		return new ApiResponse<>("Pets by price range", true, data);
 	}
-	
+
 	@Override
 	public ApiResponse<String> addGroomingServiceToPet(Long petId, Long serviceId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		GroomingServices service = groomingRepo.findById(serviceId)
+				.orElseThrow(() -> new ResourceNotFoundException("Service not found"));
 
-	    GroomingServices service = groomingRepo.findById(serviceId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Service not found"));
+		if (pet.getGroomingServices() == null) {
+			pet.setGroomingServices(new ArrayList<>());
+		}
 
-	    // Initialize list if null
-	    if (pet.getGroomingServices() == null) {
-	        pet.setGroomingServices(new ArrayList<>());
-	    }
+		if (pet.getGroomingServices().contains(service)) {
+			throw new DuplicateResourceException("Service already mapped to pet");
+		}
 
-	    // Avoid duplicate mapping
-	    if (pet.getGroomingServices().contains(service)) {
-	        throw new DuplicateResourceException("Service already mapped to pet");
-	    }
+		pet.getGroomingServices().add(service);
+		petsRepository.save(pet);
 
-	    pet.getGroomingServices().add(service);
-
-	    petsRepository.save(pet);
-
-	    return new ApiResponse<>("Service added to pet", true, null);
+		return new ApiResponse<>("Service added to pet", true, null);
 	}
-	
+
 	@Override
 	public ApiResponse<List<GroomingServicesResponseDTO>> getGroomingServicesByPet(Long petId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		List<GroomingServicesResponseDTO> data = pet.getGroomingServices()
+				.stream()
+				.map(service -> {
+					GroomingServicesResponseDTO dto = new GroomingServicesResponseDTO();
+					dto.setServiceId(service.getServiceId());
+					dto.setName(service.getName());
+					dto.setDescription(service.getDescription());
+					dto.setPrice(service.getPrice());
+					dto.setAvailable(service.isAvailable());
+					return dto;
+				})
+				.toList();
 
-	    List<GroomingServicesResponseDTO> data =
-	            pet.getGroomingServices()
-	                    .stream()
-	                    .map(service -> {
-	                        GroomingServicesResponseDTO dto = new GroomingServicesResponseDTO();
-	                        dto.setServiceId(service.getServiceId());
-	                        dto.setName(service.getName());
-	                        dto.setDescription(service.getDescription());
-	                        dto.setPrice(service.getPrice());
-	                        dto.setAvailable(service.isAvailable());
-	                        return dto;
-	                    })
-	                    .toList();
-
-	    return new ApiResponse<>("Services fetched for pet", true, data);
+		return new ApiResponse<>("Services fetched for pet", true, data);
 	}
-	
+
 	@Override
 	public ApiResponse<String> removeGroomingServiceFromPet(Long petId, Long serviceId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		GroomingServices service = groomingRepo.findById(serviceId)
+				.orElseThrow(() -> new ResourceNotFoundException("Service not found"));
 
-	    GroomingServices service = groomingRepo.findById(serviceId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Service not found"));
+		if (pet.getGroomingServices() == null || !pet.getGroomingServices().contains(service)) {
+			throw new ResourceNotFoundException("Service not mapped to this pet");
+		}
 
-	    if (pet.getGroomingServices() == null ||
-	        !pet.getGroomingServices().contains(service)) {
-	        throw new ResourceNotFoundException("Service not mapped to this pet");
-	    }
+		pet.getGroomingServices().remove(service);
+		petsRepository.save(pet);
 
-	    pet.getGroomingServices().remove(service);
-
-	    petsRepository.save(pet);
-
-	    return new ApiResponse<>("Service removed from pet", true, null);
+		return new ApiResponse<>("Service removed from pet", true, null);
 	}
-	
+
 	@Override
 	public ApiResponse<String> addVaccinationToPet(Long petId, Long vaccinationId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		Vaccinations vaccination = vaccinationRepo.findById(vaccinationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Vaccination not found"));
 
-	    Vaccinations vaccination = vaccinationRepo.findById(vaccinationId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Vaccination not found"));
+		if (pet.getVaccinations() == null) {
+			pet.setVaccinations(new ArrayList<>());
+		}
 
-	    if (pet.getVaccinations() == null) {
-	        pet.setVaccinations(new ArrayList<>());
-	    }
+		if (pet.getVaccinations().contains(vaccination)) {
+			throw new DuplicateResourceException("Vaccination already added");
+		}
 
-	    if (pet.getVaccinations().contains(vaccination)) {
-	        throw new DuplicateResourceException("Vaccination already added");
-	    }
+		pet.getVaccinations().add(vaccination);
+		petsRepository.save(pet);
 
-	    pet.getVaccinations().add(vaccination);
-
-	    petsRepository.save(pet);
-
-	    return new ApiResponse<>("Vaccination added to pet", true, null);
+		return new ApiResponse<>("Vaccination added to pet", true, null);
 	}
-	
+
 	@Override
-	public ApiResponse<List<Long>> getVaccinationsByPet(Long petId) {
+	public ApiResponse getVaccinationsByPet(Long petId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		List<VaccinationsResponseDTO> data = pet.getVaccinations()
+				.stream()
+				.map(vaccination -> {
+					VaccinationsResponseDTO dto = new VaccinationsResponseDTO();
+					dto.setVaccinationId(vaccination.getVaccinationId());
+					dto.setName(vaccination.getName());
+					dto.setDescription(vaccination.getDescription());
+					return dto;
+				})
+				.toList();
 
-	    List<Long> data = pet.getVaccinations()
-	            .stream()
-	            .map(Vaccinations::getVaccinationId)
-	            .toList();
-
-	    return new ApiResponse<>("Vaccinations fetched", true, data);
+		return new ApiResponse<>("Vaccinations fetched", true, data);
 	}
-	
+
 	@Override
 	public ApiResponse<String> removeVaccinationFromPet(Long petId, Long vaccinationId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		Vaccinations vaccination = vaccinationRepo.findById(vaccinationId)
+				.orElseThrow(() -> new ResourceNotFoundException("Vaccination not found"));
 
-	    Vaccinations vaccination = vaccinationRepo.findById(vaccinationId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Vaccination not found"));
+		if (pet.getVaccinations() == null || !pet.getVaccinations().contains(vaccination)) {
+			throw new ResourceNotFoundException("Vaccination not linked to this pet");
+		}
 
-	    if (pet.getVaccinations() == null ||
-	        !pet.getVaccinations().contains(vaccination)) {
-	        throw new ResourceNotFoundException("Vaccination not linked to this pet");
-	    }
+		pet.getVaccinations().remove(vaccination);
+		petsRepository.save(pet);
 
-	    pet.getVaccinations().remove(vaccination);
-
-	    petsRepository.save(pet);
-
-	    return new ApiResponse<>("Vaccination removed", true, null);
+		return new ApiResponse<>("Vaccination removed", true, null);
 	}
-	
+
 	@Override
 	public ApiResponse<String> addFoodToPet(Long petId, Long foodId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		PetFood food = foodRepo.findById(foodId)
+				.orElseThrow(() -> new ResourceNotFoundException("Food not found"));
 
-	    PetFood food = foodRepo.findById(foodId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
+		if (pet.getFoods() == null) {
+			pet.setFoods(new ArrayList<>());
+		}
 
-	    if (pet.getFoods() == null) {
-	        pet.setFoods(new ArrayList<>());
-	    }
+		if (pet.getFoods().contains(food)) {
+			throw new DuplicateResourceException("Food already added");
+		}
 
-	    if (pet.getFoods().contains(food)) {
-	        throw new DuplicateResourceException("Food already added");
-	    }
+		pet.getFoods().add(food);
+		petsRepository.save(pet);
 
-	    pet.getFoods().add(food);
-
-	    petsRepository.save(pet);
-
-	    return new ApiResponse<>("Food added to pet", true, null);
+		return new ApiResponse<>("Food added to pet", true, null);
 	}
-	
+
 	@Override
 	public ApiResponse<List<Long>> getFoodByPet(Long petId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		List<Long> data = pet.getFoods()
+				.stream()
+				.map(PetFood::getFoodId)
+				.toList();
 
-	    List<Long> data = pet.getFoods()
-	            .stream()
-	            .map(PetFood::getFoodId)
-	            .toList();
-
-	    return new ApiResponse<>("Food fetched", true, data);
+		return new ApiResponse<>("Food fetched", true, data);
 	}
-	
+
 	@Override
 	public ApiResponse<String> removeFoodFromPet(Long petId, Long foodId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		PetFood food = foodRepo.findById(foodId)
+				.orElseThrow(() -> new ResourceNotFoundException("Food not found"));
 
-	    PetFood food = foodRepo.findById(foodId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
+		if (pet.getFoods() == null || !pet.getFoods().contains(food)) {
+			throw new ResourceNotFoundException("Food not linked to this pet");
+		}
 
-	    if (pet.getFoods() == null ||
-	        !pet.getFoods().contains(food)) {
-	        throw new ResourceNotFoundException("Food not linked to this pet");
-	    }
+		pet.getFoods().remove(food);
+		petsRepository.save(pet);
 
-	    pet.getFoods().remove(food);
-
-	    petsRepository.save(pet);
-
-	    return new ApiResponse<>("Food removed", true, null);
+		return new ApiResponse<>("Food removed", true, null);
 	}
+
 	@Override
 	public ApiResponse<String> addSupplierToPet(Long petId, Long supplierId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+		Supplier supplier = supplierRepo.findById(supplierId)
+				.orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
 
-	    Supplier supplier = supplierRepo.findById(supplierId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
+		if (pet.getSuppliers() == null) {
+			pet.setSuppliers(new ArrayList<>());
+		}
 
-	    // Initialize list if null
-	    if (pet.getSuppliers() == null) {
-	        pet.setSuppliers(new ArrayList<>());
-	    }
-
-	    // Avoid duplicate mapping
-	    if (pet.getSuppliers().contains(supplier)) {
-	        throw new DuplicateResourceException("Supplier already mapped to this pet");
-	    }
-
-	    pet.getSuppliers().add(supplier);
-
-	    petsRepository.save(pet);
-
-	    return new ApiResponse<>("Supplier added to pet", true, null);
-	}
-	
-	@Override
-	public ApiResponse<List<SupplierResponseDTO>> getSuppliersByPet(Long petId) {
-
-	    Pets pet = petsRepository.findById(petId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
-
-	    List<SupplierResponseDTO> data =
-	            pet.getSuppliers()
-	                    .stream()
-	                    .map(supplier -> {
-	                        SupplierResponseDTO dto = new SupplierResponseDTO();
-	                        dto.setSupplierId(supplier.getSupplierId());
-	                        dto.setName(supplier.getName());
-	                        dto.setContactPerson(supplier.getContactPerson());
-	                        dto.setPhoneNumber(supplier.getPhoneNumber());
-	                        dto.setEmail(supplier.getEmail());
-
-	                        dto.setAddressId(
-	                                supplier.getAddress() != null
-	                                        ? supplier.getAddress().getAddressId()
-	                                        : null
-	                        );
-
-	                        return dto;
-	                    })
-	                    .toList();
-
-	    return new ApiResponse<>("Suppliers fetched for pet", true, data);
-	}
-	
-	
-}
+		if (pet.getSuppliers().contains(supplier)) {
+			throw new DuplicateResource

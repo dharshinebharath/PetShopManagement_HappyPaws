@@ -1,8 +1,7 @@
-
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { GroomingService } from '../../../core/services/groomingService';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GroomingService } from '../../../core/services/groomingService';
 
 @Component({
   selector: 'app-grooming-list',
@@ -12,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './grooming-list.css',
 })
 export class GroomingList {
-
   groomingService = inject(GroomingService);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -21,41 +19,35 @@ export class GroomingList {
   groomingList: any[] = [];
 
   ngOnInit() {
-
     this.route.queryParams.subscribe(params => {
-
       const id = params['id'];
 
       if (id) {
-        // 🔹 GET BY ID
         this.groomingService.getById(Number(id)).subscribe({
           next: (res: any) => {
-
             if (!res || !res.data) {
-              alert('No service found with this ID ❌');
-              this.router.navigate(['/grooming']);
+              alert('No service found with this ID');
+              this.router.navigate(['/grooming-dashboard']);
               return;
             }
 
             this.groomingList = [res.data];
             this.cdr.detectChanges();
           },
-
           error: (err) => {
             console.log(err);
 
             if (err.status === 404) {
-              alert('Service ID not found ❌');
+              alert('Service ID not found');
             } else if (err.status === 401) {
-              alert('Unauthorized ❌ Please login again');
+              alert('Unauthorized. Please login again');
             } else {
-              alert('Something went wrong ⚠️');
+              alert('Something went wrong');
             }
 
-            this.router.navigate(['/grooming']);
+            this.router.navigate(['/grooming-dashboard']);
           }
         });
-
       } else {
         this.loadAll();
       }
@@ -75,6 +67,3 @@ export class GroomingList {
     });
   }
 }
-
-
-

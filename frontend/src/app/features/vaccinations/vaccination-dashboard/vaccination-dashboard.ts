@@ -1,20 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { VaccinationService } from '../../../core/services/vaccinationService';
 
 @Component({
   selector: 'app-vaccination-dashboard',
-  imports: [],
-  templateUrl: './vaccination-dashboard.html',
-  styleUrl: './vaccination-dashboard.css',
+  standalone: true,
+  imports: [FormsModule, RouterModule],
+  templateUrl: './vaccination-dashboard.html'
 })
-
 export class VaccinationDashboard {
-viewVaccination(arg0: string) {
-throw new Error('Method not implemented.');
-}
-deleteVaccination(arg0: string) {
-throw new Error('Method not implemented.');
-}
-}
+  router = inject(Router);
+  vaccinationService = inject(VaccinationService);
 
-// export class VaccinationDashboard {}
+  goToList() {
+    this.router.navigate(['/vaccination/list']);
+  }
 
+  viewById(id: string) {
+    if (!id) return;
+
+    this.vaccinationService.getById(Number(id)).subscribe({
+      next: () => {
+        this.router.navigate(['/vaccination/list'], {
+          queryParams: { id }
+        });
+      },
+      error: () => {
+        alert('Vaccination ID not found');
+      }
+    });
+  }
+
+  updateVaccination(id: string) {
+    if (!id) return;
+
+    this.vaccinationService.getById(Number(id)).subscribe({
+      next: () => {
+        this.router.navigate(['/vaccination/form'], {
+          queryParams: { id }
+        });
+      },
+      error: () => alert('ID not found')
+    });
+  }
+
+  deleteVaccination(id: string) {
+    if (!id) return;
+
+    this.vaccinationService.delete(Number(id)).subscribe({
+      next: () => {
+        alert('Deleted successfully');
+        this.router.navigate(['/vaccination/list']);
+      },
+      error: () => alert('Delete failed')
+    });
+  }
+}

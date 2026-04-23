@@ -158,5 +158,6 @@ public class VaccinationsService implements VaccinationsInterface {
 
 	        return new ApiResponse<>("Vaccinations by price range", true, data);
 	    }
+        
 	
 }

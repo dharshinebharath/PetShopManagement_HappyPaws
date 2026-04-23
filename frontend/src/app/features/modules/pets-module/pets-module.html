@@ -1,0 +1,53 @@
+<div class="min-h-screen pt-[10px] 
+            bg-gradient-to-br from-yellow-100 via-orange-50 to-red-100">
+
+    <!-- TITLE -->
+    <h1 class="text-4xl bg-white/80 backdrop-blur-md shadow-md p-6 rounded-2xl text-center 
+             text-red-900 font-extrabold tracking-wide mx-10">
+        🐾 Pets Management
+    </h1>
+
+    <!-- CARDS CONTAINER -->
+    <div class="flex justify-center items-center gap-12 mt-20 flex-wrap">
+
+        <!-- Pets Dashboard -->
+        <div routerLink="/pets-dashboard" class="w-[280px] h-[360px] flex flex-col justify-center 
+             bg-yellow-200 text-yellow-900 p-8 rounded-2xl shadow-md border border-yellow-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🐶 Pets
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Manage pets data, perform CRUD operations, and view all pets easily.
+            </p>
+
+        </div>
+
+        <!-- Pet Categories -->
+        <div routerLink="/category-dashboard" class="w-[280px] h-[360px] flex flex-col justify-center 
+             bg-orange-200 text-orange-900 p-8 rounded-2xl shadow-md border border-orange-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🗂️ Categories
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Manage pet categories like Dog, Cat, Birds and organize pet data.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- QUICK BUTTONS -->
+<div class="text-center mt-10">
+    <button routerLink="/pets-dashboard">Pets</button>
+    <button routerLink="/pet-category">Categories</button>
+</div>

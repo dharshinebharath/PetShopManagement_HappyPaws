@@ -1,18 +1,10 @@
-<div class="p-6 bg-[#f6f8f6] min-h-screen">
-
-  <h2 class="text-3xl font-bold text-[#3a5a40] mb-6">
+<div class="min-h-screen bg-[#f6f8f6] p-6">
+  <h2 class="mb-6 text-3xl font-bold text-[#3a5a40]">
     {{ selectedCustomerId ? 'Customer Details' : 'Customers' }}
   </h2>
 
-  <!-- <p *ngIf="selectedCustomerId" class="mb-4 text-[#588157] font-medium">
-    Showing customer details for ID: {{ selectedCustomerId }}
-  </p> -->
-
-  <div class="overflow-x-auto rounded-2xl shadow-lg border border-[#d8e2dc]">
-
-    <table class="w-full text-left border-collapse">
-
-      <!-- Header -->
+  <div class="overflow-x-auto rounded-2xl border border-[#d8e2dc] shadow-lg">
+    <table class="w-full border-collapse text-left">
       <thead class="bg-[#a3b18a] text-white">
         <tr>
           <th class="p-3">ID</th>
@@ -24,29 +16,25 @@
         </tr>
       </thead>
 
-      <!-- Body -->
       <tbody class="bg-white">
-
         <tr *ngIf="customers.length === 0" class="border-b">
           <td colspan="6" class="p-4 text-center text-gray-500">
             No customer data available
           </td>
         </tr>
 
-        <tr 
-          *ngFor="let c of customers" 
-          class="border-b hover:bg-[#fefae0] transition duration-200"
-        >
-          <td class="p-3 text-[#344e41] font-medium">{{ c.customerId }}</td>
+        <tr
+          *ngFor="let c of customers"
+          class="border-b transition duration-200 hover:bg-[#fefae0]">
+          <td class="p-3 font-medium text-[#344e41]">{{ c.customerId }}</td>
           <td class="p-3">{{ c.firstName }}</td>
           <td class="p-3">{{ c.lastName }}</td>
           <td class="p-3 text-[#588157]">{{ c.email }}</td>
           <td class="p-3">{{ c.phoneNumber }}</td>
-          <td class="p-3 text-[#bc6c25] font-semibold">
+          <td class="p-3 font-semibold text-[#bc6c25]">
             {{ c.address?.addressId }}
           </td>
         </tr>
-
       </tbody>
     </table>
   </div>
