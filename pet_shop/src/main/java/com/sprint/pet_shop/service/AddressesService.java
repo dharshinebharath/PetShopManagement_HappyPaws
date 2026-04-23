@@ -58,7 +58,7 @@ public class AddressesService implements AddressesInterface {
     @Override
     public ApiResponse<List<AddressesResponseDTO>> getaddresses() {
 
-        List<AddressesResponseDTO> data = addressesRepository.findAll()
+        List<AddressesResponseDTO> data = addressesRepository.findAllSorted()
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());

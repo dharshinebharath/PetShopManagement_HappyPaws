@@ -79,7 +79,7 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	public ApiResponse<List<GroomingServicesResponseDTO>> getAllGroomingServices() {
 
 	    List<GroomingServicesResponseDTO> data =
-	            groomingServicesRepository.findAll()
+	            groomingServicesRepository.findAllSorted()
 	                    .stream()
 	                    .map(this::toDto)
 	                    .toList();

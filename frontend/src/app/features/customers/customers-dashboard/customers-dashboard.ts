@@ -43,14 +43,28 @@ export class CustomersDashboard {
     });
   }
 
-  editCustomer(id: string) {
-    if (!id) {
-      alert('Enter Customer ID');
-      return;
-    }
-
-    this.router.navigate(['/customer/edit', id]);
+ editCustomer(id: string) {
+  if (!id) {
+    alert('Enter Customer ID');
+    return;
   }
+
+  this.customerService.getCustomerById(id).subscribe({
+    next: () => {
+      this.router.navigate(['customer/form'], {
+        queryParams: { id }
+      });
+    },
+    error: (err) => {
+      if (err.status === 404) {
+        alert('Cannot update, ID not found');
+      } else {
+        alert('Error checking ID');
+      }
+    }
+  });
+}
+
 
   deleteCustomer(id: string) {
     if (!id) {
@@ -75,10 +89,22 @@ export class CustomersDashboard {
     return;
   }
 
-  this.router.navigate(['/address/list'], {
-    queryParams: { id }
+  this.addressService.getById(Number(id)).subscribe({
+    next: () => {
+      this.router.navigate(['/address/list'], {
+        queryParams: { id }
+      });
+    },
+    error: (err) => {
+      if (err.status === 404) {
+        alert('Address ID not found');
+      } else {
+        alert('Something went wrong');
+      }
+    }
   });
 }
+
 
   // 🔹 UPDATE (check ID first)
   editAddress(id: string) {
@@ -91,7 +117,7 @@ export class CustomersDashboard {
     next: () => {
 
       // ✅ FIXED HERE
-      this.router.navigate(['/address/add'], {
+      this.router.navigate(['address/form'], {
         queryParams: { id }
       });
 

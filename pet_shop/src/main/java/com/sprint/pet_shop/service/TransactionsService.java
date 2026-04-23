@@ -80,7 +80,7 @@ public class TransactionsService implements TransactionsInterface {
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getAll() {
 
-        List<TransactionsResponseDTO> data = transactionsRepository.findAll()
+        List<TransactionsResponseDTO> data = transactionsRepository.findAllSorted()
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());

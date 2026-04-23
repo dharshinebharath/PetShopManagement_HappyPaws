@@ -1,0 +1,37 @@
+<div class="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-100 p-10 space-y-8">
+
+    <h1 class="text-3xl text-center font-bold text-emerald-900">
+        Internal Employee Reports
+    </h1>
+
+    <!-- ================= BY ROLE ================= -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+
+        <h2 class="font-bold text-green-700 text-center">Employees by Role</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="role" placeholder="Enter Role (e.g. Manager)" class="w-full border p-2 rounded">
+
+            <button (click)="getByRole()" class="bg-green-500 text-white px-5 rounded">
+                Search
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ================= BY DATE ================= -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+
+        <h2 class="font-bold text-blue-700 text-center">Employees Hired After</h2>
+
+        <div class="flex gap-3">
+            <input type="date" [(ngModel)]="date" class="w-full border p-2 rounded">
+
+            <button (click)="getByDate()" class="bg-blue-500 text-white px-5 rounded">
+                Search
+            </button>
+        </div>
+
+    </div>
+
+</div>

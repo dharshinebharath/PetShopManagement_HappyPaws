@@ -1,0 +1,44 @@
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-10">
+
+    <h2 class="text-2xl font-bold text-center mb-6 text-teal-900">
+        Employees Assigned to Pet
+    </h2>
+
+    <div class="flex justify-center">
+
+        <table class="w-full max-w-3xl bg-white shadow rounded-2xl overflow-hidden">
+
+            <!-- HEADER -->
+            <thead class="bg-purple-600 text-white">
+                <tr>
+                    <th class="p-3">Employee ID</th>
+                    <th class="p-3">First Name</th>
+                    <th class="p-3">Position</th>
+                </tr>
+            </thead>
+
+            <!-- BODY -->
+            <tbody *ngIf="employees.length > 0; else noData">
+
+                <tr *ngFor="let e of employees" class="border-b hover:bg-purple-50">
+
+                    <td class="p-3 text-center">{{ e.employeeId }}</td>
+                    <td class="p-3 text-center">{{ e.firstName }}</td>
+                    <td class="p-3 text-center">{{ e.position }}</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- NO DATA -->
+    <ng-template #noData>
+        <p class="text-center mt-6 text-gray-500 text-lg">
+            No employees assigned ❌
+        </p>
+    </ng-template>
+
+</div>

@@ -1,41 +1,36 @@
 <div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+  <h2 class="text-xl font-bold mb-4">
+    {{ customerId ? 'Update Customer' : 'Add Customer' }}
+  </h2>
 
-    <h2 class="text-xl font-bold mb-4">
-        {{ customer.customerId ? 'Update Customer' : 'Add Customer' }}
-    </h2>
+  <form [formGroup]="form" class="space-y-2">
+    <input formControlName="firstName" placeholder="First Name" class="border p-2 w-full mb-2">
+    <p class="text-red-500 text-sm" *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid">
+      First name is required and must be at least 2 characters
+    </p>
 
-    <input 
-        [(ngModel)]="customer.firstName" 
-        placeholder="First Name" 
-        class="border p-2 w-full mb-2">
+    <input formControlName="lastName" placeholder="Last Name" class="border p-2 w-full mb-2">
+    <p class="text-red-500 text-sm" *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid">
+      Last name is required and must be at least 2 characters
+    </p>
 
-    <input 
-        [(ngModel)]="customer.lastName" 
-        placeholder="Last Name" 
-        class="border p-2 w-full mb-2">
+    <input formControlName="email" placeholder="Email" class="border p-2 w-full mb-2">
+    <p class="text-red-500 text-sm" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      Enter a valid email address
+    </p>
 
-    <input 
-        [(ngModel)]="customer.email" 
-        placeholder="Email" 
-        class="border p-2 w-full mb-2">
+    <input formControlName="phoneNumber" placeholder="Phone Number" class="border p-2 w-full mb-2">
+    <p class="text-red-500 text-sm" *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.invalid">
+      Phone number is required and must be a 10-digit number like 5555678001
+    </p>
 
-    <input 
-        [(ngModel)]="customer.phoneNumber" 
-        placeholder="Phone Number" 
-        class="border p-2 w-full mb-2">
+    <input formControlName="addressId" type="number" placeholder="Address ID" class="border p-2 w-full mb-2">
+    <p class="text-red-500 text-sm" *ngIf="form.get('addressId')?.touched && form.get('addressId')?.invalid">
+      Address ID is required and must be greater than 0
+    </p>
 
-    <!-- Address (optional if you use it) -->
-    <input 
-        [(ngModel)]="customer.address.addressId" 
-        placeholder="Address ID" 
-        class="border p-2 w-full mb-2">
-
-    <button 
-        (click)="submitCustomer()" 
-        class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
-
-        Submit
-
+    <button type="button" (click)="submitCustomer()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+      Submit
     </button>
-
+  </form>
 </div>

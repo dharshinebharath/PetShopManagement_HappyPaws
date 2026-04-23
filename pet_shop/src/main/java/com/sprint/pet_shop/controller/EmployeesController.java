@@ -80,6 +80,8 @@ public class EmployeesController {
 
         return employeesService.removePetFromEmployee(employeeId, petId);
     }
+    
+    
 
     // ✅ FIXED POSITION API
     @GetMapping("/role/{position}")

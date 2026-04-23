@@ -68,7 +68,7 @@ public class CustomersService implements CustomersInterface {
     @Override
     public ApiResponse<List<CustomerResponseDTO>> getcustomers() {
 
-        List<CustomerResponseDTO> data = customersRepository.getAll()
+        List<CustomerResponseDTO> data = customersRepository.findAllSorted()
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());

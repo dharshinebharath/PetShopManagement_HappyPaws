@@ -1,0 +1,41 @@
+<div class="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-100 p-10">
+
+    <h2 class="text-2xl font-bold text-center mb-6 text-emerald-900">
+        Employee Report Results
+    </h2>
+
+    <div class="flex justify-center">
+
+        <table class="w-full max-w-4xl bg-white shadow rounded-2xl overflow-hidden">
+
+            <thead class="bg-emerald-600 text-white">
+                <tr>
+                    <th class="p-3">ID</th>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Position</th>
+                    <th class="p-3">Hire Date</th>
+                </tr>
+            </thead>
+
+            <tbody *ngIf="employees.length > 0; else noData">
+
+                <tr *ngFor="let e of employees" class="border-b hover:bg-emerald-50">
+                    <td class="p-3 text-center">{{ e.employeeId }}</td>
+                    <td class="p-3 text-center">{{ e.firstName }}</td>
+                    <td class="p-3 text-center">{{ e.position }}</td>
+                    <td class="p-3 text-center">{{ e.hireDate }}</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <ng-template #noData>
+        <p class="text-center mt-6 text-gray-500 text-lg">
+            No data found ❌
+        </p>
+    </ng-template>
+
+</div>

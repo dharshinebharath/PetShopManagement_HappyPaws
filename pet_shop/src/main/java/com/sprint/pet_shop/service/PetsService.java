@@ -2,6 +2,7 @@ package com.sprint.pet_shop.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.sprint.pet_shop.dto.requestDto.PetsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
@@ -113,7 +115,7 @@ public class PetsService implements PetsInterface {
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getAllPets() {
 
-		List<PetsResponseDTO> data = petsRepository.findAll()
+		List<PetsResponseDTO> data = petsRepository.findAllSorted()
 				.stream()
 				.map(this::toDto)
 				.toList();
@@ -312,9 +314,14 @@ public class PetsService implements PetsInterface {
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getPetsByCategory(Long categoryId) {
 
+		if (categoryId == null || categoryId <= 0) {
+			throw new InvalidDataException("Invalid category id");
+		}
+
 		List<PetsResponseDTO> data = petsRepository
 				.findByCategory_CategoryId(categoryId)
 				.stream()
+				.sorted(Comparator.comparing(Pets::getPet_id))
 				.map(this::toDto)
 				.toList();
 
@@ -324,9 +331,15 @@ public class PetsService implements PetsInterface {
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getPetsByBreed(String breed) {
 
+		String normalizedBreed = breed == null ? "" : breed.trim();
+		if (normalizedBreed.isEmpty()) {
+			throw new InvalidDataException("Breed cannot be empty");
+		}
+
 		List<PetsResponseDTO> data = petsRepository
-				.findByBreedIgnoreCase(breed)
+				.findByBreedContainingIgnoreCase(normalizedBreed)
 				.stream()
+				.sorted(Comparator.comparing(Pets::getPet_id))
 				.map(this::toDto)
 				.toList();
 
@@ -336,6 +349,10 @@ public class PetsService implements PetsInterface {
 	@Override
 	public ApiResponse<List<PetsResponseDTO>> getPetsByPriceRange(BigDecimal min, BigDecimal max) {
 
+		if (min == null || max == null) {
+			throw new InvalidDataException("Min and max price are required");
+		}
+
 		if (min.compareTo(max) > 0) {
 			throw new InvalidDataException("Min price cannot be greater than max price");
 		}
@@ -343,6 +360,7 @@ public class PetsService implements PetsInterface {
 		List<PetsResponseDTO> data = petsRepository
 				.findByPriceBetween(min, max)
 				.stream()
+				.sorted(Comparator.comparing(Pets::getPet_id))
 				.map(this::toDto)
 				.toList();
 
@@ -383,6 +401,8 @@ public class PetsService implements PetsInterface {
 
 		List<GroomingServicesResponseDTO> data = pet.getGroomingServices()
 				.stream()
+				.sorted(Comparator.comparing(GroomingServices::getServiceId)) // ✅ SORT
+
 				.map(service -> {
 					GroomingServicesResponseDTO dto = new GroomingServicesResponseDTO();
 					dto.setServiceId(service.getServiceId());
@@ -450,12 +470,16 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 
     List<VaccinationsResponseDTO> data = pet.getVaccinations()
             .stream()
+			.sorted(Comparator.comparing(Vaccinations::getVaccinationId)) // ✅ SORT HERE
+
             .map(vaccination -> {
                 VaccinationsResponseDTO dto = new VaccinationsResponseDTO();
 
                 dto.setVaccinationId(vaccination.getVaccinationId());
                 dto.setName(vaccination.getName());
                 dto.setDescription(vaccination.getDescription());
+				dto.setPrice(vaccination.getPrice());
+				dto.setAvailable(vaccination.isAvailable());
              
 
                 return dto;
@@ -510,14 +534,27 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 	}
 
 	@Override
-	public ApiResponse<List<Long>> getFoodByPet(Long petId) {
+	public ApiResponse<List<PetFoodResponseDTO>> getFoodByPet(Long petId) {
 
 		Pets pet = petsRepository.findById(petId)
 				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-		List<Long> data = pet.getFoods()
+		List<PetFoodResponseDTO> data = pet.getFoods()
 				.stream()
-				.map(PetFood::getFoodId)
+				.sorted(Comparator.comparing(PetFood::getFoodId)) // ✅ SORT HERE
+
+				.map(food -> {
+					PetFoodResponseDTO dto = new PetFoodResponseDTO();
+
+					dto.setFoodId(food.getFoodId());
+					dto.setName(food.getName());
+					dto.setBrand(food.getBrand());
+					dto.setType(food.getType());
+					dto.setQuantity(food.getQuantity());
+					dto.setPrice(food.getPrice());
+
+					return dto;
+				})
 				.toList();
 
 		return new ApiResponse<>("Food fetched", true, data);
@@ -578,6 +615,8 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 
 		List<SupplierResponseDTO> data = pet.getSuppliers()
 				.stream()
+				.sorted(Comparator.comparing(Supplier::getSupplierId)) // ✅ SORT
+
 				.map(supplier -> {
 					SupplierResponseDTO dto = new SupplierResponseDTO();
 					dto.setSupplierId(supplier.getSupplierId());

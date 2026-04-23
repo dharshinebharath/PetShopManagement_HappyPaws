@@ -1,0 +1,36 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-slate-50 to-emerald-50 p-6">
+  <form [formGroup]="form" class="w-full max-w-md bg-white/90 backdrop-blur-md border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+    <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
+      {{ supplierId ? 'Update Supplier' : 'Add Supplier' }}
+    </h2>
+
+    <input type="text" formControlName="name" placeholder="Supplier Name" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Name is required (min 3 characters)
+    </p>
+
+    <input type="text" formControlName="contactPerson" placeholder="Contact Person" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('contactPerson')?.touched && form.get('contactPerson')?.invalid">
+      Contact person is required (min 3 characters)
+    </p>
+
+    <input type="text" formControlName="phoneNumber" placeholder="Phone Number" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.invalid">
+      Phone number must be in 123-456-7890 format
+    </p>
+
+    <input type="email" formControlName="email" placeholder="Email" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      Enter a valid email
+    </p>
+
+    <input type="number" formControlName="addressId" placeholder="Address ID" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('addressId')?.touched && form.get('addressId')?.invalid">
+      Address ID must be greater than 0
+    </p>
+
+    <button type="button" (click)="submit()" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg hover:from-teal-700 hover:to-emerald-700">
+      {{ supplierId ? 'Update' : 'Save' }}
+    </button>
+  </form>
+</div>

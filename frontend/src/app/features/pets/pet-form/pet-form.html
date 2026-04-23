@@ -1,53 +1,41 @@
-<div class="min-h-screen flex items-center justify-center 
-            bg-gradient-to-br from-slate-50 via-teal-50 to-emerald-50 p-6">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-teal-50 to-emerald-50 p-6">
+  <form [formGroup]="form" class="w-full max-w-md bg-white/90 backdrop-blur-md border border-teal-100 rounded-2xl shadow-lg p-8 space-y-3">
+    <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
+      {{ petId ? 'Update Pet' : 'Add Pet' }}
+    </h2>
 
-    <div class="w-full max-w-md bg-white/90 backdrop-blur-md 
-                border border-teal-100 rounded-2xl shadow-lg p-8 space-y-3">
+    <input formControlName="name" placeholder="Pet Name" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Pet name is required and must be at least 3 characters
+    </p>
 
-        <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
-            {{ petId ? 'Update Pet' : 'Add Pet' }}
-        </h2>
+    <input formControlName="breed" placeholder="Breed" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('breed')?.touched && form.get('breed')?.invalid">
+      Breed is required and must be at least 2 characters
+    </p>
 
-        <!-- NAME -->
-        <input [(ngModel)]="formData.name"
-               placeholder="Pet Name"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <input formControlName="age" type="number" placeholder="Age" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('age')?.touched && form.get('age')?.invalid">
+      Age is required and cannot be negative
+    </p>
 
-        <!-- BREED -->
-        <input [(ngModel)]="formData.breed"
-               placeholder="Breed"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <input formControlName="price" type="number" placeholder="Price" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
+      Price is required and must be greater than 0
+    </p>
 
-        <!-- AGE -->
-        <input [(ngModel)]="formData.age"
-               type="number"
-               placeholder="Age"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <input formControlName="description" placeholder="Description" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+      Description is required and must be at least 5 characters
+    </p>
 
-        <!-- PRICE -->
-        <input [(ngModel)]="formData.price"
-               type="number"
-               placeholder="Price"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <input formControlName="categoryId" type="number" placeholder="Category ID" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('categoryId')?.touched && form.get('categoryId')?.invalid">
+      Category ID is required and must be greater than 0
+    </p>
 
-        <!-- DESCRIPTION -->
-        <input [(ngModel)]="formData.description"
-               placeholder="Description"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- CATEGORY -->
-        <input [(ngModel)]="formData.categoryId"
-               type="number"
-               placeholder="Category ID"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- BUTTON -->
-        <button (click)="submit()"
-                class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 
-                       hover:from-emerald-600 hover:to-teal-700
-                       text-white py-2 rounded-lg shadow mt-3">
-            Submit
-        </button>
-
-    </div>
+    <button type="button" (click)="submit()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white py-2 rounded-lg shadow mt-3">
+      Submit
+    </button>
+  </form>
 </div>

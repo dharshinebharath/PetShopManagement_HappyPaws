@@ -1,0 +1,71 @@
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-10 space-y-8">
+
+    <h1 class="text-3xl text-center font-bold text-teal-900">
+        Employee ↔ Pet Mapping
+    </h1>
+
+    <!-- ================= GET (Pets by Employee) ================= -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+
+        <h2 class="font-bold text-teal-700 text-center">View Pets (GET)</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="getEmployeeId" placeholder="Enter Employee ID" class="w-full border p-2 rounded">
+
+            <button (click)="viewPets()" class="bg-blue-500 text-white px-5 rounded">
+                View
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ================= POST ================= -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+
+        <h2 class="font-bold text-green-700 text-center">Assign Pet (POST)</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="postEmployeeId" placeholder="Employee ID" class="w-full border p-2 rounded">
+
+            <input [(ngModel)]="postPetId" placeholder="Pet ID" class="w-full border p-2 rounded">
+
+            <button (click)="assign()" class="bg-green-500 text-white px-5 rounded">
+                Assign
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ================= GET (Employees by Pet) ================= -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+
+        <h2 class="font-bold text-purple-700 text-center">View Employees (GET)</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="getPetId" placeholder="Enter Pet ID" class="w-full border p-2 rounded">
+
+            <button (click)="viewEmployees()" class="bg-purple-500 text-white px-5 rounded">
+                View
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ================= DELETE ================= -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+
+        <h2 class="font-bold text-red-600 text-center">Remove Mapping (DELETE)</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="deleteEmployeeId" placeholder="Employee ID" class="w-full border p-2 rounded">
+
+            <input [(ngModel)]="deletePetId" placeholder="Pet ID" class="w-full border p-2 rounded">
+
+            <button (click)="remove()" class="bg-red-500 text-white px-5 rounded">
+                Delete
+            </button>
+        </div>
+
+    </div>
+
+</div>

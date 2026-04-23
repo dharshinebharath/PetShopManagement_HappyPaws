@@ -1,0 +1,39 @@
+<div class="min-h-screen bg-gradient-to-br from-teal-50 to-blue-100 p-10">
+
+    <h2 class="text-2xl font-bold text-center mb-6 text-teal-900">
+        Filtered Pets
+    </h2>
+
+    <div class="flex justify-center">
+
+        <table class="w-full max-w-4xl bg-white shadow rounded-2xl overflow-hidden">
+
+            <thead class="bg-teal-600 text-white">
+                <tr>
+                    <th class="p-3">ID</th>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Breed</th>
+                    <th class="p-3">Price</th>
+                </tr>
+            </thead>
+
+            <tbody *ngIf="pets.length > 0; else noData">
+                <tr *ngFor="let p of pets" class="border-b hover:bg-teal-50">
+                    <td class="p-3 text-center">{{ p.pet_id }}</td>
+                    <td class="p-3 text-center">{{ p.name }}</td>
+                    <td class="p-3 text-center">{{ p.breed }}</td>
+                    <td class="p-3 text-center">{{ p.price }}</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <ng-template #noData>
+        <p class="text-center mt-6 text-gray-500 text-lg">
+            No pets found ❌
+        </p>
+    </ng-template>
+
+</div>

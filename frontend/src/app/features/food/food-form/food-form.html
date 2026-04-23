@@ -1,0 +1,36 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-slate-50 to-emerald-50 p-6">
+  <form [formGroup]="form" class="w-full max-w-md bg-white/90 backdrop-blur-md border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+    <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
+      {{ foodId ? 'Update Pet Food' : 'Add Pet Food' }}
+    </h2>
+
+    <input type="text" formControlName="name" placeholder="Food Name" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Name is required (min 3 characters)
+    </p>
+
+    <input type="text" formControlName="brand" placeholder="Brand" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('brand')?.touched && form.get('brand')?.invalid">
+      Brand is required (min 2 characters)
+    </p>
+
+    <input type="text" formControlName="type" placeholder="Type" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('type')?.touched && form.get('type')?.invalid">
+      Type is required (min 2 characters)
+    </p>
+
+    <input type="number" formControlName="quantity" placeholder="Quantity" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('quantity')?.touched && form.get('quantity')?.invalid">
+      Quantity cannot be negative
+    </p>
+
+    <input type="number" formControlName="price" placeholder="Price" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
+      Price must be greater than 0
+    </p>
+
+    <button type="button" (click)="submit()" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg hover:from-teal-700 hover:to-emerald-700">
+      {{ foodId ? 'Update' : 'Save' }}
+    </button>
+  </form>
+</div>

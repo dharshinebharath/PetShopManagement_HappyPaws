@@ -109,6 +109,14 @@ public class SecurityConfig {
                                         .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
                                         .requestMatchers("/api/v1/pets/*/vaccinations").hasRole("MEDICAL")
                                         .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
+                                        .requestMatchers("/api/v1/pets/*/food").hasRole("INVENTORY_ADMIN")
+                                        .requestMatchers("/api/v1/pets/*/food/**").hasRole("INVENTORY_ADMIN")
+                                        .requestMatchers("/api/v1/pets/*/suppliers").hasRole("INVENTORY_ADMIN")
+                                        .requestMatchers("/api/v1/pets/*/suppliers/**").hasRole("INVENTORY_ADMIN")
+                                        .requestMatchers("/api/v1/employees/**").hasRole("HR_ADMIN")
+                                        .requestMatchers("/api/v1/pets/**").hasAnyRole("HR_ADMIN", "PET_ADMIN")
+                                        .requestMatchers("/api/v1/pets/*/employees").hasRole("HR_ADMIN")
+
                         // PETS
                         .requestMatchers("/api/v1/pets/**").hasRole("PET_ADMIN")
                         .requestMatchers("/api/v1/categories/**").hasRole("PET_ADMIN")
@@ -132,9 +140,6 @@ public class SecurityConfig {
                         // PET MAPPINGS
                         // .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
                         // .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
-
-                        .requestMatchers("/api/v1/pets/*/food/**").hasRole("INVENTORY_ADMIN")
-                        .requestMatchers("/api/v1/pets/*/suppliers/**").hasRole("INVENTORY_ADMIN")
 
                         .anyRequest().authenticated())
 

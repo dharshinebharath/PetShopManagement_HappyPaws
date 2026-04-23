@@ -93,7 +93,7 @@ public class SupplierService implements SupplierInterface {
     public ApiResponse<List<SupplierResponseDTO>> getAll() {
 
         List<SupplierResponseDTO> data =
-                supplierRepository.findAll()
+                supplierRepository.findAllSorted()
                         .stream()
                         .map(this::toDto)
                         .toList();

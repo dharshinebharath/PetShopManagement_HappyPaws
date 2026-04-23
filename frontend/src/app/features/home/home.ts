@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
@@ -7,15 +6,14 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrls: ['./home.css']   // ✅ correct
 })
 export class Home {
-    router:Router=inject(Router);
 
-goToLogin(module: string) {
+  router: Router = inject(Router);
+
+  goToLogin(module: string) {
     console.log("Clicked:", module);
-
-this.router.navigate(['/login', module]);
+    this.router.navigate(['/login', module]);
+  }
 }
-}
-

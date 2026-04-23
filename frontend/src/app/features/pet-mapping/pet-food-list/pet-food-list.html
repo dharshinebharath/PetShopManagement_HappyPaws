@@ -1,0 +1,29 @@
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-10">
+  <h2 class="text-2xl font-bold text-center mb-6 text-teal-900">
+    Assigned Food
+  </h2>
+
+  <div class="flex justify-center">
+    <table class="w-full max-w-3xl bg-white shadow rounded-2xl overflow-hidden">
+      <thead class="bg-teal-600 text-white">
+        <tr>
+          <th class="p-3">Food ID</th>
+          <th class="p-3">Name</th>
+        </tr>
+      </thead>
+<tbody *ngIf="foods.length > 0; else noData">
+  <tr *ngFor="let f of foods" class="border-b hover:bg-teal-50">
+    <td class="p-3 text-center">{{ f.foodId }}</td>
+    <td class="p-3 text-center">{{f.name}}</td>
+  </tr>
+</tbody>
+
+    </table>
+  </div>
+
+  <ng-template #noData>
+    <p class="text-center mt-6 text-gray-500 text-lg">
+      No food assigned ❌
+    </p>
+  </ng-template>
+</div>

@@ -7,8 +7,10 @@ import com.sprint.pet_shop.dto.requestDto.PetsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
 import com.sprint.pet_shop.entity.Pets;
 
 public interface PetsInterface {
@@ -44,14 +46,14 @@ public interface PetsInterface {
 
     ApiResponse<String> addVaccinationToPet(Long petId, Long vaccinationId);
 
-    ApiResponse<List<GroomingServicesResponseDTO>> getVaccinationsByPet(Long petId);
+    ApiResponse<List<VaccinationsResponseDTO>> getVaccinationsByPet(Long petId);
 
     ApiResponse<String> removeVaccinationFromPet(Long petId, Long vaccinationId);
 
 
     ApiResponse<String> addFoodToPet(Long petId, Long foodId);
 
-    ApiResponse<List<Long>> getFoodByPet(Long petId);
+    ApiResponse<List<PetFoodResponseDTO>> getFoodByPet(Long petId);
 
     ApiResponse<String> removeFoodFromPet(Long petId, Long foodId);
 

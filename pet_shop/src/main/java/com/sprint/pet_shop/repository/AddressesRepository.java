@@ -15,5 +15,8 @@ public interface AddressesRepository extends JpaRepository<Addresses,Long> {
 	@Query("SELECT a FROM Addresses a WHERE a.city = :city")
 	List<Addresses> getAddressesByCity(@Param("city") String city);
 
+	@Query("SELECT a FROM Addresses a ORDER BY a.addressId ASC")
+	List<Addresses> findAllSorted();
+
 	
 }

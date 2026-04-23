@@ -1,72 +1,46 @@
 <div class="p-6 max-w-md mx-auto bg-white shadow-lg rounded-2xl">
-
   <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
     {{ transactionId ? 'Update Transaction' : 'Add Transaction' }}
   </h2>
 
-  <!-- 💰 Amount -->
-  <label class="block text-sm font-medium text-gray-600 mb-1">
-    Amount
-  </label>
-  <input
-    [(ngModel)]="formData.amount"
-    type="number"
-    placeholder="Enter amount (e.g. 500)"
-    class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
-  />
+  <form [formGroup]="form" class="space-y-2">
+    <label class="block text-sm font-medium text-gray-600 mb-1">Amount</label>
+    <input formControlName="amount" type="number" placeholder="Enter amount (e.g. 500)" class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400" />
+    <p class="text-red-500 text-sm" *ngIf="form.get('amount')?.touched && form.get('amount')?.invalid">
+      Amount is required and must be greater than 0
+    </p>
 
-  <!-- 📅 Transaction Date -->
-  <label class="block text-sm font-medium text-gray-600 mb-1">
-    Transaction Date
-  </label>
-  <input
-    [(ngModel)]="formData.transactionDate"
-    type="date"
-    class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
-  />
+    <label class="block text-sm font-medium text-gray-600 mb-1">Transaction Date</label>
+    <input formControlName="transactionDate" type="date" class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400" />
+    <p class="text-red-500 text-sm" *ngIf="form.get('transactionDate')?.touched && form.get('transactionDate')?.invalid">
+      Transaction date is required
+    </p>
 
-  <!-- 📌 Status -->
-  <label class="block text-sm font-medium text-gray-600 mb-1">
-    Status
-  </label>
-  <select
-    [(ngModel)]="formData.transactionStatus"
-    class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
-  >
-    <option value="" disabled selected>Select status</option>
-    <option value="SUCCESS">SUCCESS</option>
-    <option value="FAILED">FAILED</option>
-    <option value="PENDING">PENDING</option>
-  </select>
+    <label class="block text-sm font-medium text-gray-600 mb-1">Status</label>
+    <select formControlName="transactionStatus" class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400">
+      <option value="">Select status</option>
+      <option value="SUCCESS">SUCCESS</option>
+      <option value="FAILED">FAILED</option>
+      <option value="PENDING">PENDING</option>
+    </select>
+    <p class="text-red-500 text-sm" *ngIf="form.get('transactionStatus')?.touched && form.get('transactionStatus')?.invalid">
+      Transaction status is required
+    </p>
 
-  <!-- 👤 Customer ID -->
-  <label class="block text-sm font-medium text-gray-600 mb-1">
-    Customer ID
-  </label>
-  <input
-    [(ngModel)]="formData.customerId"
-    type="number"
-    placeholder="Enter customer ID"
-    class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
-  />
+    <label class="block text-sm font-medium text-gray-600 mb-1">Customer ID</label>
+    <input formControlName="customerId" type="number" placeholder="Enter customer ID" class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400" />
+    <p class="text-red-500 text-sm" *ngIf="form.get('customerId')?.touched && form.get('customerId')?.invalid">
+      Customer ID is required and must be greater than 0
+    </p>
 
-  <!-- 🐾 Pet ID -->
-  <label class="block text-sm font-medium text-gray-600 mb-1">
-    Pet ID
-  </label>
-  <input
-    [(ngModel)]="formData.petId"
-    type="number"
-    placeholder="Enter pet ID"
-    class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
-  />
+    <label class="block text-sm font-medium text-gray-600 mb-1">Pet ID</label>
+    <input formControlName="petId" type="number" placeholder="Enter pet ID" class="border rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400" />
+    <p class="text-red-500 text-sm" *ngIf="form.get('petId')?.touched && form.get('petId')?.invalid">
+      Pet ID is required and must be greater than 0
+    </p>
 
-  <!-- 🚀 Submit Button -->
-  <button
-    (click)="submit()"
-    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg w-full transition"
-  >
-    Submit Transaction
-  </button>
-
-</div>cd
+    <button type="button" (click)="submit()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg w-full transition">
+      Submit Transaction
+    </button>
+  </form>
+</div>

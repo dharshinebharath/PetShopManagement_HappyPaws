@@ -1,13 +1,16 @@
 <div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+  <h2 class="text-xl font-bold mb-4">
+    {{ categoryId ? 'Update Category' : 'Add Category' }}
+  </h2>
 
-    <h2 class="text-xl font-bold mb-4">
-        {{ categoryId ? 'Update Category' : 'Add Category' }}
-    </h2>
+  <form [formGroup]="form" class="space-y-2">
+    <input formControlName="name" placeholder="Category Name" class="border p-2 w-full mb-2">
+    <p class="text-red-500 text-sm" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Category name is required and must be at least 3 characters
+    </p>
 
-    <input [(ngModel)]="formData.name" placeholder="Category Name" class="border p-2 w-full mb-2">
-
-    <button (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
-        Submit
+    <button type="button" (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+      Submit
     </button>
-
+  </form>
 </div>

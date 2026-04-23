@@ -14,7 +14,7 @@
     <div class="flex flex-col items-center gap-6">
 
         <!-- Card 1 -->
-        <div (click)="goToLogin('pets')" class="w-[420px] bg-gradient-to-r from-emerald-200 to-green-100
+        <div (click)="goToLogin('pets-module')" class="w-[420px] bg-gradient-to-r from-emerald-200 to-green-100
              border border-slate-300 rounded-2xl shadow-md p-6 
              cursor-pointer hover:scale-105 transition">
 
@@ -29,7 +29,7 @@
         </div>
 
         <!-- Card 2 -->
-        <div (click)="goToLogin('petservices')" class="w-[420px] bg-gradient-to-r from-teal-200 to-emerald-100
+        <div (click)="goToLogin('pet-services-module')" class="w-[420px] bg-gradient-to-r from-teal-200 to-emerald-100
              border border-slate-300 rounded-2xl shadow-md p-6 
              cursor-pointer hover:scale-105 transition">
 
@@ -44,7 +44,7 @@
         </div>
 
         <!-- Card 3 -->
-        <div (click)="goToLogin('customers')" class="w-[420px] bg-gradient-to-r from-blue-200 to-slate-100
+        <div (click)="goToLogin('customers-module')" class="w-[420px] bg-gradient-to-r from-blue-200 to-slate-100
              border border-slate-300 rounded-2xl shadow-md p-6 
              cursor-pointer hover:scale-105 transition">
 
@@ -59,7 +59,7 @@
         </div>
 
         <!-- Card 4 -->
-        <div (click)="goToLogin('inventory')" class="w-[420px] bg-gradient-to-r from-emerald-100 to-slate-100
+        <div (click)="goToLogin('inventory-module')" class="w-[420px] bg-gradient-to-r from-emerald-100 to-slate-100
              border border-slate-300 rounded-2xl shadow-md p-6 
              cursor-pointer hover:scale-105 transition">
 
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Card 5 -->
-        <div (click)="goToLogin('employee')" class="w-[420px] bg-gradient-to-r from-slate-200 to-blue-100
+        <div (click)="goToLogin('employee-module')" class="w-[420px] bg-gradient-to-r from-slate-200 to-blue-100
              border border-slate-300 rounded-2xl shadow-md p-6 
              cursor-pointer hover:scale-105 transition">
 
@@ -85,49 +85,7 @@
             <h2 class="text-xl font-semibold text-slate-700 mt-2">
                 Employees & Operations
             </h2>
-
-<div class="home-container">
-
-    <h1 class="title">Pet Shop Management System</h1>
-    <p class="subtitle">Select a module to continue</p>
-
-    <div class="card-container">
-
-        <!-- Pets Module -->
-        <div class="card" (click)="goToLogin('pets')">
-            <h2>Pets & Categories</h2>
-            <p>Manage pet details, categories, and basic pet information./p>
-            <span class="person">👤 Maha Karpagam</span>
         </div>
-
-        <!-- Services Module -->
-        <div class="card" (click)="goToLogin('petservices')">
-            <h2>Services & Medical</h2>
-            <p>Handle grooming services and vaccination records for pets.</p>
-            <span class="person">👤 Dharshine</span>
-        </div>
-
-        <div class="card" (click)="goToLogin('customers')">
-            <h2>Customers & Transactions</h2>
-            <p>Manage customer details and track all financial transactions.</p>
-            <span class="person">👤 Revathi</span>
-        </div>
-
-        <!-- Inventory Module -->
-        <div class="card" (click)="goToLogin('inventory')">
-            <h2>Inventory & Suppliers</h2>
-            <p>Maintain pet food stock and manage supplier relationships.</p>
-            <span class="person">👤 Shirlly</span>
-        </div>
-
-        <!-- Employees Module -->
-        <div class="card" (click)="goToLogin('employee')">
-            <h2>Employees & Operations</h2>
-            <p>Manage employees and assign them to pets and tasks.</p>
-            <span class="person">👤 Priyadharshini</span>
-
-        </div>
-
     </div>
-
 </div>
+

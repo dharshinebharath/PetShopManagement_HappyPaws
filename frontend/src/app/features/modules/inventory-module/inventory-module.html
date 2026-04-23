@@ -1,0 +1,83 @@
+<div class="min-h-screen pt-[10px] 
+            bg-gradient-to-br from-emerald-100 via-green-50 to-blue-100">
+
+    <!-- TITLE -->
+    <h1 class="text-4xl bg-white/80 backdrop-blur-md shadow-md p-6 rounded-2xl text-center 
+             text-emerald-900 font-extrabold tracking-wide mx-10">
+        Inventory Management
+    </h1>
+
+    <!-- CARDS CONTAINER -->
+    <div class="flex justify-center items-center gap-12 mt-20 flex-wrap">
+
+        <!-- Pet Food Card -->
+        <div routerLink="/food-dashboard" class="w-[300px] h-[360px] flex flex-col justify-center 
+             bg-emerald-200 text-emerald-900 p-8 rounded-2xl shadow-md border border-emerald-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🥫 Pet Food
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Manage pet food inventory, track stock availability,
+                and perform CRUD operations for all food items.
+            </p>
+
+        </div>
+
+        <!-- Suppliers Card -->
+        <div routerLink="/supplier-dashboard" class="w-[300px] h-[360px] flex flex-col justify-center 
+             bg-blue-200 text-blue-900 p-8 rounded-2xl shadow-md border border-blue-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🏢 Suppliers
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Maintain supplier records, manage contact details,
+                and track inventory providers efficiently.
+            </p>
+
+        </div>
+
+        <!-- Pet ↔ Food Mapping -->
+        <div routerLink="/pet-mapping/food" class="w-[300px] h-[360px] flex flex-col justify-center 
+             bg-purple-200 text-purple-900 p-8 rounded-2xl shadow-md border border-purple-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🔗 Pet ↔ Food
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Assign food items to pets, manage dietary mappings,
+                and track food consumption relationships.
+            </p>
+
+        </div>
+
+        <!-- Pet ↔ Suppliers Mapping -->
+        <div routerLink="/pet-mapping/suppliers" class="w-[300px] h-[360px] flex flex-col justify-center 
+             bg-pink-200 text-pink-900 p-8 rounded-2xl shadow-md border border-pink-300
+             cursor-pointer hover:scale-105 hover:shadow-xl 
+             transition duration-300 text-center">
+
+            <h2 class="text-2xl font-bold mb-4 tracking-wide">
+                🔗 Pet ↔ Suppliers
+            </h2>
+
+            <p class="text-base leading-relaxed">
+                Link suppliers to pets, manage provider relationships,
+                and track supply sources easily.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>

@@ -22,7 +22,7 @@ public interface PetsRepository extends JpaRepository<Pets, Long> {
     List<Pets> findByCategory_CategoryId(Long categoryId);
 
     // 🔍 2. Filter by Breed
-    List<Pets> findByBreedIgnoreCase(String breed);
+    List<Pets> findByBreedContainingIgnoreCase(String breed);
 
     @Query("SELECT p FROM Pets p ORDER BY p.pet_id ASC")
     List<Pets> findAllSorted();    // 🔍 3. Filter by Price Range

@@ -20,6 +20,7 @@ import com.sprint.pet_shop.dto.requestDto.PetsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 import com.sprint.pet_shop.entity.Pets;
@@ -188,7 +189,7 @@ public class PetsController {
 
 	    // GET FOOD
 	    @GetMapping("/{petId}/food")
-	    public ApiResponse<List<Long>> getFood(@PathVariable Long petId) {
+	    public ApiResponse<List<PetFoodResponseDTO>> getFood(@PathVariable Long petId) {
 	        return petsService.getFoodByPet(petId);
 	    }
 
@@ -207,6 +208,7 @@ public class PetsController {
 
 			return employeesService.getEmployeesByPet(petId);
 	    }
+		
 	    
 	    
 }

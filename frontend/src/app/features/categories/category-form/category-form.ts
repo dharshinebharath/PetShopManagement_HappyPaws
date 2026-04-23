@@ -1,52 +1,49 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../core/services/categoryService';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-category-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './category-form.html'
 })
 export class CategoryForm {
-
   categoryService = inject(CategoryService);
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
 
   categoryId: number | null = null;
-
-  formData: any = {
-    name: ''
-  };
-
   isLoading = true;
 
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(3)])
+  });
+
   ngOnInit() {
-
     this.route.queryParams.subscribe(params => {
-
       if (params['id']) {
         this.categoryId = Number(params['id']);
 
         this.categoryService.getById(this.categoryId).subscribe({
           next: (res: any) => {
-
             const data = res.data;
 
-            this.formData.name = data.name;
+            this.form.patchValue({
+              name: data.name
+            });
 
             this.isLoading = false;
             this.cdr.detectChanges();
           },
           error: () => {
-            alert('Category not found ❌');
+            alert('Category not found');
             this.router.navigate(['/categories']);
           }
         });
-
       } else {
         this.isLoading = false;
       }
@@ -54,39 +51,34 @@ export class CategoryForm {
   }
 
   submit() {
-
-    if (!this.formData.name) {
-      alert('Please enter category name ⚠️');
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      alert('Please fix errors:\n\nCategory name is required and must be at least 3 characters');
       return;
     }
 
-    if (this.categoryId !== null && this.categoryId !== undefined) {
+    const payload = {
+      name: this.form.value.name
+    };
 
-      // UPDATE
-      this.categoryService.update(this.categoryId, this.formData).subscribe({
+    if (this.categoryId !== null && this.categoryId !== undefined) {
+      this.categoryService.update(this.categoryId, payload).subscribe({
         next: () => {
-          alert('Updated successfully ✅');
+          alert('Updated successfully');
           this.router.navigate(['/category/list']);
         },
         error: () => {
-          alert('Update failed ❌');
+          alert('Update failed');
         }
       });
-
     } else {
-
-      // CREATE
-      const payload = [{
-        name: this.formData.name
-      }];
-
-      this.categoryService.create(payload).subscribe({
+      this.categoryService.create([payload]).subscribe({
         next: () => {
-          alert('Created successfully ✅');
+          alert('Created successfully');
           this.router.navigate(['/category/list']);
         },
         error: () => {
-          alert('Create failed ❌');
+          alert('Create failed');
         }
       });
     }

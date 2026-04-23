@@ -1,108 +1,46 @@
 <div class="p-6 max-w-md mx-auto bg-white shadow rounded">
-
   <h2 class="text-xl font-bold mb-4">
     {{ employeeId ? 'Update Employee' : 'Add Employee' }}
   </h2>
 
-  <!-- First Name -->
-  <input [(ngModel)]="formData.firstName"
-    name="firstName"
-    required
-    #firstName="ngModel"
-    placeholder="First Name"
-    class="border p-2 w-full mb-1">
+  <form [formGroup]="form" class="space-y-1">
+    <input formControlName="firstName" placeholder="First Name" class="border p-2 w-full mb-1">
+    <div *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid" class="text-red-500 text-sm mb-2">
+      First name is required and must be at least 2 characters
+    </div>
 
-  <div *ngIf="firstName.invalid && firstName.touched"
-       class="text-red-500 text-sm mb-2">
-    First name is required
-  </div>
+    <input formControlName="lastName" placeholder="Last Name" class="border p-2 w-full mb-1">
+    <div *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid" class="text-red-500 text-sm mb-2">
+      Last name is required and must be at least 2 characters
+    </div>
 
-  <!-- Last Name -->
-  <input [(ngModel)]="formData.lastName"
-    name="lastName"
-    required
-    #lastName="ngModel"
-    placeholder="Last Name"
-    class="border p-2 w-full mb-1">
+    <input formControlName="position" placeholder="Position" class="border p-2 w-full mb-1">
+    <div *ngIf="form.get('position')?.touched && form.get('position')?.invalid" class="text-red-500 text-sm mb-2">
+      Position is required and must be at least 2 characters
+    </div>
 
-  <div *ngIf="lastName.invalid && lastName.touched"
-       class="text-red-500 text-sm mb-2">
-    Last name is required
-  </div>
+    <input formControlName="hireDate" type="date" class="border p-2 w-full mb-1">
+    <div *ngIf="form.get('hireDate')?.touched && form.get('hireDate')?.invalid" class="text-red-500 text-sm mb-2">
+      Hire date is required
+    </div>
 
-  <!-- Position -->
-  <input [(ngModel)]="formData.position"
-    name="position"
-    required
-    #position="ngModel"
-    placeholder="Position"
-    class="border p-2 w-full mb-1">
+    <input formControlName="phoneNumber" placeholder="Phone Number" class="border p-2 w-full mb-1">
+    <div *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.invalid" class="text-red-500 text-sm mb-2">
+      Phone number is required and must be in 555-1234 format
+    </div>
 
-  <div *ngIf="position.invalid && position.touched"
-       class="text-red-500 text-sm mb-2">
-    Position is required
-  </div>
+    <input formControlName="email" placeholder="Email" class="border p-2 w-full mb-1">
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="text-red-500 text-sm mb-2">
+      Enter a valid email address
+    </div>
 
-  <!-- Hire Date -->
-  <input [(ngModel)]="formData.hireDate"
-    name="hireDate"
-    type="date"
-    required
-    #hireDate="ngModel"
-    class="border p-2 w-full mb-1">
+    <input formControlName="addressId" type="number" placeholder="Address ID" class="border p-2 w-full mb-1">
+    <div *ngIf="form.get('addressId')?.touched && form.get('addressId')?.invalid" class="text-red-500 text-sm mb-2">
+      Address ID is required and must be greater than 0
+    </div>
 
-  <div *ngIf="hireDate.invalid && hireDate.touched"
-       class="text-red-500 text-sm mb-2">
-    Hire date is required
-  </div>
-
-  <!-- Phone -->
-  <input [(ngModel)]="formData.phoneNumber"
-    name="phoneNumber"
-    required
-    pattern="^[0-9]{10}$"
-    #phone="ngModel"
-    placeholder="Phone Number"
-    class="border p-2 w-full mb-1">
-
-  <div *ngIf="phone.invalid && phone.touched"
-       class="text-red-500 text-sm mb-2">
-    Enter valid 10-digit phone number
-  </div>
-
-  <!-- Email -->
-  <input [(ngModel)]="formData.email"
-    name="email"
-    required
-    email
-    #email="ngModel"
-    placeholder="Email"
-    class="border p-2 w-full mb-1">
-
-  <div *ngIf="email.invalid && email.touched"
-       class="text-red-500 text-sm mb-2">
-    Enter valid email
-  </div>
-
-  <!-- Address ID -->
-  <input [(ngModel)]="formData.addressId"
-    name="addressId"
-    type="number"
-    required
-    #addressId="ngModel"
-    placeholder="Address ID"
-    class="border p-2 w-full mb-1">
-
-  <div *ngIf="addressId.invalid && addressId.touched"
-       class="text-red-500 text-sm mb-2">
-    Address ID is required
-  </div>
-
-  <!-- Submit -->
-  <button (click)="submit()"
-    class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
-
-    Submit
-  </button>
-
+    <button type="button" (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+      Submit
+    </button>
+  </form>
 </div>

@@ -1,0 +1,48 @@
+<div class="min-h-screen bg-gradient-to-br from-teal-50 to-blue-100 p-10 space-y-8">
+
+    <h1 class="text-3xl text-center font-bold text-teal-900">
+        Pet Search / Filter
+    </h1>
+
+    <!-- CATEGORY -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+        <h2 class="text-center font-bold text-teal-700">Filter by Category</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="categoryId" placeholder="Category ID" class="w-full border p-2 rounded">
+
+            <button (click)="byCategory()" class="bg-teal-500 text-white px-5 rounded">
+                Search
+            </button>
+        </div>
+    </div>
+
+    <!-- BREED -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+        <h2 class="text-center font-bold text-blue-700">Filter by Breed</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="breed" placeholder="Breed" class="w-full border p-2 rounded">
+
+            <button (click)="byBreed()" class="bg-blue-500 text-white px-5 rounded">
+                Search
+            </button>
+        </div>
+    </div>
+
+    <!-- PRICE -->
+    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+        <h2 class="text-center font-bold text-green-700">Filter by Price</h2>
+
+        <div class="flex gap-3">
+            <input [(ngModel)]="min" placeholder="Min" class="w-full border p-2 rounded">
+
+            <input [(ngModel)]="max" placeholder="Max" class="w-full border p-2 rounded">
+
+            <button (click)="byPrice()" class="bg-green-500 text-white px-5 rounded">
+                Search
+            </button>
+        </div>
+    </div>
+
+</div>
