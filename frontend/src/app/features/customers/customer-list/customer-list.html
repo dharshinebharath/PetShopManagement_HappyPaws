@@ -1,8 +1,12 @@
 <div class="p-6 bg-[#f6f8f6] min-h-screen">
 
   <h2 class="text-3xl font-bold text-[#3a5a40] mb-6">
-    Customers
+    {{ selectedCustomerId ? 'Customer Details' : 'Customers' }}
   </h2>
+
+  <!-- <p *ngIf="selectedCustomerId" class="mb-4 text-[#588157] font-medium">
+    Showing customer details for ID: {{ selectedCustomerId }}
+  </p> -->
 
   <div class="overflow-x-auto rounded-2xl shadow-lg border border-[#d8e2dc]">
 
@@ -22,6 +26,12 @@
 
       <!-- Body -->
       <tbody class="bg-white">
+
+        <tr *ngIf="customers.length === 0" class="border-b">
+          <td colspan="6" class="p-4 text-center text-gray-500">
+            No customer data available
+          </td>
+        </tr>
 
         <tr 
           *ngFor="let c of customers" 

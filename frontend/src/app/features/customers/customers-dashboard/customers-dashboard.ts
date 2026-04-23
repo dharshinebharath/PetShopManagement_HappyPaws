@@ -33,13 +33,15 @@ export class CustomersDashboard {
       alert('Enter Customer ID');
       return;
     }
-
     this.customerService.getCustomerById(id).subscribe({
       next: (res) => {
         console.log(res);
         alert('Check console for data');
       },
       error: () => alert('Customer not found ❌')
+    });
+    this.router.navigate(['/customer/list'], {
+      queryParams: { id }
     });
   }
 

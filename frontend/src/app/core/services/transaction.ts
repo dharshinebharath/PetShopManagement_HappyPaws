@@ -44,14 +44,15 @@ export class transaction {
 
   // ================= GET BY CUSTOMER =================
   getByCustomerId(customerId: number) {
-    return this.http.get(
-      `${this.baseUrl}/customer/${customerId}`,
-      this.getAuthHeaders()
-    );
-  }
+  return this.http.get(
+    `http://localhost:8081/api/v1/customers/${customerId}/transactions`,
+    this.getAuthHeaders()
+  );
+}
 
   // ================= CREATE ONLY =================
   create(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
+  
 }

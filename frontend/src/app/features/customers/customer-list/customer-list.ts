@@ -18,12 +18,14 @@ export class CustomerList {
   cdr = inject(ChangeDetectorRef);
 
   customers: any[] = [];
+  selectedCustomerId: string | null = null;
 
   ngOnInit() {
 
     this.route.queryParams.subscribe(params => {
 
       const id = params['id'];
+      this.selectedCustomerId = id ?? null;
 
       if (id) {
 
@@ -38,6 +40,7 @@ export class CustomerList {
             if (!data) {
               alert('Customer not found ❌');
               this.router.navigate(['/customers']);
+              this.router.navigate(['/customers-dashboard']);
               return;
             }
 
@@ -55,8 +58,8 @@ export class CustomerList {
             } else {
               alert('Something went wrong ⚠️');
             }
-
-            this.router.navigate(['/customers']);
+ this.router.navigate(['/customers']);
+            this.router.navigate(['/customers-dashboard']);
           }
         });
 
