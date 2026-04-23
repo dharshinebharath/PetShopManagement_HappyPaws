@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { GroomingService } from '../../../core/services/groomingService';
 
 @Component({
@@ -47,7 +47,7 @@ export class GroomingForm {
           },
           error: () => {
             alert('Service not found');
-            this.router.navigate(['/grooming']);
+            this.router.navigate(['/grooming-dashboard']);
           }
         });
       } else {

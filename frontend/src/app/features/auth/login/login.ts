@@ -32,12 +32,12 @@ export class Login {
         next: (res: any) => {
           const user = res.username;
 
-          const routeMap: any = {
-            Mahakarpagam: '/pets-services-module',
+          const routeMap: Record<string, string> = {
+            Mahakarpagam: '/pets-module',
             Dharshine: '/pet-services-module',
             Revathi: '/customertransaction-module',
             Shirlly: '/inventory-module',
-            Priyadharshini: '/employees-module'
+            Priyadharshini: '/employee-module'
           };
 
           if (routeMap[user]) {

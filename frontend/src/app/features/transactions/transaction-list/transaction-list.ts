@@ -11,7 +11,6 @@ import { transaction } from '../../../core/services/transaction';
   styleUrl: './transaction-list.css',
 })
 export class TransactionList {
-
   transactionService = inject(transaction);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -20,70 +19,57 @@ export class TransactionList {
   transactionList: any[] = [];
 
   ngOnInit() {
-
     this.route.queryParams.subscribe(params => {
-
       const id = params['id'];
       const status = params['status'];
       const customerId = params['customerId'];
-      const from = params['from'];
-      const to = params['to'];
+      const from = params['fromDate'];
+      const to = params['toDate'];
 
-      // ================= GET BY ID =================
       if (id) {
         this.transactionService.getById(Number(id)).subscribe({
           next: (res: any) => {
-            if (!res || !res.data) {
-              alert('Transaction not found ❌');
-              this.router.navigate(['/transactions']);
+            const record = Array.isArray(res) ? res[0] : res.data ?? res;
+
+            if (!record) {
+              alert('Transaction not found');
+              this.router.navigate(['/transactions-dashboard']);
               return;
             }
 
-        this.transactionList = [res.data || res];
+            this.transactionList = [record];
             this.cdr.detectChanges();
           },
           error: () => {
-            alert('Transaction ID not found ❌');
-            this.router.navigate(['/transactions']);
+            alert('Transaction ID not found');
+            this.router.navigate(['/transactions-dashboard']);
           }
         });
-      }
-
-      // ================= GET BY STATUS =================
-      else if (status) {
+      } else if (status) {
         this.transactionService.getByStatus(status.toUpperCase()).subscribe({
           next: (res: any) => {
-            this.transactionList = res.data;
+            this.transactionList = Array.isArray(res) ? res : res.data ?? [];
             this.cdr.detectChanges();
           },
-          error: () => alert('Failed to fetch by status ❌')
+          error: () => alert('Failed to fetch by status')
         });
-      }
-
-      // ================= GET BY CUSTOMER =================
-      else if (customerId) {
+      } else if (customerId) {
         this.transactionService.getByCustomerId(Number(customerId)).subscribe({
           next: (res: any) => {
-            this.transactionList = res.data;
+            this.transactionList = Array.isArray(res) ? res : res.data ?? [];
             this.cdr.detectChanges();
           },
-          error: () => alert('Failed to fetch customer transactions ❌')
+          error: () => alert('Failed to fetch customer transactions')
         });
-      }
-
-      // ================= GET BY DATE RANGE =================
-      else if (from && to) {
+      } else if (from && to) {
         this.transactionService.getByDateRange(from, to).subscribe({
           next: (res: any) => {
-            this.transactionList = res.data;
+            this.transactionList = Array.isArray(res) ? res : res.data ?? [];
             this.cdr.detectChanges();
           },
-          error: () => alert('Failed to fetch by date ❌')
+          error: () => alert('Failed to fetch by date')
         });
-      }
-
-      // ================= DEFAULT (GET ALL) =================
-      else {
+      } else {
         this.loadAll();
       }
     });
@@ -91,11 +77,11 @@ export class TransactionList {
 
   loadAll() {
     this.transactionService.getAll().subscribe({
-  next: (res: any) => {
-    console.log(res);  // 👈 paste here
-    this.transactionList = res.data || res;
-    this.cdr.detectChanges();
-  },
-  error: () => alert('Failed to load transactions ❌')
-});
-  }}
+      next: (res: any) => {
+        this.transactionList = res.data || res;
+        this.cdr.detectChanges();
+      },
+      error: () => alert('Failed to load transactions')
+    });
+  }
+}

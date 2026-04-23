@@ -3,8 +3,6 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { customer } from '../../../core/services/customer';
 import { AddressService } from '../../../core/services/address';
-// import{address} from '../../../core/services/address';
-
 
 @Component({
   selector: 'app-customers-dashboard',
@@ -14,19 +12,15 @@ import { AddressService } from '../../../core/services/address';
   styleUrl: './customers-dashboard.css',
 })
 export class CustomersDashboard {
-
   router = inject(Router);
   customerService = inject(customer);
   addressService = inject(AddressService);
 
   activeTab: string = 'customer';
 
-  // 🔹 Tab Switch
   selectTab(tab: string) {
     this.activeTab = tab;
   }
-
-  // ================= CUSTOMER METHODS =================
 
   viewCustomer(id: string) {
     if (!id) {
@@ -35,11 +29,12 @@ export class CustomersDashboard {
     }
 
     this.customerService.getCustomerById(id).subscribe({
-      next: (res) => {
-        console.log(res);
-        alert('Check console for data');
+      next: () => {
+        this.router.navigate(['/customer/list'], {
+          queryParams: { id }
+        });
       },
-      error: () => alert('Customer not found ❌')
+      error: () => alert('Customer not found')
     });
   }
 
@@ -60,53 +55,45 @@ export class CustomersDashboard {
 
     this.customerService.deleteCustomer(id).subscribe({
       next: () => {
-        alert('Deleted successfully ✅');
+        alert('Deleted successfully');
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed')
     });
   }
 
-  // ================= ADDRESS METHODS =================
-
-  // 🔹 GET BY ID
   viewAddress(id: string) {
-  if (!id) {
-    alert('Enter Address ID');
-    return;
-  }
-
-  this.router.navigate(['/address/list'], {
-    queryParams: { id }
-  });
-}
-
-  // 🔹 UPDATE (check ID first)
-  editAddress(id: string) {
-  if (!id) {
-    alert('Enter Address ID');
-    return;
-  }
-
-  this.addressService.getById(Number(id)).subscribe({
-    next: () => {
-
-      // ✅ FIXED HERE
-      this.router.navigate(['/address/add'], {
-        queryParams: { id }
-      });
-
-    },
-    error: (err) => {
-      if (err.status === 404) {
-        alert('Cannot update ❌ ID not found');
-      } else {
-        alert('Error checking ID');
-      }
+    if (!id) {
+      alert('Enter Address ID');
+      return;
     }
-  });
-}
 
-  // 🔹 DELETE
+    this.router.navigate(['/address/list'], {
+      queryParams: { id }
+    });
+  }
+
+  editAddress(id: string) {
+    if (!id) {
+      alert('Enter Address ID');
+      return;
+    }
+
+    this.addressService.getById(Number(id)).subscribe({
+      next: () => {
+        this.router.navigate(['/address/add'], {
+          queryParams: { id }
+        });
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          alert('Cannot update. ID not found');
+        } else {
+          alert('Error checking ID');
+        }
+      }
+    });
+  }
+
   deleteAddress(id: string) {
     if (!id) {
       alert('Enter Address ID');
@@ -115,9 +102,9 @@ export class CustomersDashboard {
 
     this.addressService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Address deleted successfully ✅');
+        alert('Address deleted successfully');
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed')
     });
   }
 }

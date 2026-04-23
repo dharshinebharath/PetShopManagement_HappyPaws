@@ -13,12 +13,10 @@ export class GroomingDashboard {
   router = inject(Router);
   groomingService = inject(GroomingService);
 
-  // GET ALL
   goToList() {
     this.router.navigate(['/grooming/list']);
   }
 
-  // GET BY ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -41,7 +39,6 @@ export class GroomingDashboard {
     });
   }
 
-  // UPDATE
   updateService(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -64,7 +61,6 @@ export class GroomingDashboard {
     });
   }
 
-  // DELETE
   deleteService(id: string) {
     if (!id) {
       alert('Enter ID to delete');
