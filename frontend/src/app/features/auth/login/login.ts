@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -47,13 +47,17 @@ export class Login {
     const password = this.loginForm.value.password!;
     const moduleKey = (this.route.snapshot.paramMap.get('module') ?? '').trim();
 
-    const moduleCredentials: Record<string, { route: string; username: string; password: string }> = {
-      'pets-module': { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123' },
-      'pet-services-module': { route: '/pet-services-module', username: 'Dharshine', password: 'Dharsh123' },
-      'inventory-module': { route: '/inventory-module', username: 'Shirlly', password: 'Shirl123' },
-      'customers-module': { route: '/customers-module', username: 'Revati', password: 'Rev123' },
-      'custoners-module': { route: '/customers-module', username: 'Revati', password: 'Rev123' },
-      'employee-module': { route: '/employee-module', username: 'Priyadharshini', password: 'Priya123' }
+    const moduleCredentials: Record<string, { route: string; username: string; password: string; label: string }> = {
+      'pets-module': { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module' },
+      pets: { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module' },
+      'pet-services-module': { route: '/pet-services-module', username: 'Dharshine', password: 'Dharsh123', label: 'Dharshine Module' },
+      petservices: { route: '/pet-services-module', username: 'Dharshine', password: 'Dharsh123', label: 'Dharshine Module' },
+      'inventory-module': { route: '/inventory-module', username: 'Shirlly', password: 'Shirl123', label: 'Shirlly Module' },
+      inventory: { route: '/inventory-module', username: 'Shirlly', password: 'Shirl123', label: 'Shirlly Module' },
+      'customers-module': { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module' },
+      customers: { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module' },
+      'custoners-module': { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module' },
+      'employee-module': { route: '/employee-module', username: 'Priyadharshini', password: 'Priya123', label: 'Priyadharshini Module' }
     };
 
     const moduleConfig = moduleCredentials[moduleKey];
@@ -63,7 +67,13 @@ export class Login {
       return;
     }
 
-    if (username !== moduleConfig.username || password !== moduleConfig.password) {
+    const validCredentials = new Set<string>([`${moduleConfig.username}:${moduleConfig.password}`]);
+    if (moduleKey === 'customers-module' || moduleKey === 'customers' || moduleKey === 'custoners-module') {
+      validCredentials.add('Revathi:Reva123');
+      validCredentials.add('Revati:Rev123');
+    }
+
+    if (!validCredentials.has(`${username}:${password}`)) {
       alert(`Use the correct username and password for ${moduleConfig.route}`);
       return;
     }
@@ -80,10 +90,22 @@ export class Login {
             return;
           }
 
+          sessionStorage.setItem('activeModuleLabel', moduleConfig.label);
+          sessionStorage.setItem('activeModuleRoute', moduleConfig.route);
           this.router.navigateByUrl(moduleConfig.route);
         },
-        error: () => {
-          alert('Invalid credentials');
+        error: (err: HttpErrorResponse) => {
+          if (err.status === 0) {
+            alert('Backend server is not running (http://localhost:8081). Please start backend first.');
+            return;
+          }
+
+          if (err.status === 401 || err.status === 403) {
+            alert('Invalid credentials');
+            return;
+          }
+
+          alert(`Login failed (${err.status}). Please try again.`);
         }
       });
   }

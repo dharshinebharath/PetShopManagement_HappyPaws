@@ -1,7 +1,7 @@
-import { Component, inject } from "@angular/core";
-import { VaccinationService } from "../../../core/services/vaccinationService";
-import { Router, RouterModule } from "@angular/router";
-import { FormsModule } from "@angular/forms";
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { VaccinationService } from '../../../core/services/vaccinationService';
 
 @Component({
   selector: 'app-vaccination-dashboard',
@@ -9,9 +9,7 @@ import { FormsModule } from "@angular/forms";
   imports: [FormsModule, RouterModule],
   templateUrl: './vaccination-dashboard.html'
 })
-
 export class VaccinationDashboard {
-
   router = inject(Router);
   vaccinationService = inject(VaccinationService);
 
@@ -29,7 +27,7 @@ export class VaccinationDashboard {
         });
       },
       error: () => {
-        alert('Vaccination ID not found ❌');
+        alert('Vaccination ID not found');
       }
     });
   }
@@ -43,7 +41,7 @@ export class VaccinationDashboard {
           queryParams: { id }
         });
       },
-      error: () => alert('ID not found ❌')
+      error: () => alert('ID not found')
     });
   }
 
@@ -52,11 +50,10 @@ export class VaccinationDashboard {
 
     this.vaccinationService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Deleted successfully ✅');
+        alert('Deleted successfully');
         this.router.navigate(['/vaccination/list']);
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed')
     });
   }
 }
-

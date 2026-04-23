@@ -6,12 +6,12 @@
   <form [formGroup]="form" class="space-y-2">
     <input formControlName="firstName" placeholder="First Name" class="border p-2 w-full mb-2">
     <p class="text-red-500 text-sm" *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid">
-      First name is required and must be at least 2 characters
+      First name is required, at least 2 characters, and letters only
     </p>
 
     <input formControlName="lastName" placeholder="Last Name" class="border p-2 w-full mb-2">
     <p class="text-red-500 text-sm" *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid">
-      Last name is required and must be at least 2 characters
+      Last name is required, at least 2 characters, and letters only
     </p>
 
     <input formControlName="email" placeholder="Email" class="border p-2 w-full mb-2">
@@ -24,7 +24,12 @@
       Phone number is required and must be a 10-digit number like 5555678001
     </p>
 
-    <input formControlName="addressId" type="number" placeholder="Address ID" class="border p-2 w-full mb-2">
+    <select formControlName="addressId" class="border p-2 w-full mb-2">
+      <option [ngValue]="null">Select Address</option>
+      <option *ngFor="let a of addresses" [ngValue]="a.addressId">
+        {{ a.addressId }} - {{ a.street }}, {{ a.city }}
+      </option>
+    </select>
     <p class="text-red-500 text-sm" *ngIf="form.get('addressId')?.touched && form.get('addressId')?.invalid">
       Address ID is required and must be greater than 0
     </p>

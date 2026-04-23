@@ -22,7 +22,7 @@
                 <!-- BODY -->
                 <tbody>
 
-                    <tr *ngFor="let c of categoryList"
+                    <tr *ngFor="let c of paginated(categoryList)"
                         class="border-b hover:bg-teal-50 transition duration-200">
 
                         <td class="p-3 text-blue-700 font-semibold">
@@ -46,3 +46,6 @@
     </div>
 
 </div>
+<app-pagination [totalItems]="categoryList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

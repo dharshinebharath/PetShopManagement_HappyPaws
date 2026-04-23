@@ -25,7 +25,6 @@ public class VaccinationsService implements VaccinationsInterface {
 	@Autowired
 	private VaccinationsRepository vaccinationsRepository;
 	
-	 // 🔹 ENTITY → DTO
     private VaccinationsResponseDTO toDto(Vaccinations entity) {
         VaccinationsResponseDTO dto = new VaccinationsResponseDTO();
 

@@ -1,61 +1,58 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-teal-50 to-emerald-50 p-6">
+  <div class="w-full max-w-md space-y-4 rounded-2xl border border-teal-100 bg-white/90 p-8 shadow-lg backdrop-blur-md">
+    <h2 class="mb-4 text-center text-2xl font-bold text-teal-900">
+      Grooming Services API
+    </h2>
 
-<div class="min-h-screen flex items-center justify-center 
-            bg-gradient-to-br from-slate-50 via-teal-50 to-emerald-50 p-6">
+    <button
+      (click)="goToList()"
+      class="w-full rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 py-2 text-white shadow hover:from-emerald-600 hover:to-teal-700">
+      GET All Grooming Services
+    </button>
 
-    <div class="w-full max-w-md bg-white/90 backdrop-blur-md 
-              border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+    <div class="flex gap-2">
+      <input
+        #sid
+        placeholder="Enter Service ID"
+        class="w-full rounded border border-teal-200 p-2 focus:outline-none focus:ring-2 focus:ring-teal-400">
 
-        <!-- TITLE -->
-        <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
-            Grooming Services API
-        </h2>
-
-        <!-- GET ALL -->
-        <button (click)="goToList()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 
-             hover:from-emerald-600 hover:to-teal-700 
-             text-white py-2 rounded-lg shadow">
-            GET All Grooming Services
-        </button>
-
-        <!-- GET BY ID  -->
-        <div class="flex gap-2">
-            <input #sid placeholder="Enter Service ID" class="border border-teal-200 p-2 rounded w-full 
-               focus:outline-none focus:ring-2 focus:ring-teal-400">
-
-            <button (click)="viewById(sid.value)"
-                class="bg-teal-500 hover:bg-teal-600 text-white px-4 rounded-lg shadow">
-                GET
-            </button>
-        </div>
-<!-- -- POST -->
-        <button routerLink="/grooming/form" class="w-full bg-gradient-to-r from-blue-500 to-teal-600 
-             hover:from-blue-600 hover:to-teal-700 
-             text-white py-2 rounded-lg shadow">
-            Add Grooming Service (POST)
-        </button>
-
-        <!-- PUT -->
-        <div class="flex gap-2">
-            <input #uid placeholder="Enter Service ID for Update" class="border border-slate-300 p-2 rounded w-full 
-               focus:outline-none focus:ring-2 focus:ring-blue-400">
-
-            <button (click)="updateService(uid.value)"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-lg shadow">
-                UPDATE
-            </button>
-        </div>
-
-        <!-- DELETE -->
-        <div class="flex gap-2">
-            <input #did placeholder="Enter Service ID to Delete" class="border border-slate-300 p-2 rounded w-full 
-               focus:outline-none focus:ring-2 focus:ring-red-400">
-
-            <button (click)="deleteService(did.value)"
-                class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-lg shadow">
-                DELETE
-            </button>
-        </div>
-
+      <button
+        (click)="viewById(sid.value)"
+        class="rounded-lg bg-teal-500 px-4 text-white shadow hover:bg-teal-600">
+        GET
+      </button>
     </div>
 
+    <button
+      routerLink="/grooming/form"
+      class="w-full rounded-lg bg-gradient-to-r from-blue-500 to-teal-600 py-2 text-white shadow hover:from-blue-600 hover:to-teal-700">
+      Add Grooming Service (POST)
+    </button>
+
+    <div class="flex gap-2">
+      <input
+        #uid
+        placeholder="Enter Service ID for Update"
+        class="w-full rounded border border-slate-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+      <button
+        (click)="updateService(uid.value)"
+        class="rounded-lg bg-blue-500 px-4 text-white shadow hover:bg-blue-600">
+        UPDATE
+      </button>
+    </div>
+
+    <div class="flex gap-2">
+      <input
+        #did
+        placeholder="Enter Service ID to Delete"
+        class="w-full rounded border border-slate-300 p-2 focus:outline-none focus:ring-2 focus:ring-red-400">
+
+      <button
+        (click)="deleteService(did.value)"
+        class="rounded-lg bg-red-500 px-4 text-white shadow hover:bg-red-600">
+        DELETE
+      </button>
+    </div>
+  </div>
 </div>

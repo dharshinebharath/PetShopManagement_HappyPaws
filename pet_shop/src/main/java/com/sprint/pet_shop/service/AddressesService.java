@@ -97,7 +97,6 @@ public class AddressesService implements AddressesInterface {
         return new ApiResponse<>("Addresses fetched successfully", true, data);
     }
 
-    // 🔹 DELETE
     @Override
     public ApiResponse<String> deleteaddress(long id) {
 
@@ -140,7 +139,6 @@ public class AddressesService implements AddressesInterface {
         return new ApiResponse<>("Address updated successfully", true, toDto(saved));
     }
 
-    // 🔹 ENTITY → DTO
     private AddressesResponseDTO toDto(Addresses entity) {
         AddressesResponseDTO dto = new AddressesResponseDTO();
         dto.setAddressId(entity.getAddressId());

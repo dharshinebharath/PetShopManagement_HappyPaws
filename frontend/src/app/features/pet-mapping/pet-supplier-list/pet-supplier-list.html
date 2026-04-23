@@ -14,7 +14,7 @@
       </thead>
 
       <tbody *ngIf="suppliers.length > 0; else noData">
-        <tr *ngFor="let s of suppliers" class="border-b hover:bg-teal-50">
+        <tr *ngFor="let s of paginated(suppliers)" class="border-b hover:bg-teal-50">
           <td class="p-3 text-center">{{ s.supplierId }}</td>
           <td class="p-3 text-center">{{ s.name }}</td>
           <td class="p-3 text-center">{{ s.contactPerson }}</td>
@@ -29,3 +29,6 @@
     </p>
   </ng-template>
 </div>
+<app-pagination [totalItems]="suppliers.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

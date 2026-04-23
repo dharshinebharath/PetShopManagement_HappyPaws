@@ -59,7 +59,6 @@ public class EmployeesController {
         return ResponseEntity.ok(employeesService.updateEmployee(id, employees));
     }
 
-    // 🔥 PET ASSIGN
     @PostMapping("{employeeId}/pets/{petId}")
     public ApiResponse<String> assign(
             @PathVariable Long employeeId,
@@ -83,7 +82,6 @@ public class EmployeesController {
     
     
 
-    // ✅ FIXED POSITION API
     @GetMapping("/role/{position}")
     public ApiResponse<List<EmployeesResponseDTO>> getByPosition(
             @PathVariable String position) {
@@ -91,7 +89,6 @@ public class EmployeesController {
         return employeesService.getEmployeesByPosition(position);
     }
 
-    // ✅ ADD THIS (IMPORTANT FIX)
     @GetMapping("/hired-after/{date}")
     public ApiResponse<List<EmployeesResponseDTO>> getByHireDate(
         @PathVariable

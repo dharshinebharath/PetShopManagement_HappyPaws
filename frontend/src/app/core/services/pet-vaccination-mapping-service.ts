@@ -10,7 +10,6 @@ export class PetVaccinationMappingService {
 
   private baseUrl = 'http://localhost:8081/api/v1';
 
-  // ✅ AUTH HEADER
   private getAuthHeaders() {
     const username = 'Dharshine';
     const password = 'Dharsh123';

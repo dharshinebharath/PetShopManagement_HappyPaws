@@ -23,7 +23,7 @@
                 <!-- BODY -->
                 <tbody>
 
-                    <tr *ngFor="let v of vaccinationList" class="border-b hover:bg-teal-50 transition">
+                    <tr *ngFor="let v of paginated(vaccinationList)" class="border-b hover:bg-teal-50 transition">
 
                         <td class="p-3 text-blue-700 font-medium">
                             {{ v.vaccinationId }}
@@ -52,3 +52,6 @@
         </div>
     </div>
 </div>
+<app-pagination [totalItems]="vaccinationList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

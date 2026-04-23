@@ -10,7 +10,6 @@ export class AddressService {
 
   http: HttpClient = inject(HttpClient);
 
-  // 🔐 AUTH HEADERS
   private getAuthHeaders() {
     const username = 'Revathi';   // CUSTOMER_ADMIN
     const password = 'Reva123';

@@ -24,7 +24,12 @@
       Enter a valid email
     </p>
 
-    <input type="number" formControlName="addressId" placeholder="Address ID" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <select formControlName="addressId" class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
+      <option [ngValue]="null">Select Address</option>
+      <option *ngFor="let a of addresses" [ngValue]="a.addressId">
+        {{ a.addressId }} - {{ a.street }}, {{ a.city }}
+      </option>
+    </select>
     <p class="text-red-500 text-sm" *ngIf="form.get('addressId')?.touched && form.get('addressId')?.invalid">
       Address ID must be greater than 0
     </p>

@@ -20,7 +20,7 @@
             <!-- BODY -->
             <tbody *ngIf="employees.length > 0; else noData">
 
-                <tr *ngFor="let e of employees" class="border-b hover:bg-purple-50">
+                <tr *ngFor="let e of paginated(employees)" class="border-b hover:bg-purple-50">
 
                     <td class="p-3 text-center">{{ e.employeeId }}</td>
                     <td class="p-3 text-center">{{ e.firstName }}</td>
@@ -42,3 +42,6 @@
     </ng-template>
 
 </div>
+<app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

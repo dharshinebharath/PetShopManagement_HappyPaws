@@ -18,7 +18,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let s of supplierList" class="border-b hover:bg-teal-50 transition">
+          <tr *ngFor="let s of paginated(supplierList)" class="border-b hover:bg-teal-50 transition">
             <td class="p-3 text-blue-700 font-medium">{{ s.supplierId }}</td>
             <td class="p-3 font-semibold text-teal-800">{{ s.name }}</td>
             <td class="p-3 text-slate-700">{{ s.contactPerson }}</td>
@@ -31,3 +31,6 @@
     </div>
   </div>
 </div>
+<app-pagination [totalItems]="supplierList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

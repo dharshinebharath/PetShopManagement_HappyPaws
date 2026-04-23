@@ -30,7 +30,6 @@ public class PetCategoriesController {
 	@Autowired
 	private PetCategoriesService service;
 	
-	// ✅ CREATE
     @PostMapping
     public ResponseEntity<ApiResponse<List<PetCategoriesResponseDTO>>> addAll(
             @Valid @RequestBody List<PetCategoriesRequestDTO> dtos) {
@@ -41,7 +40,6 @@ public class PetCategoriesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // ✅ GET ALL
     @GetMapping
     public ResponseEntity<ApiResponse<List<PetCategoriesResponseDTO>>> getAll() {
 
@@ -51,7 +49,6 @@ public class PetCategoriesController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ GET BY ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<PetCategoriesResponseDTO>> getById(
             @PathVariable long id) {
@@ -62,7 +59,6 @@ public class PetCategoriesController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<PetCategoriesResponseDTO>> update(
             @PathVariable long id,
@@ -74,7 +70,6 @@ public class PetCategoriesController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(
             @PathVariable long id) {

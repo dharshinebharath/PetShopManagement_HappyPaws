@@ -24,7 +24,7 @@
                 <!-- BODY -->
                 <tbody>
 
-                    <tr *ngFor="let g of groomingList" class="border-b hover:bg-teal-50 transition">
+                    <tr *ngFor="let g of paginated(groomingList)" class="border-b hover:bg-teal-50 transition">
 
                         <td class="p-3 text-blue-700 font-medium">
                             {{ g.serviceId }}
@@ -53,5 +53,6 @@
         </div>
     </div>
 </div>
+<app-pagination [totalItems]="groomingList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
 
 

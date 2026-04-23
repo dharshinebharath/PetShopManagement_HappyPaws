@@ -67,7 +67,6 @@ export class VaccinationForm {
   // ================= SUBMIT =================
   submit() {
 
-    // 🔥 FORCE VALIDATION CHECK
     if (this.form.invalid) {
 
       this.form.markAllAsTouched();
@@ -108,7 +107,6 @@ export class VaccinationForm {
         }
       }
 
-      // 🔥 FINAL ALERT
       alert('❌ Please fix errors:\n\n' + errors.join('\n'));
 
       return;

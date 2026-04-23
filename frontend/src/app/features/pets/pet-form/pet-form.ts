@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PetsService } from '../../../core/services/petsService';
+import { CategoryService } from '../../../core/services/categoryService';
 
 @Component({
   selector: 'app-pet-form',
@@ -15,9 +16,11 @@ export class PetForm {
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
+  categoryService = inject(CategoryService);
 
   petId: number | null = null;
   isLoading = true;
+  categories: any[] = [];
 
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -25,10 +28,12 @@ export class PetForm {
     age: new FormControl(0, [Validators.required, Validators.min(0)]),
     price: new FormControl(0, [Validators.required, Validators.min(1)]),
     description: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    categoryId: new FormControl(0, [Validators.required, Validators.min(1)])
+    categoryId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
   });
 
   ngOnInit() {
+    this.loadCategories();
+
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.petId = Number(params['id']);
@@ -56,6 +61,18 @@ export class PetForm {
         });
       } else {
         this.isLoading = false;
+      }
+    });
+  }
+
+  private loadCategories() {
+    this.categoryService.getAll().subscribe({
+      next: (res: any) => {
+        this.categories = res?.data || [];
+      },
+      error: () => {
+        this.categories = [];
+        alert('Unable to load categories for selection');
       }
     });
   }

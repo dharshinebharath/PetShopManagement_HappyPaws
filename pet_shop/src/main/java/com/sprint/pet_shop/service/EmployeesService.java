@@ -77,7 +77,6 @@ public class EmployeesService implements EmployeesInterface {
                 throw new DuplicateResourceException("Employee email already exists");
             }
 
-            // ✅ SET BASIC FIELDS
             emp.setFirstName(dto.getFirstName());
             emp.setLastName(dto.getLastName());
             emp.setPosition(dto.getPosition());
@@ -85,7 +84,6 @@ public class EmployeesService implements EmployeesInterface {
             emp.setPhoneNumber(dto.getPhoneNumber());
             emp.setEmail(dto.getEmail());
 
-            // 🔥🔥🔥 IMPORTANT PART (THIS IS YOUR FIX)
             if (dto.getAddressId() != null) {
 
                 Addresses address = addressesRepository.findById(dto.getAddressId())
@@ -154,7 +152,6 @@ public class EmployeesService implements EmployeesInterface {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Employee not found with id: " + employeeId));
 
-        // 🔥 BREAK RELATION SAFELY (IMPORTANT)
         if (existing.getPets() != null) {
             existing.getPets().forEach(pet -> pet.getEmployees().remove(existing));
             existing.getPets().clear();
@@ -170,7 +167,6 @@ public class EmployeesService implements EmployeesInterface {
         return response;
     }
 
-    // UPDATE (FIXED → DTO STYLE LIKE GROOMING)
     @Override
     public ApiResponse<EmployeesResponseDTO> updateEmployee(Long id, EmployeesRequestDTO dto) {
 
@@ -243,7 +239,6 @@ public class EmployeesService implements EmployeesInterface {
             Pets pet = petsRepository.findById(petId)
                     .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-            // ✅ ADD BOTH SIDES
             if (!emp.getPets().contains(pet)) {
                 emp.getPets().add(pet);
             }

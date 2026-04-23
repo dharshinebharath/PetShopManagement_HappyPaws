@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SupplierService } from '../../../core/services/supplier';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AddressService } from '../../../core/services/address';
 
 @Component({
   selector: 'app-supplier-form',
@@ -15,19 +16,23 @@ export class SupplierForm {
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
+  addressService = inject(AddressService);
 
   supplierId: number | null = null;
   isLoading = true;
+  addresses: any[] = [];
 
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     contactPerson: new FormControl('', [Validators.required, Validators.minLength(3)]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3}-[0-9]{3}-[0-9]{4}$')]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    addressId: new FormControl(0, [Validators.required, Validators.min(1)])
+    addressId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
   });
 
   ngOnInit() {
+    this.loadAddresses();
+
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.supplierId = Number(params['id']);
@@ -54,6 +59,18 @@ export class SupplierForm {
         });
       } else {
         this.isLoading = false;
+      }
+    });
+  }
+
+  private loadAddresses() {
+    this.addressService.getAll().subscribe({
+      next: (res: any) => {
+        this.addresses = res?.data || [];
+      },
+      error: () => {
+        this.addresses = [];
+        alert('Unable to load addresses for selection');
       }
     });
   }

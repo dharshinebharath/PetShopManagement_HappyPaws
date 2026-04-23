@@ -27,7 +27,7 @@
                 <!-- BODY -->
                 <tbody>
 
-                    <tr *ngFor="let p of petsList" 
+                    <tr *ngFor="let p of paginated(petsList)" 
                         class="border-b hover:bg-teal-50 transition duration-200">
 
                         <!-- PET ID -->
@@ -81,3 +81,6 @@
     </div>
 
 </div>
+<app-pagination [totalItems]="petsList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

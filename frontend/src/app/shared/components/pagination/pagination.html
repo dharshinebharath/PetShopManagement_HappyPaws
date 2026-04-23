@@ -1,1 +1,12 @@
-<p>pagination works!</p>
+<div class="pagination-wrap" *ngIf="totalItems > pageSize">
+  <button (click)="goTo(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+
+  <button
+    *ngFor="let p of pages"
+    (click)="goTo(p)"
+    [class.active]="p === currentPage">
+    {{ p }}
+  </button>
+
+  <button (click)="goTo(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</div>

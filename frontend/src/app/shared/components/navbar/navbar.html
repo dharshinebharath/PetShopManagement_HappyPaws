@@ -1,1 +1,7 @@
-<p>navbar works!</p>
+<header *ngIf="showNavbar" class="nav-wrap">
+  <button class="link-btn" (click)="goHome()">Home</button>
+
+  <div class="module-label">{{ moduleLabel }}</div>
+
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</header>

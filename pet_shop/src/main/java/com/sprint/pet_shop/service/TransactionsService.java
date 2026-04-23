@@ -66,7 +66,6 @@ public class TransactionsService implements TransactionsInterface {
         entity.setTransactionDate(dto.getTransactionDate());
         entity.setAmount(dto.getAmount());
 
-        // ✅ CLEAN ENUM HANDLING (NO STRING CONVERSION)
         entity.setTransactionStatus(dto.getTransactionStatus());
 
         entity.setCustomer(customer);

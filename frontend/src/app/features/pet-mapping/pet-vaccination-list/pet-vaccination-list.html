@@ -19,7 +19,7 @@
             <!-- BODY -->
             <tbody *ngIf="vaccinations.length > 0; else noData">
 
-                <tr *ngFor="let v of vaccinations" class="border-b hover:bg-teal-50">
+                <tr *ngFor="let v of paginated(vaccinations)" class="border-b hover:bg-teal-50">
 
                     <td class="p-3 text-center">{{ v.vaccinationId }}</td>
                     <td class="p-3 text-center">{{ v.name }}</td>
@@ -40,3 +40,6 @@
     </ng-template>
 
 </div>
+<app-pagination [totalItems]="vaccinations.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

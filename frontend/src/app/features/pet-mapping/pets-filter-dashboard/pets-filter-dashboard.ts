@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PetsService } from '../../../core/services/petsService';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pets-filter-dashboard',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './pets-filter-dashboard.html'
 })
 export class PetsFilterDashboard {
@@ -18,6 +19,25 @@ export class PetsFilterDashboard {
   breed = '';
   min = '';
   max = '';
+  breedOptions: string[] = [];
+
+  ngOnInit() {
+    this.service.getAll().subscribe({
+      next: (res: any) => {
+        const allPets = res?.data || [];
+        const breeds = allPets
+          .map((p: any) => String(p?.breed || '').trim())
+          .filter((b: string) => !!b);
+
+        this.breedOptions = Array.from(new Set<string>(breeds)).sort((a: string, b: string) =>
+          a.localeCompare(b)
+        );
+      },
+      error: () => {
+        this.breedOptions = [];
+      }
+    });
+  }
 
   byCategory() {
     if (!this.categoryId) {

@@ -21,8 +21,8 @@ export class AddressForm {
 
   form = new FormGroup({
     street: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    city: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    state: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    city: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
+    state: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
     zipCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5,6}$')])
   });
 
@@ -73,10 +73,12 @@ export class AddressForm {
       if (city?.errors) {
         if (city.errors['required']) errors.push('City is required');
         if (city.errors['minlength']) errors.push('City must be at least 2 characters');
+        if (city.errors['pattern']) errors.push('City must contain only letters');
       }
       if (state?.errors) {
         if (state.errors['required']) errors.push('State is required');
         if (state.errors['minlength']) errors.push('State must be at least 2 characters');
+        if (state.errors['pattern']) errors.push('State must contain only letters');
       }
       if (zipCode?.errors) {
         if (zipCode.errors['required']) errors.push('Zip code is required');

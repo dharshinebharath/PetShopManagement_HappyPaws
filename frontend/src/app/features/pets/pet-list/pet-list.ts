@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { PetsService } from '../../../core/services/petsService';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pets-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-list.html',
   styleUrl: './pet-list.css',
 })
@@ -26,11 +27,10 @@ export class PetsList {
       const id = params['id'];
 
       if (id) {
-        // 🔹 GET BY ID
         this.petService.getById(Number(id)).subscribe({
           next: (res: any) => {
 
-              console.log('GET BY ID RESPONSE 👉', res);  // ✅ ADD HERE
+              console.log('GET BY ID RESPONSE 👉', res);
 
             if (!res || !res.data) {
               alert('No pet found with this ID ❌');
@@ -67,7 +67,7 @@ export class PetsList {
   loadAll() {
     this.petService.getAll().subscribe({
       next: (res: any) => {
-                      console.log('GET BY ID RESPONSE 👉', res);  // ✅ ADD HERE
+                      console.log('GET BY ID RESPONSE 👉', res);
 
         this.petsList = res.data;
         this.cdr.detectChanges();
@@ -78,4 +78,18 @@ export class PetsList {
       }
     });
   }
+  currentPage = 1;
+  pageSize = 8;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+

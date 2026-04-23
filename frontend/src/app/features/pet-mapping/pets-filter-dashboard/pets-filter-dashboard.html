@@ -22,7 +22,10 @@
         <h2 class="text-center font-bold text-blue-700">Filter by Breed</h2>
 
         <div class="flex gap-3">
-            <input [(ngModel)]="breed" placeholder="Breed" class="w-full border p-2 rounded">
+            <select [(ngModel)]="breed" class="w-full border p-2 rounded">
+                <option value="">Select Breed</option>
+                <option *ngFor="let b of breedOptions" [value]="b">{{ b }}</option>
+            </select>
 
             <button (click)="byBreed()" class="bg-blue-500 text-white px-5 rounded">
                 Search

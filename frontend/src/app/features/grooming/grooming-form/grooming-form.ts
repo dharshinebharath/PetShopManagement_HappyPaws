@@ -1,9 +1,8 @@
-
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GroomingService } from '../../../core/services/groomingService';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { GroomingService } from '../../../core/services/groomingService';
 
 @Component({
   selector: 'app-grooming-form',
@@ -12,7 +11,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: './grooming-form.html'
 })
 export class GroomingForm {
-
   groomingService = inject(GroomingService);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -21,7 +19,6 @@ export class GroomingForm {
   serviceId: number | null = null;
   isLoading = true;
 
-  // ✅ FORM GROUP (UPDATED)
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     description: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -30,20 +27,13 @@ export class GroomingForm {
   });
 
   ngOnInit() {
-
     this.route.queryParams.subscribe(params => {
-
       if (params['id']) {
-
         this.serviceId = Number(params['id']);
 
-        // FETCH EXISTING DATA
         this.groomingService.getById(this.serviceId).subscribe({
           next: (res: any) => {
-
             const data = res.data;
-
-            // PATCH FORM VALUES
             this.form.patchValue({
               name: data.name,
               description: data.description,
@@ -55,11 +45,10 @@ export class GroomingForm {
             this.cdr.detectChanges();
           },
           error: () => {
-            alert('Service not found ❌');
-            this.router.navigate(['/grooming']);
+            alert('Service not found');
+            this.router.navigate(['/grooming-dashboard']);
           }
         });
-
       } else {
         this.isLoading = false;
       }
@@ -67,78 +56,51 @@ export class GroomingForm {
   }
 
   submit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
 
-  // 🔥 FORCE VALIDATION CHECK
-  if (this.form.invalid) {
+      const errors: string[] = [];
+      const name = this.form.get('name');
+      const desc = this.form.get('description');
+      const price = this.form.get('price');
 
-    this.form.markAllAsTouched();
-
-    let errors: string[] = [];
-
-    const name = this.form.get('name');
-    const desc = this.form.get('description');
-    const price = this.form.get('price');
-
-    // ================= NAME =================
-    if (name?.errors) {
-      if (name.errors['required']) {
-        errors.push('Name is required');
+      if (name?.errors) {
+        if (name.errors['required']) errors.push('Name is required');
+        if (name.errors['minlength']) errors.push('Name must be at least 3 characters');
       }
-      if (name.errors['minlength']) {
-        errors.push('Name must be at least 3 characters');
+
+      if (desc?.errors) {
+        if (desc.errors['required']) errors.push('Description is required');
+        if (desc.errors['minlength']) errors.push('Description must be at least 5 characters');
       }
+
+      if (price?.errors) {
+        if (price.errors['required']) errors.push('Price is required');
+        if (price.errors['min']) errors.push('Price must be greater than 0');
+      }
+
+      alert('Please fix errors:\n\n' + errors.join('\n'));
+      return;
     }
 
-    // ================= DESCRIPTION =================
-    if (desc?.errors) {
-      if (desc.errors['required']) {
-        errors.push('Description is required');
-      }
-      if (desc.errors['minlength']) {
-        errors.push('Description must be at least 5 characters');
-      }
+    const payload = this.form.value;
+
+    if (this.serviceId) {
+      this.groomingService.update(this.serviceId, payload).subscribe({
+        next: () => {
+          alert('Updated successfully');
+          this.router.navigate(['/grooming/list']);
+        },
+        error: () => alert('Update failed')
+      });
+    } else {
+      this.groomingService.create([payload]).subscribe({
+        next: () => {
+          alert('Created successfully');
+          this.router.navigate(['/grooming/list']);
+        },
+        error: () => alert('Create failed')
+      });
     }
-
-    // ================= PRICE =================
-    if (price?.errors) {
-      if (price.errors['required']) {
-        errors.push('Price is required');
-      }
-      if (price.errors['min']) {
-        errors.push('Price must be greater than 0');
-      }
-    }
-
-    // 🔥 FINAL ALERT (ALL ERRORS TOGETHER)
-    alert('❌ Please fix errors:\n\n' + errors.join('\n'));
-
-    return;
-  }
-
-  // ================= VALID FORM =================
-  const payload = this.form.value;
-
-  if (this.serviceId) {
-
-    this.groomingService.update(this.serviceId, payload).subscribe({
-      next: () => {
-        alert('Updated successfully ✅');
-        this.router.navigate(['/grooming/list']);
-      },
-      error: () => alert('Update failed ❌')
-    });
-
-  } else {
-
-    this.groomingService.create([payload]).subscribe({
-      next: () => {
-        alert('Created successfully ✅');
-        this.router.navigate(['/grooming/list']);
-      },
-      error: () => alert('Create failed ❌')
-    });
-
   }
 }
-}
-

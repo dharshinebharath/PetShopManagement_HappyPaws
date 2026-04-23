@@ -29,7 +29,12 @@
       Description is required and must be at least 5 characters
     </p>
 
-    <input formControlName="categoryId" type="number" placeholder="Category ID" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+    <select formControlName="categoryId" class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+      <option [ngValue]="null">Select Category</option>
+      <option *ngFor="let c of categories" [ngValue]="c.category_id ?? c.categoryId">
+        {{ c.category_id ?? c.categoryId }} - {{ c.name }}
+      </option>
+    </select>
     <p class="text-red-500 text-sm" *ngIf="form.get('categoryId')?.touched && form.get('categoryId')?.invalid">
       Category ID is required and must be greater than 0
     </p>

@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../core/services/categoryService';
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
 })
@@ -26,7 +27,6 @@ export class CategoryList {
       const id = params['id'];
 
       if (id) {
-        // 🔹 GET BY ID
         this.categoryService.getById(Number(id)).subscribe({
           next: (res: any) => {
 
@@ -71,4 +71,18 @@ export class CategoryList {
       }
     });
   }
+  currentPage = 1;
+  pageSize = 8;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+

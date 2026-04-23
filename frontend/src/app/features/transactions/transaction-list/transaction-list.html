@@ -25,7 +25,7 @@
         <!-- BODY -->
         <tbody>
 
-          <tr *ngFor="let t of transactionList"
+          <tr *ngFor="let t of paginated(transactionList)"
               class="border-b hover:bg-teal-50 transition">
 
             <td class="p-3 text-blue-700 font-medium">
@@ -70,3 +70,6 @@
     </div>
   </div>
 </div>
+<app-pagination [totalItems]="transactionList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

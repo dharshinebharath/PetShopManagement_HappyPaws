@@ -24,7 +24,7 @@
         <!-- BODY -->
         <tbody>
 
-          <tr *ngFor="let a of addressList" class="border-b hover:bg-blue-50 transition">
+          <tr *ngFor="let a of paginated(addressList)" class="border-b hover:bg-blue-50 transition">
 
             <td class="p-3 text-indigo-700 font-medium">
               {{ a.addressId }}
@@ -55,3 +55,6 @@
     </div>
   </div>
 </div>
+<app-pagination [totalItems]="addressList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

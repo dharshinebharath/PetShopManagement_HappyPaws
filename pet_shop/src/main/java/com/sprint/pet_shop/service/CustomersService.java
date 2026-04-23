@@ -28,7 +28,6 @@ public class CustomersService implements CustomersInterface {
     @Autowired
     private AddressesRepository addressesRepository;
 
-    // 🔹 CREATE
     @Override
     public ApiResponse<List<CustomerResponseDTO>> savecustomers(List<CustomerRequestDTO> customers) {
 
@@ -64,7 +63,6 @@ public class CustomersService implements CustomersInterface {
         return new ApiResponse<>("Customers created successfully", true, data);
     }
 
-    // 🔹 GET ALL
     @Override
     public ApiResponse<List<CustomerResponseDTO>> getcustomers() {
 
@@ -76,7 +74,6 @@ public class CustomersService implements CustomersInterface {
         return new ApiResponse<>("Customers fetched successfully", true, data);
     }
 
-    // 🔹 GET BY ID
     @Override
     public ApiResponse<CustomerResponseDTO> getcustomerByID(long id) {
 
@@ -86,7 +83,6 @@ public class CustomersService implements CustomersInterface {
         return new ApiResponse<>("Customer found", true, mapToResponse(customer));
     }
 
-    // 🔹 UPDATE
     @Override
     public ApiResponse<CustomerResponseDTO> updatecustomer(long id, CustomerRequestDTO dto) {
 
@@ -116,7 +112,6 @@ public class CustomersService implements CustomersInterface {
         return new ApiResponse<>("Customer updated successfully", true, mapToResponse(updated));
     }
 
-    // 🔹 DELETE
     @Override
     public ApiResponse<String> deletecustomer(long id) {
 
@@ -129,7 +124,6 @@ public class CustomersService implements CustomersInterface {
         return new ApiResponse<>("Customer deleted successfully", true, "Deleted ID: " + id);
     }
 
-    // 🔥 VALIDATION METHOD
     private void validate(CustomerRequestDTO dto) {
 
         if (dto.getFirstName() == null || dto.getFirstName().trim().isEmpty()) {
@@ -149,7 +143,6 @@ public class CustomersService implements CustomersInterface {
         }
     }
 
-    // 🔥 ENTITY → RESPONSE
     private CustomerResponseDTO mapToResponse(Customers customer) {
 
         CustomerResponseDTO dto = new CustomerResponseDTO();

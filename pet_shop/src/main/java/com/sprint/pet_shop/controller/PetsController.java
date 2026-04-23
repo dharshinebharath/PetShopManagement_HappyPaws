@@ -39,7 +39,6 @@ public class PetsController {
 	  @Autowired
 	  private EmployeesService employeesService;
 
-	    // ✅ CREATE (SAVE ALL)
 	    @PostMapping
 	    public ResponseEntity<ApiResponse<List<PetsResponseDTO>>> addAllPets(
 	            @Valid @RequestBody List<PetsRequestDTO> dtos) {
@@ -50,7 +49,6 @@ public class PetsController {
 	        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	    }
 
-	    // ✅ GET ALL
 	    @GetMapping
 	    public ResponseEntity<ApiResponse<List<PetsResponseDTO>>> getAllPets() {
 
@@ -60,7 +58,6 @@ public class PetsController {
 	        return ResponseEntity.ok(response);
 	    }
 
-	    // ✅ GET BY ID
 	    @GetMapping("/{id}")
 	    public ResponseEntity<ApiResponse<PetsResponseDTO>> getPetById(
 	            @PathVariable long id) {
@@ -71,7 +68,6 @@ public class PetsController {
 	        return ResponseEntity.ok(response);
 	    }
 
-	    // ✅ UPDATE
 	    @PutMapping("/{id}")
 	    public ResponseEntity<ApiResponse<PetsResponseDTO>> updatePet(
 	            @PathVariable long id,
@@ -83,7 +79,6 @@ public class PetsController {
 	        return ResponseEntity.ok(response);
 	    }
 
-	    // ✅ DELETE
 	    @DeleteMapping("/{id}")
 	    public ResponseEntity<ApiResponse<String>> deletePet(
 	            @PathVariable long id) {
@@ -99,19 +94,16 @@ public class PetsController {
 	        return petsService.getPetsByEmployee(empId);
 	    }
 	    
-	    // 🔍 Category
 	    @GetMapping("/category/{categoryId}")
 	    public ApiResponse<List<PetsResponseDTO>> getByCategory(@PathVariable Long categoryId) {
 	        return petsService.getPetsByCategory(categoryId);
 	    }
 
-	    // 🔍 Breed
 	    @GetMapping("/breed/{breed}")
 	    public ApiResponse<List<PetsResponseDTO>> getByBreed(@PathVariable String breed) {
 	        return petsService.getPetsByBreed(breed);
 	    }
 
-	    // 🔍 Price range
 	    @GetMapping("/price")
 	    public ApiResponse<List<PetsResponseDTO>> getByPrice(
 	            @RequestParam BigDecimal min,
@@ -119,7 +111,6 @@ public class PetsController {
 
 	        return petsService.getPetsByPriceRange(min, max);
 	    }
-	 // 🔹 ADD
 	    @PostMapping("/{petId}/grooming-services/{serviceId}")
 	    public ApiResponse<String> addService(
 	            @PathVariable Long petId,
@@ -128,7 +119,6 @@ public class PetsController {
 	        return petsService.addGroomingServiceToPet(petId, serviceId);
 	    }
 
-	    // 🔹 GET
 	    @GetMapping("/{petId}/grooming-services")
 	    public ApiResponse<List<GroomingServicesResponseDTO>> getServices(
 	            @PathVariable Long petId) {
@@ -136,7 +126,6 @@ public class PetsController {
 	        return petsService.getGroomingServicesByPet(petId);
 	    }
 
-	    // 🔹 DELETE
 	    @DeleteMapping("/{petId}/grooming-services/{serviceId}")
 	    public ApiResponse<String> removeService(
 	            @PathVariable Long petId,

@@ -88,6 +88,23 @@ export class TransactionForm {
       return;
     }
 
+    const transactionDate = this.form.value.transactionDate || '';
+    if (transactionDate) {
+      const selectedDate = new Date(transactionDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate > today) {
+        alert('Transaction date cannot be in the future');
+        return;
+      }
+    }
+
+    const allowedStatus = ['SUCCESS', 'FAILED', 'PENDING'];
+    if (!allowedStatus.includes(this.form.value.transactionStatus || '')) {
+      alert('Invalid transaction status');
+      return;
+    }
+
     const payload = {
       amount: Number(this.form.value.amount),
       transactionDate: this.form.value.transactionDate,
@@ -95,13 +112,22 @@ export class TransactionForm {
       customerId: this.form.value.customerId,
       petId: this.form.value.petId
     };
-
-    this.transactionService.create(payload).subscribe({
-      next: () => {
-        alert('Created successfully');
-        this.router.navigate(['/transactions/list']);
-      },
-      error: () => alert('Create failed')
-    });
+    if (this.transactionId) {
+      this.transactionService.update(this.transactionId, payload).subscribe({
+        next: () => {
+          alert('Updated successfully');
+          this.router.navigate(['/transactions/list']);
+        },
+        error: () => alert('Update failed')
+      });
+    } else {
+      this.transactionService.create(payload).subscribe({
+        next: () => {
+          alert('Created successfully');
+          this.router.navigate(['/transactions/list']);
+        },
+        error: () => alert('Create failed')
+      });
+    }
   }
 }

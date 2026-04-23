@@ -27,7 +27,7 @@
                 <!-- BODY -->
                 <tbody>
 
-                    <tr *ngFor="let e of employeeList" class="border-b hover:bg-teal-50 transition">
+                    <tr *ngFor="let e of paginated(employeeList)" class="border-b hover:bg-teal-50 transition">
 
                         <td class="p-3 text-blue-700 font-medium">
                             {{ e.employeeId }}
@@ -70,3 +70,6 @@
         </div>
     </div>
 </div>
+<app-pagination [totalItems]="employeeList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

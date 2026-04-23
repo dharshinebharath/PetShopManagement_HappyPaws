@@ -10,7 +10,10 @@
         <h2 class="font-bold text-green-700 text-center">Employees by Role</h2>
 
         <div class="flex gap-3">
-            <input [(ngModel)]="role" placeholder="Enter Role (e.g. Manager)" class="w-full border p-2 rounded">
+            <select [(ngModel)]="role" class="w-full border p-2 rounded">
+                <option value="">Select Role</option>
+                <option *ngFor="let r of roleOptions" [value]="r">{{ r }}</option>
+            </select>
 
             <button (click)="getByRole()" class="bg-green-500 text-white px-5 rounded">
                 Search

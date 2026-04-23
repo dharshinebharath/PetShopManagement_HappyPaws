@@ -16,7 +16,7 @@
             </thead>
 
             <tbody *ngIf="pets.length > 0; else noData">
-                <tr *ngFor="let p of pets" class="border-b hover:bg-teal-50">
+                <tr *ngFor="let p of paginated(pets)" class="border-b hover:bg-teal-50">
                     <td class="p-3 text-center">{{ p.pet_id }}</td>
                     <td class="p-3 text-center">{{ p.name }}</td>
                 </tr>
@@ -33,3 +33,6 @@
     </ng-template>
 
 </div>
+<app-pagination [totalItems]="pets.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

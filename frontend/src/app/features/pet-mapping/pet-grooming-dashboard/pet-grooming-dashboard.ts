@@ -27,18 +27,15 @@ export class PetGroomingDashboard {
     return;
   }
 
-  // 🔥 CALL API FIRST
   this.service.getGroomingByPet(Number(this.getPetId)).subscribe({
     
     next: (res: any) => {
 
-      // ✅ CHECK DATA
       if (!res || !res.data || res.data.length === 0) {
         alert('No services found for this Pet ID ❌');
         return;
       }
 
-      // ✅ ONLY THEN NAVIGATE
       this.router.navigate(['/pet-mapping/grooming/list'], {
         queryParams: { petId: this.getPetId }
       });
@@ -47,7 +44,6 @@ export class PetGroomingDashboard {
     error: (err) => {
       console.log(err);
 
-      // ✅ INVALID PET ID
       alert('Invalid Pet ID ❌');
     }
   });
@@ -66,7 +62,6 @@ export class PetGroomingDashboard {
       next: () => {
         alert('Assigned Successfully ✅');
 
-        // 🔥 REDIRECT AFTER SUCCESS
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.postPetId }
         });
@@ -89,7 +84,6 @@ export class PetGroomingDashboard {
       next: () => {
         alert('Deleted Successfully ✅');
 
-        // 🔥 REDIRECT AFTER DELETE
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.deletePetId }
         });

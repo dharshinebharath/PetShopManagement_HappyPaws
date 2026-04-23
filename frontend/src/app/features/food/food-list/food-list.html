@@ -18,7 +18,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let f of foodList" class="border-b hover:bg-teal-50 transition">
+          <tr *ngFor="let f of paginated(foodList)" class="border-b hover:bg-teal-50 transition">
             <td class="p-3 text-blue-700 font-medium">{{ f.foodId }}</td>
             <td class="p-3 font-semibold text-teal-800">{{ f.name }}</td>
             <td class="p-3 text-slate-700">{{ f.brand }}</td>
@@ -31,3 +31,6 @@
     </div>
   </div>
 </div>
+<app-pagination [totalItems]="foodList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+

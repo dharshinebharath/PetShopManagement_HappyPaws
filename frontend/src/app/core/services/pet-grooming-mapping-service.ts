@@ -10,7 +10,6 @@ export class PetGroomingMappingService {
 
   private baseUrl = 'http://localhost:8081/api/v1';
 
-  // ✅ AUTH HEADER
   private getAuthHeaders() {
     const username = 'Dharshine';
     const password = 'Dharsh123';
@@ -24,7 +23,6 @@ export class PetGroomingMappingService {
     };
   }
 
-  // ✅ GET
   getGroomingByPet(petId: number) {
     return this.http.get(
       `${this.baseUrl}/pets/${petId}/grooming-services`,
@@ -32,7 +30,6 @@ export class PetGroomingMappingService {
     );
   }
 
-  // ✅ POST
   assignGrooming(petId: number, serviceId: number) {
     return this.http.post(
       `${this.baseUrl}/pets/${petId}/grooming-services/${serviceId}`,
@@ -41,7 +38,6 @@ export class PetGroomingMappingService {
     );
   }
 
-  // ✅ DELETE
   removeGrooming(petId: number, serviceId: number) {
     return this.http.delete(
       `${this.baseUrl}/pets/${petId}/grooming-services/${serviceId}`,

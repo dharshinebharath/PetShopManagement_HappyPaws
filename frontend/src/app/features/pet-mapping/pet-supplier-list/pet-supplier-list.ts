@@ -1,12 +1,13 @@
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { PetSupplierMappingService } from '../../../core/services/pet-supplier-mapping-service';
 
 @Component({
   selector: 'app-pet-supplier-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-supplier-list.html'
 })
 export class PetSupplierList {
@@ -40,4 +41,18 @@ export class PetSupplierList {
       }
     });
   }
+  currentPage = 1;
+  pageSize = 8;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+

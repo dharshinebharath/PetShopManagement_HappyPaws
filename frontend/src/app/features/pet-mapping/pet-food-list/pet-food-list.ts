@@ -1,12 +1,13 @@
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { PetFoodMappingService } from '../../../core/services/pet-food-mapping-service';
 
 @Component({
   selector: 'app-pet-food-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-food-list.html'
 })
 export class PetFoodList {
@@ -28,19 +29,16 @@ export class PetFoodList {
     });
   }
 
-  // ✅ GET API
   load() {
     this.service.getFoodByPet(this.petId!).subscribe({
       next: (res: any) => {
 
         console.log("API RESPONSE:", res);
 
-        // 🔥 IMPORTANT FIX
         this.foods = res?.data || [];
 
         console.log("Assigned foods:", this.foods);
 
-        // 🔥 FORCE UI UPDATE
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -51,7 +49,6 @@ export class PetFoodList {
     });
   }
 
-  // ✅ DELETE API
   remove(foodId: number) {
     this.service.removeFood(this.petId!, foodId).subscribe({
       next: () => {
@@ -61,4 +58,18 @@ export class PetFoodList {
       error: () => alert('Delete failed ❌')
     });
   }
+  currentPage = 1;
+  pageSize = 8;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+

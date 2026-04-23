@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AddressService } from '../../../core/services/address';
 
 @Component({
   selector: 'app-employee-form',
@@ -15,11 +16,13 @@ export class EmployeeForm {
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
+  addressService = inject(AddressService);
 
   private baseUrl = 'http://localhost:8081/api/v1/employees';
 
   employeeId: number | null = null;
   isLoading = true;
+  addresses: any[] = [];
 
   form = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -44,6 +47,8 @@ export class EmployeeForm {
   }
 
   ngOnInit() {
+    this.loadAddresses();
+
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.employeeId = Number(params['id']);
@@ -73,6 +78,18 @@ export class EmployeeForm {
           });
       } else {
         this.isLoading = false;
+      }
+    });
+  }
+
+  private loadAddresses() {
+    this.addressService.getAll().subscribe({
+      next: (res: any) => {
+        this.addresses = res?.data || [];
+      },
+      error: () => {
+        this.addresses = [];
+        alert('Unable to load addresses for selection');
       }
     });
   }

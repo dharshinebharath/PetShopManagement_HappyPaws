@@ -11,12 +11,12 @@
 
     <input formControlName="city" placeholder="City" class="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
     <p class="text-red-500 text-sm" *ngIf="form.get('city')?.touched && form.get('city')?.invalid">
-      City is required and must be at least 2 characters
+      City is required, at least 2 characters, and letters only
     </p>
 
     <input formControlName="state" placeholder="State" class="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
     <p class="text-red-500 text-sm" *ngIf="form.get('state')?.touched && form.get('state')?.invalid">
-      State is required and must be at least 2 characters
+      State is required, at least 2 characters, and letters only
     </p>
 
     <input formControlName="zipCode" placeholder="Zip Code" class="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
