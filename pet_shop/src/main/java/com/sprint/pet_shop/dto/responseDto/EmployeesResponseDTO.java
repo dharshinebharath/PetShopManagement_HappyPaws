@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.dto.responseDto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class EmployeesResponseDTO {
@@ -7,7 +8,7 @@ public class EmployeesResponseDTO {
     private String firstName;
     private String lastName;
     private String position;
-    private Date hireDate;
+    private LocalDate hireDate;
     private String phoneNumber;
     private String email;
     private Long addressId;
@@ -35,10 +36,10 @@ public class EmployeesResponseDTO {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public Date getHireDate() {
+	public LocalDate getHireDate() {
 		return hireDate;
 	}
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(LocalDate hireDate) {
 		this.hireDate = hireDate;
 	}
 	public String getPhoneNumber() {

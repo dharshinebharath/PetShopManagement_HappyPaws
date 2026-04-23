@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +69,7 @@ public class TransactionsServiceTest {
         dto.setCustomerId(1L);
         dto.setPetId(1L);
         dto.setAmount(new BigDecimal("500"));
-        dto.setTransactionDate(new Date(System.currentTimeMillis()));
+        dto.setTransactionDate(LocalDate.now());
         dto.setTransactionStatus(TransactionStatus.SUCCESS); // ✅ correct enum
 
         TransactionsEntity saved = new TransactionsEntity();
@@ -135,7 +136,7 @@ public class TransactionsServiceTest {
         dto.setCustomerId(1L);
         dto.setPetId(1L);
         dto.setAmount(new BigDecimal("300"));
-        dto.setTransactionDate(new Date(System.currentTimeMillis()));
+        dto.setTransactionDate(LocalDate.now());
         dto.setTransactionStatus(TransactionStatus.SUCCESS);
 
         TransactionsEntity existing = new TransactionsEntity();

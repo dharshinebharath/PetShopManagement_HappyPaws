@@ -1,0 +1,80 @@
+
+<h2 class="text-2xl font-bold text-center mb-6">Transaction API</h2>
+
+<div class="flex flex-col gap-4 max-w-md mx-auto">
+
+  <!-- GET ALL TRANSACTIONS -->
+  <button 
+    routerLink="/transactions/list"
+    class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg shadow">
+    GET All Transactions
+  </button>
+
+  <!-- GET BY ID -->
+  <div class="flex gap-2">
+    <input #tid 
+      placeholder="Enter Transaction ID"
+      class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-green-400">
+    <button 
+      (click)="viewTransaction(tid.value)"
+      class="bg-green-400 hover:bg-green-500 text-white px-4 rounded-lg shadow">
+      GET
+    </button>
+  </div>
+
+  <!-- POST TRANSACTION -->
+  <button 
+    routerLink="/transactions/add"
+    class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow">
+    Add Transaction (POST)
+  </button>
+
+</div>
+
+<!-- FINANCIAL QUERY SECTION -->
+<h2 class="text-2xl font-bold text-center mt-10 mb-6">Financial Queries</h2>
+
+<div class="flex flex-col gap-4 max-w-md mx-auto">
+
+  <!-- GET CUSTOMER TRANSACTIONS -->
+  <div class="flex gap-2">
+    <input #cid 
+      placeholder="Enter Customer ID"
+      class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-purple-400">
+    <button 
+      (click)="getCustomerTransactions(cid.value)"
+      class="bg-purple-500 hover:bg-purple-600 text-white px-4 rounded-lg shadow">
+      GET
+    </button>
+  </div>
+
+  <!-- GET BY STATUS -->
+  <div class="flex gap-2">
+    <input #status 
+      placeholder="Enter Status (SUCCESS / FAILED)"
+      class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-400">
+    <button 
+      (click)="getByStatus(status.value)"
+      class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 rounded-lg shadow">
+      GET
+    </button>
+  </div>
+
+  <!-- GET BY DATE RANGE -->
+  <div class="flex flex-col gap-2">
+    <input #fromDate 
+      type="date"
+      class="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+    
+    <input #toDate 
+      type="date"
+      class="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+    <button 
+      (click)="getByDateRange(fromDate.value, toDate.value)"
+      class="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg shadow">
+      GET by Date Range
+    </button>
+  </div>
+
+</div>

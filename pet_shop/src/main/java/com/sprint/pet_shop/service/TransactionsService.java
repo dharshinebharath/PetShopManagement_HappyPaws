@@ -134,7 +134,7 @@ public class TransactionsService implements TransactionsInterface {
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(LocalDate start, LocalDate end) {
 
-        List<TransactionsResponseDTO> data = transactionsRepository.findByDateRange(start, end)
+        List<TransactionsResponseDTO> data = transactionsRepository.findByTransactionDateBetween(start, end)
                 .stream()
                 .map(this::toDto)
                 .toList();

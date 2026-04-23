@@ -81,10 +81,10 @@ public class TransactionsController {
 	    }
 	    @GetMapping("/date-range")
 	    public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(
-	            LocalDate start,
-	             LocalDate end) {
+	            @RequestParam("startDate") LocalDate startDate,
+	            @RequestParam("endDate") LocalDate endDate) {
 
-	        return transactionsService.getByDateRange(start, end);
+	        return transactionsService.getByDateRange(startDate, endDate);
 	    }
 	    
 	   
