@@ -19,6 +19,5 @@ public interface TransactionsRepository extends JpaRepository<TransactionsEntity
 
 	List<TransactionsEntity> findByTransactionStatus(TransactionStatus status);
 
-	@Query("SELECT t FROM TransactionsEntity t WHERE t.transactionDate BETWEEN :start AND :end")
-	List<TransactionsEntity> findByDateRange(@Param("start") LocalDate start, @Param("end") LocalDate end);
+	List<TransactionsEntity> findByTransactionDateBetween(LocalDate start, LocalDate end);
 }

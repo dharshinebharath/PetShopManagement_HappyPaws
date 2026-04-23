@@ -1,0 +1,38 @@
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+
+  <h2 class="text-xl font-bold mb-4">
+    {{ addressId ? 'Update Address' : 'Add Address' }}
+  </h2>
+
+  <!-- STREET -->
+  <input 
+    [(ngModel)]="formData.street"
+    placeholder="Street"
+    class="border p-2 w-full mb-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+  <!-- CITY -->
+  <input 
+    [(ngModel)]="formData.city"
+    placeholder="City"
+    class="border p-2 w-full mb-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+  <!-- STATE -->
+  <input 
+    [(ngModel)]="formData.state"
+    placeholder="State"
+    class="border p-2 w-full mb-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+  <!-- ZIP CODE -->
+  <input 
+    [(ngModel)]="formData.zipCode"
+    placeholder="Zip Code"
+    class="border p-2 w-full mb-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+  <!-- SUBMIT BUTTON -->
+  <button 
+    (click)="submit()"
+    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 mt-3 rounded w-full shadow">
+    Submit
+  </button>
+
+</div>

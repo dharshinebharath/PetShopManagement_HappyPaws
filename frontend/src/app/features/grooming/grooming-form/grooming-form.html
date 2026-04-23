@@ -1,62 +1,49 @@
-<<<<<<< HEAD
-<div class="min-h-screen flex items-center justify-center 
-            bg-gradient-to-br from-green-50 via-slate-50 to-emerald-50 p-6">
-=======
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-slate-50 to-emerald-50 p-6">
+  <form [formGroup]="form" class="w-full max-w-md bg-white/90 backdrop-blur-md border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+    <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
+      {{ serviceId ? 'Update Grooming Service' : 'Add Grooming Service' }}
+    </h2>
 
-<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
->>>>>>> ea4d543ee4f3ef1091c6b8cf712d0f4e23a8300b
+    <input
+      type="text"
+      formControlName="name"
+      placeholder="Service Name"
+      class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
 
-    <form [formGroup]="form" class="w-full max-w-md bg-white/90 backdrop-blur-md 
-          border border-teal-100 rounded-2xl shadow-lg p-8 space-y-4">
+    <p class="text-red-500 text-sm" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Name is required (min 3 characters)
+    </p>
 
-        <!-- TITLE -->
-        <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
-            {{ serviceId ? 'Update Grooming Service' : 'Add Grooming Service' }}
-        </h2>
+    <input
+      type="text"
+      formControlName="description"
+      placeholder="Description"
+      class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
 
-        <!-- NAME -->
-        <input type="text" formControlName="name" placeholder="Service Name" class="w-full p-3 border border-teal-200 rounded-lg 
-               focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+      Description is required (min 5 characters)
+    </p>
 
-        <!-- NAME ERROR -->
-        <p class="text-red-500 text-sm" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
-            Name is required (min 3 characters)
-        </p>
+    <input
+      type="number"
+      formControlName="price"
+      placeholder="Price"
+      class="w-full p-3 border border-teal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400">
 
-        <!-- DESCRIPTION -->
-        <input type="text" formControlName="description" placeholder="Description" class="w-full p-3 border border-teal-200 rounded-lg 
-               focus:outline-none focus:ring-2 focus:ring-teal-400">
+    <p class="text-red-500 text-sm" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
+      Price must be greater than 0
+    </p>
 
-        <!-- DESCRIPTION ERROR -->
-        <p class="text-red-500 text-sm" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
-            Description is required (min 5 characters)
-        </p>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" formControlName="available">
+      <span class="text-slate-700">Available</span>
+    </label>
 
-        <!-- PRICE -->
-        <input type="number" formControlName="price" placeholder="Price" class="w-full p-3 border border-teal-200 rounded-lg 
-               focus:outline-none focus:ring-2 focus:ring-teal-400">
-
-        <!-- PRICE ERROR -->
-        <p class="text-red-500 text-sm" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">
-            Price must be greater than 0
-        </p>
-
-        <!-- AVAILABLE -->
-        <label class="flex items-center gap-2">
-            <input type="checkbox" formControlName="available">
-            <span class="text-slate-700">Available</span>
-        </label>
-
-        <!-- SUBMIT BUTTON -->
-        <button type="button" (click)="submit()" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600
-                text-white py-3 rounded-lg hover:from-teal-700 hover:to-emerald-700">
-
-            {{ serviceId ? 'Update' : 'Save' }}
-
-        </button>
-
-    </form>
-
+    <button
+      type="button"
+      (click)="submit()"
+      class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white py-3 rounded-lg hover:from-teal-700 hover:to-emerald-700">
+      {{ serviceId ? 'Update' : 'Save' }}
+    </button>
+  </form>
 </div>
-
-<p>grooming-form works!</p>

@@ -70,7 +70,7 @@ public class PetCategoriesService implements PetCategoriesInterface{
     public ApiResponse<List<PetCategoriesResponseDTO>> getAllCategories() {
 
         List<PetCategoriesResponseDTO> data =
-                petCategoryRepository.findAll()
+                petCategoryRepository.findAllSorted()
                         .stream()
                         .map(this::toDto)
                         .toList();

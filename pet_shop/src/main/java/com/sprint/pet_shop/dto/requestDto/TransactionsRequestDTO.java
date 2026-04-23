@@ -2,6 +2,7 @@ package com.sprint.pet_shop.dto.requestDto;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sprint.pet_shop.entity.TransactionStatus;
@@ -13,7 +14,7 @@ public class TransactionsRequestDTO {
 
     @NotNull(message = "Transaction date cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd") // ✅ ensures correct JSON format
-    private Date transactionDate;
+    private LocalDate transactionDate;
 
     @NotNull(message = "Amount cannot be null")
     @Positive(message = "Amount must be greater than 0")
@@ -29,11 +30,11 @@ public class TransactionsRequestDTO {
     private TransactionStatus transactionStatus;
     // ================= GETTERS & SETTERS =================
 
-    public Date getTransactionDate() {
+    public LocalDate getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -68,5 +69,7 @@ public class TransactionsRequestDTO {
     public void setPetId(Long petId) {
         this.petId = petId;
     }
+
+	
 
 }

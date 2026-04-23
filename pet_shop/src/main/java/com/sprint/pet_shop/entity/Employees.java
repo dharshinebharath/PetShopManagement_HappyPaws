@@ -1,7 +1,8 @@
 package com.sprint.pet_shop.entity;
 
 
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -41,9 +42,10 @@ public class Employees {
     @NotBlank(message = "Position cannot be empty")
     private String position;
 
-    @Column(length = 50, name = "hire_date")
+
+	@Column(length = 50, name = "hire_date")
     @NotNull(message = "Hire date cannot be null")
-    private Date hireDate;
+    private LocalDate hireDate;
 
     @Column(length = 20, name = "phone_number")
     @NotNull(message = "Phone number cannot be null")
@@ -101,14 +103,16 @@ public class Employees {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-
-	public Date getHireDate() {
+   
+	public LocalDate getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(LocalDate hireDate) {
 		this.hireDate = hireDate;
 	}
+
+	
 
 	public String getPhoneNumber() {
 		return phoneNumber;

@@ -2,6 +2,7 @@ package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class TransactionsEntity {
 
     @NotNull(message = "Transaction date cannot be null")
     @Column(name = "transaction_date", nullable = false)
-    private Date transactionDate;
+    private LocalDate transactionDate;
 
     @NotNull(message = "Amount cannot be null")
     @Column(nullable = false)
@@ -47,12 +48,12 @@ public class TransactionsEntity {
         this.transactionId = transactionId;
     }
 
-    public Date getTransactionDate() {
+    public LocalDate getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
-        this.transactionDate = transactionDate;
+    public void setTransactionDate(LocalDate date) {
+        this.transactionDate = date;
     }
 
     public BigDecimal getAmount() {

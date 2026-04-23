@@ -1,5 +1,6 @@
 package com.sprint.pet_shop.repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public interface EmployeesRepository extends JpaRepository<Employees , Long>{
 	     boolean existsByEmail(String email);
 
 
-	     List<Employees> findByHireDateAfter(Date date);
+	     List<Employees> findByHireDateAfter(LocalDate date);
+	     List<Employees> findAllByOrderByEmployeeIdAsc();
 
 }

@@ -1,1 +1,41 @@
-<p>customer-form works!</p>
+<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
+
+    <h2 class="text-xl font-bold mb-4">
+        {{ customer.customerId ? 'Update Customer' : 'Add Customer' }}
+    </h2>
+
+    <input 
+        [(ngModel)]="customer.firstName" 
+        placeholder="First Name" 
+        class="border p-2 w-full mb-2">
+
+    <input 
+        [(ngModel)]="customer.lastName" 
+        placeholder="Last Name" 
+        class="border p-2 w-full mb-2">
+
+    <input 
+        [(ngModel)]="customer.email" 
+        placeholder="Email" 
+        class="border p-2 w-full mb-2">
+
+    <input 
+        [(ngModel)]="customer.phoneNumber" 
+        placeholder="Phone Number" 
+        class="border p-2 w-full mb-2">
+
+    <!-- Address (optional if you use it) -->
+    <input 
+        [(ngModel)]="customer.address.addressId" 
+        placeholder="Address ID" 
+        class="border p-2 w-full mb-2">
+
+    <button 
+        (click)="submitCustomer()" 
+        class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
+
+        Submit
+
+    </button>
+
+</div>

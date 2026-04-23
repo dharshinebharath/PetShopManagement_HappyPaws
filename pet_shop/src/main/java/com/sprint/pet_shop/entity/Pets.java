@@ -4,7 +4,7 @@ package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
-
+import jakarta.persistence.CascadeType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -23,6 +23,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pets")
+
 public class Pets {
 
 	    @Id
@@ -98,6 +99,7 @@ public class Pets {
 	        joinColumns = @JoinColumn(name = "pet_id"),
 	        inverseJoinColumns = @JoinColumn(name = "employee_id")
 	    )
+	    @JsonIgnore
 	    private List<Employees> employees;
 
 	    // 🔗 Suppliers
@@ -110,7 +112,7 @@ public class Pets {
 	    private List<Supplier> suppliers;
 
 	    // 🔗 Transactions
-	    @OneToMany(mappedBy = "pet")
+	    @OneToMany(mappedBy = "pet" , cascade = CascadeType.ALL, orphanRemoval = true)
 	    @JsonIgnore
 	    private List<TransactionsEntity> transactions;
 
