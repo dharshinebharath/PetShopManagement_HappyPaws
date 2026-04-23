@@ -4,7 +4,7 @@ package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
-
+import jakarta.persistence.CascadeType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -112,7 +112,7 @@ public class Pets {
 	    private List<Supplier> suppliers;
 
 	    // 🔗 Transactions
-	    @OneToMany(mappedBy = "pet")
+	    @OneToMany(mappedBy = "pet" , cascade = CascadeType.ALL, orphanRemoval = true)
 	    @JsonIgnore
 	    private List<TransactionsEntity> transactions;
 

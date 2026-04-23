@@ -1,22 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { PetsService } from '../../../core/services/petsService';
+import { CategoryService } from '../../../core/services/categoryService';
 
 @Component({
-  selector: 'app-pets-dashboard',
+  selector: 'app-category-dashboard',
   standalone: true,
   imports: [FormsModule, RouterModule],
-  templateUrl: './pets-dashboard.html'
+  templateUrl: './category-dashboard.html'
 })
-export class PetsDashboard {
+export class CategoryDashboard {
 
   router = inject(Router);
-  petService = inject(PetsService);
+  categoryService = inject(CategoryService);
 
   // GET ALL
   goToList() {
-    this.router.navigate(['/pets/list']);
+    this.router.navigate(['/category/list']);
   }
 
   // GET BY ID
@@ -26,28 +26,28 @@ export class PetsDashboard {
       return;
     }
 
-    this.petService.getById(Number(id)).subscribe({
+    this.categoryService.getById(Number(id)).subscribe({
       next: () => {
-        this.router.navigate(['/pets/list'], {
+        this.router.navigate(['/category/list'], {
           queryParams: { id }
         });
       },
       error: () => {
-        alert('Pet not found ❌');
+        alert('Category not found ❌');
       }
     });
   }
 
   // UPDATE
-  updatePet(id: string) {
+  updateCategory(id: string) {
     if (!id) {
       alert('Enter ID to update');
       return;
     }
 
-    this.petService.getById(Number(id)).subscribe({
+    this.categoryService.getById(Number(id)).subscribe({
       next: () => {
-        this.router.navigate(['/pets/form'], {
+        this.router.navigate(['/category/form'], {
           queryParams: { id }
         });
       },
@@ -58,16 +58,16 @@ export class PetsDashboard {
   }
 
   // DELETE
-  deletePet(id: string) {
+  deleteCategory(id: string) {
     if (!id) {
       alert('Enter ID to delete');
       return;
     }
 
-    this.petService.delete(Number(id)).subscribe({
+    this.categoryService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Pet deleted successfully ✅');
-        this.router.navigate(['/pets/list']);
+        alert('Category deleted successfully ✅');
+        this.router.navigate(['/category/list']);
       },
       error: () => {
         alert('Delete failed ❌');

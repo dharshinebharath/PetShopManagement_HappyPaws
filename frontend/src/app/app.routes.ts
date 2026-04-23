@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+
 import { Home } from './features/home/home';
 import { Login } from './features/auth/login/login';
 
@@ -50,10 +51,31 @@ export const routes: Routes = [
   { path: '', component: Home },
 
   // LOGIN
+
   { path: 'login/:module', component: Login },
 
 
 { path: 'pet-services-module', component: PetServicesModule },
+
+{ path: 'grooming-dashboard', component: GroomingDashboard },
+{ path: 'vaccination-dashboard', component: VaccinationDashboard },
+ 
+{ path: 'grooming/list', component: GroomingList },
+
+{path: 'grooming/form', component:GroomingForm},
+
+
+{ path: 'pets-module', component: PetsModule },
+{ path: 'pets-dashboard', component: PetsDashboard },
+{ path: 'category-dashboard', component: CategoryDashboard },
+
+{ path: 'pets/list', component: PetsList },
+
+{path: 'pets/form', component:PetForm},
+
+{ path: 'category/list', component: CategoryList },
+
+{path: 'category/form', component:CategoryForm},
 
 { path: 'grooming-dashboard', component: GroomingDashboard },
 { path: 'vaccination-dashboard', component: VaccinationDashboard },
@@ -106,6 +128,7 @@ export const routes: Routes = [
   { path: 'vaccination-dashboard', component: VaccinationDashboard },
   { path: 'grooming/list', component: GroomingList },
   { path: 'grooming/form', component: GroomingForm },
+
 
   // EMPLOYEE MODULE
   { path: 'employee-module', component: EmployeeModule },

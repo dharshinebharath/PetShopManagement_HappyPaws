@@ -1,1 +1,53 @@
-<p>pet-form works!</p>
+<div class="min-h-screen flex items-center justify-center 
+            bg-gradient-to-br from-slate-50 via-teal-50 to-emerald-50 p-6">
+
+    <div class="w-full max-w-md bg-white/90 backdrop-blur-md 
+                border border-teal-100 rounded-2xl shadow-lg p-8 space-y-3">
+
+        <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
+            {{ petId ? 'Update Pet' : 'Add Pet' }}
+        </h2>
+
+        <!-- NAME -->
+        <input [(ngModel)]="formData.name"
+               placeholder="Pet Name"
+               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+
+        <!-- BREED -->
+        <input [(ngModel)]="formData.breed"
+               placeholder="Breed"
+               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+
+        <!-- AGE -->
+        <input [(ngModel)]="formData.age"
+               type="number"
+               placeholder="Age"
+               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+
+        <!-- PRICE -->
+        <input [(ngModel)]="formData.price"
+               type="number"
+               placeholder="Price"
+               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+
+        <!-- DESCRIPTION -->
+        <input [(ngModel)]="formData.description"
+               placeholder="Description"
+               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+
+        <!-- CATEGORY -->
+        <input [(ngModel)]="formData.categoryId"
+               type="number"
+               placeholder="Category ID"
+               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
+
+        <!-- BUTTON -->
+        <button (click)="submit()"
+                class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 
+                       hover:from-emerald-600 hover:to-teal-700
+                       text-white py-2 rounded-lg shadow mt-3">
+            Submit
+        </button>
+
+    </div>
+</div>

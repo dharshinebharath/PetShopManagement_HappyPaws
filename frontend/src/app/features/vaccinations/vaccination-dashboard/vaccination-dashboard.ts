@@ -12,7 +12,6 @@ import { FormsModule } from "@angular/forms";
 
 export class VaccinationDashboard {
 
-
   router = inject(Router);
   vaccinationService = inject(VaccinationService);
 
@@ -59,17 +58,5 @@ export class VaccinationDashboard {
       error: () => alert('Delete failed ❌')
     });
   }
-
-viewVaccination(arg0: string) {
-throw new Error('Method not implemented.');
 }
-deleteVaccination(arg0: string) {
-throw new Error('Method not implemented.');
-}
-
-
-// export class VaccinationDashboard {}
-
-}
-
 
