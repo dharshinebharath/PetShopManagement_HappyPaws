@@ -1,3 +1,4 @@
+// This controller exposes the HTTP endpoints for vaccinations controller.
 package com.sprint.pet_shop.controller;
 
 import java.math.BigDecimal;

@@ -1,3 +1,4 @@
+// This service contains the main business flow for transactions service.
 package com.sprint.pet_shop.service;
 
 import java.time.LocalDate;
@@ -32,8 +33,6 @@ public class TransactionsService implements TransactionsInterface {
 
     @Autowired
     private PetsRepository petsRepository;
-    
-    // ================= DTO MAPPING =================
     private TransactionsResponseDTO toDto(TransactionsEntity entity) {
 
         TransactionsResponseDTO dto = new TransactionsResponseDTO();
@@ -47,8 +46,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return dto;
     }
-
-    // ================= CREATE =================
     @Override
     public ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto) {
 
@@ -75,7 +72,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transaction saved successfully", true, toDto(saved));
     }
-    // ================= GET ALL =================
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getAll() {
 
@@ -86,8 +82,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Fetched all transactions", true, data);
     }
-
-    // ================= GET BY ID =================
     @Override
     public ApiResponse<TransactionsResponseDTO> getById(Long id) {
 
@@ -96,8 +90,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transaction fetched successfully", true, toDto(entity));
     }
-
-    // ================= UPDATE =================
     @Override
     public ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto) {
 
@@ -113,8 +105,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transaction updated successfully", true, toDto(updated));
     }
-    
-    // ================= DELETE =================
     @Override
     public ApiResponse<String> delete(Long id) {
 
@@ -126,10 +116,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Deleted successfully", true, "Deleted ID: " + id);
     }
-
-   
-
-    // ================= DATE RANGE =================
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(LocalDate start, LocalDate end) {
 
@@ -140,8 +126,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transactions by date range", true, data);
     }
-
-    // ================= BY CUSTOMER =================
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByCustomer(Long customerId) {
 
@@ -157,8 +141,6 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transactions for customer", true, data);
     }
-
-    // ================= BY STATUS =================
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByStatus(String status) {
 
@@ -173,3 +155,4 @@ public class TransactionsService implements TransactionsInterface {
         return new ApiResponse<>("Transactions by status", true, data);
     }
 }
+

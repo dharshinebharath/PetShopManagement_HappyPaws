@@ -1,3 +1,4 @@
+// This entity maps the persisted data for transactions entity.
 package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;
@@ -36,8 +37,6 @@ public class TransactionsEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_status", nullable = false)
     private TransactionStatus transactionStatus;
-
-    // ================= GETTERS & SETTERS =================
 
     public Long getTransactionId() {
         return transactionId;
@@ -87,3 +86,4 @@ public class TransactionsEntity {
         this.transactionStatus = transactionStatus;
     }
 }
+

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for category dashboard.
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,13 +14,9 @@ export class CategoryDashboard {
 
   router = inject(Router);
   categoryService = inject(CategoryService);
-
-  // GET ALL
   goToList() {
     this.router.navigate(['/category/list']);
   }
-
-  // GET BY ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -33,12 +30,10 @@ export class CategoryDashboard {
         });
       },
       error: () => {
-        alert('Category not found ❌');
+        alert('Category not found Ã¢ÂÅ’');
       }
     });
   }
-
-  // UPDATE
   updateCategory(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -52,12 +47,10 @@ export class CategoryDashboard {
         });
       },
       error: () => {
-        alert('Cannot update ❌ ID not found');
+        alert('Cannot update Ã¢ÂÅ’ ID not found');
       }
     });
   }
-
-  // DELETE
   deleteCategory(id: string) {
     if (!id) {
       alert('Enter ID to delete');
@@ -66,12 +59,13 @@ export class CategoryDashboard {
 
     this.categoryService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Category deleted successfully ✅');
+        alert('Category deleted successfully Ã¢Å“â€¦');
         this.router.navigate(['/category/list']);
       },
       error: () => {
-        alert('Delete failed ❌');
+        alert('Delete failed Ã¢ÂÅ’');
       }
     });
   }
 }
+

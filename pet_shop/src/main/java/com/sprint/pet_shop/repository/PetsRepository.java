@@ -1,3 +1,4 @@
+// This repository handles database access for pets repository.
 package com.sprint.pet_shop.repository;
 
 import java.math.BigDecimal;
@@ -22,7 +23,8 @@ public interface PetsRepository extends JpaRepository<Pets, Long> {
     List<Pets> findByBreedContainingIgnoreCase(String breed);
 
     @Query("SELECT p FROM Pets p ORDER BY p.pet_id ASC")
-    List<Pets> findAllSorted();    // 🔍 3. Filter by Price Range
+    List<Pets> findAllSorted();
     List<Pets> findByPriceBetween(BigDecimal min, BigDecimal max);
 
 }
+

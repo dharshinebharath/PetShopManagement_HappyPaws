@@ -1,3 +1,4 @@
+// This service handles the app-side requests and data flow for auth service.
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 

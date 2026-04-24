@@ -1,3 +1,4 @@
+// This file holds the Angular logic for customertransaction module.
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 

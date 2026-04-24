@@ -1,3 +1,4 @@
+// This file keeps the main route map for the Angular app.
 import { Routes } from '@angular/router';
 
 import { Home } from './features/home/home';
@@ -68,16 +69,12 @@ import { InventoryModule } from './features/modules/inventory-module/inventory-m
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'login/:module', component: Login },
-
-  // Module landing pages
   { path: 'pets-module', component: PetsModule },
   { path: 'pet-services-module', component: PetServicesModule },
   { path: 'customers-module', component: CustomertransactionModule },
   { path: 'customertransaction-module', component: CustomertransactionModule },
   { path: 'employee-module', component: EmployeeModule },
   { path: 'inventory-module', component: InventoryModule },
-
-  // Dashboard paths
   { path: 'pets-dashboard', component: PetsDashboard },
   { path: 'category-dashboard', component: CategoryDashboard },
   { path: 'grooming-dashboard', component: GroomingDashboard },
@@ -90,24 +87,14 @@ export const routes: Routes = [
   { path: 'employee-dashboard', component: EmployeeDashboard },
   { path: 'pets-filter-dashboard', component: PetsFilterDashboard },
   { path: 'pets-filter/list', component: PetsFilterList },
-
-  // Pets
   { path: 'pets/list', component: PetsList },
   { path: 'pets/form', component: PetForm },
-
-  // Categories
   { path: 'category/list', component: CategoryList },
   { path: 'category/form', component: CategoryForm },
-
-  // Grooming
   { path: 'grooming/list', component: GroomingList },
   { path: 'grooming/form', component: GroomingForm },
-
-  // Vaccinations
   { path: 'vaccination/list', component: VaccinationList },
   { path: 'vaccination/form', component: VaccinationForm },
-
-  // Pet mapping
   { path: 'pet-mapping/grooming', component: PetGroomingDashboard },
   { path: 'pet-mapping/grooming/list', component: PetGroomingList },
   { path: 'pet-mapping/food', component: PetFoodDashboard },
@@ -121,34 +108,25 @@ export const routes: Routes = [
   { path: 'employee-pet-mapping/employees-list', component: PetEmployeesList },
   { path: 'employee-reports', component: EmployeeReportsDashboard },
   { path: 'employee-reports/list', component: EmployeeReportsList },
-
-  // Customers
   { path: 'customer/list', component: CustomerList },
   { path: 'customer/form', component: CustomerForm },
   { path: 'customer/add', component: CustomerForm },
   { path: 'customer/edit/:id', component: CustomerForm },
-
-  // Transactions
   { path: 'transactions/list', component: TransactionList },
   { path: 'transactions/form', component: TransactionForm },
   { path: 'transactions/add', component: TransactionForm },
-
-  // Address
   { path: 'address/list', component: AddressList },
   { path: 'address/form', component: AddressForm },
   { path: 'address/add', component: AddressForm },
   { path: 'address/edit/:id', component: AddressForm },
-
-  // Inventory
   { path: 'food/list', component: FoodList },
   { path: 'food/form', component: FoodForm },
   { path: 'supplier/list', component: SupplierList },
   { path: 'supplier/form', component: SupplierForm },
-
-  // Employees
   { path: 'employee/list', component: EmployeeList },
   { path: 'employee/form', component: EmployeeForm },
   { path: 'employee/assignment', component: Assignment },
 
   { path: '**', redirectTo: '' }
 ];
+

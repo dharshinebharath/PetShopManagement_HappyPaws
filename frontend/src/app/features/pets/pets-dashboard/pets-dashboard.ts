@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pets dashboard.
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -33,7 +34,7 @@ export class PetsDashboard {
         });
       },
       error: () => {
-        alert('Pet not found ❌');
+        alert('Pet not found Ã¢ÂÅ’');
       }
     });
   }
@@ -52,7 +53,7 @@ export class PetsDashboard {
         });
       },
       error: () => {
-        alert('Cannot update ❌ ID not found');
+        alert('Cannot update Ã¢ÂÅ’ ID not found');
       }
     });
   }
@@ -66,11 +67,11 @@ export class PetsDashboard {
 
     this.petService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Pet deleted successfully ✅');
+        alert('Pet deleted successfully Ã¢Å“â€¦');
         this.router.navigate(['/pets/list']);
       },
       error: () => {
-        alert('Delete failed ❌');
+        alert('Delete failed Ã¢ÂÅ’');
       }
     });
   }

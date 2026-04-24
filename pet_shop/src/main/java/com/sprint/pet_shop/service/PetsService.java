@@ -1,3 +1,4 @@
+// This service contains the main business flow for pets service.
 package com.sprint.pet_shop.service;
 
 import java.math.BigDecimal;
@@ -70,10 +71,9 @@ public class PetsService implements PetsInterface {
 		dto.setDescription(pet.getDescription());
 		dto.setImage_url(pet.getImage_url());
 
+		// The response keeps related records as ID lists so the UI can show links without loading full objects again.
 		dto.setCategory_id(pet.getCategory().getCategory_id());
 		dto.setCategoryName(pet.getCategory().getName());
-
-		// Relationships → IDs
 		if (pet.getGroomingServices() != null) {
 			dto.setGroomingServiceIds(
 					pet.getGroomingServices().stream()
@@ -146,8 +146,6 @@ public class PetsService implements PetsInterface {
 			if (dto.getAge() == null || dto.getAge() < 0) {
 				throw new InvalidDataException("Age cannot be negative");
 			}
-
-			// CATEGORY
 			PetCategories category = categoryRepository.findById(dto.getCategory_id())
 					.orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
@@ -159,32 +157,22 @@ public class PetsService implements PetsInterface {
 			pet.setDescription(dto.getDescription());
 			pet.setImage_url(dto.getImage_url());
 			pet.setCategory(category);
-
-			// ---------------- GROOMING ----------------
 			if (dto.getGroomingServiceIds() != null) {
 				pet.setGroomingServices(
 						groomingRepo.findAllById(dto.getGroomingServiceIds()));
 			}
-
-			// ---------------- FOOD ----------------
 			if (dto.getFoodIds() != null) {
 				pet.setFoods(
 						foodRepo.findAllById(dto.getFoodIds()));
 			}
-
-			// ---------------- VACCINATIONS ----------------
 			if (dto.getVaccinationIds() != null) {
 				pet.setVaccinations(
 						vaccinationRepo.findAllById(dto.getVaccinationIds()));
 			}
-
-			// ---------------- EMPLOYEES ----------------
 			if (dto.getEmployeeIds() != null) {
 				pet.setEmployees(
 						employeeRepo.findAllById(dto.getEmployeeIds()));
 			}
-
-			// ---------------- SUPPLIERS ----------------
 			if (dto.getSupplierIds() != null) {
 				pet.setSuppliers(
 						supplierRepo.findAllById(dto.getSupplierIds()));
@@ -236,39 +224,27 @@ public class PetsService implements PetsInterface {
 		existing.setPrice(dto.getPrice());
 		existing.setDescription(dto.getDescription());
 		existing.setImage_url(dto.getImage_url());
-
-		// CATEGORY
 		if (dto.getCategory_id() != null) {
 			PetCategories category = categoryRepository.findById(dto.getCategory_id())
 					.orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 			existing.setCategory(category);
 		}
-
-		// GROOMING
 		if (dto.getGroomingServiceIds() != null) {
 			existing.setGroomingServices(
 					groomingRepo.findAllById(dto.getGroomingServiceIds()));
 		}
-
-		// FOOD
 		if (dto.getFoodIds() != null) {
 			existing.setFoods(
 					foodRepo.findAllById(dto.getFoodIds()));
 		}
-
-		// VACCINATION
 		if (dto.getVaccinationIds() != null) {
 			existing.setVaccinations(
 					vaccinationRepo.findAllById(dto.getVaccinationIds()));
 		}
-
-		// EMPLOYEE
 		if (dto.getEmployeeIds() != null) {
 			existing.setEmployees(
 					employeeRepo.findAllById(dto.getEmployeeIds()));
 		}
-
-		// SUPPLIER
 		if (dto.getSupplierIds() != null) {
 			existing.setSuppliers(
 					supplierRepo.findAllById(dto.getSupplierIds()));
@@ -375,13 +351,9 @@ public class PetsService implements PetsInterface {
 
 		GroomingServices service = groomingRepo.findById(serviceId)
 				.orElseThrow(() -> new ResourceNotFoundException("Service not found"));
-
-		// Initialize list if null
 		if (pet.getGroomingServices() == null) {
 			pet.setGroomingServices(new ArrayList<>());
 		}
-
-		// Avoid duplicate mapping
 		if (pet.getGroomingServices().contains(service)) {
 			throw new DuplicateResourceException("Service already mapped to pet");
 		}
@@ -401,7 +373,7 @@ public class PetsService implements PetsInterface {
 
 		List<GroomingServicesResponseDTO> data = pet.getGroomingServices()
 				.stream()
-				.sorted(Comparator.comparing(GroomingServices::getServiceId)) // ✅ SORT
+				.sorted(Comparator.comparing(GroomingServices::getServiceId))
 
 				.map(service -> {
 					GroomingServicesResponseDTO dto = new GroomingServicesResponseDTO();
@@ -470,7 +442,7 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 
     List<VaccinationsResponseDTO> data = pet.getVaccinations()
             .stream()
-			.sorted(Comparator.comparing(Vaccinations::getVaccinationId)) // ✅ SORT HERE
+			.sorted(Comparator.comparing(Vaccinations::getVaccinationId))
 
             .map(vaccination -> {
                 VaccinationsResponseDTO dto = new VaccinationsResponseDTO();
@@ -541,7 +513,7 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 
 		List<PetFoodResponseDTO> data = pet.getFoods()
 				.stream()
-				.sorted(Comparator.comparing(PetFood::getFoodId)) // ✅ SORT HERE
+				.sorted(Comparator.comparing(PetFood::getFoodId))
 
 				.map(food -> {
 					PetFoodResponseDTO dto = new PetFoodResponseDTO();
@@ -589,13 +561,9 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 
 		Supplier supplier = supplierRepo.findById(supplierId)
 				.orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
-
-		// Initialize list if null
 		if (pet.getSuppliers() == null) {
 			pet.setSuppliers(new ArrayList<>());
 		}
-
-		// Avoid duplicate mapping
 		if (pet.getSuppliers().contains(supplier)) {
 			throw new DuplicateResourceException("Supplier already mapped to this pet");
 		}
@@ -615,7 +583,7 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 
 		List<SupplierResponseDTO> data = pet.getSuppliers()
 				.stream()
-				.sorted(Comparator.comparing(Supplier::getSupplierId)) // ✅ SORT
+				.sorted(Comparator.comparing(Supplier::getSupplierId))
 
 				.map(supplier -> {
 					SupplierResponseDTO dto = new SupplierResponseDTO();
@@ -638,3 +606,4 @@ public ApiResponse getVaccinationsByPet(Long petId) {
 	}
 
 }
+

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for food list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FoodService } from '../../../core/services/food';
 import { CommonModule } from '@angular/common';
@@ -68,7 +69,7 @@ export class FoodList {
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for employee reports dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -38,11 +39,9 @@ export class EmployeeReportsDashboard {
       }
     });
   }
-
-  // ================= ROLE =================
   getByRole() {
     if (!this.role) {
-      alert('Enter role ⚠️');
+      alert('Enter role Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -50,7 +49,7 @@ export class EmployeeReportsDashboard {
       next: (res: any) => {
 
         if (!res?.data?.length) {
-          alert('No employees found ❌');
+          alert('No employees found Ã¢ÂÅ’');
           return;
         }
 
@@ -58,14 +57,12 @@ export class EmployeeReportsDashboard {
           queryParams: { type: 'role', value: this.role }
         });
       },
-      error: () => alert('Error ❌')
+      error: () => alert('Error Ã¢ÂÅ’')
     });
   }
-
-  // ================= DATE =================
   getByDate() {
     if (!this.date) {
-      alert('Select date ⚠️');
+      alert('Select date Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -73,7 +70,7 @@ export class EmployeeReportsDashboard {
       next: (res: any) => {
 
         if (!res?.data?.length) {
-          alert('No employees found ❌');
+          alert('No employees found Ã¢ÂÅ’');
           return;
         }
 
@@ -81,7 +78,8 @@ export class EmployeeReportsDashboard {
           queryParams: { type: 'date', value: this.date }
         });
       },
-      error: () => alert('Error ❌')
+      error: () => alert('Error Ã¢ÂÅ’')
     });
   }
 }
+

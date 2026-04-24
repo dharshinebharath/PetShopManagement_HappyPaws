@@ -1,3 +1,4 @@
+// This configuration class sets up framework behavior for security config.
 package com.sprint.pet_shop.security;
 
 import org.springframework.context.annotation.Bean;
@@ -20,14 +21,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-    // ================= PASSWORD ENCODER =================
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    // ================= USERS =================
     @Bean
     public UserDetailsService userDetailsService() {
 
@@ -66,8 +63,6 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(
                 petAdmin, medical, customerAdmin, inventory, hr);
     }
-
-    // ================= CORS CONFIG =================
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
@@ -83,8 +78,6 @@ public class SecurityConfig {
 
         return source;
     }
-
-    // ================= SECURITY FILTER =================
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -93,19 +86,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
-
-                        // PUBLIC
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**")
                         .permitAll()
-
-                        //MAPPINGS 
-                        
-                                        // EXACT MATCH
                                         .requestMatchers("/api/v1/pets/*/grooming-services").hasRole("MEDICAL")
-
-                                        // WITH EXTRA PATH
                                         .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
                                         .requestMatchers("/api/v1/pets/*/vaccinations").hasRole("MEDICAL")
                                         .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
@@ -116,30 +101,16 @@ public class SecurityConfig {
                                         .requestMatchers("/api/v1/employees/**").hasRole("HR_ADMIN")
                                         .requestMatchers("/api/v1/pets/**").hasAnyRole("HR_ADMIN", "PET_ADMIN")
                                         .requestMatchers("/api/v1/pets/*/employees").hasRole("HR_ADMIN")
-
-                        // PETS
                         .requestMatchers("/api/v1/pets/**").hasRole("PET_ADMIN")
                         .requestMatchers("/api/v1/categories/**").hasRole("PET_ADMIN")
-
-                        // SERVICES
                         .requestMatchers("/api/v1/grooming-services/**").hasRole("MEDICAL")
                         .requestMatchers("/api/v1/vaccinations/**").hasRole("MEDICAL")
-
-                        // CUSTOMERS
                         .requestMatchers("/api/v1/customers/**").hasRole("CUSTOMER_ADMIN")
                         .requestMatchers("/api/v1/transactions/**").hasRole("CUSTOMER_ADMIN")
                         .requestMatchers("/api/v1/addresses/**").hasRole("CUSTOMER_ADMIN")
-
-                        // INVENTORY
                         .requestMatchers("/api/v1/food/**").hasRole("INVENTORY_ADMIN")
                         .requestMatchers("/api/v1/suppliers/**").hasRole("INVENTORY_ADMIN")
-
-                        // EMPLOYEES
                         .requestMatchers("/api/v1/employees/**").hasRole("HR_ADMIN")
-
-                        // PET MAPPINGS
-                        // .requestMatchers("/api/v1/pets/*/grooming-services/**").hasRole("MEDICAL")
-                        // .requestMatchers("/api/v1/pets/*/vaccinations/**").hasRole("MEDICAL")
 
                         .anyRequest().authenticated())
 
@@ -148,3 +119,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+

@@ -1,83 +1,42 @@
-<div class="min-h-screen pt-[10px] 
-            bg-gradient-to-br from-emerald-100 via-green-50 to-blue-100">
+<!-- This template renders the page layout for inventory module. -->
+<div class="min-h-screen !bg-gradient-to-br from-emerald-100 via-stone-50 to-green-100 py-12 px-6">
 
-    <!-- TITLE -->
-    <h1 class="text-4xl bg-white/80 backdrop-blur-md shadow-md p-6 rounded-2xl text-center 
-             text-emerald-900 font-extrabold tracking-wide mx-10">
-        Inventory Management
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-4xl font-extrabold text-emerald-900 tracking-wide mb-2">
+      Inventory Management
     </h1>
+    <p class="text-stone-600 text-lg">
+      Centralized management for food inventory, suppliers, and pet inventory mappings.
+    </p>
+  </div>
 
-    <!-- CARDS CONTAINER -->
-    <div class="flex justify-center items-center gap-12 mt-20 flex-wrap">
-
-        <!-- Pet Food Card -->
-        <div routerLink="/food-dashboard" class="w-[300px] h-[360px] flex flex-col justify-center 
-             bg-emerald-200 text-emerald-900 p-8 rounded-2xl shadow-md border border-emerald-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-            <h2 class="text-2xl font-bold mb-4 tracking-wide">
-                🥫 Pet Food
-            </h2>
-
-            <p class="text-base leading-relaxed">
-                Manage pet food inventory, track stock availability,
-                and perform CRUD operations for all food items.
-            </p>
-
-        </div>
-
-        <!-- Suppliers Card -->
-        <div routerLink="/supplier-dashboard" class="w-[300px] h-[360px] flex flex-col justify-center 
-             bg-blue-200 text-blue-900 p-8 rounded-2xl shadow-md border border-blue-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-            <h2 class="text-2xl font-bold mb-4 tracking-wide">
-                🏢 Suppliers
-            </h2>
-
-            <p class="text-base leading-relaxed">
-                Maintain supplier records, manage contact details,
-                and track inventory providers efficiently.
-            </p>
-
-        </div>
-
-        <!-- Pet ↔ Food Mapping -->
-        <div routerLink="/pet-mapping/food" class="w-[300px] h-[360px] flex flex-col justify-center 
-             bg-purple-200 text-purple-900 p-8 rounded-2xl shadow-md border border-purple-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-            <h2 class="text-2xl font-bold mb-4 tracking-wide">
-                🔗 Pet ↔ Food
-            </h2>
-
-            <p class="text-base leading-relaxed">
-                Assign food items to pets, manage dietary mappings,
-                and track food consumption relationships.
-            </p>
-
-        </div>
-
-        <!-- Pet ↔ Suppliers Mapping -->
-        <div routerLink="/pet-mapping/suppliers" class="w-[300px] h-[360px] flex flex-col justify-center 
-             bg-pink-200 text-pink-900 p-8 rounded-2xl shadow-md border border-pink-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-            <h2 class="text-2xl font-bold mb-4 tracking-wide">
-                🔗 Pet ↔ Suppliers
-            </h2>
-
-            <p class="text-base leading-relaxed">
-                Link suppliers to pets, manage provider relationships,
-                and track supply sources easily.
-            </p>
-
-        </div>
-
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
+    <div routerLink="/food-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Pet Food</h2>
+      <p class="text-stone-600 leading-relaxed">Manage pet food inventory, stock levels, pricing, and product records.</p>
+      <div class="mt-6 text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard Ã¢â€ â€™</div>
     </div>
 
+    <div routerLink="/supplier-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Suppliers</h2>
+      <p class="text-stone-600 leading-relaxed">Maintain supplier details, contacts, and vendor relationships with clarity.</p>
+      <div class="mt-6 text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard Ã¢â€ â€™</div>
+    </div>
+
+    <div routerLink="/pet-mapping/food" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Pet Ã¢â€ â€ Food Mapping</h2>
+      <p class="text-stone-600 leading-relaxed">Assign food items to pets and track dietary relationships efficiently.</p>
+      <div class="mt-6 text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard Ã¢â€ â€™</div>
+    </div>
+
+    <div routerLink="/pet-mapping/suppliers" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Pet Ã¢â€ â€ Supplier Mapping</h2>
+      <p class="text-stone-600 leading-relaxed">Link suppliers with pets and manage supply relationships with better visibility.</p>
+      <div class="mt-6 text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard Ã¢â€ â€™</div>
+    </div>
+  </div>
 </div>

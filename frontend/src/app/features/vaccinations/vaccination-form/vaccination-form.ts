@@ -1,3 +1,4 @@
+// This file holds the Angular logic for vaccination form.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VaccinationService } from '../../../core/services/vaccinationService';
@@ -53,7 +54,7 @@ export class VaccinationForm {
             this.cdr.detectChanges();
           },
           error: () => {
-            alert('Vaccination not found ❌');
+            alert('Vaccination not found Ã¢ÂÅ’');
             this.router.navigate(['/vaccination']);
           }
         });
@@ -107,7 +108,7 @@ export class VaccinationForm {
         }
       }
 
-      alert('❌ Please fix errors:\n\n' + errors.join('\n'));
+      alert('Ã¢ÂÅ’ Please fix errors:\n\n' + errors.join('\n'));
 
       return;
     }
@@ -119,10 +120,10 @@ export class VaccinationForm {
 
       this.vaccinationService.update(this.serviceId, payload).subscribe({
         next: () => {
-          alert('Updated successfully ✅');
+          alert('Updated successfully Ã¢Å“â€¦');
           this.router.navigate(['/vaccination/list']);
         },
-        error: () => alert('Update failed ❌')
+        error: () => alert('Update failed Ã¢ÂÅ’')
       });
 
     } else {
@@ -136,10 +137,10 @@ export class VaccinationForm {
 
       this.vaccinationService.create(createPayload).subscribe({
         next: () => {
-          alert('Created successfully ✅');
+          alert('Created successfully Ã¢Å“â€¦');
           this.router.navigate(['/vaccination/list']);
         },
-        error: () => alert('Create failed ❌')
+        error: () => alert('Create failed Ã¢ÂÅ’')
       });
 
     }

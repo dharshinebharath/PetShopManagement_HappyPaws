@@ -1,3 +1,4 @@
+// This file holds the Angular logic for food dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -14,13 +15,9 @@ export class FoodDashboard {
 
   router = inject(Router);
   foodService = inject(FoodService);
-
-  // GET ALL
   goToList() {
     this.router.navigate(['/food/list']);
   }
-
-  // GET BY ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -35,15 +32,13 @@ export class FoodDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Food ID not found ❌');
+          alert('Food ID not found Ã¢ÂÅ’');
         } else {
-          alert('Something went wrong ⚠️');
+          alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
         }
       }
     });
   }
-
-  // UPDATE
   updateFood(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -58,15 +53,13 @@ export class FoodDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Cannot update ❌ ID not found');
+          alert('Cannot update Ã¢ÂÅ’ ID not found');
         } else {
           alert('Error checking ID');
         }
       }
     });
   }
-
-  // DELETE
   deleteFood(id: string) {
     if (!id) {
       alert('Enter ID to delete');
@@ -75,13 +68,14 @@ export class FoodDashboard {
 
     this.foodService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Food deleted successfully ✅');
+        alert('Food deleted successfully Ã¢Å“â€¦');
         this.router.navigate(['/food/list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Delete failed ❌');
+        alert('Delete failed Ã¢ÂÅ’');
       }
     });
   }
 }
+

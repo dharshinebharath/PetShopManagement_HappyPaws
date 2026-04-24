@@ -1,3 +1,4 @@
+// This test exercises the expected behavior for supplier repo test.
 package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,8 +24,6 @@ public class SupplierRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // ✅ 1. Positive: valid supplier
     @Test
     void testValidSupplier() {
         Supplier s = new Supplier();
@@ -37,8 +36,6 @@ public class SupplierRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // ✅ 2. Positive: another valid supplier
     @Test
     void testAnotherValidSupplier() {
         Supplier s = new Supplier();
@@ -51,8 +48,6 @@ public class SupplierRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // ❌ 3. Negative: name null
     @Test
     void testNameNull() {
         Supplier s = new Supplier();
@@ -65,8 +60,6 @@ public class SupplierRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 4. Negative: contact person blank
     @Test
     void testContactPersonBlank() {
         Supplier s = new Supplier();
@@ -79,8 +72,6 @@ public class SupplierRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 5. Negative: email null
     @Test
     void testEmailNull() {
         Supplier s = new Supplier();

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for food form.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodService } from '../../../core/services/food';

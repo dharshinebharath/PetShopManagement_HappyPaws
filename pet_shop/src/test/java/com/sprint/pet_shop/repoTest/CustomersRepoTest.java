@@ -1,3 +1,4 @@
+// This test exercises the expected behavior for customers repo test.
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.Customers;
@@ -18,8 +19,6 @@ public class CustomersRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // 1️⃣ VALID CASE (Positive)
     @Test
     void testValidCustomer() {
         Customers customer = new Customers();
@@ -32,8 +31,6 @@ public class CustomersRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // 2️⃣ NEGATIVE: First name null
     @Test
     void testFirstNameNull() {
         Customers customer = new Customers();
@@ -44,8 +41,6 @@ public class CustomersRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 3️⃣ NEGATIVE: First name blank
     @Test
     void testFirstNameBlank() {
         Customers customer = new Customers();
@@ -56,8 +51,6 @@ public class CustomersRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 4️⃣ NEGATIVE: Last name null
     @Test
     void testLastNameNull() {
         Customers customer = new Customers();
@@ -68,8 +61,6 @@ public class CustomersRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 5️⃣ EDGE CASE: Invalid email & phone STILL VALID (because no constraints)
     @Test
     void testInvalidEmailAndPhoneStillPasses() {
         Customers customer = new Customers();
@@ -79,8 +70,6 @@ public class CustomersRepoTest {
         customer.setPhoneNumber("ABC123@@@");
 
         Set<ConstraintViolation<Customers>> violations = validator.validate(customer);
-
-        // No validation rules exist → will pass
         assertTrue(violations.isEmpty());
     }
 }

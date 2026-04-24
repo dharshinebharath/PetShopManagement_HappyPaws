@@ -1,3 +1,4 @@
+// This file holds the Angular logic for customer list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination';
@@ -72,7 +73,7 @@ export class CustomerList {
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

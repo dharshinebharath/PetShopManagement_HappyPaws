@@ -1,3 +1,4 @@
+// This test exercises the expected behavior for pet categories repo test.
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.PetCategories;
@@ -19,8 +20,6 @@ public class PetCategoriesRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // ❌ 1. Name should not be blank
     @Test
     void testNameShouldNotBeBlank() {
         PetCategories category = new PetCategories();
@@ -30,8 +29,6 @@ public class PetCategoriesRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 2. Name should not be null
     @Test
     void testNameShouldNotBeNull() {
         PetCategories category = new PetCategories();
@@ -41,8 +38,6 @@ public class PetCategoriesRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 3. Name should not be only spaces
     @Test
     void testNameShouldNotBeOnlySpaces() {
         PetCategories category = new PetCategories();
@@ -52,8 +47,6 @@ public class PetCategoriesRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // ✅ 4. Valid Category
     @Test
     void testValidCategory() {
         PetCategories category = new PetCategories();
@@ -63,12 +56,10 @@ public class PetCategoriesRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // ✅ 5. Category ID Auto Generation (Logical Test)
     @Test
     void testCategoryIdInitiallyNull() {
         PetCategories category = new PetCategories();
 
-        assertNull(category.getCategory_id()); // before saving
+        assertNull(category.getCategory_id());
     }
 }

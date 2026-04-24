@@ -1,3 +1,4 @@
+// This repository handles database access for transactions repository.
 package com.sprint.pet_shop.repository;
 
 import java.sql.Date;

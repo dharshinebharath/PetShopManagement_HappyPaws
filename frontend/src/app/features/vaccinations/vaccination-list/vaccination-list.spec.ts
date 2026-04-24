@@ -1,3 +1,4 @@
+// This test file checks the behavior around the vaccination list test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VaccinationList } from './vaccination-list';

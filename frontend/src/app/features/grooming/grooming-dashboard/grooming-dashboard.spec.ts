@@ -1,3 +1,4 @@
+// This test file checks the behavior around the grooming dashboard test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroomingDashboard } from './grooming-dashboard';

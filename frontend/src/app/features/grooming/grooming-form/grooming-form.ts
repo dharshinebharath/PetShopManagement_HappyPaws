@@ -1,3 +1,4 @@
+// This file holds the Angular logic for grooming form.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pets filter dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';

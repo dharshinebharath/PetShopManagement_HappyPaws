@@ -1,3 +1,4 @@
+// This test exercises the expected behavior for pet food repo test.
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.PetFood;
@@ -19,8 +20,6 @@ public class PetFoodRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // 1️⃣ VALID CASE (Positive)
     @Test
     void testValidPetFood() {
         PetFood food = new PetFood();
@@ -34,8 +33,6 @@ public class PetFoodRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // 2️⃣ NEGATIVE: Name blank
     @Test
     void testNameShouldNotBeBlank() {
         PetFood food = new PetFood();
@@ -49,8 +46,6 @@ public class PetFoodRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 3️⃣ NEGATIVE: Brand blank
     @Test
     void testBrandShouldNotBeBlank() {
         PetFood food = new PetFood();
@@ -64,8 +59,6 @@ public class PetFoodRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 4️⃣ NEGATIVE: Type blank
     @Test
     void testTypeShouldNotBeBlank() {
         PetFood food = new PetFood();
@@ -79,8 +72,6 @@ public class PetFoodRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 5️⃣ EDGE CASE: Price null
     @Test
     void testPriceShouldNotBeNull() {
         PetFood food = new PetFood();

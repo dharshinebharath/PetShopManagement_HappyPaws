@@ -1,4 +1,4 @@
-
+// This service contains the main business flow for employees service.
 package com.sprint.pet_shop.service;
 
 import java.time.LocalDate;
@@ -32,7 +32,6 @@ public class EmployeesService implements EmployeesInterface {
 
     @Autowired
     private AddressesRepository addressesRepository;
-    // ENTITY → DTO
     
     @Autowired
     private PetsRepository petsRepository;
@@ -55,8 +54,6 @@ public class EmployeesService implements EmployeesInterface {
         	);
         return dto;
     }
-
-    // SAVE ALL
     @Override
     public ApiResponse<List<EmployeesResponseDTO>> saveAll(List<EmployeesRequestDTO> employees) {
 
@@ -108,8 +105,6 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-
-    // GET ALL
     @Override
     public ApiResponse<List<EmployeesResponseDTO>> getAll() {
 
@@ -126,8 +121,6 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-
-    // GET BY ID
     @Override
     public ApiResponse<EmployeesResponseDTO> getEmployeesById(long employeesId) {
 
@@ -142,8 +135,6 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-
-    // DELETE (NOW RETURN API RESPONSE LIKE GROOMING)
 
     @Override
     public ApiResponse<String> deleteEmployee(long employeeId) {
@@ -318,3 +309,4 @@ public class EmployeesService implements EmployeesInterface {
 	        return new ApiResponse<>("Employees hired after date", true, data);
 	    }
     }
+

@@ -1,3 +1,4 @@
+// This service contains the main business flow for pets interface.
 package com.sprint.pet_shop.service.interfaces;
 
 import java.math.BigDecimal;
@@ -14,20 +15,10 @@ import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
 import com.sprint.pet_shop.entity.Pets;
 
 public interface PetsInterface {
-
-	  // CREATE
     ApiResponse<List<PetsResponseDTO>> addAllPets(List<PetsRequestDTO> dtos);
-
-    // GET ALL
     ApiResponse<List<PetsResponseDTO>> getAllPets();
-
-    // GET BY ID
     ApiResponse<PetsResponseDTO> getPetById(long id);
-
-    // UPDATE
     ApiResponse<PetsResponseDTO> updatePets(long id, PetsRequestDTO dto);
-
-    // DELETE
     ApiResponse<String> deletePets(long id);
     
     ApiResponse<List<PetsResponseDTO>> getPetsByEmployee(Long employeeId);
@@ -62,3 +53,4 @@ public interface PetsInterface {
     ApiResponse<List<SupplierResponseDTO>> getSuppliersByPet(Long petId);
 
 }
+

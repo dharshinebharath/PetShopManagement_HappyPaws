@@ -1,3 +1,4 @@
+// This service handles the app-side requests and data flow for customer.
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
@@ -9,8 +10,6 @@ export class customer {
   private baseUrl = 'http://localhost:8081/api/v1/customers';
 
   private http: HttpClient = inject(HttpClient);
-
-  // ================= AUTH HEADERS =================
   private getAuthHeaders() {
     const username = 'Revathi';
     const password = 'Reva123';
@@ -23,29 +22,20 @@ export class customer {
       })
     };
   }
-
-  // ================= GET ALL =================
   getAllCustomers() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
-
-  // ================= GET BY ID =================
   getCustomerById(id: string) {
     return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
-
-  // ================= CREATE =================
   addCustomer(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
-
-  // ================= UPDATE =================
   updateCustomer(id: string, data: any) {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
-
-  // ================= DELETE =================
   deleteCustomer(id: string) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
 }
+

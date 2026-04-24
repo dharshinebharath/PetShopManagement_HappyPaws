@@ -1,18 +1,1 @@
-.back-wrap {
-  position: fixed;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%);
-  z-index: 1000;
-}
-
-.back-wrap button {
-  border: none;
-  background: #0f766e;
-  color: #fff;
-  border-radius: 999px;
-  padding: 10px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-}
+/* These styles shape the shared presentation for route back. */

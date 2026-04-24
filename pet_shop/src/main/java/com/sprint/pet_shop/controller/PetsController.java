@@ -1,3 +1,4 @@
+// This controller exposes the HTTP endpoints for pets controller.
 package com.sprint.pet_shop.controller;
 
 import java.math.BigDecimal;
@@ -167,7 +168,6 @@ public class PetsController {
 
 	        return petsService.getSuppliersByPet(petId);
 	    }
-	    // ADD FOOD
 	    @PostMapping("/{petId}/food/{foodId}")
 	    public ApiResponse<String> addFood(
 	            @PathVariable Long petId,
@@ -175,14 +175,10 @@ public class PetsController {
 
 	        return petsService.addFoodToPet(petId, foodId);
 	    }
-
-	    // GET FOOD
 	    @GetMapping("/{petId}/food")
 	    public ApiResponse<List<PetFoodResponseDTO>> getFood(@PathVariable Long petId) {
 	        return petsService.getFoodByPet(petId);
 	    }
-
-	    // REMOVE FOOD
 	    @DeleteMapping("/{petId}/food/{foodId}")
 	    public ApiResponse<String> removeFood(
 	            @PathVariable Long petId,
@@ -201,3 +197,4 @@ public class PetsController {
 	    
 	    
 }
+

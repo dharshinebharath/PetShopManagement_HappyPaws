@@ -1,37 +1,84 @@
-<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-10 space-y-8">
-  <h1 class="text-3xl text-center font-bold text-teal-900">
-    Pet ↔ Food Mapping
-  </h1>
+<!-- This template renders the page layout for pet food dashboard. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 py-12 px-6">
 
-  <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
-    <h2 class="font-bold text-teal-700 text-center">View Food (GET)</h2>
-    <div class="flex gap-3">
-      <input [(ngModel)]="getPetId" placeholder="Enter Pet ID" class="w-full border p-2 rounded">
-      <button (click)="viewFood()" class="bg-blue-500 text-white px-5 rounded">
-        View
-      </button>
-    </div>
+  
+  <div class="max-w-4xl mx-auto text-center mb-10">
+    <h1 class="text-4xl font-extrabold tracking-tight text-sage-900">
+      Pet Ã¢â€ â€ Food Mapping
+    </h1>
+    <p class="mt-3 text-stone-600 text-lg">
+      Manage food assignments for pets with structured operational control and traceability.
+    </p>
   </div>
 
-  <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
-    <h2 class="font-bold text-green-700 text-center">Assign Food (POST)</h2>
-    <div class="flex gap-3">
-      <input [(ngModel)]="postPetId" placeholder="Pet ID" class="w-full border p-2 rounded">
-      <input [(ngModel)]="postFoodId" placeholder="Food ID" class="w-full border p-2 rounded">
-      <button (click)="assign()" class="bg-green-500 text-white px-5 rounded">
-        Assign
-      </button>
-    </div>
-  </div>
+  
+  <div class="max-w-2xl mx-auto space-y-6">
 
-  <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
-    <h2 class="font-bold text-red-600 text-center">Remove Food (DELETE)</h2>
-    <div class="flex gap-3">
-      <input [(ngModel)]="deletePetId" placeholder="Pet ID" class="w-full border p-2 rounded">
-      <input [(ngModel)]="deleteFoodId" placeholder="Food ID" class="w-full border p-2 rounded">
-      <button (click)="remove()" class="bg-red-500 text-white px-5 rounded">
-        Delete
-      </button>
+    
+    <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+
+      <div class="mb-4">
+        <h2 class="text-sm font-semibold text-sage-900">View Assigned Food</h2>
+        <p class="text-xs text-stone-500">Fetch food records assigned to a pet</p>
+      </div>
+
+      <div class="flex gap-3">
+        <input [(ngModel)]="getPetId" placeholder="Enter Pet ID" class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
+          focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+        <button (click)="viewFood()" class="w-28 py-2 rounded-lg bg-stone-700 text-white text-sm font-medium
+          hover:bg-stone-800 transition">
+          VIEW
+        </button>
+      </div>
+
     </div>
+
+    
+    <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+
+      <div class="mb-4">
+        <h2 class="text-sm font-semibold text-sage-900">Assign Food</h2>
+        <p class="text-xs text-stone-500">Link food item to a pet</p>
+      </div>
+
+      <div class="flex gap-3">
+        <input [(ngModel)]="postPetId" placeholder="Pet ID" class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
+          focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+        <input [(ngModel)]="postFoodId" placeholder="Food ID" class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
+          focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+        <button (click)="assign()" class="w-28 py-2 rounded-lg bg-stone-700 text-white text-sm font-medium
+          hover:bg-stone-800 transition">
+          ASSIGN
+        </button>
+      </div>
+
+    </div>
+
+    
+    <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+
+      <div class="mb-4">
+        <h2 class="text-sm font-semibold text-sage-900">Remove Food Mapping</h2>
+        <p class="text-xs text-stone-500">Unlink food item from pet</p>
+      </div>
+
+      <div class="flex gap-3">
+        <input [(ngModel)]="deletePetId" placeholder="Pet ID" class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
+          focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+        <input [(ngModel)]="deleteFoodId" placeholder="Food ID" class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
+          focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+        <button (click)="remove()" class="w-28 py-2 rounded-lg bg-red-500 text-white text-sm font-medium
+          hover:bg-red-600 transition">
+          REMOVE
+        </button>
+      </div>
+
+    </div>
+
   </div>
 </div>

@@ -1,3 +1,4 @@
+// This shared component supports pagination across multiple screens.
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
@@ -10,7 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PaginationComponent {
   @Input() totalItems = 0;
-  @Input() pageSize = 8;
+  @Input() pageSize = 10;
   @Input() currentPage = 1;
   @Output() pageChange = new EventEmitter<number>();
 

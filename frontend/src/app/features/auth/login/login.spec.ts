@@ -1,3 +1,4 @@
+// This test file checks the behavior around the login test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Login } from './login';

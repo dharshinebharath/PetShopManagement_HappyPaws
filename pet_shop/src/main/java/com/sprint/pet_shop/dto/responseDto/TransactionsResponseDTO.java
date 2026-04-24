@@ -1,3 +1,4 @@
+// This DTO shapes the request or response data for transactions response dto.
 package com.sprint.pet_shop.dto.responseDto;
 
 import java.math.BigDecimal;
@@ -12,8 +13,6 @@ public class TransactionsResponseDTO {
     private Long customerId;
     private Long petId;
     private String transactionStatus;
-
-    // getters & setters
     public Long getTransactionId() { return transactionId; }
     public void setTransactionId(Long transactionId) { this.transactionId = transactionId; }
 
@@ -32,3 +31,4 @@ public class TransactionsResponseDTO {
     public String getTransactionStatus() { return transactionStatus; }
     public void setTransactionStatus(String transactionStatus) { this.transactionStatus = transactionStatus; }
 }
+

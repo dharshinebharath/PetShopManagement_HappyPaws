@@ -1,3 +1,4 @@
+// This service contains the main business flow for pet categories service.
 package com.sprint.pet_shop.service;
 
 import java.util.ArrayList;

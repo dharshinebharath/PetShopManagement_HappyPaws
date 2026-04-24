@@ -1,3 +1,4 @@
+// This DTO shapes the request or response data for customer response dto.
 package com.sprint.pet_shop.dto.responseDto;
 
 public class CustomerResponseDTO{

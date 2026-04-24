@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet grooming list.
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -45,7 +46,7 @@ export class PetGroomingList {
       },
       error: (err) => {
         console.log(err);
-        alert('No services found ❌');
+        alert('No services found Ã¢ÂÅ’');
         this.services = [];
       }
     });
@@ -54,14 +55,14 @@ export class PetGroomingList {
   remove(serviceId: number) {
     this.service.removeGrooming(this.petId!, serviceId).subscribe({
       next: () => {
-        alert('Removed successfully ✅');
-        this.load(); // reload
+        alert('Removed successfully Ã¢Å“â€¦');
+        this.load();
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed Ã¢ÂÅ’')
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
@@ -74,4 +75,5 @@ export class PetGroomingList {
   }
 
 }
+
 

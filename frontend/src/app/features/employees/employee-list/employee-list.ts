@@ -1,3 +1,4 @@
+// This file holds the Angular logic for employee list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination';
@@ -46,7 +47,7 @@ export class EmployeeList {
             next: (res) => {
 
               if (!res || !res.data) {
-                alert('No employee found with this ID ❌');
+                alert('No employee found with this ID Ã¢ÂÅ’');
                 this.router.navigate(['/employee']);
                 return;
               }
@@ -59,11 +60,11 @@ export class EmployeeList {
               console.log(err);
 
               if (err.status === 404) {
-                alert('Employee ID not found ❌');
+                alert('Employee ID not found Ã¢ÂÅ’');
               } else if (err.status === 401) {
-                alert('Unauthorized ❌ Please login again');
+                alert('Unauthorized Ã¢ÂÅ’ Please login again');
               } else {
-                alert('Something went wrong ⚠️');
+                alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
               }
 
               this.router.navigate(['/employee']);
@@ -92,7 +93,7 @@ export class EmployeeList {
       });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

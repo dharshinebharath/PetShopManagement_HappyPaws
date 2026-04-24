@@ -1,6 +1,8 @@
+// This shared component supports navbar across multiple screens.
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { NotificationService } from '../../../core/services/notification';
 
 @Component({
   selector: 'app-navbar',
@@ -11,46 +13,74 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class NavbarComponent {
   router = inject(Router);
+  notification = inject(NotificationService);
   currentUrl = '';
-  moduleLabel = '';
+  displayName = 'Happy Paws';
 
   constructor() {
+    this.currentUrl = this.router.url;
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.urlAfterRedirects || event.url;
-        this.syncModuleLabel();
+        this.syncDisplayName();
       }
     });
-    this.syncModuleLabel();
+    this.syncDisplayName();
   }
 
   get showNavbar(): boolean {
     return this.currentUrl !== '/' && !this.currentUrl.startsWith('/login');
   }
 
-  private syncModuleLabel() {
-    const byStorage = sessionStorage.getItem('activeModuleLabel');
+  private syncDisplayName() {
+    const byStorage = sessionStorage.getItem('activeUserName');
     if (byStorage) {
-      this.moduleLabel = byStorage;
+      this.displayName = byStorage;
       return;
     }
 
     const url = this.currentUrl;
-    if (url.startsWith('/pets')) this.moduleLabel = 'Maha Karpagam Module';
-    else if (url.startsWith('/pet-services') || url.startsWith('/grooming') || url.startsWith('/vaccination')) this.moduleLabel = 'Dharshine Module';
-    else if (url.startsWith('/customer') || url.startsWith('/transactions') || url.startsWith('/address')) this.moduleLabel = 'Revathi Module';
-    else if (url.startsWith('/inventory') || url.startsWith('/food') || url.startsWith('/supplier')) this.moduleLabel = 'Shirlly Module';
-    else if (url.startsWith('/employee')) this.moduleLabel = 'Priyadharshini Module';
-    else this.moduleLabel = 'Happy Paws';
-  }
-
-  goHome() {
-    this.router.navigate(['/']);
+    if (
+      url.startsWith('/pets') ||
+      url.startsWith('/category') ||
+      url.startsWith('/pets-module')
+    ) {
+      this.displayName = 'Mahakarpagam';
+    } else if (
+      url.startsWith('/pet-services-module') ||
+      url.startsWith('/grooming') ||
+      url.startsWith('/vaccination')
+    ) {
+      this.displayName = 'Dharshine';
+    } else if (
+      url.startsWith('/customer') ||
+      url.startsWith('/transactions') ||
+      url.startsWith('/address') ||
+      url.startsWith('/customers-module')
+    ) {
+      this.displayName = 'Revathi';
+    } else if (
+      url.startsWith('/inventory') ||
+      url.startsWith('/food') ||
+      url.startsWith('/supplier')
+    ) {
+      this.displayName = 'Shirlly';
+    } else if (
+      url.startsWith('/employee') ||
+      url.startsWith('/employee-module')
+    ) {
+      this.displayName = 'Priyadharshini';
+    } else {
+      this.displayName = 'Happy Paws';
+    }
   }
 
   logout() {
     sessionStorage.removeItem('activeModuleLabel');
     sessionStorage.removeItem('activeModuleRoute');
+    sessionStorage.removeItem('activeUserName');
+    sessionStorage.removeItem('activeUserRole');
+    this.notification.showSuccess('Logged out successfully');
     this.router.navigate(['/']);
   }
 }

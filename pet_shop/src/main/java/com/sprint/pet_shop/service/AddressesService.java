@@ -1,3 +1,4 @@
+// This service contains the main business flow for addresses service.
 package com.sprint.pet_shop.service;
 
 import java.util.List;
@@ -19,8 +20,6 @@ public class AddressesService implements AddressesInterface {
 
     @Autowired
     private AddressesRepository addressesRepository;
-
-    //CREATE
     @Override
     public ApiResponse<List<AddressesResponseDTO>> saveaddresses(List<AddressesRequestDTO> addresses) {
 
@@ -53,8 +52,6 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Addresses created successfully", true, data);
     }
-
-    // GET ALL
     @Override
     public ApiResponse<List<AddressesResponseDTO>> getaddresses() {
 
@@ -65,8 +62,6 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Addresses fetched successfully", true, data);
     }
-
-    //  GET BY ID
     @Override
     public ApiResponse<AddressesResponseDTO> getaddressesByID(long id) {
 
@@ -75,8 +70,6 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Address found", true, toDto(address));
     }
-    
-    //GET BY CITY
     @Override
     public ApiResponse<List<AddressesResponseDTO>> getAddressesByCity(String city) {
 
@@ -108,8 +101,6 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Address deleted successfully", true, "Deleted ID: " + id);
     }
-
-    //  UPDATE
     @Override
     public ApiResponse<AddressesResponseDTO> updateaddress(long id, AddressesRequestDTO updatedaddress) {
 
@@ -149,3 +140,4 @@ public class AddressesService implements AddressesInterface {
         return dto;
     }
 }
+

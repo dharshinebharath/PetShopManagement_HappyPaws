@@ -1,15 +1,16 @@
-<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-10">
+<!-- This template renders the page layout for pet employees list. -->
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-10">
 
-    <h2 class="text-2xl font-bold text-center mb-6 text-teal-900">
+    <h2 class="text-2xl font-bold text-center mb-6 text-slate-100">
         Employees Assigned to Pet
     </h2>
 
     <div class="flex justify-center">
 
-        <table class="w-full max-w-3xl bg-white shadow rounded-2xl overflow-hidden">
+        <table class="w-full max-w-3xl bg-slate-800 rounded-2xl shadow overflow-hidden border border-slate-700">
 
-            <!-- HEADER -->
-            <thead class="bg-purple-600 text-white">
+            
+            <thead class="bg-slate-700 text-cyan-400">
                 <tr>
                     <th class="p-3">Employee ID</th>
                     <th class="p-3">First Name</th>
@@ -17,10 +18,10 @@
                 </tr>
             </thead>
 
-            <!-- BODY -->
+            
             <tbody *ngIf="employees.length > 0; else noData">
 
-                <tr *ngFor="let e of paginated(employees)" class="border-b hover:bg-purple-50">
+                <tr *ngFor="let e of paginated(employees)" class="border-b border-slate-700 hover:bg-slate-700">
 
                     <td class="p-3 text-center">{{ e.employeeId }}</td>
                     <td class="p-3 text-center">{{ e.firstName }}</td>
@@ -34,14 +35,18 @@
 
     </div>
 
-    <!-- NO DATA -->
+    
     <ng-template #noData>
-        <p class="text-center mt-6 text-gray-500 text-lg">
-            No employees assigned ❌
+        <p class="text-center mt-6 text-slate-300 text-lg">
+            No employees assigned Ã¢ÂÅ’
         </p>
     </ng-template>
 
 </div>
 <app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+
+
+
 
 

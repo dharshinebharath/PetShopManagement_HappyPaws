@@ -1,3 +1,4 @@
+// This file holds the Angular logic for employees pet list.
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -33,7 +34,7 @@ export class EmployeePetList {
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('No pets found ❌');
+        alert('No pets found Ã¢ÂÅ’');
         this.pets = [];
       }
     });
@@ -42,14 +43,14 @@ export class EmployeePetList {
   remove(petId: number) {
     this.service.removePet(this.employeeId!, petId).subscribe({
       next: () => {
-        alert('Removed successfully ✅');
+        alert('Removed successfully Ã¢Å“â€¦');
         this.load();
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed Ã¢ÂÅ’')
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

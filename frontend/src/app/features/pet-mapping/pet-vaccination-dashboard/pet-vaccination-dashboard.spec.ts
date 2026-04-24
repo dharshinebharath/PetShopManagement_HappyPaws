@@ -1,3 +1,4 @@
+// This test file checks the behavior around the pet vaccination dashboard test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PetVaccinationDashboard } from './pet-vaccination-dashboard';

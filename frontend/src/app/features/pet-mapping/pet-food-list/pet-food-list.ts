@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet food list.
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -43,7 +44,7 @@ export class PetFoodList {
       },
       error: (err) => {
         console.log(err);
-        alert('No food found ❌');
+        alert('No food found Ã¢ÂÅ’');
         this.foods = [];
       }
     });
@@ -52,14 +53,14 @@ export class PetFoodList {
   remove(foodId: number) {
     this.service.removeFood(this.petId!, foodId).subscribe({
       next: () => {
-        alert('Removed successfully ✅');
-        this.load(); // reload
+        alert('Removed successfully Ã¢Å“â€¦');
+        this.load();
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed Ã¢ÂÅ’')
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
@@ -72,4 +73,5 @@ export class PetFoodList {
   }
 
 }
+
 

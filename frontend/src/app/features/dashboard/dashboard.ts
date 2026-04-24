@@ -1,3 +1,4 @@
+// This file holds the Angular logic for dashboard.
 import { Component } from '@angular/core';
 
 @Component({

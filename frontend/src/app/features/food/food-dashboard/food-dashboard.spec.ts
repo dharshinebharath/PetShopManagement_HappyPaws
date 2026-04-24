@@ -1,3 +1,4 @@
+// This test file checks the behavior around the food dashboard test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FoodDashboard } from './food-dashboard';

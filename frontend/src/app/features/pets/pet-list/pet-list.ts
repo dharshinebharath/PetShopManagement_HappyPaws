@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { PetsService } from '../../../core/services/petsService';
 import { CommonModule } from '@angular/common';
@@ -30,10 +31,10 @@ export class PetsList {
         this.petService.getById(Number(id)).subscribe({
           next: (res: any) => {
 
-              console.log('GET BY ID RESPONSE 👉', res);
+              console.log('GET BY ID RESPONSE Ã°Å¸â€˜â€°', res);
 
             if (!res || !res.data) {
-              alert('No pet found with this ID ❌');
+              alert('No pet found with this ID Ã¢ÂÅ’');
               this.router.navigate(['/pets']);
               return;
             }
@@ -47,11 +48,11 @@ export class PetsList {
             console.log(err);
 
             if (err.status === 404) {
-              alert('Pet ID not found ❌');
+              alert('Pet ID not found Ã¢ÂÅ’');
             } else if (err.status === 401) {
-              alert('Unauthorized ❌ Please login again');
+              alert('Unauthorized Ã¢ÂÅ’ Please login again');
             } else {
-              alert('Something went wrong ⚠️');
+              alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
             }
 
             this.router.navigate(['/pets']);
@@ -67,7 +68,7 @@ export class PetsList {
   loadAll() {
     this.petService.getAll().subscribe({
       next: (res: any) => {
-                      console.log('GET BY ID RESPONSE 👉', res);
+                      console.log('GET BY ID RESPONSE Ã°Å¸â€˜â€°', res);
 
         this.petsList = res.data;
         this.cdr.detectChanges();
@@ -79,7 +80,7 @@ export class PetsList {
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

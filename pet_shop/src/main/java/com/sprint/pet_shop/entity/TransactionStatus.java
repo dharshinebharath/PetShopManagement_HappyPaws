@@ -1,3 +1,4 @@
+// This entity maps the persisted data for transaction status.
 package com.sprint.pet_shop.entity;
 
 public enum TransactionStatus {

@@ -1,3 +1,4 @@
+// This DTO shapes the request or response data for pet categories response dto.
 package com.sprint.pet_shop.dto.responseDto;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-
+// This controller exposes the HTTP endpoints for supplier controller.
 package com.sprint.pet_shop.controller;
 
 import java.util.List;
@@ -23,8 +23,6 @@ public class SupplierController {
     public SupplierController(SupplierService supplierService) {
         this.supplierService = supplierService;
     }
-
-    // POST ALL
     @PostMapping
     public ResponseEntity<ApiResponse<List<SupplierResponseDTO>>> saveAll(
             @Valid @RequestBody List<SupplierRequestDTO> suppliers) {
@@ -34,8 +32,6 @@ public class SupplierController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-    // GET ALL
     @GetMapping
     public ResponseEntity<ApiResponse<List<SupplierResponseDTO>>> getAll() {
 
@@ -44,8 +40,6 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
-
-    // GET BY ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<SupplierResponseDTO>> getById(
             @PathVariable long id) {
@@ -55,8 +49,6 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
-
-    // DELETE BY ID
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> deleteSupplier(
             @PathVariable long id) {
@@ -66,8 +58,6 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
-
-    // UPDATE BY ID
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<SupplierResponseDTO>> updateSupplier(
             @PathVariable long id,
@@ -84,3 +74,4 @@ public class SupplierController {
         return supplierService.getSuppliersByPet(petName);
     }
 }
+

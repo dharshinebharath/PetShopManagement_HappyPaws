@@ -1,3 +1,4 @@
+// This file holds the Angular logic for category list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination';
@@ -30,10 +31,10 @@ export class CategoryList {
         this.categoryService.getById(Number(id)).subscribe({
           next: (res: any) => {
 
-            console.log('GET BY ID RESPONSE 👉', res);
+            console.log('GET BY ID RESPONSE Ã°Å¸â€˜â€°', res);
 
             if (!res || !res.data) {
-              alert('No category found ❌');
+              alert('No category found Ã¢ÂÅ’');
               this.router.navigate(['/category/list']);
               return;
             }
@@ -45,7 +46,7 @@ export class CategoryList {
           error: (err) => {
             console.log(err);
 
-            alert('Category not found ❌');
+            alert('Category not found Ã¢ÂÅ’');
             this.router.navigate(['/category/list']);
           }
         });
@@ -60,7 +61,7 @@ export class CategoryList {
     this.categoryService.getAll().subscribe({
       next: (res: any) => {
 
-        console.log('GET ALL RESPONSE 👉', res);
+        console.log('GET ALL RESPONSE Ã°Å¸â€˜â€°', res);
 
         this.categoryList = res.data;
         this.cdr.detectChanges();
@@ -72,7 +73,7 @@ export class CategoryList {
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

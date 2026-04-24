@@ -1,3 +1,4 @@
+// This test file checks the behavior around the pets module test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PetsModule } from './pets-module';

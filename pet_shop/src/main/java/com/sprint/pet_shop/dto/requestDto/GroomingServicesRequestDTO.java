@@ -1,3 +1,4 @@
+// This service contains the main business flow for grooming services request dto.
 package com.sprint.pet_shop.dto.requestDto;
 
 

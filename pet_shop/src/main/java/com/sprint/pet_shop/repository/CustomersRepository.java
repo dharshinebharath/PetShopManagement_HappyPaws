@@ -1,3 +1,4 @@
+// This repository handles database access for customers repository.
 package com.sprint.pet_shop.repository;
 
 import java.util.List;

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet grooming dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,11 +20,9 @@ export class PetGroomingDashboard {
   postServiceId: string = '';
   deletePetId: string = '';
   deleteServiceId: string = '';
-
-  // ================= GET =================
  viewServices() {
   if (!this.getPetId) {
-    alert('Enter Pet ID ⚠️');
+    alert('Enter Pet ID Ã¢Å¡Â Ã¯Â¸Â');
     return;
   }
 
@@ -32,7 +31,7 @@ export class PetGroomingDashboard {
     next: (res: any) => {
 
       if (!res || !res.data || res.data.length === 0) {
-        alert('No services found for this Pet ID ❌');
+        alert('No services found for this Pet ID Ã¢ÂÅ’');
         return;
       }
 
@@ -44,14 +43,13 @@ export class PetGroomingDashboard {
     error: (err) => {
       console.log(err);
 
-      alert('Invalid Pet ID ❌');
+      alert('Invalid Pet ID Ã¢ÂÅ’');
     }
   });
 }
-  // ================= POST =================
   assign() {
     if (!this.postPetId || !this.postServiceId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -60,20 +58,18 @@ export class PetGroomingDashboard {
       Number(this.postServiceId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully ✅');
+        alert('Assigned Successfully Ã¢Å“â€¦');
 
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.postPetId }
         });
       },
-      error: () => alert('Assign Failed ❌')
+      error: () => alert('Assign Failed Ã¢ÂÅ’')
     });
   }
-
-  // ================= DELETE =================
   remove() {
     if (!this.deletePetId || !this.deleteServiceId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -82,13 +78,14 @@ export class PetGroomingDashboard {
       Number(this.deleteServiceId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully ✅');
+        alert('Deleted Successfully Ã¢Å“â€¦');
 
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.deletePetId }
         });
       },
-      error: () => alert('Delete Failed ❌')
+      error: () => alert('Delete Failed Ã¢ÂÅ’')
     });
   }
 }
+

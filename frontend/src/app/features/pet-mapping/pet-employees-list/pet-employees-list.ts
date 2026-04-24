@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet employees list.
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -41,13 +42,13 @@ export class PetEmployeesList {
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('No employees found ❌');
+        alert('No employees found Ã¢ÂÅ’');
         this.employees = [];
       }
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

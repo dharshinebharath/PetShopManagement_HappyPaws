@@ -1,3 +1,4 @@
+// This test file checks the behavior around the customers dashboard test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomersDashboard } from './customers-dashboard';

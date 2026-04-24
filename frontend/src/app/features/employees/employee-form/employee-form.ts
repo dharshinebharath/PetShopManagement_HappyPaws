@@ -1,3 +1,4 @@
+// This file holds the Angular logic for employee form.
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';

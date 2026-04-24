@@ -1,3 +1,4 @@
+// This file holds the Angular logic for supplier dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -35,9 +36,9 @@ export class SupplierDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Supplier ID not found ❌');
+          alert('Supplier ID not found Ã¢ÂÅ’');
         } else {
-          alert('Something went wrong ⚠️');
+          alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
         }
       }
     });
@@ -58,7 +59,7 @@ export class SupplierDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Cannot update ❌ ID not found');
+          alert('Cannot update Ã¢ÂÅ’ ID not found');
         } else {
           alert('Error checking ID');
         }
@@ -75,12 +76,12 @@ export class SupplierDashboard {
 
     this.supplierService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Supplier deleted successfully ✅');
+        alert('Supplier deleted successfully Ã¢Å“â€¦');
         this.router.navigate(['/supplier/list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Delete failed ❌');
+        alert('Delete failed Ã¢ÂÅ’');
       }
     });
   }

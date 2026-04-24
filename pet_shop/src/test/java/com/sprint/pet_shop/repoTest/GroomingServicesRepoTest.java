@@ -1,3 +1,4 @@
+// This service contains the main business flow for grooming services repo test.
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.GroomingServices;
@@ -19,8 +20,6 @@ public class GroomingServicesRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // 1️⃣ VALID CASE (Positive)
     @Test
     void testValidGroomingService() {
         GroomingServices service = new GroomingServices();
@@ -33,8 +32,6 @@ public class GroomingServicesRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // 2️⃣ NEGATIVE: Name is blank
     @Test
     void testNameShouldNotBeBlank() {
         GroomingServices service = new GroomingServices();
@@ -46,8 +43,6 @@ public class GroomingServicesRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 3️⃣ NEGATIVE: Price is null
     @Test
     void testPriceShouldNotBeNull() {
         GroomingServices service = new GroomingServices();
@@ -59,8 +54,6 @@ public class GroomingServicesRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 4️⃣ EDGE CASE: Description can be null (Valid case)
     @Test
     void testDescriptionCanBeNull() {
         GroomingServices service = new GroomingServices();
@@ -73,8 +66,6 @@ public class GroomingServicesRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // 5️⃣ EDGE CASE: Zero price (Valid but boundary check)
     @Test
     void testZeroPriceAllowedAsBoundary() {
         GroomingServices service = new GroomingServices();

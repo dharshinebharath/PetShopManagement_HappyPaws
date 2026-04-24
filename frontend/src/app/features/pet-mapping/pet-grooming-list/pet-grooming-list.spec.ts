@@ -1,3 +1,4 @@
+// This test file checks the behavior around the pet grooming list test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PetGroomingList } from './pet-grooming-list';

@@ -1,3 +1,4 @@
+// This service handles the app-side requests and data flow for employee pet mapping service.
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
@@ -11,18 +12,12 @@ export class EmployeePetMappingService {
     const auth = btoa('Priyadharshini:Priya123');
     return { headers: { Authorization: `Basic ${auth}` } };
   }
-
-  // GET pets by employee
   getPetsByEmployee(employeeId: number) {
     return this.http.get(`${this.baseUrl}/employees/${employeeId}/pets`, this.getAuthHeaders());
   }
-
-  // GET employees by pet (optional later use)
   getEmployeesByPet(petId: number) {
     return this.http.get(`${this.baseUrl}/pets/${petId}/employees`, this.getAuthHeaders());
   }
-
-  // POST assign
   assignPet(employeeId: number, petId: number) {
     return this.http.post(
       `${this.baseUrl}/employees/${employeeId}/pets/${petId}`,
@@ -30,8 +25,6 @@ export class EmployeePetMappingService {
       this.getAuthHeaders()
     );
   }
-
-  // DELETE
   removePet(employeeId: number, petId: number) {
     return this.http.delete(
       `${this.baseUrl}/employees/${employeeId}/pets/${petId}`,
@@ -46,3 +39,4 @@ export class EmployeePetMappingService {
     return this.http.get(`${this.baseUrl}/employees/hired-after/${date}`, this.getAuthHeaders());
   }
 }
+

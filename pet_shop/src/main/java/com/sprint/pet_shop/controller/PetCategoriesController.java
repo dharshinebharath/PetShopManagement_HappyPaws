@@ -1,3 +1,4 @@
+// This controller exposes the HTTP endpoints for pet categories controller.
 package com.sprint.pet_shop.controller;
 
 import java.util.List;

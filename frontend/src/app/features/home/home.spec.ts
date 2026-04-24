@@ -1,3 +1,4 @@
+// This test file checks the behavior around the home test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Home } from './home';

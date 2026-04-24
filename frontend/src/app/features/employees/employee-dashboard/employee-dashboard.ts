@@ -1,3 +1,4 @@
+// This file holds the Angular logic for employee dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -15,8 +16,6 @@ export class EmployeeDashboard {
   http = inject(HttpClient);
 
   private baseUrl = 'http://localhost:8081/api/v1/employees';
-
-  // AUTH HEADERS
   private getAuthHeaders() {
     const username = 'Priyadharshini';
     const password = 'Priya123';
@@ -29,13 +28,9 @@ export class EmployeeDashboard {
       }
     };
   }
-
-  // GET ALL
   goToList() {
     this.router.navigate(['/employee/list']);
   }
-
-  // GET BY ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -44,22 +39,19 @@ export class EmployeeDashboard {
 
     this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders()).subscribe({
       next: (res: any) => {
-        // if exists → go to list page with query param
         this.router.navigate(['/employee/list'], {
           queryParams: { id }
         });
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Employee ID not found ❌');
+          alert('Employee ID not found Ã¢ÂÅ’');
         } else {
-          alert('Something went wrong ⚠️');
+          alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
         }
       }
     });
   }
-
-  // UPDATE (CHECK ID FIRST)
   updateEmployee(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -68,22 +60,19 @@ export class EmployeeDashboard {
 
     this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders()).subscribe({
       next: () => {
-        // ID exists → go to form
         this.router.navigate(['/employee/form'], {
           queryParams: { id }
         });
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Cannot update ❌ Employee not found');
+          alert('Cannot update Ã¢ÂÅ’ Employee not found');
         } else {
           alert('Error checking employee');
         }
       }
     });
   }
-
-  // DELETE
   deleteEmployee(id: string) {
     if (!id) {
       alert('Enter ID to delete');
@@ -92,13 +81,14 @@ export class EmployeeDashboard {
 
     this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders()).subscribe({
       next: () => {
-        alert('Employee deleted successfully ✅');
+        alert('Employee deleted successfully Ã¢Å“â€¦');
         this.router.navigate(['/employee/list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Delete failed ❌');
+        alert('Delete failed Ã¢ÂÅ’');
       }
     });
   }
 }
+

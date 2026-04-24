@@ -1,3 +1,4 @@
+// This file wires up the shared Angular providers used across the app.
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 

@@ -1,3 +1,4 @@
+// This test file checks the behavior around the vaccination service test flow.
 import { TestBed } from '@angular/core/testing';
 
 import { VaccinationService } from './vaccinationService';

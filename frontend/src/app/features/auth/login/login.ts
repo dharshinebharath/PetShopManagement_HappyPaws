@@ -1,8 +1,10 @@
+// This file holds the Angular logic for login.
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../../../core/services/notification';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,7 @@ export class Login {
   router = inject(Router);
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
+  notificationService = inject(NotificationService);
 
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -47,17 +50,17 @@ export class Login {
     const password = this.loginForm.value.password!;
     const moduleKey = (this.route.snapshot.paramMap.get('module') ?? '').trim();
 
-    const moduleCredentials: Record<string, { route: string; username: string; password: string; label: string }> = {
-      'pets-module': { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module' },
-      pets: { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module' },
-      'pet-services-module': { route: '/pet-services-module', username: 'Dharshine', password: 'Dharsh123', label: 'Dharshine Module' },
-      petservices: { route: '/pet-services-module', username: 'Dharshine', password: 'Dharsh123', label: 'Dharshine Module' },
-      'inventory-module': { route: '/inventory-module', username: 'Shirlly', password: 'Shirl123', label: 'Shirlly Module' },
-      inventory: { route: '/inventory-module', username: 'Shirlly', password: 'Shirl123', label: 'Shirlly Module' },
-      'customers-module': { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module' },
-      customers: { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module' },
-      'custoners-module': { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module' },
-      'employee-module': { route: '/employee-module', username: 'Priyadharshini', password: 'Priya123', label: 'Priyadharshini Module' }
+    const moduleCredentials: Record<string, { route: string; username: string; password: string; label: string; role: string }> = {
+      'pets-module': { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module', role: 'Pet Admin' },
+      pets: { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module', role: 'Pet Admin' },
+      'pet-services-module': { route: '/pet-services-module', username: 'Dharshine', password: 'Dharsh123', label: 'Dharshine Module', role: 'Medical' },
+      petservices: { route: '/pet-services-module', username: 'Dharshine', password: 'Dharsh123', label: 'Dharshine Module', role: 'Medical' },
+      'inventory-module': { route: '/inventory-module', username: 'Shirlly', password: 'Shirl123', label: 'Shirlly Module', role: 'Inventory Admin' },
+      inventory: { route: '/inventory-module', username: 'Shirlly', password: 'Shirl123', label: 'Shirlly Module', role: 'Inventory Admin' },
+      'customers-module': { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module', role: 'Customer Admin' },
+      customers: { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module', role: 'Customer Admin' },
+      'custoners-module': { route: '/customers-module', username: 'Revathi', password: 'Reva123', label: 'Revathi Module', role: 'Customer Admin' },
+      'employee-module': { route: '/employee-module', username: 'Priyadharshini', password: 'Priya123', label: 'Priyadharshini Module', role: 'HR Admin' }
     };
 
     const moduleConfig = moduleCredentials[moduleKey];
@@ -90,8 +93,14 @@ export class Login {
             return;
           }
 
+          const userName = res?.username || moduleConfig.username;
+          const userRole = this.formatRole(res?.role) || moduleConfig.role;
+
           sessionStorage.setItem('activeModuleLabel', moduleConfig.label);
           sessionStorage.setItem('activeModuleRoute', moduleConfig.route);
+          sessionStorage.setItem('activeUserName', userName);
+          sessionStorage.setItem('activeUserRole', userRole);
+          this.notificationService.showSuccess(`${userName} logged in successfully as ${userRole}.`);
           this.router.navigateByUrl(moduleConfig.route);
         },
         error: (err: HttpErrorResponse) => {
@@ -108,5 +117,26 @@ export class Login {
           alert(`Login failed (${err.status}). Please try again.`);
         }
       });
+  }
+
+  private formatRole(role: string | null | undefined): string {
+    const normalized = (role ?? '')
+      .replace(/[\[\]]/g, '')
+      .split(',')
+      .map(item => item.trim())
+      .find(Boolean)
+      ?.replace(/^ROLE_/, '');
+
+    if (!normalized) {
+      return '';
+    }
+
+    return normalized
+      .split('_')
+      .map(part => {
+        const upper = part.toUpperCase();
+        return upper.length <= 3 ? upper : upper[0] + upper.slice(1).toLowerCase();
+      })
+      .join(' ');
   }
 }

@@ -1,3 +1,4 @@
+// This service handles the app-side requests and data flow for pet food mapping service.
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 

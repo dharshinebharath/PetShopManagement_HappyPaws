@@ -1,66 +1,35 @@
-<div class="min-h-screen pt-[10px] 
-            bg-gradient-to-br from-emerald-100 via-green-50 to-blue-100">
+<!-- This template renders the page layout for employee module. -->
+<div class="min-h-screen !bg-gradient-to-br from-emerald-100 via-stone-50 to-green-100 py-12 px-6">
 
-  <!-- TITLE -->
-  <h1 class="text-4xl bg-white/80 backdrop-blur-md shadow-md p-6 rounded-2xl text-center 
-             text-emerald-900 font-extrabold tracking-wide mx-10">
-    Employees & Internal Operations
-  </h1>
-
-  <!-- CARDS CONTAINER -->
-  <div class="flex justify-center items-center gap-12 mt-20 flex-wrap">
-
-    <!-- Employees Card -->
-    <div routerLink="/employee-dashboard" class="w-[300px] h-[360px] flex flex-col justify-center 
-             bg-emerald-200 text-emerald-900 p-8 rounded-2xl shadow-md border border-emerald-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-      <h2 class="text-2xl font-bold mb-4 tracking-wide">
-        👨‍💼 Employees
-      </h2>
-
-      <p class="text-base leading-relaxed">
-        Manage employee records including adding, updating,
-        deleting, and viewing employee details efficiently.
-      </p>
-
-    </div>
-
-    <!-- Employee ↔ Pet Mapping -->
-    <div routerLink="/employee-pet-mapping" class="w-[300px] h-[360px] flex flex-col justify-center 
-             bg-blue-200 text-blue-900 p-8 rounded-2xl shadow-md border border-blue-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-      <h2 class="text-2xl font-bold mb-4 tracking-wide">
-        🔗 Employee ↔ Pet
-      </h2>
-
-      <p class="text-base leading-relaxed">
-        Assign pets to employees, manage relationships,
-        and track responsibilities within the system.
-      </p>
-
-    </div>
-
-    <!-- Internal Operations / Reporting -->
-    <div routerLink="/employee-reports" class="w-[300px] h-[360px] flex flex-col justify-center 
-             bg-purple-200 text-purple-900 p-8 rounded-2xl shadow-md border border-purple-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-      <h2 class="text-2xl font-bold mb-4 tracking-wide">
-        📊 Internal Reports
-      </h2>
-
-      <p class="text-base leading-relaxed">
-        Generate reports based on employee roles and hiring dates.
-        Analyze workforce data and improve internal operations.
-      </p>
-
-    </div>
-
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-4xl font-extrabold text-emerald-900 tracking-wide mb-2">
+      Employees & Internal Operations
+    </h1>
+    <p class="text-stone-600 text-lg">
+      Structured control for employee records, assignments, and internal reporting workflows.
+    </p>
   </div>
 
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+    <div routerLink="/employee-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Employees</h2>
+      <p class="text-stone-600 leading-relaxed">Manage employee records, onboarding details, and operational updates.</p>
+      <div class="mt-6 text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard Ã¢â€ â€™</div>
+    </div>
+
+    <div routerLink="/employee-pet-mapping" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Employee Ã¢â€ â€ Pet Mapping</h2>
+      <p class="text-stone-600 leading-relaxed">Assign pets to employees and review responsibility mappings in one place.</p>
+      <div class="mt-6 text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard Ã¢â€ â€™</div>
+    </div>
+
+    <div routerLink="/employee-reports" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Internal Reports</h2>
+      <p class="text-stone-600 leading-relaxed">Review role-based and hiring reports with a structured internal operations view.</p>
+      <div class="mt-6 text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard Ã¢â€ â€™</div>
+    </div>
+  </div>
 </div>

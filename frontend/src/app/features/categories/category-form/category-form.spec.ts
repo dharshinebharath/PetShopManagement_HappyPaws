@@ -1,3 +1,4 @@
+// This test file checks the behavior around the category form test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CategoryForm } from './category-form';

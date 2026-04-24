@@ -1,3 +1,4 @@
+// This file holds the Angular logic for employees pet dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -20,11 +21,9 @@ export class EmployeePetDashboard {
   getPetId: string = '';
   deleteEmployeeId: string = '';
   deletePetId: string = '';
-
-  // ================= GET Pets by Employee =================
   viewPets() {
     if (!this.getEmployeeId) {
-      alert('Enter Employee ID ⚠️');
+      alert('Enter Employee ID Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -32,7 +31,7 @@ export class EmployeePetDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No pets found ❌');
+          alert('No pets found Ã¢ÂÅ’');
           return;
         }
 
@@ -40,14 +39,12 @@ export class EmployeePetDashboard {
           queryParams: { employeeId: this.getEmployeeId }
         });
       },
-      error: () => alert('Invalid Employee ID ❌')
+      error: () => alert('Invalid Employee ID Ã¢ÂÅ’')
     });
   }
-
-  // ================= POST =================
   assign() {
     if (!this.postEmployeeId || !this.postPetId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -56,20 +53,18 @@ export class EmployeePetDashboard {
       Number(this.postPetId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully ✅');
+        alert('Assigned Successfully Ã¢Å“â€¦');
 
         this.router.navigate(['/employee-pet-mapping/list'], {
           queryParams: { employeeId: this.postEmployeeId }
         });
       },
-      error: () => alert('Assign Failed ❌')
+      error: () => alert('Assign Failed Ã¢ÂÅ’')
     });
   }
-
-  // ================= GET Employees by Pet =================
   viewEmployees() {
     if (!this.getPetId) {
-      alert('Enter Pet ID ⚠️');
+      alert('Enter Pet ID Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -77,7 +72,7 @@ export class EmployeePetDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No employees found ❌');
+          alert('No employees found Ã¢ÂÅ’');
           return;
         }
 
@@ -85,14 +80,12 @@ export class EmployeePetDashboard {
           queryParams: { petId: this.getPetId }
         });
       },
-      error: () => alert('Invalid Pet ID ❌')
+      error: () => alert('Invalid Pet ID Ã¢ÂÅ’')
     });
   }
-
-  // ================= DELETE =================
   remove() {
     if (!this.deleteEmployeeId || !this.deletePetId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -101,13 +94,14 @@ export class EmployeePetDashboard {
       Number(this.deletePetId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully ✅');
+        alert('Deleted Successfully Ã¢Å“â€¦');
 
         this.router.navigate(['/employee-pet-mapping/list'], {
           queryParams: { employeeId: this.deleteEmployeeId }
         });
       },
-      error: () => alert('Delete Failed ❌')
+      error: () => alert('Delete Failed Ã¢ÂÅ’')
     });
   }
 }
+

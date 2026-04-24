@@ -1,3 +1,4 @@
+// This service contains the main business flow for addresses service test.
 package com.sprint.pet_shop.serviceTest;
 
 import com.sprint.pet_shop.dto.requestDto.AddressesRequestDTO;
@@ -48,8 +49,6 @@ class AddressesServiceTest {
         address.setState("Tamil Nadu");
         address.setZipCode("600001");
     }
-
-    // ✅ 1. Positive: Save Address
     @Test
     void saveAddresses_success() {
 
@@ -64,8 +63,6 @@ class AddressesServiceTest {
 
         verify(addressesRepository, times(1)).saveAll(anyList());
     }
-
-    // ❌ 2. Negative: Empty street validation
     @Test
     void saveAddresses_emptyStreet_throwsException() {
 
@@ -76,8 +73,6 @@ class AddressesServiceTest {
 
         verify(addressesRepository, never()).saveAll(anyList());
     }
-
-    // ❌ 3. Negative: Empty city validation
     @Test
     void saveAddresses_emptyCity_throwsException() {
 
@@ -88,8 +83,6 @@ class AddressesServiceTest {
 
         verify(addressesRepository, never()).saveAll(anyList());
     }
-
-    // ✅ 4. Positive: Get by ID
     @Test
     void getAddressById_success() {
 
@@ -104,8 +97,6 @@ class AddressesServiceTest {
 
         verify(addressesRepository).findById(1L);
     }
-
-    // ❌ 5. Negative: Not found by ID
     @Test
     void getAddressById_notFound_throwsException() {
 

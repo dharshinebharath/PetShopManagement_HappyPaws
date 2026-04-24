@@ -1,3 +1,4 @@
+// This service contains the main business flow for pet food service test.
 package com.sprint.pet_shop.serviceTest;
 
 
@@ -53,8 +54,6 @@ class PetFoodServiceTest {
         petFood.setQuantity(10);
         petFood.setPrice(BigDecimal.valueOf(500));
     }
-
-    // ✅ 1. Positive: Save PetFood
     @Test
     void saveAllPetFood_success() {
 
@@ -72,8 +71,6 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository, times(1)).saveAll(anyList());
     }
-
-    // ❌ 2. Negative: Invalid quantity
     @Test
     void saveAllPetFood_invalidQuantity_throwsException() {
 
@@ -84,8 +81,6 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository, never()).saveAll(anyList());
     }
-
-    // ❌ 3. Negative: Duplicate food
     @Test
     void saveAllPetFood_duplicateFood_throwsException() {
 
@@ -97,8 +92,6 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository, never()).saveAll(anyList());
     }
-
-    // ✅ 4. Positive: Get by ID
     @Test
     void getPetFoodById_success() {
 
@@ -113,8 +106,6 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository).findById(1L);
     }
-
-    // ❌ 5. Negative: Not found by ID
     @Test
     void getPetFoodById_notFound_throwsException() {
 

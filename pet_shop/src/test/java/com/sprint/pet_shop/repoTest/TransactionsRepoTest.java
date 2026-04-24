@@ -1,3 +1,4 @@
+// This test exercises the expected behavior for transactions repo test.
 package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -140,10 +141,6 @@ public class TransactionsRepoTest {
         validator = factory.getValidator();
     }
 
-    // =========================
-    // ✅ POSITIVE TEST CASES (5)
-    // =========================
-
     @Test
     void testValidTransaction1() {
         TransactionsEntity t = createValidTransaction();
@@ -177,10 +174,6 @@ public class TransactionsRepoTest {
         t.setTransactionDate(LocalDate.now());
         assertTrue(validator.validate(t).isEmpty());
     }
-
-    // =========================
-    // ❌ NEGATIVE TEST CASES (5)
-    // =========================
 
     @Test
     void testTransactionDateNull() {
@@ -225,10 +218,6 @@ public class TransactionsRepoTest {
         Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
         assertFalse(violations.isEmpty());
     }
-
-    // =========================
-    // 🔧 Helper Method
-    // =========================
     private TransactionsEntity createValidTransaction() {
         TransactionsEntity t = new TransactionsEntity();
         t.setTransactionDate(LocalDate.now());

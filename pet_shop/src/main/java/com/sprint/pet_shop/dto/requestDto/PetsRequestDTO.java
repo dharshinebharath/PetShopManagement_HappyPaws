@@ -1,3 +1,4 @@
+// This DTO shapes the request or response data for pets request dto.
 package com.sprint.pet_shop.dto.requestDto;
 
 import java.math.BigDecimal;
@@ -28,15 +29,11 @@ public class PetsRequestDTO {
 
 	    @NotNull(message = "Category ID cannot be null")
 	    private Long category_id;
-
-	    // Relationships (IDs only)
 	    private List<Long> groomingServiceIds;
 	    private List<Long> vaccinationIds;
 	    private List<Long> foodIds;
 	    private List<Long> employeeIds;
 	    private List<Long> supplierIds;
-
-	    // Getters & Setters
 
 	    public String getName() { return name; }
 	    public void setName(String name) { this.name = name; }
@@ -80,3 +77,4 @@ public class PetsRequestDTO {
 	    public List<Long> getSupplierIds() { return supplierIds; }
 	    public void setSupplierIds(List<Long> supplierIds) { this.supplierIds = supplierIds; }
 	}
+

@@ -1,3 +1,4 @@
+// This service contains the main business flow for pet categories service test.
 package com.sprint.pet_shop.serviceTest;
 
 import com.sprint.pet_shop.dto.requestDto.PetCategoriesRequestDTO;
@@ -43,8 +44,6 @@ class PetCategoriesServiceTest {
         dto = new PetCategoriesRequestDTO();
         dto.setName("Dog");
     }
-
-    // ✅ 1. ADD CATEGORY (Positive)
     @Test
     void testAddAll_Positive() {
 
@@ -56,8 +55,6 @@ class PetCategoriesServiceTest {
         assertTrue(response.isSuccess());
         assertEquals(1, response.getData().size());
     }
-
-    // ❌ 2. ADD CATEGORY (Invalid Name)
     @Test
     void testAddAll_InvalidName() {
 
@@ -66,8 +63,6 @@ class PetCategoriesServiceTest {
         assertThrows(InvalidDataException.class,
                 () -> service.addAll(List.of(dto)));
     }
-
-    // ✅ 3. GET CATEGORY BY ID (Positive)
     @Test
     void testGetById_Positive() {
 
@@ -78,8 +73,6 @@ class PetCategoriesServiceTest {
 
         assertEquals("Dog", response.getData().getName());
     }
-
-    // ❌ 4. GET CATEGORY BY ID (Not Found)
     @Test
     void testGetById_NotFound() {
 
@@ -88,8 +81,6 @@ class PetCategoriesServiceTest {
         assertThrows(ResourceNotFoundException.class,
                 () -> service.getCategoryById(1L));
     }
-
-    // ❌ 5. DELETE CATEGORY (Not Found)
     @Test
     void testDelete_NotFound() {
 

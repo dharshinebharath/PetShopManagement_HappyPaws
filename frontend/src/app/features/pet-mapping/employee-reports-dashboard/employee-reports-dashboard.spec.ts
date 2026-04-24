@@ -1,3 +1,4 @@
+// This test file checks the behavior around the employee reports dashboard test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmployeeReportsDashboard } from './employee-reports-dashboard';

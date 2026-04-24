@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet vaccination dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,11 +20,9 @@ export class PetVaccinationDashboard {
   postVaccinationId: string = '';
   deletePetId: string = '';
   deleteVaccinationId: string = '';
-
-  // ================= GET =================
   viewVaccinations() {
     if (!this.getPetId) {
-      alert('Enter Pet ID ⚠️');
+      alert('Enter Pet ID Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -31,7 +30,7 @@ export class PetVaccinationDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No vaccinations found ❌');
+          alert('No vaccinations found Ã¢ÂÅ’');
           return;
         }
 
@@ -39,14 +38,12 @@ export class PetVaccinationDashboard {
           queryParams: { petId: this.getPetId }
         });
       },
-      error: () => alert('Invalid Pet ID ❌')
+      error: () => alert('Invalid Pet ID Ã¢ÂÅ’')
     });
   }
-
-  // ================= POST =================
   assign() {
     if (!this.postPetId || !this.postVaccinationId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -55,20 +52,18 @@ export class PetVaccinationDashboard {
       Number(this.postVaccinationId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully ✅');
+        alert('Assigned Successfully Ã¢Å“â€¦');
 
         this.router.navigate(['/pet-mapping/vaccination/list'], {
           queryParams: { petId: this.postPetId }
         });
       },
-      error: () => alert('Assign Failed ❌')
+      error: () => alert('Assign Failed Ã¢ÂÅ’')
     });
   }
-
-  // ================= DELETE =================
   remove() {
     if (!this.deletePetId || !this.deleteVaccinationId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
       return;
     }
 
@@ -77,13 +72,14 @@ export class PetVaccinationDashboard {
       Number(this.deleteVaccinationId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully ✅');
+        alert('Deleted Successfully Ã¢Å“â€¦');
 
         this.router.navigate(['/pet-mapping/vaccination/list'], {
           queryParams: { petId: this.deletePetId }
         });
       },
-      error: () => alert('Delete Failed ❌')
+      error: () => alert('Delete Failed Ã¢ÂÅ’')
     });
   }
 }
+

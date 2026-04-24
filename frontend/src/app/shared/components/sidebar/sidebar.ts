@@ -1,3 +1,4 @@
+// This shared component supports sidebar across multiple screens.
 import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 

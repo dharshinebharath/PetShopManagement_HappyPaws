@@ -1,3 +1,4 @@
+// This service handles the app-side requests and data flow for transaction.
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 

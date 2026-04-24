@@ -1,3 +1,4 @@
+// This file holds the Angular logic for customers dashboard.
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';

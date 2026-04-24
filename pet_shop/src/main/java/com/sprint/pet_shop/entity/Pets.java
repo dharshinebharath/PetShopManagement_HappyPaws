@@ -1,3 +1,4 @@
+// This entity maps the persisted data for pets.
 package com.sprint.pet_shop.entity;
 
 
@@ -52,11 +53,6 @@ public class Pets {
 
 	    @NotBlank(message = "Image URL cannot be empty")
 	    private String image_url;
-	    
-
-//		@NotNull(message = "Category cannot be null")
-//		@Column(nullable = false)
-//	    private String category;
 
 
 	    @NotNull(message = "Category cannot be null")
@@ -227,3 +223,4 @@ public class Pets {
 	
 	
 }
+

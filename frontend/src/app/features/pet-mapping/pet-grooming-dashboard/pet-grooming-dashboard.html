@@ -1,56 +1,84 @@
-<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 p-10 space-y-8">
+<!-- This template renders the page layout for pet grooming dashboard. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 py-14 px-6">
 
-    <h1 class="text-3xl text-center font-bold text-teal-900">
-        Pet ↔ Grooming Mapping
-    </h1>
+    
+    <div class="max-w-4xl mx-auto text-center mb-12">
+        <h1 class="text-4xl md:text-4xl font-extrabold tracking-tight text-sage-900">
+            Pet Ã¢â€ â€ Grooming Mapping
+        </h1>
+        <p class="mt-4 text-stone-600 text-lg max-w-2xl mx-auto">
+            Manage grooming service assignments with structured and consistent control.
+        </p>
+    </div>
 
-    <!-- ================= GET ================= -->
-    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
+    
+    <div class="max-w-2xl mx-auto space-y-6">
 
-        <h2 class="font-bold text-teal-700 text-center">View Services (GET)</h2>
+        
+        <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
 
-        <div class="flex gap-3">
-            <input [(ngModel)]="getPetId" placeholder="Enter Pet ID" class="w-full border p-2 rounded">
+            <div class="mb-4">
+                <h2 class="text-base font-semibold text-sage-900">View Grooming Services</h2>
+                <p class="text-xs text-stone-500 mt-1">Retrieve services assigned to a pet</p>
+            </div>
 
-            <button (click)="viewServices()" class="bg-blue-500 text-white px-5 rounded">
-                View
-            </button>
+            <div class="flex items-center gap-3">
+                <input [(ngModel)]="getPetId" placeholder="Pet ID"
+                    class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+
+                <button (click)="viewServices()"
+                    class="w-28 py-2 rounded-lg bg-stone-700 text-white text-sm font-medium hover:bg-stone-800 transition">
+                    VIEW
+                </button>
+            </div>
+
+        </div>
+
+        
+        <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+
+            <div class="mb-4">
+                <h2 class="text-base font-semibold text-sage-900">Assign Grooming Service</h2>
+                <p class="text-xs text-stone-500 mt-1">Link a service to a pet</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <input [(ngModel)]="postPetId" placeholder="Pet ID"
+                    class="w-1/2 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+
+                <input [(ngModel)]="postServiceId" placeholder="Service ID"
+                    class="w-1/2 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+
+                <button (click)="assign()"
+                    class="w-28 py-2 rounded-lg bg-stone-700 text-white text-sm font-medium hover:bg-stone-800 transition">
+                    ASSIGN
+                </button>
+            </div>
+
+        </div>
+
+        
+        <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+
+            <div class="mb-4">
+                <h2 class="text-base font-semibold text-sage-900">Remove Mapping</h2>
+                <p class="text-xs text-stone-500 mt-1">Unlink service from a pet</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <input [(ngModel)]="deletePetId" placeholder="Pet ID"
+                    class="w-1/2 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+
+                <input [(ngModel)]="deleteServiceId" placeholder="Service ID"
+                    class="w-1/2 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+
+                <button (click)="remove()"
+                    class="w-28 py-2 rounded-lg bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition">
+                    REMOVE
+                </button>
+            </div>
+
         </div>
 
     </div>
-
-    <!-- ================= POST ================= -->
-    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
-
-        <h2 class="font-bold text-green-700 text-center">Assign Service (POST)</h2>
-
-        <div class="flex gap-3">
-            <input [(ngModel)]="postPetId" placeholder="Pet ID" class="w-full border p-2 rounded">
-
-            <input [(ngModel)]="postServiceId" placeholder="Service ID" class="w-full border p-2 rounded">
-
-            <button (click)="assign()" class="bg-green-500 text-white px-5 rounded">
-                Assign
-            </button>
-        </div>
-
-    </div>
-
-    <!-- ================= DELETE ================= -->
-    <div class="bg-white p-6 rounded-2xl shadow w-[500px] mx-auto space-y-3">
-
-        <h2 class="font-bold text-red-600 text-center">Remove Service (DELETE)</h2>
-
-        <div class="flex gap-3">
-            <input [(ngModel)]="deletePetId" placeholder="Pet ID" class="w-full border p-2 rounded">
-
-            <input [(ngModel)]="deleteServiceId" placeholder="Service ID" class="w-full border p-2 rounded">
-
-            <button (click)="remove()" class="bg-red-500 text-white px-5 rounded">
-                Delete
-            </button>
-        </div>
-
-    </div>
-
 </div>

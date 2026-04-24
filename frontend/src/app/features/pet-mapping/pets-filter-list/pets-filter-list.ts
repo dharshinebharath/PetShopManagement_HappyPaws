@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pets filter list.
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -22,7 +23,7 @@ export class PetsFilterList {
     this.pets = res?.data || [];
 
     if (!this.pets.length) {
-      alert('No pets found ❌');
+      alert('No pets found Ã¢ÂÅ’');
     }
   }
 
@@ -40,28 +41,28 @@ export class PetsFilterList {
       if (type === 'category') {
         this.service.getByCategory(params['value']).subscribe({
           next: (res: any) => this.handlePetsResponse(res),
-          error: () => alert('Error while fetching pets ❌')
+          error: () => alert('Error while fetching pets Ã¢ÂÅ’')
         });
       }
 
       else if (type === 'breed') {
         this.service.getByBreed(params['value']).subscribe({
           next: (res: any) => this.handlePetsResponse(res),
-          error: () => alert('Error while fetching pets ❌')
+          error: () => alert('Error while fetching pets Ã¢ÂÅ’')
         });
       }
 
       else if (type === 'price') {
         this.service.getByPrice(params['min'], params['max']).subscribe({
           next: (res: any) => this.handlePetsResponse(res),
-          error: () => alert('Error while fetching pets ❌')
+          error: () => alert('Error while fetching pets Ã¢ÂÅ’')
         });
       }
 
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];

@@ -1,3 +1,4 @@
+// This test file checks the behavior around the transaction form test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionForm } from './transaction-form';

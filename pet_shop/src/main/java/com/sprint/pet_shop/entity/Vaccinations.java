@@ -1,3 +1,4 @@
+// This entity maps the persisted data for vaccinations.
 package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;

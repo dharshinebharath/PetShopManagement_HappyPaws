@@ -1,25 +1,53 @@
-<div class="min-h-screen flex flex-col justify-center items-center bg-gray-100 gap-10">
+<!-- This template renders the page layout for customertransaction module. -->
+<div class="min-h-screen !bg-gradient-to-br from-emerald-100 via-stone-50 to-green-100 py-12 px-6">
 
-  <!-- Customer Card -->
-  <div class="bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center w-80">
-    <h1 class="text-2xl font-bold mb-6 text-center">Customer Dashboard</h1>
-
-    <button 
-      routerLink="/customers-dashboard"
-      class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl shadow">
-      Go to Customer Dashboard
-    </button>
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-4xl font-extrabold text-emerald-900 tracking-wide mb-2">
+      Customer & Transactions
+    </h1>
+    <p class="text-stone-600 text-lg">
+      Professional workflows for customer records, addresses, and transaction management.
+    </p>
   </div>
 
-  <!-- Transaction Card -->
-  <div class="bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center w-80">
-    <h1 class="text-2xl font-bold mb-6 text-center">Transaction Dashboard</h1>
+  
+  <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
 
-    <button 
-      routerLink="/transactions-dashboard"
-      class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl shadow">
-      Go to Transactions Dashboard
-    </button>
+    
+    <div routerLink="/customers-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md 
+      h-[220px] flex flex-col justify-between
+      hover:shadow-xl hover:-translate-y-1 transition duration-300">
+
+      <div>
+        <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+        <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Customer Dashboard</h2>
+        <p class="text-stone-600 leading-relaxed">
+          Manage customer information and address records from a unified operational dashboard.
+        </p>
+      </div>
+
+      <div class="text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">
+        View Dashboard Ã¢â€ â€™
+      </div>
+    </div>
+
+    
+    <div routerLink="/transactions-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 p-8 shadow-md 
+      h-[220px] flex flex-col justify-between
+      hover:shadow-xl hover:-translate-y-1 transition duration-300 ">
+
+      <div>
+        <div class="w-12 h-1 bg-emerald-500 mb-5 rounded"></div>
+        <h2 class="text-2xl font-semibold text-emerald-900 mb-3">Transaction Dashboard</h2>
+        <p class="text-stone-600 leading-relaxed">
+          Track transaction activity, payment status, and filtered financial records efficiently.
+        </p>
+      </div>
+
+      <div class="text-emerald-700 font-medium opacity-0 group-hover:opacity-100 transition">
+        View Dashboard Ã¢â€ â€™
+      </div>
+    </div>
+
   </div>
-
 </div>

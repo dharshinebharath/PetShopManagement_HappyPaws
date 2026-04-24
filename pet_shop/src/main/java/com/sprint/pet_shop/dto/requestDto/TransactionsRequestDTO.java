@@ -1,3 +1,4 @@
+// This DTO shapes the request or response data for transactions request dto.
 package com.sprint.pet_shop.dto.requestDto;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import jakarta.validation.constraints.Positive;
 public class TransactionsRequestDTO {
 
     @NotNull(message = "Transaction date cannot be null")
-    @JsonFormat(pattern = "yyyy-MM-dd") // ✅ ensures correct JSON format
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate transactionDate;
 
     @NotNull(message = "Amount cannot be null")
@@ -28,7 +29,6 @@ public class TransactionsRequestDTO {
 
     @NotNull(message = "Transaction status cannot be null")
     private TransactionStatus transactionStatus;
-    // ================= GETTERS & SETTERS =================
 
     public LocalDate getTransactionDate() {
         return transactionDate;
@@ -73,3 +73,4 @@ public class TransactionsRequestDTO {
 	
 
 }
+

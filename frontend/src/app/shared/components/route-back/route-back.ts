@@ -1,3 +1,4 @@
+// This shared component supports route back across multiple screens.
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
@@ -11,7 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class RouteBackComponent {
   router = inject(Router);
-  currentUrl = '';
+  currentUrl = this.router.url;
 
   constructor() {
     this.router.events.subscribe(event => {
@@ -22,7 +23,35 @@ export class RouteBackComponent {
   }
 
   get show(): boolean {
-    return this.currentUrl.includes('/list') || this.currentUrl.includes('/form');
+    return this.isDashboardRoute || this.currentUrl.includes('/list') || this.currentUrl.includes('/form');
+  }
+
+  get buttonLabel(): string {
+    return this.isDashboardRoute ? 'Back To Module' : 'Back To Dashboard';
+  }
+
+  private get isDashboardRoute(): boolean {
+    // These routes act as entry points for each module, so they should return to the module card page.
+    const dashboards = [
+      '/pets-dashboard',
+      '/category-dashboard',
+      '/grooming-dashboard',
+      '/vaccination-dashboard',
+      '/customers-dashboard',
+      '/transactions-dashboard',
+      '/employee-dashboard',
+      '/food-dashboard',
+      '/supplier-dashboard',
+      '/pets-filter-dashboard',
+      '/employee-reports',
+      '/employee-pet-mapping',
+      '/pet-mapping/grooming',
+      '/pet-mapping/food',
+      '/pet-mapping/suppliers',
+      '/pet-mapping/vaccination'
+    ];
+
+    return dashboards.includes(this.currentUrl);
   }
 
   goBackToDashboard() {
@@ -43,6 +72,32 @@ export class RouteBackComponent {
     if (u.startsWith('/pet-mapping/food/')) return this.router.navigate(['/pet-mapping/food']);
     if (u.startsWith('/pet-mapping/suppliers/')) return this.router.navigate(['/pet-mapping/suppliers']);
     if (u.startsWith('/pet-mapping/vaccination/')) return this.router.navigate(['/pet-mapping/vaccination']);
+    return this.router.navigate(['/']);
+  }
+
+  goBack() {
+    if (!this.isDashboardRoute) {
+      return this.goBackToDashboard();
+    }
+
+    // Keep the navigation predictable by sending each dashboard back to its own module home.
+    const u = this.currentUrl;
+    if (u === '/pets-dashboard' || u === '/category-dashboard' || u === '/pets-filter-dashboard') {
+      return this.router.navigate(['/pets-module']);
+    }
+    if (u === '/grooming-dashboard' || u === '/vaccination-dashboard' || u === '/pet-mapping/grooming' || u === '/pet-mapping/vaccination') {
+      return this.router.navigate(['/pet-services-module']);
+    }
+    if (u === '/food-dashboard' || u === '/supplier-dashboard' || u === '/pet-mapping/food' || u === '/pet-mapping/suppliers') {
+      return this.router.navigate(['/inventory-module']);
+    }
+    if (u === '/customers-dashboard' || u === '/transactions-dashboard') {
+      return this.router.navigate(['/customertransaction-module']);
+    }
+    if (u === '/employee-dashboard' || u === '/employee-pet-mapping' || u === '/employee-reports') {
+      return this.router.navigate(['/employee-module']);
+    }
+
     return this.router.navigate(['/']);
   }
 }

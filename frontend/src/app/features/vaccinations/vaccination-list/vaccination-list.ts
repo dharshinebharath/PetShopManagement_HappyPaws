@@ -1,3 +1,4 @@
+// This file holds the Angular logic for vaccination list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { VaccinationService } from '../../../core/services/vaccinationService';
 import { CommonModule } from '@angular/common';
@@ -30,7 +31,7 @@ export class VaccinationList {
           next: (res: any) => {
 
             if (!res || !res.data) {
-              alert('No vaccination found with this ID ❌');
+              alert('No vaccination found with this ID Ã¢ÂÅ’');
               this.vaccinationList = [];
               return;
             }
@@ -40,7 +41,7 @@ export class VaccinationList {
           },
 
           error: (err) => {
-            alert('Vaccination ID not found ❌');
+            alert('Vaccination ID not found Ã¢ÂÅ’');
             this.vaccinationList = [];
             console.log(err);
           }
@@ -62,7 +63,7 @@ export class VaccinationList {
     });
   }
   currentPage = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
