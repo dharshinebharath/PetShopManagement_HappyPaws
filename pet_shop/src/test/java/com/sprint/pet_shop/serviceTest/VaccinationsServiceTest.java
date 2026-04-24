@@ -1,4 +1,3 @@
-// This service contains the main business flow for vaccinations service test.
 package com.sprint.pet_shop.serviceTest;
 
 

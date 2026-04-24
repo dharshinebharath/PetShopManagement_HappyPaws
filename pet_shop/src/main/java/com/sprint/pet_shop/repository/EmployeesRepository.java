@@ -1,4 +1,3 @@
-// This repository handles database access for employees repository.
 package com.sprint.pet_shop.repository;
 
 import java.time.LocalDate;

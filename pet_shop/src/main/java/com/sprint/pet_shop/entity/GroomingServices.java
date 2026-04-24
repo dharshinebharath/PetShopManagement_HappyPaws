@@ -1,4 +1,3 @@
-// This service contains the main business flow for grooming services.
 package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;

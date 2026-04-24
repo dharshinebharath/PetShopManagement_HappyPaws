@@ -1,4 +1,3 @@
-// This DTO shapes the request or response data for pet food response dto.
 package com.sprint.pet_shop.dto.responseDto;
 
 import java.math.BigDecimal;

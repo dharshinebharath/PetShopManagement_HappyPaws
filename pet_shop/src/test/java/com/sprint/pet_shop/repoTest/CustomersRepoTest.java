@@ -1,4 +1,3 @@
-// This test exercises the expected behavior for customers repo test.
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.Customers;

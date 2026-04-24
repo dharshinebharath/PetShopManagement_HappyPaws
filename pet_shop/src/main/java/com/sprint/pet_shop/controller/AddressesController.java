@@ -1,4 +1,3 @@
-// This controller exposes the HTTP endpoints for addresses controller.
 package com.sprint.pet_shop.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

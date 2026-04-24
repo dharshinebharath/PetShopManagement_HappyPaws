@@ -1,4 +1,3 @@
-// This Java file supports pet shop application in the backend application.
 package com.sprint.pet_shop;
 
 import org.springframework.boot.SpringApplication;

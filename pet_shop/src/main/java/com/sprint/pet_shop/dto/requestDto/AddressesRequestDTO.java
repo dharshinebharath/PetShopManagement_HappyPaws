@@ -1,4 +1,3 @@
-// This DTO shapes the request or response data for addresses request dto.
 package com.sprint.pet_shop.dto.requestDto;
 
 import jakarta.validation.constraints.NotBlank;

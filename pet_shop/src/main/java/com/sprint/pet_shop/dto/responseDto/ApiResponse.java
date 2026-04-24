@@ -1,4 +1,3 @@
-// This DTO shapes the request or response data for api response.
 package com.sprint.pet_shop.dto.responseDto;
 
 public class ApiResponse<T> {

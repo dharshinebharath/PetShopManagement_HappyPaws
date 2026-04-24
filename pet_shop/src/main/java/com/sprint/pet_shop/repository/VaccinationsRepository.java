@@ -1,4 +1,3 @@
-// This repository handles database access for vaccinations repository.
 package com.sprint.pet_shop.repository;
 
 import java.math.BigDecimal;

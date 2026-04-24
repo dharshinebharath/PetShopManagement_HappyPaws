@@ -1,4 +1,3 @@
-// This DTO shapes the request or response data for supplier response dto.
 package com.sprint.pet_shop.dto.responseDto;
 
 

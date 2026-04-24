@@ -1,4 +1,3 @@
-// This entity maps the persisted data for transactions entity.
 package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;

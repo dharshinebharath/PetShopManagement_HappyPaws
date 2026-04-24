@@ -1,4 +1,3 @@
-// This service contains the main business flow for pets interface.
 package com.sprint.pet_shop.service.interfaces;
 
 import java.math.BigDecimal;

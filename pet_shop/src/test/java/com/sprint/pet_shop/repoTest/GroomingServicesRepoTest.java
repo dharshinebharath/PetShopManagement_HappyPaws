@@ -1,4 +1,3 @@
-// This service contains the main business flow for grooming services repo test.
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.GroomingServices;

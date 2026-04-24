@@ -1,4 +1,3 @@
-// This test exercises the expected behavior for employees repo test.
 package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,3 @@
-// This repository handles database access for pet food repository.
 package com.sprint.pet_shop.repository;
 
 import java.util.List;

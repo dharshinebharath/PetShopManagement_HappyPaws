@@ -1,4 +1,3 @@
-// This test exercises the expected behavior for transactions repo test.
 package com.sprint.pet_shop.repoTest;
 
 import static org.junit.jupiter.api.Assertions.*;

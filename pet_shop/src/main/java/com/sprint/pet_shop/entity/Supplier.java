@@ -1,4 +1,3 @@
-// This entity maps the persisted data for supplier.
 package com.sprint.pet_shop.entity;
 
 import java.util.List;

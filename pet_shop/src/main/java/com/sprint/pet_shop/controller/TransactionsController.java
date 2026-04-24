@@ -1,4 +1,3 @@
-// This controller exposes the HTTP endpoints for transactions controller.
 package com.sprint.pet_shop.controller;
 
 import java.sql.Date;

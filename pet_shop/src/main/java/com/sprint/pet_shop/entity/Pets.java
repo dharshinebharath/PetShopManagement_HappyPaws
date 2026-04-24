@@ -1,4 +1,3 @@
-// This entity maps the persisted data for pets.
 package com.sprint.pet_shop.entity;
 
 

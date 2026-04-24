@@ -1,4 +1,3 @@
-// This controller exposes the HTTP endpoints for supplier controller.
 package com.sprint.pet_shop.controller;
 
 import java.util.List;

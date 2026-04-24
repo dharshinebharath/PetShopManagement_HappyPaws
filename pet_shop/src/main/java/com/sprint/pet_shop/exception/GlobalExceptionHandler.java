@@ -1,4 +1,3 @@
-// This class defines an exception or error-handling helper for global exception handler.
 package com.sprint.pet_shop.exception;
 
 import org.springframework.http.HttpStatus;

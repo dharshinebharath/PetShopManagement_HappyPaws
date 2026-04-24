@@ -1,4 +1,3 @@
-// This service contains the main business flow for transactions service test.
 package com.sprint.pet_shop.serviceTest;
 
 import static org.junit.jupiter.api.Assertions.*;

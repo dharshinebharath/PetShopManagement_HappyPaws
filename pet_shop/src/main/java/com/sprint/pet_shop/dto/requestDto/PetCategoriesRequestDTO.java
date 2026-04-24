@@ -1,4 +1,3 @@
-// This DTO shapes the request or response data for pet categories request dto.
 package com.sprint.pet_shop.dto.requestDto;
 
 import jakarta.validation.constraints.NotBlank;

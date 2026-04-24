@@ -1,4 +1,3 @@
-// This service contains the main business flow for addresses service test.
 package com.sprint.pet_shop.serviceTest;
 
 import com.sprint.pet_shop.dto.requestDto.AddressesRequestDTO;

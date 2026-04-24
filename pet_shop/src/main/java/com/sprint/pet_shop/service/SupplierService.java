@@ -1,4 +1,3 @@
-// This service contains the main business flow for supplier service.
 package com.sprint.pet_shop.service;
 
 import java.util.List;

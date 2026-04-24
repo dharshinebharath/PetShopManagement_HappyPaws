@@ -1,4 +1,3 @@
-// This configuration class sets up framework behavior for security config.
 package com.sprint.pet_shop.security;
 
 import org.springframework.context.annotation.Bean;
