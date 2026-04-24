@@ -314,6 +314,16 @@ body {
   accent-color: var(--sage-700) !important;
 }
 
+main > :not(router-outlet):not(app-route-back) {
+  display: block;
+}
+
+app-home, app-login {
+  display: flex !important;
+  flex-direction: column;
+  height: 100%;
+}
+
 .hover\:bg-sage-700:hover {
   background-color: var(--sage-700) !important;
 }

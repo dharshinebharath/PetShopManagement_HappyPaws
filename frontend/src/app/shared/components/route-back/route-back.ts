@@ -18,13 +18,14 @@ export class RouteBackComponent {
   constructor() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.currentUrl = event.urlAfterRedirects || event.url;
+        const url = event.urlAfterRedirects || event.url;
+        this.currentUrl = url.split('?')[0]; // Strip query params to ensure accurate matching
       }
     });
   }
 
   get show(): boolean {
-    return this.isDashboardRoute || this.currentUrl.includes('/list') || this.currentUrl.includes('/form');
+    return this.isDashboardRoute || this.currentUrl.includes('list') || this.currentUrl.includes('/form') || this.currentUrl.includes('/add') || this.currentUrl.includes('/edit') || this.currentUrl.includes('/assignment');
   }
 
   get buttonLabel(): string {

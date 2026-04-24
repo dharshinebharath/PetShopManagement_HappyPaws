@@ -84,8 +84,24 @@ export class TransactionDashboard {
       return;
     }
 
-    this.router.navigate(['/transactions/list'], {
-      queryParams: { fromDate, toDate }
+    this.transactionService.getByDateRange(fromDate, toDate).subscribe({
+      next: (res: any) => {
+        const records = Array.isArray(res) ? res : res.data ?? [];
+        if (records.length === 0) {
+          alert('No transactions found for the specified date range');
+        } else {
+          this.router.navigate(['/transactions/list'], {
+            queryParams: { fromDate, toDate }
+          });
+        }
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          alert('No transactions found for the specified date range');
+        } else {
+          alert('Something went wrong');
+        }
+      }
     });
   }
 }
