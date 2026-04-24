@@ -313,3 +313,20 @@ body {
 .accent-sage-700 {
   accent-color: var(--sage-700) !important;
 }
+
+.hover\:bg-sage-700:hover {
+  background-color: var(--sage-700) !important;
+}
+
+.hover\:text-stone-50:hover {
+  color: var(--stone-50) !important;
+}
+
+.hover\:from-sage-700:hover {
+  --tw-gradient-from: var(--sage-700) var(--tw-gradient-from-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.hover\:to-sage-900:hover {
+  --tw-gradient-to: var(--sage-900) var(--tw-gradient-to-position) !important;
+}
