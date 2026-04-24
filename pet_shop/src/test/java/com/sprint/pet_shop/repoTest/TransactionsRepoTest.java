@@ -25,7 +25,7 @@ public class TransactionsRepoTest {
     void testValidTransactionCreation() {
         TransactionsEntity transaction = new TransactionsEntity();
 
-        transaction.setTransactionDate(Date.valueOf("2024-03-01"));
+        transaction.setTransactionDate(LocalDate.now());
         transaction.setAmount(BigDecimal.valueOf(1500));
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
 
