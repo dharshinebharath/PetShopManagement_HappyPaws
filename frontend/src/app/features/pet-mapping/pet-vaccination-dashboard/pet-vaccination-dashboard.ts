@@ -22,7 +22,7 @@ export class PetVaccinationDashboard {
   deleteVaccinationId: string = '';
   viewVaccinations() {
     if (!this.getPetId) {
-      alert('Enter Pet ID Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter Pet ID ⚠️Â');
       return;
     }
 
@@ -30,7 +30,7 @@ export class PetVaccinationDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No vaccinations found Ã¢ÂÅ’');
+          alert('No vaccinations found ❌');
           return;
         }
 
@@ -38,12 +38,12 @@ export class PetVaccinationDashboard {
           queryParams: { petId: this.getPetId }
         });
       },
-      error: () => alert('Invalid Pet ID Ã¢ÂÅ’')
+      error: () => alert('Invalid Pet ID ❌')
     });
   }
   assign() {
     if (!this.postPetId || !this.postVaccinationId) {
-      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -52,18 +52,18 @@ export class PetVaccinationDashboard {
       Number(this.postVaccinationId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully Ã¢Å“â€¦');
+        alert('Assigned Successfully ✅');
 
         this.router.navigate(['/pet-mapping/vaccination/list'], {
           queryParams: { petId: this.postPetId }
         });
       },
-      error: () => alert('Assign Failed Ã¢ÂÅ’')
+      error: () => alert('Assign Failed ❌')
     });
   }
   remove() {
     if (!this.deletePetId || !this.deleteVaccinationId) {
-      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -72,13 +72,13 @@ export class PetVaccinationDashboard {
       Number(this.deleteVaccinationId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully Ã¢Å“â€¦');
+        alert('Deleted Successfully ✅');
 
         this.router.navigate(['/pet-mapping/vaccination/list'], {
           queryParams: { petId: this.deletePetId }
         });
       },
-      error: () => alert('Delete Failed Ã¢ÂÅ’')
+      error: () => alert('Delete Failed ❌')
     });
   }
 }

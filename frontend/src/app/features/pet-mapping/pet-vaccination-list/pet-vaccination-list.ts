@@ -43,7 +43,7 @@ export class PetVaccinationList {
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('No vaccinations found Ã¢ÂÅ’');
+        alert('No vaccinations found ❌');
         this.vaccinations = [];
       }
     });
@@ -51,10 +51,10 @@ export class PetVaccinationList {
   remove(vaccinationId: number) {
     this.service.removeVaccination(this.petId!, vaccinationId).subscribe({
       next: () => {
-        alert('Removed successfully Ã¢Å“â€¦');
+        alert('Removed successfully ✅');
         this.load();
       },
-      error: () => alert('Delete failed Ã¢ÂÅ’')
+      error: () => alert('Delete failed ❌')
     });
   }
   currentPage = 1;

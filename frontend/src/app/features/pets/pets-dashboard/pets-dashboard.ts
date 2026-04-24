@@ -34,7 +34,7 @@ export class PetsDashboard {
         });
       },
       error: () => {
-        alert('Pet not found Ã¢ÂÅ’');
+        alert('Pet not found ❌');
       }
     });
   }
@@ -53,7 +53,7 @@ export class PetsDashboard {
         });
       },
       error: () => {
-        alert('Cannot update Ã¢ÂÅ’ ID not found');
+        alert('Cannot update ❌ ID not found');
       }
     });
   }
@@ -67,11 +67,11 @@ export class PetsDashboard {
 
     this.petService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Pet deleted successfully Ã¢Å“â€¦');
+        alert('Pet deleted successfully ✅');
         this.router.navigate(['/pets/list']);
       },
       error: () => {
-        alert('Delete failed Ã¢ÂÅ’');
+        alert('Delete failed ❌');
       }
     });
   }

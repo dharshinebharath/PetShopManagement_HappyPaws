@@ -23,7 +23,7 @@ export class PetsFilterList {
     this.pets = res?.data || [];
 
     if (!this.pets.length) {
-      alert('No pets found Ã¢ÂÅ’');
+      alert('No pets found ❌');
     }
   }
 
@@ -41,21 +41,21 @@ export class PetsFilterList {
       if (type === 'category') {
         this.service.getByCategory(params['value']).subscribe({
           next: (res: any) => this.handlePetsResponse(res),
-          error: () => alert('Error while fetching pets Ã¢ÂÅ’')
+          error: () => alert('Error while fetching pets ❌')
         });
       }
 
       else if (type === 'breed') {
         this.service.getByBreed(params['value']).subscribe({
           next: (res: any) => this.handlePetsResponse(res),
-          error: () => alert('Error while fetching pets Ã¢ÂÅ’')
+          error: () => alert('Error while fetching pets ❌')
         });
       }
 
       else if (type === 'price') {
         this.service.getByPrice(params['min'], params['max']).subscribe({
           next: (res: any) => this.handlePetsResponse(res),
-          error: () => alert('Error while fetching pets Ã¢ÂÅ’')
+          error: () => alert('Error while fetching pets ❌')
         });
       }
 

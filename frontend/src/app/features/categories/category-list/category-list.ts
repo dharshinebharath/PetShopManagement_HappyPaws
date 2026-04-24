@@ -34,7 +34,7 @@ export class CategoryList {
             console.log('GET BY ID RESPONSE Ã°Å¸â€˜â€°', res);
 
             if (!res || !res.data) {
-              alert('No category found Ã¢ÂÅ’');
+              alert('No category found ❌');
               this.router.navigate(['/category/list']);
               return;
             }
@@ -46,7 +46,7 @@ export class CategoryList {
           error: (err) => {
             console.log(err);
 
-            alert('Category not found Ã¢ÂÅ’');
+            alert('Category not found ❌');
             this.router.navigate(['/category/list']);
           }
         });

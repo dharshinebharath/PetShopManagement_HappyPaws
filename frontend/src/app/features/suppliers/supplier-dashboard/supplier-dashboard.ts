@@ -36,9 +36,9 @@ export class SupplierDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Supplier ID not found Ã¢ÂÅ’');
+          alert('Supplier ID not found ❌');
         } else {
-          alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
+          alert('Something went wrong ⚠️Â');
         }
       }
     });
@@ -59,7 +59,7 @@ export class SupplierDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Cannot update Ã¢ÂÅ’ ID not found');
+          alert('Cannot update ❌ ID not found');
         } else {
           alert('Error checking ID');
         }
@@ -76,12 +76,12 @@ export class SupplierDashboard {
 
     this.supplierService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Supplier deleted successfully Ã¢Å“â€¦');
+        alert('Supplier deleted successfully ✅');
         this.router.navigate(['/supplier/list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Delete failed Ã¢ÂÅ’');
+        alert('Delete failed ❌');
       }
     });
   }

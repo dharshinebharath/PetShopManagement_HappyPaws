@@ -34,7 +34,7 @@ export class PetsList {
               console.log('GET BY ID RESPONSE Ã°Å¸â€˜â€°', res);
 
             if (!res || !res.data) {
-              alert('No pet found with this ID Ã¢ÂÅ’');
+              alert('No pet found with this ID ❌');
               this.router.navigate(['/pets']);
               return;
             }
@@ -48,11 +48,11 @@ export class PetsList {
             console.log(err);
 
             if (err.status === 404) {
-              alert('Pet ID not found Ã¢ÂÅ’');
+              alert('Pet ID not found ❌');
             } else if (err.status === 401) {
-              alert('Unauthorized Ã¢ÂÅ’ Please login again');
+              alert('Unauthorized ❌ Please login again');
             } else {
-              alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
+              alert('Something went wrong ⚠️Â');
             }
 
             this.router.navigate(['/pets']);

@@ -46,7 +46,7 @@ export class PetGroomingList {
       },
       error: (err) => {
         console.log(err);
-        alert('No services found Ã¢ÂÅ’');
+        alert('No services found ❌');
         this.services = [];
       }
     });
@@ -55,10 +55,10 @@ export class PetGroomingList {
   remove(serviceId: number) {
     this.service.removeGrooming(this.petId!, serviceId).subscribe({
       next: () => {
-        alert('Removed successfully Ã¢Å“â€¦');
+        alert('Removed successfully ✅');
         this.load();
       },
-      error: () => alert('Delete failed Ã¢ÂÅ’')
+      error: () => alert('Delete failed ❌')
     });
   }
   currentPage = 1;

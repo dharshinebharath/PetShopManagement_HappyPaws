@@ -45,9 +45,9 @@ export class EmployeeDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Employee ID not found Ã¢ÂÅ’');
+          alert('Employee ID not found ❌');
         } else {
-          alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
+          alert('Something went wrong ⚠️Â');
         }
       }
     });
@@ -66,7 +66,7 @@ export class EmployeeDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Cannot update Ã¢ÂÅ’ Employee not found');
+          alert('Cannot update ❌ Employee not found');
         } else {
           alert('Error checking employee');
         }
@@ -81,12 +81,12 @@ export class EmployeeDashboard {
 
     this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders()).subscribe({
       next: () => {
-        alert('Employee deleted successfully Ã¢Å“â€¦');
+        alert('Employee deleted successfully ✅');
         this.router.navigate(['/employee/list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Delete failed Ã¢ÂÅ’');
+        alert('Delete failed ❌');
       }
     });
   }

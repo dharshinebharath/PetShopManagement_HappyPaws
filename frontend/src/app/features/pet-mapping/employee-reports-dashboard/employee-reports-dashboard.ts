@@ -41,7 +41,7 @@ export class EmployeeReportsDashboard {
   }
   getByRole() {
     if (!this.role) {
-      alert('Enter role Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter role ⚠️Â');
       return;
     }
 
@@ -49,7 +49,7 @@ export class EmployeeReportsDashboard {
       next: (res: any) => {
 
         if (!res?.data?.length) {
-          alert('No employees found Ã¢ÂÅ’');
+          alert('No employees found ❌');
           return;
         }
 
@@ -57,12 +57,12 @@ export class EmployeeReportsDashboard {
           queryParams: { type: 'role', value: this.role }
         });
       },
-      error: () => alert('Error Ã¢ÂÅ’')
+      error: () => alert('Error ❌')
     });
   }
   getByDate() {
     if (!this.date) {
-      alert('Select date Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Select date ⚠️Â');
       return;
     }
 
@@ -70,7 +70,7 @@ export class EmployeeReportsDashboard {
       next: (res: any) => {
 
         if (!res?.data?.length) {
-          alert('No employees found Ã¢ÂÅ’');
+          alert('No employees found ❌');
           return;
         }
 
@@ -78,7 +78,7 @@ export class EmployeeReportsDashboard {
           queryParams: { type: 'date', value: this.date }
         });
       },
-      error: () => alert('Error Ã¢ÂÅ’')
+      error: () => alert('Error ❌')
     });
   }
 }

@@ -31,7 +31,7 @@ export class VaccinationList {
           next: (res: any) => {
 
             if (!res || !res.data) {
-              alert('No vaccination found with this ID Ã¢ÂÅ’');
+              alert('No vaccination found with this ID ❌');
               this.vaccinationList = [];
               return;
             }
@@ -41,7 +41,7 @@ export class VaccinationList {
           },
 
           error: (err) => {
-            alert('Vaccination ID not found Ã¢ÂÅ’');
+            alert('Vaccination ID not found ❌');
             this.vaccinationList = [];
             console.log(err);
           }

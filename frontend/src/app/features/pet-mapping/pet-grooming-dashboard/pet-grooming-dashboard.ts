@@ -22,7 +22,7 @@ export class PetGroomingDashboard {
   deleteServiceId: string = '';
  viewServices() {
   if (!this.getPetId) {
-    alert('Enter Pet ID Ã¢Å¡Â Ã¯Â¸Â');
+    alert('Enter Pet ID ⚠️Â');
     return;
   }
 
@@ -31,7 +31,7 @@ export class PetGroomingDashboard {
     next: (res: any) => {
 
       if (!res || !res.data || res.data.length === 0) {
-        alert('No services found for this Pet ID Ã¢ÂÅ’');
+        alert('No services found for this Pet ID ❌');
         return;
       }
 
@@ -43,13 +43,13 @@ export class PetGroomingDashboard {
     error: (err) => {
       console.log(err);
 
-      alert('Invalid Pet ID Ã¢ÂÅ’');
+      alert('Invalid Pet ID ❌');
     }
   });
 }
   assign() {
     if (!this.postPetId || !this.postServiceId) {
-      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -58,18 +58,18 @@ export class PetGroomingDashboard {
       Number(this.postServiceId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully Ã¢Å“â€¦');
+        alert('Assigned Successfully ✅');
 
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.postPetId }
         });
       },
-      error: () => alert('Assign Failed Ã¢ÂÅ’')
+      error: () => alert('Assign Failed ❌')
     });
   }
   remove() {
     if (!this.deletePetId || !this.deleteServiceId) {
-      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -78,13 +78,13 @@ export class PetGroomingDashboard {
       Number(this.deleteServiceId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully Ã¢Å“â€¦');
+        alert('Deleted Successfully ✅');
 
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.deletePetId }
         });
       },
-      error: () => alert('Delete Failed Ã¢ÂÅ’')
+      error: () => alert('Delete Failed ❌')
     });
   }
 }

@@ -32,9 +32,9 @@ export class FoodDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Food ID not found Ã¢ÂÅ’');
+          alert('Food ID not found ❌');
         } else {
-          alert('Something went wrong Ã¢Å¡Â Ã¯Â¸Â');
+          alert('Something went wrong ⚠️Â');
         }
       }
     });
@@ -53,7 +53,7 @@ export class FoodDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Cannot update Ã¢ÂÅ’ ID not found');
+          alert('Cannot update ❌ ID not found');
         } else {
           alert('Error checking ID');
         }
@@ -68,12 +68,12 @@ export class FoodDashboard {
 
     this.foodService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Food deleted successfully Ã¢Å“â€¦');
+        alert('Food deleted successfully ✅');
         this.router.navigate(['/food/list']);
       },
       error: (err) => {
         console.error(err);
-        alert('Delete failed Ã¢ÂÅ’');
+        alert('Delete failed ❌');
       }
     });
   }

@@ -44,7 +44,7 @@ export class PetFoodList {
       },
       error: (err) => {
         console.log(err);
-        alert('No food found Ã¢ÂÅ’');
+        alert('No food found ❌');
         this.foods = [];
       }
     });
@@ -53,10 +53,10 @@ export class PetFoodList {
   remove(foodId: number) {
     this.service.removeFood(this.petId!, foodId).subscribe({
       next: () => {
-        alert('Removed successfully Ã¢Å“â€¦');
+        alert('Removed successfully ✅');
         this.load();
       },
-      error: () => alert('Delete failed Ã¢ÂÅ’')
+      error: () => alert('Delete failed ❌')
     });
   }
   currentPage = 1;

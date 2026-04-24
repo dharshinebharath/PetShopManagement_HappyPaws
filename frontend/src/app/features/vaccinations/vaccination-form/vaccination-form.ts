@@ -54,7 +54,7 @@ export class VaccinationForm {
             this.cdr.detectChanges();
           },
           error: () => {
-            alert('Vaccination not found Ã¢ÂÅ’');
+            alert('Vaccination not found ❌');
             this.router.navigate(['/vaccination']);
           }
         });
@@ -108,7 +108,7 @@ export class VaccinationForm {
         }
       }
 
-      alert('Ã¢ÂÅ’ Please fix errors:\n\n' + errors.join('\n'));
+      alert('❌ Please fix errors:\n\n' + errors.join('\n'));
 
       return;
     }
@@ -120,10 +120,10 @@ export class VaccinationForm {
 
       this.vaccinationService.update(this.serviceId, payload).subscribe({
         next: () => {
-          alert('Updated successfully Ã¢Å“â€¦');
+          alert('Updated successfully ✅');
           this.router.navigate(['/vaccination/list']);
         },
-        error: () => alert('Update failed Ã¢ÂÅ’')
+        error: () => alert('Update failed ❌')
       });
 
     } else {
@@ -137,10 +137,10 @@ export class VaccinationForm {
 
       this.vaccinationService.create(createPayload).subscribe({
         next: () => {
-          alert('Created successfully Ã¢Å“â€¦');
+          alert('Created successfully ✅');
           this.router.navigate(['/vaccination/list']);
         },
-        error: () => alert('Create failed Ã¢ÂÅ’')
+        error: () => alert('Create failed ❌')
       });
 
     }

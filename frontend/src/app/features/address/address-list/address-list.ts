@@ -33,7 +33,7 @@ export class AddressList {
             this.addressList = [res.data];
             this.cdr.detectChanges();
           },
-          error: () => alert('Address not found Ã¢ÂÅ’')
+          error: () => alert('Address not found ❌')
         });
 
       } else {
@@ -49,7 +49,7 @@ export class AddressList {
         this.addressList = res.data;
         this.cdr.detectChanges();
       },
-      error: () => alert('Failed to load addresses Ã¢ÂÅ’')
+      error: () => alert('Failed to load addresses ❌')
     });
   }
   currentPage = 1;

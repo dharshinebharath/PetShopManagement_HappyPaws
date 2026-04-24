@@ -23,7 +23,7 @@ export class EmployeePetDashboard {
   deletePetId: string = '';
   viewPets() {
     if (!this.getEmployeeId) {
-      alert('Enter Employee ID Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter Employee ID ⚠️Â');
       return;
     }
 
@@ -31,7 +31,7 @@ export class EmployeePetDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No pets found Ã¢ÂÅ’');
+          alert('No pets found ❌');
           return;
         }
 
@@ -39,12 +39,12 @@ export class EmployeePetDashboard {
           queryParams: { employeeId: this.getEmployeeId }
         });
       },
-      error: () => alert('Invalid Employee ID Ã¢ÂÅ’')
+      error: () => alert('Invalid Employee ID ❌')
     });
   }
   assign() {
     if (!this.postEmployeeId || !this.postPetId) {
-      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -53,18 +53,18 @@ export class EmployeePetDashboard {
       Number(this.postPetId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully Ã¢Å“â€¦');
+        alert('Assigned Successfully ✅');
 
         this.router.navigate(['/employee-pet-mapping/list'], {
           queryParams: { employeeId: this.postEmployeeId }
         });
       },
-      error: () => alert('Assign Failed Ã¢ÂÅ’')
+      error: () => alert('Assign Failed ❌')
     });
   }
   viewEmployees() {
     if (!this.getPetId) {
-      alert('Enter Pet ID Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter Pet ID ⚠️Â');
       return;
     }
 
@@ -72,7 +72,7 @@ export class EmployeePetDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No employees found Ã¢ÂÅ’');
+          alert('No employees found ❌');
           return;
         }
 
@@ -80,12 +80,12 @@ export class EmployeePetDashboard {
           queryParams: { petId: this.getPetId }
         });
       },
-      error: () => alert('Invalid Pet ID Ã¢ÂÅ’')
+      error: () => alert('Invalid Pet ID ❌')
     });
   }
   remove() {
     if (!this.deleteEmployeeId || !this.deletePetId) {
-      alert('Enter both IDs Ã¢Å¡Â Ã¯Â¸Â');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -94,13 +94,13 @@ export class EmployeePetDashboard {
       Number(this.deletePetId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully Ã¢Å“â€¦');
+        alert('Deleted Successfully ✅');
 
         this.router.navigate(['/employee-pet-mapping/list'], {
           queryParams: { employeeId: this.deleteEmployeeId }
         });
       },
-      error: () => alert('Delete Failed Ã¢ÂÅ’')
+      error: () => alert('Delete Failed ❌')
     });
   }
 }

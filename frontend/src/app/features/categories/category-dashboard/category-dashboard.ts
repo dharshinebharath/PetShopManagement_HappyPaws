@@ -30,7 +30,7 @@ export class CategoryDashboard {
         });
       },
       error: () => {
-        alert('Category not found Ã¢ÂÅ’');
+        alert('Category not found ❌');
       }
     });
   }
@@ -47,7 +47,7 @@ export class CategoryDashboard {
         });
       },
       error: () => {
-        alert('Cannot update Ã¢ÂÅ’ ID not found');
+        alert('Cannot update ❌ ID not found');
       }
     });
   }
@@ -59,11 +59,11 @@ export class CategoryDashboard {
 
     this.categoryService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Category deleted successfully Ã¢Å“â€¦');
+        alert('Category deleted successfully ✅');
         this.router.navigate(['/category/list']);
       },
       error: () => {
-        alert('Delete failed Ã¢ÂÅ’');
+        alert('Delete failed ❌');
       }
     });
   }
