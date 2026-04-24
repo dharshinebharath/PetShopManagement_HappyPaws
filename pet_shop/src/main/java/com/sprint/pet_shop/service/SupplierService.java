@@ -24,8 +24,6 @@ public class SupplierService implements SupplierInterface {
     private SupplierRepository supplierRepository;
     @Autowired
     private AddressesRepository addressesRepository;
-
-    // ENTITY → DTO
     private SupplierResponseDTO toDto(Supplier entity) {
 
         SupplierResponseDTO dto = new SupplierResponseDTO();
@@ -40,8 +38,6 @@ public class SupplierService implements SupplierInterface {
 
         return dto;
     }
-
-    // SAVE ALL
     @Override
     public ApiResponse<List<SupplierResponseDTO>> saveAll(List<SupplierRequestDTO> suppliers) {
 
@@ -87,13 +83,11 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
-
-    // GET ALL
     @Override
     public ApiResponse<List<SupplierResponseDTO>> getAll() {
 
         List<SupplierResponseDTO> data =
-                supplierRepository.findAll()
+                supplierRepository.findAllSorted()
                         .stream()
                         .map(this::toDto)
                         .toList();
@@ -105,8 +99,6 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
-
-    // GET BY ID
     @Override
     public ApiResponse<SupplierResponseDTO> getSupplierById(long supplierId) {
 
@@ -121,8 +113,6 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
-
-    // DELETE
     @Override
     public ApiResponse<String> deleteSupplier(long supplierId) {
 
@@ -139,8 +129,6 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
-
-    // UPDATE
     @Override
     public ApiResponse<SupplierResponseDTO> updateSupplier(Long id, SupplierRequestDTO dto) {
 
@@ -199,3 +187,4 @@ public class SupplierService implements SupplierInterface {
     
     
 }
+

@@ -1,53 +1,35 @@
-<div class="min-h-screen pt-[10px] 
-            bg-gradient-to-br from-yellow-100 via-orange-50 to-red-100">
+<!-- This template renders the page layout for pets module. -->
+<div class="min-h-screen !bg-gradient-to-br from-emerald-100 via-stone-50 to-green-100 py-12 px-6">
 
-    <!-- TITLE -->
-    <h1 class="text-4xl bg-white/80 backdrop-blur-md shadow-md p-6 rounded-2xl text-center 
-             text-red-900 font-extrabold tracking-wide mx-10">
-        🐾 Pets Management
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-4xl font-extrabold text-emerald-900 group-hover:text-stone-50 tracking-wide mb-2">
+      🐾 Pets Management
     </h1>
+    <p class="text-stone-600 group-hover:text-stone-200 text-lg">
+      Organized management for pet records, categories, and filtered discovery workflows.
+    </p>
+  </div>
 
-    <!-- CARDS CONTAINER -->
-    <div class="flex justify-center items-center gap-12 mt-20 flex-wrap">
-
-        <!-- Pets Dashboard -->
-        <div routerLink="/pets-dashboard" class="w-[280px] h-[360px] flex flex-col justify-center 
-             bg-yellow-200 text-yellow-900 p-8 rounded-2xl shadow-md border border-yellow-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-            <h2 class="text-2xl font-bold mb-4 tracking-wide">
-                🐶 Pets
-            </h2>
-
-            <p class="text-base leading-relaxed">
-                Manage pets data, perform CRUD operations, and view all pets easily.
-            </p>
-
-        </div>
-
-        <!-- Pet Categories -->
-        <div routerLink="/category-dashboard" class="w-[280px] h-[360px] flex flex-col justify-center 
-             bg-orange-200 text-orange-900 p-8 rounded-2xl shadow-md border border-orange-300
-             cursor-pointer hover:scale-105 hover:shadow-xl 
-             transition duration-300 text-center">
-
-            <h2 class="text-2xl font-bold mb-4 tracking-wide">
-                🗂️ Categories
-            </h2>
-
-            <p class="text-base leading-relaxed">
-                Manage pet categories like Dog, Cat, Birds and organize pet data.
-            </p>
-
-        </div>
-
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+    <div routerLink="/pets-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Pets</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Manage pet profiles, pricing, breed details, and everyday pet operations.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
     </div>
 
-</div>
+    <div routerLink="/category-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Categories</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Maintain pet categories and keep record organization consistent across the system.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
 
-<!-- QUICK BUTTONS -->
-<div class="text-center mt-10">
-    <button routerLink="/pets-dashboard">Pets</button>
-    <button routerLink="/pet-category">Categories</button>
+    <div routerLink="/pets-filter-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Pet Search / Filter</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Search pets by category, breed, and price with a focused, structured browsing experience.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
+  </div>
 </div>

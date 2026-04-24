@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet vaccination dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,11 +20,9 @@ export class PetVaccinationDashboard {
   postVaccinationId: string = '';
   deletePetId: string = '';
   deleteVaccinationId: string = '';
-
-  // ================= GET =================
   viewVaccinations() {
     if (!this.getPetId) {
-      alert('Enter Pet ID ⚠️');
+      alert('Enter Pet ID ⚠️Â');
       return;
     }
 
@@ -42,11 +41,9 @@ export class PetVaccinationDashboard {
       error: () => alert('Invalid Pet ID ❌')
     });
   }
-
-  // ================= POST =================
   assign() {
     if (!this.postPetId || !this.postVaccinationId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -64,11 +61,9 @@ export class PetVaccinationDashboard {
       error: () => alert('Assign Failed ❌')
     });
   }
-
-  // ================= DELETE =================
   remove() {
     if (!this.deletePetId || !this.deleteVaccinationId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -87,3 +82,4 @@ export class PetVaccinationDashboard {
     });
   }
 }
+

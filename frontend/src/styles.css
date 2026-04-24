@@ -1,3 +1,332 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* This stylesheet carries the global visual theme used across the app. */
 @import 'tailwindcss';
+
+:root {
+  --sage-900: #40554a;
+  --sage-700: #5f7b6e;
+  --sage-500: #7f9d90;
+  --sage-200: #dbe7e0;
+  --stone-50: #f7f3ee;
+  --stone-100: #efe8df;
+  --stone-200: #e1d8cc;
+  --stone-300: #cfc2b2;
+  --stone-400: #b6a899;
+  --ink: #31423a;
+  --paper: #fffdf9;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: var(--stone-50);
+  color: var(--ink);
+  font-family: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: rgba(127, 157, 144, 0.22);
+  color: var(--ink);
+}
+
+.bg-white,
+.bg-white\/80,
+.bg-white\/90 {
+  background-color: rgba(255, 253, 249, 0.92) !important;
+}
+
+.bg-stone-50 {
+  background-color: var(--stone-50) !important;
+}
+
+.bg-stone-100 {
+  background-color: var(--stone-100) !important;
+}
+
+.bg-stone-200 {
+  background-color: var(--stone-200) !important;
+}
+
+.bg-stone-500 {
+  background-color: var(--stone-400) !important;
+}
+
+.bg-stone-700 {
+  background-color: var(--sage-700) !important;
+}
+
+.bg-stone-800 {
+  background-color: var(--sage-900) !important;
+}
+
+.bg-sage-50,
+.bg-sage-100 {
+  background-color: rgba(219, 231, 224, 0.68) !important;
+}
+
+.bg-gray-100,
+.bg-slate-50,
+.via-slate-50 {
+  background-color: var(--stone-50) !important;
+}
+
+.from-slate-900 {
+  --tw-gradient-from: #edf2ee var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(237, 242, 238, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.via-slate-800 {
+  --tw-gradient-stops: var(--tw-gradient-from), var(--stone-50) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+.to-slate-900 {
+  --tw-gradient-to: var(--stone-100) var(--tw-gradient-to-position) !important;
+}
+
+.from-slate-50 {
+  --tw-gradient-from: var(--stone-50) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(247, 243, 238, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.from-stone-50 {
+  --tw-gradient-from: var(--stone-50) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(247, 243, 238, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.via-teal-50,
+.via-green-50,
+.via-orange-50 {
+  --tw-gradient-stops: var(--tw-gradient-from), #edf2ee var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+.via-stone-100 {
+  --tw-gradient-stops: var(--tw-gradient-from), var(--stone-100) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+.to-emerald-50,
+.to-red-100,
+.to-blue-100 {
+  --tw-gradient-to: var(--stone-100) var(--tw-gradient-to-position) !important;
+}
+
+.from-yellow-100,
+.from-emerald-100 {
+  --tw-gradient-from: #edf2ee var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(237, 242, 238, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-sage-50 {
+  --tw-gradient-to: rgba(219, 231, 224, 0.68) var(--tw-gradient-to-position) !important;
+}
+
+.bg-yellow-200,
+.bg-orange-200,
+.bg-teal-200,
+.bg-blue-200,
+.bg-emerald-200,
+.bg-purple-200,
+.bg-pink-200 {
+  background-color: var(--stone-100) !important;
+}
+
+.bg-slate-900,
+.bg-slate-900\/95,
+.bg-slate-800 {
+  background-color: rgba(255, 253, 249, 0.94) !important;
+}
+
+.bg-slate-700,
+.bg-slate-600 {
+  background-color: #f1ebe3 !important;
+}
+
+.border-yellow-300,
+.border-orange-300,
+.border-teal-300,
+.border-blue-300,
+.border-emerald-300,
+.border-purple-300,
+.border-pink-300,
+.border-teal-100,
+.border-teal-200,
+.border-slate-300,
+.border-slate-700,
+.border-slate-600 {
+  border-color: var(--stone-300) !important;
+}
+
+.border-stone-100,
+.border-stone-200,
+.border-stone-300 {
+  border-color: var(--stone-300) !important;
+}
+
+.text-red-900,
+.text-yellow-900,
+.text-orange-900,
+.text-teal-900,
+.text-blue-900,
+.text-emerald-900,
+.text-purple-900,
+.text-pink-900,
+.text-teal-800,
+.text-slate-100,
+.text-slate-300,
+.text-slate-700,
+.text-gray-700,
+.text-gray-600 {
+  color: var(--ink) !important;
+}
+
+.text-stone-100 {
+  color: #f8f4ee !important;
+}
+
+.text-stone-500,
+.text-stone-600,
+.text-stone-700,
+.text-stone-800,
+.text-black {
+  color: var(--ink) !important;
+}
+
+.text-sage-900 {
+  color: var(--sage-900) !important;
+}
+
+.text-blue-700,
+.text-emerald-700,
+.text-cyan-400,
+.text-green-700,
+.text-purple-700 {
+  color: var(--sage-700) !important;
+}
+
+.text-sage-700 {
+  color: var(--sage-700) !important;
+}
+
+.bg-blue-500,
+.bg-green-500,
+.bg-green-400,
+.bg-teal-500,
+.bg-yellow-500,
+.bg-purple-500 {
+  background-color: var(--sage-700) !important;
+}
+
+.hover\:bg-blue-600:hover,
+.hover\:bg-green-600:hover,
+.hover\:bg-green-500:hover,
+.hover\:bg-teal-600:hover,
+.hover\:bg-yellow-600:hover,
+.hover\:bg-purple-600:hover,
+.hover\:bg-slate-600:hover {
+  background-color: var(--sage-900) !important;
+}
+
+.bg-red-500 {
+  background-color: #ddcbc0 !important;
+  color: var(--ink) !important;
+}
+
+.hover\:bg-red-600:hover {
+  background-color: #cdb8ab !important;
+  color: var(--ink) !important;
+}
+
+.from-emerald-500,
+.from-emerald-600,
+.from-blue-500,
+.from-blue-600,
+.from-teal-600 {
+  --tw-gradient-from: var(--sage-700) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(95, 123, 110, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-emerald-600,
+.to-teal-600,
+.to-teal-700 {
+  --tw-gradient-to: var(--sage-900) var(--tw-gradient-to-position) !important;
+}
+
+.focus\:ring-teal-400:focus,
+.focus\:ring-green-400:focus,
+.focus\:ring-blue-400:focus,
+.focus\:ring-yellow-400:focus,
+.focus\:ring-purple-400:focus,
+.focus\:ring-red-400:focus {
+  --tw-ring-color: rgba(127, 157, 144, 0.28) !important;
+}
+
+.focus\:ring-sage-300:focus {
+  --tw-ring-color: rgba(127, 157, 144, 0.28) !important;
+}
+
+.shadow,
+.shadow-md,
+.shadow-lg,
+.shadow-xl,
+.hover\:shadow-xl:hover {
+  box-shadow: 0 18px 36px rgba(91, 94, 88, 0.12) !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 10px 22px rgba(91, 94, 88, 0.08) !important;
+}
+
+.hover\:bg-teal-50:hover {
+  background-color: rgba(127, 157, 144, 0.08) !important;
+}
+
+.hover\:bg-slate-700:hover {
+  background-color: rgba(127, 157, 144, 0.1) !important;
+}
+
+.border-cyan-500,
+.hover\:border-cyan-500:hover {
+  border-color: var(--sage-500) !important;
+}
+
+.bg-cyan-600 {
+  background-color: var(--sage-700) !important;
+}
+
+.hover\:text-cyan-400:hover {
+  color: var(--sage-700) !important;
+}
+
+.focus\:ring-cyan-500:focus {
+  --tw-ring-color: rgba(127, 157, 144, 0.28) !important;
+}
+
+.accent-sage-700 {
+  accent-color: var(--sage-700) !important;
+}
+
+.hover\:bg-sage-700:hover {
+  background-color: var(--sage-700) !important;
+}
+
+.hover\:text-stone-50:hover {
+  color: var(--stone-50) !important;
+}
+
+.hover\:from-sage-700:hover {
+  --tw-gradient-from: var(--sage-700) var(--tw-gradient-from-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.hover\:to-sage-900:hover {
+  --tw-gradient-to: var(--sage-900) var(--tw-gradient-to-position) !important;
+}

@@ -1,3 +1,4 @@
+// This test file checks the behavior around the auth service test flow.
 import { TestBed } from '@angular/core/testing';
 
 import { AuthService } from './authService';

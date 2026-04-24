@@ -15,4 +15,6 @@ List<Customers> getAll();
 
 @Query("SELECT c FROM Customers c WHERE c.transactions IS EMPTY")
 List<Customers> findCustomersWithNoTransactions();
+@Query("SELECT c FROM Customers c ORDER BY c.customerId ASC")
+List<Customers> findAllSorted();
 }

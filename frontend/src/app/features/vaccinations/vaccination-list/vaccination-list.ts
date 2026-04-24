@@ -1,12 +1,14 @@
+// This file holds the Angular logic for vaccination list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { VaccinationService } from '../../../core/services/vaccinationService';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-vaccination-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './vaccination-list.html',
   styleUrl: './vaccination-list.css',
 })
@@ -25,7 +27,6 @@ export class VaccinationList {
       const id = params['id'];
 
       if (id) {
-        // ✅ GET BY ID
         this.vaccinationService.getById(id).subscribe({
           next: (res: any) => {
 
@@ -47,7 +48,6 @@ export class VaccinationList {
         });
 
       } else {
-        // ✅ GET ALL
         this.loadAll();
       }
     });
@@ -62,4 +62,18 @@ export class VaccinationList {
       error: (err) => console.log(err)
     });
   }
+  currentPage = 1;
+  pageSize = 10;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+

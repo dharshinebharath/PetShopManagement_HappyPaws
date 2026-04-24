@@ -1,3 +1,4 @@
+// This test file checks the behavior around the pet list test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PetList } from './pet-list';

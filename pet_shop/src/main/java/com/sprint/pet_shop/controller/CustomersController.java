@@ -24,7 +24,6 @@ public class CustomersController {
 
     @Autowired
     private TransactionsService transactionsService;
-    // CREATE
     @PostMapping
     public ResponseEntity<ApiResponse<List<CustomerResponseDTO>>> savecustomers(
             @Valid @RequestBody List<CustomerRequestDTO> customers) {
@@ -33,7 +32,6 @@ public class CustomersController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-    // GET ALL
     @GetMapping
     public ResponseEntity<ApiResponse<List<CustomerResponseDTO>>> getcustomers() {
 
@@ -42,7 +40,6 @@ public class CustomersController {
 
         return ResponseEntity.ok(response);
     }
-    //GET BY ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CustomerResponseDTO>> getcustomerbyId(
             @PathVariable Long id) {
@@ -52,7 +49,6 @@ public class CustomersController {
 
         return ResponseEntity.ok(response);
     }
-    //UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<CustomerResponseDTO>> updatecustomers(
             @PathVariable long id,
@@ -63,7 +59,6 @@ public class CustomersController {
 
         return ResponseEntity.ok(response);
     }
-    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> deletecustomer(
             @PathVariable long id) {
@@ -86,3 +81,4 @@ public class CustomersController {
         return transactionsService.getByCustomer(customerId);
     }
 }
+

@@ -1,39 +1,40 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+// This file holds the Angular logic for employee form.
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AddressService } from '../../../core/services/address';
 
 @Component({
   selector: 'app-employee-form',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './employee-form.html'
 })
 export class EmployeeForm {
-
   http = inject(HttpClient);
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
+  addressService = inject(AddressService);
 
   private baseUrl = 'http://localhost:8081/api/v1/employees';
 
   employeeId: number | null = null;
-
-  formData: any = {
-    firstName: '',
-    lastName: '',
-    position: '',
-    hireDate: '',
-    phoneNumber: '',
-    email: '',
-    addressId: null
-  };
-
   isLoading = true;
+  addresses: any[] = [];
 
-  // AUTH
+  form = new FormGroup({
+    firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    position: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    hireDate: new FormControl('', [Validators.required]),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3}-[0-9]{4}$')]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    addressId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+  });
+
   private getAuthHeaders() {
     const username = 'Priyadharshini';
     const password = 'Priya123';
@@ -47,110 +48,128 @@ export class EmployeeForm {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.loadAddresses();
 
+    this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.employeeId = Number(params['id']);
 
         this.http.get<any>(`${this.baseUrl}/${this.employeeId}`, this.getAuthHeaders())
           .subscribe({
             next: (res) => {
-
               const data = res.data;
 
-              this.formData.firstName = data.firstName;
-              this.formData.lastName = data.lastName;
-              this.formData.position = data.position;
-              this.formData.hireDate = data.hireDate
-                ? new Date(data.hireDate).toISOString().split('T')[0]
-                : '';
-              this.formData.phoneNumber = data.phoneNumber;
-              this.formData.email = data.email;
-              this.formData.addressId = data.addressId;
+              this.form.patchValue({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                position: data.position,
+                hireDate: data.hireDate ? new Date(data.hireDate).toISOString().split('T')[0] : '',
+                phoneNumber: data.phoneNumber,
+                email: data.email,
+                addressId: data.addressId
+              });
 
               this.isLoading = false;
               this.cdr.detectChanges();
             },
             error: () => {
-              alert('Employee not found ❌');
+              alert('Employee not found');
               this.router.navigate(['/employee/list']);
             }
           });
-
       } else {
         this.isLoading = false;
       }
     });
   }
 
+  private loadAddresses() {
+    this.addressService.getAll().subscribe({
+      next: (res: any) => {
+        this.addresses = res?.data || [];
+      },
+      error: () => {
+        this.addresses = [];
+        alert('Unable to load addresses for selection');
+      }
+    });
+  }
+
   submit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
 
-    // ✅ VALIDATION BLOCK
-    if (
-      !this.formData.firstName ||
-      !this.formData.lastName ||
-      !this.formData.position ||
-      !this.formData.hireDate ||
-      !this.formData.phoneNumber ||
-      !this.formData.email
-    ) {
-      alert('Please fill all required fields ⚠️');
-      return;
-    }
+      const errors: string[] = [];
+      const firstName = this.form.get('firstName');
+      const lastName = this.form.get('lastName');
+      const position = this.form.get('position');
+      const hireDate = this.form.get('hireDate');
+      const phoneNumber = this.form.get('phoneNumber');
+      const email = this.form.get('email');
+      const addressId = this.form.get('addressId');
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.formData.email)) {
-      alert('Invalid email format ⚠️');
-      return;
-    }
-
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!phoneRegex.test(this.formData.phoneNumber)) {
-      alert('Phone must be 10 digits ⚠️');
-      return;
-    }
-
-    // UPDATE
-    if (this.employeeId !== null && this.employeeId !== undefined) {
-
-      if (this.formData.hireDate) {
-        this.formData.hireDate = this.formData.hireDate.split('T')[0];
+      if (firstName?.errors) {
+        if (firstName.errors['required']) errors.push('First name is required');
+        if (firstName.errors['minlength']) errors.push('First name must be at least 2 characters');
+      }
+      if (lastName?.errors) {
+        if (lastName.errors['required']) errors.push('Last name is required');
+        if (lastName.errors['minlength']) errors.push('Last name must be at least 2 characters');
+      }
+      if (position?.errors) {
+        if (position.errors['required']) errors.push('Position is required');
+        if (position.errors['minlength']) errors.push('Position must be at least 2 characters');
+      }
+      if (hireDate?.errors) errors.push('Hire date is required');
+      if (phoneNumber?.errors) {
+        if (phoneNumber.errors['required']) errors.push('Phone number is required');
+        if (phoneNumber.errors['pattern']) errors.push('Phone number must be in 555-1234 format');
+      }
+      if (email?.errors) {
+        if (email.errors['required']) errors.push('Email is required');
+        if (email.errors['email']) errors.push('Email must be valid');
+      }
+      if (addressId?.errors) {
+        if (addressId.errors['required']) errors.push('Address ID is required');
+        if (addressId.errors['min']) errors.push('Address ID must be greater than 0');
       }
 
-      this.http.put(
-        `${this.baseUrl}/${this.employeeId}`,
-        this.formData,
-        this.getAuthHeaders()
-      ).subscribe({
+      alert('Please fix errors:\n\n' + errors.join('\n'));
+      return;
+    }
+
+    const payload = {
+      ...this.form.value,
+      hireDate: this.form.value.hireDate ? this.form.value.hireDate.split('T')[0] : ''
+    };
+
+    if (this.employeeId !== null && this.employeeId !== undefined) {
+      this.http.put(`${this.baseUrl}/${this.employeeId}`, payload, this.getAuthHeaders()).subscribe({
         next: () => {
-          alert('Updated successfully ✅');
+          alert('Updated successfully');
           this.router.navigate(['/employee/list']);
         },
         error: (err) => {
-          console.log("FULL ERROR:", err);
-          console.log("BACKEND MSG:", err.error);
+          console.log('FULL ERROR:', err);
+          console.log('BACKEND MSG:', err.error);
 
           if (err.status === 404) {
-            alert('Employee not found ❌');
+            alert('Employee not found');
           } else {
-            alert('Update failed ❌');
+            alert('Update failed');
           }
         }
       });
-
     } else {
-
-      const payload = [this.formData];
-
-      this.http.post(this.baseUrl, payload, this.getAuthHeaders())
+      this.http.post(this.baseUrl, [payload], this.getAuthHeaders())
         .subscribe({
           next: () => {
-            alert('Created successfully ✅');
+            alert('Created successfully');
             this.router.navigate(['/employee/list']);
           },
           error: (err) => {
             console.log(err);
-            alert('Create failed ❌');
+            alert('Create failed');
           }
         });
     }

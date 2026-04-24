@@ -1,6 +1,7 @@
+// This file holds the Angular logic for customers dashboard.
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { customer } from '../../../core/services/customer';
 import { AddressService } from '../../../core/services/address';
 
@@ -11,12 +12,22 @@ import { AddressService } from '../../../core/services/address';
   templateUrl: './customers-dashboard.html',
   styleUrl: './customers-dashboard.css',
 })
-export class CustomersDashboard {
+export class CustomersDashboard implements OnInit {
   router = inject(Router);
+  route = inject(ActivatedRoute);
   customerService = inject(customer);
   addressService = inject(AddressService);
 
   activeTab: string = 'customer';
+
+  ngOnInit() {
+    this.route.queryParamMap.subscribe(queryParams => {
+      const tab = queryParams.get('tab');
+      if (tab === 'customer' || tab === 'address') {
+        this.activeTab = tab;
+      }
+    });
+  }
 
   selectTab(tab: string) {
     this.activeTab = tab;
@@ -44,7 +55,20 @@ export class CustomersDashboard {
       return;
     }
 
-    this.router.navigate(['/customer/edit', id]);
+    this.customerService.getCustomerById(id).subscribe({
+      next: () => {
+        this.router.navigate(['customer/form'], {
+          queryParams: { id }
+        });
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          alert('Cannot update, ID not found');
+        } else {
+          alert('Error checking ID');
+        }
+      }
+    });
   }
 
   deleteCustomer(id: string) {
@@ -67,8 +91,19 @@ export class CustomersDashboard {
       return;
     }
 
-    this.router.navigate(['/address/list'], {
-      queryParams: { id }
+    this.addressService.getById(Number(id)).subscribe({
+      next: () => {
+        this.router.navigate(['/address/list'], {
+          queryParams: { id }
+        });
+      },
+      error: (err) => {
+        if (err.status === 404) {
+          alert('Address ID not found');
+        } else {
+          alert('Something went wrong');
+        }
+      }
     });
   }
 
@@ -80,7 +115,7 @@ export class CustomersDashboard {
 
     this.addressService.getById(Number(id)).subscribe({
       next: () => {
-        this.router.navigate(['/address/add'], {
+        this.router.navigate(['address/form'], {
           queryParams: { id }
         });
       },

@@ -1,0 +1,23 @@
+// This test file checks the behavior around the supplier form test flow.
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { SupplierForm } from './supplier-form';
+
+describe('SupplierForm', () => {
+  let component: SupplierForm;
+  let fixture: ComponentFixture<SupplierForm>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SupplierForm]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SupplierForm);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

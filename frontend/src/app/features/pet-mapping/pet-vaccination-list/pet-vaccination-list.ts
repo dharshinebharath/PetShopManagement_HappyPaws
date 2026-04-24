@@ -1,12 +1,14 @@
+// This file holds the Angular logic for pet vaccination list.
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { PetVaccinationMappingService } from '../../../core/services/pet-vaccination-mapping-service';
 
 @Component({
   selector: 'app-pet-vaccination-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-vaccination-list.html'
 })
 export class PetVaccinationList {
@@ -28,8 +30,6 @@ export class PetVaccinationList {
       }
     });
   }
-
-  // ================= GET =================
   load() {
     this.service.getVaccinationByPet(this.petId!).subscribe({
       next: (res: any) => {
@@ -48,8 +48,6 @@ export class PetVaccinationList {
       }
     });
   }
-
-  // ================= DELETE =================
   remove(vaccinationId: number) {
     this.service.removeVaccination(this.petId!, vaccinationId).subscribe({
       next: () => {
@@ -59,4 +57,19 @@ export class PetVaccinationList {
       error: () => alert('Delete failed ❌')
     });
   }
+  currentPage = 1;
+  pageSize = 10;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+
+

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for transactions dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';

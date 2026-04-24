@@ -1,137 +1,182 @@
-<div class="min-h-screen bg-gray-100 p-6">
+<!-- This template renders the page layout for customers dashboard. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 py-12 px-6">
 
-  <h1 class="text-3xl font-bold text-center mb-6">
-     👨‍💼CUSTOMER DASHBOARD
-  </h1>
+  <div class="max-w-2xl mx-auto">
 
-  <!-- Tabs -->
-  <div class="flex justify-center gap-4 mb-8">
-    <button 
-      (click)="selectTab('customer')"
-      [ngClass]="activeTab === 'customer' 
-        ? 'bg-blue-500 text-white' 
-        : 'bg-white text-black'"
-      class="px-6 py-2 rounded-lg shadow">
-      Customer
-    </button>
+    
+    <div class="text-center mb-10">
+      <h1 class="text-4xl font-extrabold tracking-tight text-sage-900">
+        Customer Dashboard
+      </h1>
+      <p class="mt-3 text-stone-600 text-lg">
+        Structured customer and address management workspace
+      </p>
+    </div>
 
-    <button 
-      (click)="selectTab('address')"
-      [ngClass]="activeTab === 'address' 
-        ? 'bg-green-500 text-white' 
-        : 'bg-white text-black'"
-      class="px-6 py-2 rounded-lg shadow">
-      Address
-    </button>
-  </div>
-
-  <!-- ================= CUSTOMER API ================= -->
-  <div *ngIf="activeTab === 'customer'">
-
-    <h2 class="text-2xl font-bold text-center mb-6">Customer API</h2>
-
-    <div class="flex flex-col gap-4 max-w-md mx-auto">
-
-      <!-- GET ALL -->
-      <button 
-        routerLink="/customer/list"
-        class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg shadow">
-        GET All Customers
+    
+    <div class="flex justify-center gap-4 mb-10">
+      <button (click)="selectTab('customer')"
+        [ngClass]="activeTab === 'customer' ? 'bg-stone-700 text-white shadow-md' : 'bg-white text-sage-900'"
+        class="px-6 py-2.5 rounded-lg border border-stone-200 transition duration-200 font-medium">
+        Customer
       </button>
 
-      <!-- GET BY ID -->
-      <div class="flex gap-2">
-        <input #cid 
-          placeholder="Enter ID"
-          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-green-400">
-        <button 
-          (click)="viewCustomer(cid.value)"
-          class="bg-green-400 hover:bg-green-500 text-white px-4 rounded-lg shadow">
-          GET
-        </button>
-      </div>
-
-      <!-- POST -->
-      <button 
-        routerLink="/customer/add"
-        class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow">
-        Add Customer (POST)
+      <button (click)="selectTab('address')"
+        [ngClass]="activeTab === 'address' ? 'bg-stone-700 text-white shadow-md' : 'bg-white text-sage-900'"
+        class="px-6 py-2.5 rounded-lg border border-stone-200 transition duration-200 font-medium">
+        Address
       </button>
+    </div>
 
-      <!-- PUT -->
-      <div class="flex gap-2">
-        <input #uid placeholder="Enter ID"
-          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        <button 
-          (click)="editCustomer(uid.value)"
-          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 rounded-lg shadow">
-          UPDATE
-        </button>
+    
+    <div *ngIf="activeTab === 'customer'" class="space-y-6">
+
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-semibold text-sage-900">Get All Customers</h3>
+            <p class="text-sm text-stone-500 mt-1">Fetch complete customer dataset</p>
+          </div>
+          <button routerLink="/customer/list"
+            class="w-32 py-2.5 rounded-lg bg-stone-700 text-white text-sm font-medium hover:bg-stone-800 transition">
+            GET
+          </button>
+        </div>
       </div>
 
-      <!-- DELETE -->
-      <div class="flex gap-2">
-        <input #did placeholder="Enter ID"
-          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-red-400">
-        <button 
-          (click)="deleteCustomer(did.value)"
-          class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-lg shadow">
-          DELETE
-        </button>
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-base font-semibold text-sage-900">Get Customer By ID</h3>
+        <p class="text-sm text-stone-500 mt-1 mb-4">Fetch single customer record</p>
+
+        <div class="flex gap-3">
+          <input #cid placeholder="Customer ID"
+            class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+          <button (click)="viewCustomer(cid.value)"
+            class="w-32 py-2.5 rounded-lg bg-stone-700 text-white text-sm font-medium hover:bg-stone-800 transition">
+            GET
+          </button>
+        </div>
+      </div>
+
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-semibold text-sage-900">Add Customer</h3>
+            <p class="text-sm text-stone-500 mt-1">Create new customer record</p>
+          </div>
+
+          <button routerLink="/customer/form"
+            class="w-32 py-2.5 rounded-lg bg-stone-700 text-white text-sm font-medium hover:bg-stone-800 transition">
+            SAVE
+          </button>
+        </div>
+      </div>
+
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-base font-semibold text-sage-900">Update Customer</h3>
+        <p class="text-sm text-stone-500 mt-1 mb-4">Modify existing customer</p>
+
+        <div class="flex gap-3">
+          <input #uid placeholder="Customer ID"
+            class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+          <button (click)="editCustomer(uid.value)"
+            class="w-32 py-2.5 rounded-lg bg-stone-500 text-white text-sm font-medium hover:bg-stone-600 transition">
+            UPDATE
+          </button>
+        </div>
+      </div>
+
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-base font-semibold text-sage-900">Delete Customer</h3>
+        <p class="text-sm text-stone-500 mt-1 mb-4">Remove customer permanently</p>
+
+        <div class="flex gap-3">
+          <input #did placeholder="Customer ID"
+            class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-red-400" />
+
+          <button (click)="deleteCustomer(did.value)"
+            class="w-32 py-2.5 rounded-lg bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition">
+            DELETE
+          </button>
+        </div>
       </div>
 
     </div>
-  </div>
 
-  <!-- ================= ADDRESS API ================= -->
-  <div *ngIf="activeTab === 'address'">
+    
+    <div *ngIf="activeTab === 'address'" class="space-y-6">
 
-    <h2 class="text-2xl font-bold text-center mb-6">Address API</h2>
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-base font-semibold text-sage-900">Get Address By ID</h3>
+        <p class="text-sm text-stone-500 mt-1 mb-4">Fetch single address record</p>
 
-    <div class="flex flex-col gap-4 max-w-md mx-auto">
+        <div class="flex gap-3">
+          <input #aid placeholder="Address ID"
+            class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-400" />
 
-      <!-- GET BY ID -->
-      <div class="flex gap-2">
-        <input #aid 
-          placeholder="Enter Address ID"
-          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-green-400">
-        <button 
-          (click)="viewAddress(aid.value)"
-          class="bg-green-400 hover:bg-green-500 text-white px-4 rounded-lg shadow">
-          GET
-        </button>
+          <button (click)="viewAddress(aid.value)"
+            class="w-32 py-2.5 rounded-lg bg-stone-700 text-white text-sm font-medium hover:bg-stone-800 transition">
+            GET
+          </button>
+        </div>
       </div>
 
-      <!-- POST -->
-      <button 
-        routerLink="/address/add"
-        class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg shadow">
-        Add Address (POST)
-      </button>
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-semibold text-sage-900">Add Address</h3>
+            <p class="text-sm text-stone-500 mt-1">Create new address record</p>
+          </div>
 
-      <!-- PUT -->
-      <div class="flex gap-2">
-        <input #auid placeholder="Enter Address ID"
-          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        <button 
-          (click)="editAddress(auid.value)"
-          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 rounded-lg shadow">
-          UPDATE
-        </button>
+          <button routerLink="/address/form"
+            class="w-32 py-2.5 rounded-lg bg-stone-700 text-white text-sm font-medium hover:bg-stone-800 transition">
+            SAVE
+          </button>
+        </div>
       </div>
 
-      <!-- DELETE -->
-      <div class="flex gap-2">
-        <input #adid placeholder="Enter Address ID"
-          class="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-red-400">
-        <button 
-          (click)="deleteAddress(adid.value)"
-          class="bg-red-500 hover:bg-red-600 text-white px-4 rounded-lg shadow">
-          DELETE
-        </button>
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-base font-semibold text-sage-900">Update Address</h3>
+        <p class="text-sm text-stone-500 mt-1 mb-4">Modify existing address</p>
+
+        <div class="flex gap-3">
+          <input #auid placeholder="Address ID"
+            class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-400" />
+
+          <button (click)="editAddress(auid.value)"
+            class="w-32 py-2.5 rounded-lg bg-stone-500 text-white text-sm font-medium hover:bg-stone-600 transition">
+            UPDATE
+          </button>
+        </div>
+      </div>
+
+      
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+        <h3 class="text-base font-semibold text-sage-900">Delete Address</h3>
+        <p class="text-sm text-stone-500 mt-1 mb-4">Remove address permanently</p>
+
+        <div class="flex gap-3">
+          <input #adid placeholder="Address ID"
+            class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-red-400" />
+
+          <button (click)="deleteAddress(adid.value)"
+            class="w-32 py-2.5 rounded-lg bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition">
+            DELETE
+          </button>
+        </div>
       </div>
 
     </div>
-  </div>
 
+  </div>
 </div>

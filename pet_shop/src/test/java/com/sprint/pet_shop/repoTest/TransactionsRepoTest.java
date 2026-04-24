@@ -21,116 +21,115 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
 public class TransactionsRepoTest {
-	@Test
-	void testValidTransactionCreation() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testValidTransactionCreation() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
+        transaction.setTransactionDate(LocalDate.now());
+        transaction.setAmount(BigDecimal.valueOf(1500));
+        transaction.setTransactionStatus(TransactionStatus.SUCCESS);
 
-	    transaction.setTransactionDate(Date.valueOf("2024-03-01"));
-	    transaction.setAmount(BigDecimal.valueOf(1500));
-	    transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+        Customers customer = new Customers();
+        customer.setCustomerId(5L);
 
-	    Customers customer = new Customers();
-	    customer.setCustomerId(5L);
+        Pets pet = new Pets();
+        pet.setPet_id(8L);
 
-	    Pets pet = new Pets();
-	    pet.setPet_id(8L);
+        transaction.setCustomer(customer);
+        transaction.setPet(pet);
 
-	    transaction.setCustomer(customer);
-	    transaction.setPet(pet);
+        assertNotNull(transaction.getCustomer());
+        assertNotNull(transaction.getPet());
+    }
 
-	    assertNotNull(transaction.getCustomer());
-	    assertNotNull(transaction.getPet());
-	}
+    @Test
+    void testLargeAmountTransaction() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	@Test
-	void testLargeAmountTransaction() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+        transaction.setAmount(BigDecimal.valueOf(9999999.99));
 
-	    transaction.setAmount(BigDecimal.valueOf(9999999.99));
+        assertEquals(BigDecimal.valueOf(9999999.99), transaction.getAmount());
+    }
 
-	    assertEquals(BigDecimal.valueOf(9999999.99), transaction.getAmount());
-	}
+    @Test
+    void testSuccessfulStatusAssignment() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	@Test
-	void testSuccessfulStatusAssignment() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+        transaction.setTransactionStatus(TransactionStatus.SUCCESS);
 
-	    transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+        assertEquals(TransactionStatus.SUCCESS, transaction.getTransactionStatus());
+    }
 
-	    assertEquals(TransactionStatus.SUCCESS, transaction.getTransactionStatus());
-	}
+    @Test
+    void testFailedStatusAssignment() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	@Test
-	void testFailedStatusAssignment() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+        transaction.setTransactionStatus(TransactionStatus.FAILED);
 
-	    transaction.setTransactionStatus(TransactionStatus.FAILED);
+        assertEquals(TransactionStatus.FAILED, transaction.getTransactionStatus());
+    }
 
-	    assertEquals(TransactionStatus.FAILED, transaction.getTransactionStatus());
-	}
+    @Test
+    void testCustomerAndPetAssignment() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	@Test
-	void testCustomerAndPetAssignment() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+        Customers customer = new Customers();
+        customer.setCustomerId(101L);
 
-	    Customers customer = new Customers();
-	    customer.setCustomerId(101L);
+        Pets pet = new Pets();
+        pet.setPet_id(202L);
 
-	    Pets pet = new Pets();
-	    pet.setPet_id(202L);
+        transaction.setCustomer(customer);
+        transaction.setPet(pet);
 
-	    transaction.setCustomer(customer);
-	    transaction.setPet(pet);
+        assertEquals(101L, transaction.getCustomer().getCustomerId());
+        assertEquals(202L, transaction.getPet().getPet_id());
+    }
 
-	    assertEquals(101L, transaction.getCustomer().getCustomerId());
-	    assertEquals(202L, transaction.getPet().getPet_id());
-	}
-	@Test
-	void testNullCustomer() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testNullCustomer() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setCustomer(null);
+        transaction.setCustomer(null);
 
-	    assertNull(transaction.getCustomer());
-	}
+        assertNull(transaction.getCustomer());
+    }
 
-	@Test
-	void testNullPet() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testNullPet() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setPet(null);
+        transaction.setPet(null);
 
-	    assertNull(transaction.getPet());
-	}
+        assertNull(transaction.getPet());
+    }
 
-	@Test
-	void testNullTransactionStatus() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testNullTransactionStatus() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setTransactionStatus(null);
+        transaction.setTransactionStatus(null);
 
-	    assertNull(transaction.getTransactionStatus());
-	}
+        assertNull(transaction.getTransactionStatus());
+    }
 
-	@Test
-	void testNegativeAmount() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testNegativeAmount() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setAmount(BigDecimal.valueOf(-500));
+        transaction.setAmount(BigDecimal.valueOf(-500));
 
-	    assertEquals(BigDecimal.valueOf(-500), transaction.getAmount());
-	}
+        assertEquals(BigDecimal.valueOf(-500), transaction.getAmount());
+    }
 
-	@Test
-	void testNullTransactionDate() {
-	    TransactionsEntity transaction = new TransactionsEntity();
+    @Test
+    void testNullTransactionDate() {
+        TransactionsEntity transaction = new TransactionsEntity();
 
-	    transaction.setTransactionDate(null);
+        transaction.setTransactionDate(null);
 
-	    assertNull(transaction.getTransactionDate());
-	}
-
+        assertNull(transaction.getTransactionDate());
+    }
 
     private Validator validator;
 
@@ -139,10 +138,6 @@ public class TransactionsRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // =========================
-    // ✅ POSITIVE TEST CASES (5)
-    // =========================
 
     @Test
     void testValidTransaction1() {
@@ -177,10 +172,6 @@ public class TransactionsRepoTest {
         t.setTransactionDate(LocalDate.now());
         assertTrue(validator.validate(t).isEmpty());
     }
-
-    // =========================
-    // ❌ NEGATIVE TEST CASES (5)
-    // =========================
 
     @Test
     void testTransactionDateNull() {
@@ -226,9 +217,6 @@ public class TransactionsRepoTest {
         assertFalse(violations.isEmpty());
     }
 
-    // =========================
-    // 🔧 Helper Method
-    // =========================
     private TransactionsEntity createValidTransaction() {
         TransactionsEntity t = new TransactionsEntity();
         t.setTransactionDate(LocalDate.now());

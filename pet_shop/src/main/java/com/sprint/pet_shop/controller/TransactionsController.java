@@ -41,7 +41,6 @@ public class TransactionsController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-	//getall
 	 @GetMapping
 	 public ResponseEntity<ApiResponse<List<TransactionsResponseDTO>>> getAll() {
 
@@ -50,7 +49,6 @@ public class TransactionsController {
 
 	        return ResponseEntity.ok(response);
 	    }
-	 //get by id
 	 @GetMapping("/{id}")
 	 public ResponseEntity<ApiResponse<TransactionsResponseDTO>> getById(
 	            @PathVariable Long id) {
@@ -70,7 +68,6 @@ public class TransactionsController {
 
 	        return ResponseEntity.ok(response);
 	    }
-	    // DELETE
 	    @DeleteMapping("/{id}")
 	    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
 
@@ -89,7 +86,6 @@ public class TransactionsController {
 	    
 	   
 
-	    // ✅ STATUS FILTER
 	    @GetMapping("/status/{status}")
 	    public ApiResponse<List<TransactionsResponseDTO>> getByStatus(
 	            @PathVariable String status) {
@@ -99,3 +95,4 @@ public class TransactionsController {
 	 
 
 }
+

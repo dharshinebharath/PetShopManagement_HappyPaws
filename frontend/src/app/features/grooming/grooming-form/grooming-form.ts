@@ -1,3 +1,4 @@
+// This file holds the Angular logic for grooming form.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,7 +35,6 @@ export class GroomingForm {
         this.groomingService.getById(this.serviceId).subscribe({
           next: (res: any) => {
             const data = res.data;
-
             this.form.patchValue({
               name: data.name,
               description: data.description,
@@ -62,7 +62,7 @@ export class GroomingForm {
 
       const errors: string[] = [];
       const name = this.form.get('name');
-      const description = this.form.get('description');
+      const desc = this.form.get('description');
       const price = this.form.get('price');
 
       if (name?.errors) {
@@ -70,9 +70,9 @@ export class GroomingForm {
         if (name.errors['minlength']) errors.push('Name must be at least 3 characters');
       }
 
-      if (description?.errors) {
-        if (description.errors['required']) errors.push('Description is required');
-        if (description.errors['minlength']) errors.push('Description must be at least 5 characters');
+      if (desc?.errors) {
+        if (desc.errors['required']) errors.push('Description is required');
+        if (desc.errors['minlength']) errors.push('Description must be at least 5 characters');
       }
 
       if (price?.errors) {
@@ -84,37 +84,23 @@ export class GroomingForm {
       return;
     }
 
-    if (this.serviceId !== null && this.serviceId !== undefined) {
-      this.groomingService.update(this.serviceId, this.form.value).subscribe({
+    const payload = this.form.value;
+
+    if (this.serviceId) {
+      this.groomingService.update(this.serviceId, payload).subscribe({
         next: () => {
           alert('Updated successfully');
           this.router.navigate(['/grooming/list']);
         },
-        error: (err) => {
-          if (err.status === 404) {
-            alert('ID not found');
-          } else {
-            alert('Update failed');
-          }
-        }
+        error: () => alert('Update failed')
       });
     } else {
-      const payload = [{
-        name: this.form.value.name,
-        description: this.form.value.description,
-        price: Number(this.form.value.price),
-        available: this.form.value.available
-      }];
-
-      this.groomingService.create(payload).subscribe({
+      this.groomingService.create([payload]).subscribe({
         next: () => {
           alert('Created successfully');
           this.router.navigate(['/grooming/list']);
         },
-        error: (err) => {
-          console.log(err);
-          alert('Create failed');
-        }
+        error: () => alert('Create failed')
       });
     }
   }

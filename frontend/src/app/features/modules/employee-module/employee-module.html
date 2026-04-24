@@ -1,26 +1,35 @@
-<div class="module-container">
+<!-- This template renders the page layout for employee module. -->
+<div class="min-h-screen !bg-gradient-to-br from-emerald-100 via-stone-50 to-green-100 py-12 px-6">
 
-  <h1>Employees & Internal Operations</h1>
-
-  <button class="description-btn" (click)="goToDashboard()">
-
-    <p>
-      This module manages the internal workforce of the pet shop and handles day-to-day operations.
-      You can perform employee management such as adding, updating, deleting, and viewing employee records.
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-4xl font-extrabold text-emerald-900 group-hover:text-stone-50 tracking-wide mb-2">
+      👥 Employees & Internal Operations
+    </h1>
+    <p class="text-stone-600 group-hover:text-stone-200 text-lg">
+      Structured control for employee records, assignments, and internal reporting workflows.
     </p>
+  </div>
 
-    <p>
-      It also allows assigning employees to pets, tracking responsibilities,
-      and generating reports based on roles and hiring dates.
-    </p>
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+    <div routerLink="/employee-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Employees</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Manage employee records, onboarding details, and operational updates.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
 
-    <ul>
-      <li>✔ Manage employee records (CRUD operations)</li>
-      <li>✔ Assign pets to employees</li>
-      <li>✔ Track employee–pet relationships</li>
-      <li>✔ Generate reports by role and hiring date</li>
-    </ul>
+    <div routerLink="/employee-pet-mapping" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Employee &harr; Pet Mapping</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Assign pets to employees and review responsibility mappings in one place.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
 
-  </button>
-
+    <div routerLink="/employee-reports" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Internal Reports</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Review role-based and hiring reports with a structured internal operations view.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
+  </div>
 </div>

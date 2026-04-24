@@ -25,7 +25,6 @@ public class VaccinationsService implements VaccinationsInterface {
 	@Autowired
 	private VaccinationsRepository vaccinationsRepository;
 	
-	 // 🔹 ENTITY → DTO
     private VaccinationsResponseDTO toDto(Vaccinations entity) {
         VaccinationsResponseDTO dto = new VaccinationsResponseDTO();
 
@@ -80,7 +79,7 @@ public class VaccinationsService implements VaccinationsInterface {
 	  public ApiResponse<List<VaccinationsResponseDTO>> getAllVaccinations() {
 
         List<VaccinationsResponseDTO> data =
-                vaccinationsRepository.findAll()
+                vaccinationsRepository.findAllSorted()
                         .stream()
                         .map(this::toDto)
                         .toList();

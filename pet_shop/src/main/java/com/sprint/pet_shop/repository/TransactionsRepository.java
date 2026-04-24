@@ -3,7 +3,6 @@ package com.sprint.pet_shop.repository;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +19,7 @@ public interface TransactionsRepository extends JpaRepository<TransactionsEntity
 	List<TransactionsEntity> findByTransactionStatus(TransactionStatus status);
 
 	List<TransactionsEntity> findByTransactionDateBetween(LocalDate start, LocalDate end);
+
+	@Query("SELECT t FROM TransactionsEntity t ORDER BY t.transactionId ASC")
+	List<TransactionsEntity> findAllSorted();
 }

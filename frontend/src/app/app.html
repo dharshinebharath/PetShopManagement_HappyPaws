@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<!-- This template renders the page layout for app. -->
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100">
+  <div class="min-h-screen flex flex-col">
+    <app-navbar></app-navbar>
+    <app-toast></app-toast>
+
+    <main class="flex flex-1 flex-col px-4 pb-6 pt-3 md:px-6 md:pt-4">
+      <router-outlet></router-outlet>
+      <app-route-back></app-route-back>
+    </main>
+
+    <app-footer></app-footer>
+  </div>
+</div>
+
+

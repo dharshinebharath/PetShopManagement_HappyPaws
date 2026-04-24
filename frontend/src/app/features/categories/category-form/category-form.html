@@ -1,13 +1,24 @@
-<div class="p-6 max-w-md mx-auto bg-white shadow rounded">
-
-    <h2 class="text-xl font-bold mb-4">
-        {{ categoryId ? 'Update Category' : 'Add Category' }}
-    </h2>
-
-    <input [(ngModel)]="formData.name" placeholder="Category Name" class="border p-2 w-full mb-2">
-
-    <button (click)="submit()" class="bg-green-500 text-white px-4 py-2 mt-3 rounded w-full">
-        Submit
-    </button>
-
+<!-- This template renders the page layout for category form. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 flex items-center justify-center px-6 py-8">
+  <div class="w-full max-w-2xl">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-sage-900 tracking-tight">{{ categoryId ? 'Update Category' : 'Add Category' }}</h1>
+      <p class="mt-2 text-sm text-stone-600">Structured category management module</p>
+    </div>
+    <div class="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-stone-200 bg-stone-50">
+        <h2 class="text-sm font-semibold text-sage-900">Category Details</h2>
+        <p class="text-xs text-stone-500">Enter validated information to maintain system consistency</p>
+      </div>
+      <form [formGroup]="form" class="p-6 space-y-6">
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-stone-600">Category Name</label>
+          <input formControlName="name" placeholder="e.g. Dogs" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+          <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Category name is required and must be at least 3 characters</p>
+        </div>
+        <button type="button" (click)="submit()" class="w-full py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium hover:bg-stone-800 transition shadow-sm">Save Category</button>
+      </form>
+    </div>
+  </div>
 </div>
+

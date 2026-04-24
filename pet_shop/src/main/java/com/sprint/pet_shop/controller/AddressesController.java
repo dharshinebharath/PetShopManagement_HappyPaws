@@ -16,7 +16,6 @@ import jakarta.validation.Valid;
 public class AddressesController {
     @Autowired
     private AddressesService addressesService;
-    // CREATE
     @PostMapping
     public ResponseEntity<ApiResponse<List<AddressesResponseDTO>>> saveaddresses(
             @Valid @RequestBody List<AddressesRequestDTO> addresses) {
@@ -26,7 +25,6 @@ public class AddressesController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-    // GET ALL
     @GetMapping
     public ResponseEntity<ApiResponse<List<AddressesResponseDTO>>> getaddresses() {
 
@@ -35,7 +33,6 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
-    // GET BY ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> getaddressesbyId(
             @PathVariable long id) {
@@ -45,7 +42,6 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
-    // UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> updateaddresses(
             @PathVariable long id,
@@ -56,7 +52,6 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
-    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
 
@@ -71,3 +66,4 @@ public class AddressesController {
         return addressesService.getAddressesByCity(city);
     }
 }
+

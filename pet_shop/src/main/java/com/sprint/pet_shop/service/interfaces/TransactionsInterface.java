@@ -20,8 +20,6 @@ public interface TransactionsInterface {
     ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto);
 
     ApiResponse<String> delete(Long id);
-    
-//    ApiResponse<List<TransactionsResponseDTO>> getByDateRange(Date start, Date end);
 
 	ApiResponse<List<TransactionsResponseDTO>> getByCustomer(Long customerId);
 
@@ -31,3 +29,4 @@ public interface TransactionsInterface {
 
 	
 }
+

@@ -1,6 +1,6 @@
-
 package com.sprint.pet_shop.service.interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.sprint.pet_shop.dto.requestDto.EmployeesRequestDTO;
@@ -30,6 +30,8 @@ public interface EmployeesInterface {
 	ApiResponse<String> removePetFromEmployee(Long employeeId, Long petId);
 
 	ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPet(Long petId);
+
+    ApiResponse<List<EmployeesResponseDTO>> getEmployeesHiredAfter(LocalDate date);
 
     
 

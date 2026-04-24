@@ -1,41 +1,6 @@
-<div class="min-h-screen bg-[#f6f8f6] p-6">
-  <h2 class="mb-6 text-3xl font-bold text-[#3a5a40]">
-    {{ selectedCustomerId ? 'Customer Details' : 'Customers' }}
-  </h2>
-
-  <div class="overflow-x-auto rounded-2xl border border-[#d8e2dc] shadow-lg">
-    <table class="w-full border-collapse text-left">
-      <thead class="bg-[#a3b18a] text-white">
-        <tr>
-          <th class="p-3">ID</th>
-          <th class="p-3">First Name</th>
-          <th class="p-3">Last Name</th>
-          <th class="p-3">Email</th>
-          <th class="p-3">Phone</th>
-          <th class="p-3">Address ID</th>
-        </tr>
-      </thead>
-
-      <tbody class="bg-white">
-        <tr *ngIf="customers.length === 0" class="border-b">
-          <td colspan="6" class="p-4 text-center text-gray-500">
-            No customer data available
-          </td>
-        </tr>
-
-        <tr
-          *ngFor="let c of customers"
-          class="border-b transition duration-200 hover:bg-[#fefae0]">
-          <td class="p-3 font-medium text-[#344e41]">{{ c.customerId }}</td>
-          <td class="p-3">{{ c.firstName }}</td>
-          <td class="p-3">{{ c.lastName }}</td>
-          <td class="p-3 text-[#588157]">{{ c.email }}</td>
-          <td class="p-3">{{ c.phoneNumber }}</td>
-          <td class="p-3 font-semibold text-[#bc6c25]">
-            {{ c.address?.addressId }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<!-- This template renders the page layout for customer list. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 px-6 py-10">
+  <div class="max-w-6xl mx-auto mb-8 text-center"><h2 class="text-4xl font-bold text-sage-900 tracking-tight">{{ selectedCustomerId ? 'Customer Details' : 'Customers' }}</h2><p class="mt-2 text-sm text-stone-600">Structured customer records overview</p></div>
+  <div class="overflow-x-auto rounded-2xl border border-stone-200 shadow-sm bg-white"><table class="w-full border-collapse text-left text-sm"><thead class="bg-stone-100 text-sage-900 border-b border-stone-200"><tr><th class="p-4 font-semibold">ID</th><th class="p-4 font-semibold">First Name</th><th class="p-4 font-semibold">Last Name</th><th class="p-4 font-semibold">Email</th><th class="p-4 font-semibold">Phone</th><th class="p-4 font-semibold">Address ID</th></tr></thead><tbody><tr *ngIf="customers.length === 0"><td colspan="6" class="p-4 text-center text-stone-600">No customer data available</td></tr><tr *ngFor="let c of paginated(customers)" class="border-b border-stone-100 hover:bg-stone-50 transition duration-200"><td class="p-4 font-medium text-sage-900">{{ c.customerId }}</td><td class="p-4 text-stone-700">{{ c.firstName }}</td><td class="p-4 text-stone-700">{{ c.lastName }}</td><td class="p-4 text-stone-700">{{ c.email }}</td><td class="p-4 text-stone-700">{{ c.phoneNumber }}</td><td class="p-4 text-stone-700">{{ c.address?.addressId }}</td></tr></tbody></table></div>
 </div>
+<app-pagination [totalItems]="customers.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>

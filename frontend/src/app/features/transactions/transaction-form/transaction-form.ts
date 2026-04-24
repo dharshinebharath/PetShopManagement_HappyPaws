@@ -1,93 +1,134 @@
+// This file holds the Angular logic for transaction form.
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { transaction } from '../../../core/services/transaction';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transaction-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './transaction-form.html'
 })
 export class TransactionForm {
-
   transactionService = inject(transaction);
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
 
   transactionId: number | null = null;
-
-  formData: any = {
-    amount: 0,
-    transactionDate: '',
-    transactionStatus: '',
-    customerId: null,
-    petId: null
-  };
-
   isLoading = true;
 
-  // ================= LOAD BY ID =================
+  form = new FormGroup({
+    amount: new FormControl(0, [Validators.required, Validators.min(1)]),
+    transactionDate: new FormControl('', [Validators.required]),
+    transactionStatus: new FormControl('', [Validators.required]),
+    customerId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
+    petId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+  });
+
   ngOnInit() {
-
     this.route.queryParams.subscribe(params => {
-
       if (params['id']) {
         this.transactionId = Number(params['id']);
 
         this.transactionService.getById(this.transactionId).subscribe({
           next: (res: any) => {
-
             const data = res.data;
 
-            this.formData = {
+            this.form.patchValue({
               amount: data.amount,
               transactionDate: data.transactionDate,
               transactionStatus: data.transactionStatus,
               customerId: data.customerId,
               petId: data.petId
-            };
+            });
 
             this.isLoading = false;
             this.cdr.detectChanges();
           },
           error: () => {
-            alert('Transaction not found ❌');
+            alert('Transaction not found');
             this.router.navigate(['/transactions']);
           }
         });
-
       } else {
         this.isLoading = false;
       }
     });
   }
 
-  // ================= CREATE ONLY =================
   submit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
 
-    console.log('FORM DATA:', this.formData);
+      const errors: string[] = [];
+      const amount = this.form.get('amount');
+      const transactionDate = this.form.get('transactionDate');
+      const transactionStatus = this.form.get('transactionStatus');
+      const customerId = this.form.get('customerId');
+      const petId = this.form.get('petId');
 
-    if (!this.formData.amount || !this.formData.transactionStatus) {
-      alert('Please fill required fields ⚠️');
+      if (amount?.errors) {
+        if (amount.errors['required']) errors.push('Amount is required');
+        if (amount.errors['min']) errors.push('Amount must be greater than 0');
+      }
+      if (transactionDate?.errors) errors.push('Transaction date is required');
+      if (transactionStatus?.errors) errors.push('Transaction status is required');
+      if (customerId?.errors) {
+        if (customerId.errors['required']) errors.push('Customer ID is required');
+        if (customerId.errors['min']) errors.push('Customer ID must be greater than 0');
+      }
+      if (petId?.errors) {
+        if (petId.errors['required']) errors.push('Pet ID is required');
+        if (petId.errors['min']) errors.push('Pet ID must be greater than 0');
+      }
+
+      alert('Please fix errors:\n\n' + errors.join('\n'));
+      return;
+    }
+
+    const transactionDate = this.form.value.transactionDate || '';
+    if (transactionDate) {
+      const selectedDate = new Date(transactionDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate > today) {
+        alert('Transaction date cannot be in the future');
+        return;
+      }
+    }
+
+    const allowedStatus = ['SUCCESS', 'FAILED', 'PENDING'];
+    if (!allowedStatus.includes(this.form.value.transactionStatus || '')) {
+      alert('Invalid transaction status');
       return;
     }
 
     const payload = {
-      amount: Number(this.formData.amount),
-      transactionDate: this.formData.transactionDate,
-      transactionStatus: this.formData.transactionStatus,
-      customerId: this.formData.customerId,
-      petId: this.formData.petId
+      amount: Number(this.form.value.amount),
+      transactionDate: this.form.value.transactionDate,
+      transactionStatus: this.form.value.transactionStatus,
+      customerId: this.form.value.customerId,
+      petId: this.form.value.petId
     };
-
-    this.transactionService.create(payload).subscribe({
-      next: () => {
-        alert('Created successfully ✅');
-        this.router.navigate(['/transactions/list']);
-      },
-      error: () => alert('Create failed ❌')
-    });
+    if (this.transactionId) {
+      this.transactionService.update(this.transactionId, payload).subscribe({
+        next: () => {
+          alert('Updated successfully');
+          this.router.navigate(['/transactions/list']);
+        },
+        error: () => alert('Update failed')
+      });
+    } else {
+      this.transactionService.create(payload).subscribe({
+        next: () => {
+          alert('Created successfully');
+          this.router.navigate(['/transactions/list']);
+        },
+        error: () => alert('Create failed')
+      });
+    }
   }
 }

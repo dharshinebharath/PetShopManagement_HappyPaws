@@ -22,7 +22,6 @@ public class PetFoodController {
     @Autowired
     private PetFoodInterface petFoodService;
 
-    // 🔹 CREATE
     @PostMapping
     public ResponseEntity<ApiResponse<List<PetFoodResponseDTO>>> saveAll(
             @Valid @RequestBody List<PetFoodRequestDTO> dtos) {
@@ -31,19 +30,16 @@ public class PetFoodController {
                 .body(petFoodService.saveAllPetFood(dtos));
     }
 
-    // 🔹 GET ALL
     @GetMapping
     public ResponseEntity<ApiResponse<List<PetFoodResponseDTO>>> getAll() {
         return ResponseEntity.ok(petFoodService.getAllPetFood());
     }
 
-    // 🔹 GET BY ID
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<PetFoodResponseDTO>> getById(@PathVariable long id) {
         return ResponseEntity.ok(petFoodService.getPetFoodById(id));
     }
 
-    // 🔹 UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<PetFoodResponseDTO>> update(
             @PathVariable long id,
@@ -52,7 +48,6 @@ public class PetFoodController {
         return ResponseEntity.ok(petFoodService.updatePetFood(id, dto));
     }
 
-    // 🔹 DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
         return ResponseEntity.ok(petFoodService.deletePetFoodById(id));

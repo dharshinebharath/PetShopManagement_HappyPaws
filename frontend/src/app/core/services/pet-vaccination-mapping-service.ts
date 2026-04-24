@@ -1,3 +1,4 @@
+// This service handles the app-side requests and data flow for pet vaccination mapping service.
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
@@ -10,7 +11,6 @@ export class PetVaccinationMappingService {
 
   private baseUrl = 'http://localhost:8081/api/v1';
 
-  // ✅ AUTH HEADER
   private getAuthHeaders() {
     const username = 'Dharshine';
     const password = 'Dharsh123';
@@ -23,16 +23,12 @@ export class PetVaccinationMappingService {
       })
     };
   }
-
-  // ================= GET =================
   getVaccinationByPet(petId: number) {
     return this.http.get(
       `${this.baseUrl}/pets/${petId}/vaccinations`,
       this.getAuthHeaders()
     );
   }
-
-  // ================= POST =================
   assignVaccination(petId: number, vaccinationId: number) {
     return this.http.post(
       `${this.baseUrl}/pets/${petId}/vaccinations/${vaccinationId}`,
@@ -40,8 +36,6 @@ export class PetVaccinationMappingService {
       this.getAuthHeaders()
     );
   }
-
-  // ================= DELETE =================
   removeVaccination(petId: number, vaccinationId: number) {
     return this.http.delete(
       `${this.baseUrl}/pets/${petId}/vaccinations/${vaccinationId}`,
@@ -49,3 +43,4 @@ export class PetVaccinationMappingService {
     );
   }
 }
+

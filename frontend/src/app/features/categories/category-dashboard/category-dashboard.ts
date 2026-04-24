@@ -1,3 +1,4 @@
+// This file holds the Angular logic for category dashboard.
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,13 +14,9 @@ export class CategoryDashboard {
 
   router = inject(Router);
   categoryService = inject(CategoryService);
-
-  // GET ALL
   goToList() {
     this.router.navigate(['/category/list']);
   }
-
-  // GET BY ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -37,8 +34,6 @@ export class CategoryDashboard {
       }
     });
   }
-
-  // UPDATE
   updateCategory(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -56,8 +51,6 @@ export class CategoryDashboard {
       }
     });
   }
-
-  // DELETE
   deleteCategory(id: string) {
     if (!id) {
       alert('Enter ID to delete');
@@ -75,3 +68,4 @@ export class CategoryDashboard {
     });
   }
 }
+

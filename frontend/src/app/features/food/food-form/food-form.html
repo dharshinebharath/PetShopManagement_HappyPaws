@@ -1,0 +1,26 @@
+<!-- This template renders the page layout for food form. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 flex items-center justify-center px-6 py-8">
+  <div class="w-full max-w-3xl">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-sage-900 tracking-tight">{{ foodId ? 'Update Food' : 'Add Food' }}</h1>
+      <p class="mt-2 text-sm text-stone-600">Structured inventory record management module</p>
+    </div>
+    <div class="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-stone-200 bg-stone-50">
+        <h2 class="text-sm font-semibold text-sage-900">Food Details</h2>
+        <p class="text-xs text-stone-500">Enter validated information to maintain system consistency</p>
+      </div>
+      <form [formGroup]="form" class="p-6 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="space-y-1"><label class="text-xs font-medium text-stone-600">Food Name</label><input type="text" formControlName="name" placeholder="e.g. Puppy Food" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" /><p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Name is required (min 3 characters)</p></div>
+          <div class="space-y-1"><label class="text-xs font-medium text-stone-600">Brand</label><input type="text" formControlName="brand" placeholder="e.g. Pedigree" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" /><p class="text-xs text-red-500" *ngIf="form.get('brand')?.touched && form.get('brand')?.invalid">Brand is required (min 2 characters)</p></div>
+          <div class="space-y-1"><label class="text-xs font-medium text-stone-600">Type</label><input type="text" formControlName="type" placeholder="e.g. Dry Food" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" /><p class="text-xs text-red-500" *ngIf="form.get('type')?.touched && form.get('type')?.invalid">Type is required (min 2 characters)</p></div>
+          <div class="space-y-1"><label class="text-xs font-medium text-stone-600">Quantity</label><input type="number" formControlName="quantity" placeholder="e.g. 25" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" /><p class="text-xs text-red-500" *ngIf="form.get('quantity')?.touched && form.get('quantity')?.invalid">Quantity cannot be negative</p></div>
+        </div>
+        <div class="space-y-1"><label class="text-xs font-medium text-stone-600">Price</label><input type="number" formControlName="price" placeholder="e.g. 650" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" /><p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">Price must be greater than 0</p></div>
+        <button type="button" (click)="submit()" class="w-full py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium hover:bg-stone-800 transition shadow-sm">{{ foodId ? 'Update Food' : 'Save Food' }}</button>
+      </form>
+    </div>
+  </div>
+</div>
+

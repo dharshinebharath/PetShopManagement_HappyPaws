@@ -58,10 +58,6 @@ public class TransactionsServiceTest {
         pet.setPet_id(1L);
     }
 
-    // =========================
-    // ✅ POSITIVE TEST CASES
-    // =========================
-
     @Test
     void testSaveTransaction_Positive() {
 
@@ -70,7 +66,7 @@ public class TransactionsServiceTest {
         dto.setPetId(1L);
         dto.setAmount(new BigDecimal("500"));
         dto.setTransactionDate(LocalDate.now());
-        dto.setTransactionStatus(TransactionStatus.SUCCESS); // ✅ correct enum
+        dto.setTransactionStatus(TransactionStatus.SUCCESS);
 
         TransactionsEntity saved = new TransactionsEntity();
         saved.setTransactionId(1L);
@@ -165,10 +161,6 @@ public class TransactionsServiceTest {
 
         verify(transactionsRepository).deleteById(1L);
     }
-
-    // =========================
-    // ❌ NEGATIVE TEST CASES
-    // =========================
 
     @Test
     void testSave_NullIds_Negative() {

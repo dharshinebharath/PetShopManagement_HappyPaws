@@ -1,53 +1,62 @@
-<div class="min-h-screen flex items-center justify-center 
-            bg-gradient-to-br from-slate-50 via-teal-50 to-emerald-50 p-6">
-
-    <div class="w-full max-w-md bg-white/90 backdrop-blur-md 
-                border border-teal-100 rounded-2xl shadow-lg p-8 space-y-3">
-
-        <h2 class="text-2xl font-bold text-center text-teal-900 mb-4">
-            {{ petId ? 'Update Pet' : 'Add Pet' }}
-        </h2>
-
-        <!-- NAME -->
-        <input [(ngModel)]="formData.name"
-               placeholder="Pet Name"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- BREED -->
-        <input [(ngModel)]="formData.breed"
-               placeholder="Breed"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- AGE -->
-        <input [(ngModel)]="formData.age"
-               type="number"
-               placeholder="Age"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- PRICE -->
-        <input [(ngModel)]="formData.price"
-               type="number"
-               placeholder="Price"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- DESCRIPTION -->
-        <input [(ngModel)]="formData.description"
-               placeholder="Description"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- CATEGORY -->
-        <input [(ngModel)]="formData.categoryId"
-               type="number"
-               placeholder="Category ID"
-               class="border p-2 w-full rounded focus:ring-2 focus:ring-teal-400">
-
-        <!-- BUTTON -->
-        <button (click)="submit()"
-                class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 
-                       hover:from-emerald-600 hover:to-teal-700
-                       text-white py-2 rounded-lg shadow mt-3">
-            Submit
-        </button>
-
+<!-- This template renders the page layout for pet form. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 flex items-center justify-center px-6 py-8">
+  <div class="w-full max-w-3xl">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-sage-900 tracking-tight">{{ petId ? 'Update Pet' : 'Add Pet' }}</h1>
+      <p class="mt-2 text-sm text-stone-600">Structured pet profile management module</p>
     </div>
+
+    <div class="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-stone-200 bg-stone-50">
+        <h2 class="text-sm font-semibold text-sage-900">Pet Details</h2>
+        <p class="text-xs text-stone-500">Enter validated information to maintain system consistency</p>
+      </div>
+
+      <form [formGroup]="form" class="p-6 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Pet Name</label>
+            <input formControlName="name" placeholder="e.g. Bruno" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+            <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Pet name is required and must be at least 3 characters</p>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Breed</label>
+            <input formControlName="breed" placeholder="e.g. Golden Retriever" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+            <p class="text-xs text-red-500" *ngIf="form.get('breed')?.touched && form.get('breed')?.invalid">Breed is required and must be at least 2 characters</p>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Age</label>
+            <input formControlName="age" type="number" placeholder="e.g. 2" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+            <p class="text-xs text-red-500" *ngIf="form.get('age')?.touched && form.get('age')?.invalid">Age is required and cannot be negative</p>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Price</label>
+            <input formControlName="price" type="number" placeholder="e.g. 4000" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+            <p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.invalid">Price is required and must be greater than 0</p>
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-stone-600">Description</label>
+          <textarea rows="3" formControlName="description" placeholder="Enter pet details..." class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300"></textarea>
+          <p class="text-xs text-red-500" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">Description is required and must be at least 5 characters</p>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-stone-600">Category</label>
+          <select formControlName="categoryId" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300">
+            <option [ngValue]="null">Select Category</option>
+            <option *ngFor="let c of categories" [ngValue]="c.category_id ?? c.categoryId">{{ c.category_id ?? c.categoryId }} - {{ c.name }}</option>
+          </select>
+          <p class="text-xs text-red-500" *ngIf="form.get('categoryId')?.touched && form.get('categoryId')?.invalid">Category ID is required and must be greater than 0</p>
+        </div>
+
+        <button type="button" (click)="submit()" class="w-full py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium hover:bg-stone-800 transition shadow-sm">Save Pet</button>
+      </form>
+    </div>
+  </div>
 </div>
+

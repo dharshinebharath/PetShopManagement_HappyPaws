@@ -1,3 +1,4 @@
+// This service handles the app-side requests and data flow for transaction.
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
@@ -46,5 +47,9 @@ export class transaction {
 
   create(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
+  }
+
+  update(id: number, data: any) {
+    return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
 }

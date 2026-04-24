@@ -1,3 +1,4 @@
+// This test file checks the behavior around the pet vaccination list test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PetVaccinationList } from './pet-vaccination-list';

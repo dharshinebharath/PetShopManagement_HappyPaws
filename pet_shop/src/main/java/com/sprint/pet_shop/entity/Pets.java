@@ -52,11 +52,6 @@ public class Pets {
 
 	    @NotBlank(message = "Image URL cannot be empty")
 	    private String image_url;
-	    
-
-//		@NotNull(message = "Category cannot be null")
-//		@Column(nullable = false)
-//	    private String category;
 
 
 	    @NotNull(message = "Category cannot be null")
@@ -64,7 +59,6 @@ public class Pets {
 	    @JoinColumn(name = "category_id", nullable = false)
 	    private PetCategories category;
 
-	    // 🔗 Grooming
 	    @ManyToMany
 	    @JoinTable(
 	        name = "pet_grooming_relationship",
@@ -73,7 +67,6 @@ public class Pets {
 	    )
 	    private List<GroomingServices> groomingServices;
 
-	    // 🔗 Vaccination
 	    @ManyToMany
 	    @JoinTable(
 	        name = "pet_vaccination_relationship",
@@ -83,7 +76,6 @@ public class Pets {
 	    
 	    private List<Vaccinations> vaccinations;
 
-	    // 🔗 Food
 	    @ManyToMany
 	    @JoinTable(
 	        name = "pet_food_relationship",
@@ -92,7 +84,6 @@ public class Pets {
 	    )
 	    private List<PetFood> foods;
 
-	    // 🔗 Employees
 	    @ManyToMany
 	    @JoinTable(
 	        name = "employee_pet_relationship",
@@ -102,7 +93,6 @@ public class Pets {
 	    @JsonIgnore
 	    private List<Employees> employees;
 
-	    // 🔗 Suppliers
 	    @ManyToMany
 	    @JoinTable(
 	        name = "pet_supplier_relationship",
@@ -111,7 +101,6 @@ public class Pets {
 	    )
 	    private List<Supplier> suppliers;
 
-	    // 🔗 Transactions
 	    @OneToMany(mappedBy = "pet" , cascade = CascadeType.ALL, orphanRemoval = true)
 	    @JsonIgnore
 	    private List<TransactionsEntity> transactions;
@@ -233,3 +222,4 @@ public class Pets {
 	
 	
 }
+

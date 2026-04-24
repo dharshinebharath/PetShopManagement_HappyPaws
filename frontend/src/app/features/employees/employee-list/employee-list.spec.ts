@@ -1,3 +1,4 @@
+// This test file checks the behavior around the employee list test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmployeeList } from './employee-list';

@@ -1,7 +1,7 @@
-
 package com.sprint.pet_shop.service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +31,6 @@ public class EmployeesService implements EmployeesInterface {
 
     @Autowired
     private AddressesRepository addressesRepository;
-    // ENTITY → DTO
     
     @Autowired
     private PetsRepository petsRepository;
@@ -54,8 +53,6 @@ public class EmployeesService implements EmployeesInterface {
         	);
         return dto;
     }
-
-    // SAVE ALL
     @Override
     public ApiResponse<List<EmployeesResponseDTO>> saveAll(List<EmployeesRequestDTO> employees) {
 
@@ -76,7 +73,6 @@ public class EmployeesService implements EmployeesInterface {
                 throw new DuplicateResourceException("Employee email already exists");
             }
 
-            // ✅ SET BASIC FIELDS
             emp.setFirstName(dto.getFirstName());
             emp.setLastName(dto.getLastName());
             emp.setPosition(dto.getPosition());
@@ -84,7 +80,6 @@ public class EmployeesService implements EmployeesInterface {
             emp.setPhoneNumber(dto.getPhoneNumber());
             emp.setEmail(dto.getEmail());
 
-            // 🔥🔥🔥 IMPORTANT PART (THIS IS YOUR FIX)
             if (dto.getAddressId() != null) {
 
                 Addresses address = addressesRepository.findById(dto.getAddressId())
@@ -109,8 +104,6 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-
-    // GET ALL
     @Override
     public ApiResponse<List<EmployeesResponseDTO>> getAll() {
 
@@ -127,8 +120,6 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-
-    // GET BY ID
     @Override
     public ApiResponse<EmployeesResponseDTO> getEmployeesById(long employeesId) {
 
@@ -144,8 +135,6 @@ public class EmployeesService implements EmployeesInterface {
         return response;
     }
 
-    // DELETE (NOW RETURN API RESPONSE LIKE GROOMING)
-
     @Override
     public ApiResponse<String> deleteEmployee(long employeeId) {
 
@@ -153,7 +142,6 @@ public class EmployeesService implements EmployeesInterface {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Employee not found with id: " + employeeId));
 
-        // 🔥 BREAK RELATION SAFELY (IMPORTANT)
         if (existing.getPets() != null) {
             existing.getPets().forEach(pet -> pet.getEmployees().remove(existing));
             existing.getPets().clear();
@@ -169,7 +157,6 @@ public class EmployeesService implements EmployeesInterface {
         return response;
     }
 
-    // UPDATE (FIXED → DTO STYLE LIKE GROOMING)
     @Override
     public ApiResponse<EmployeesResponseDTO> updateEmployee(Long id, EmployeesRequestDTO dto) {
 
@@ -234,25 +221,27 @@ public class EmployeesService implements EmployeesInterface {
 	    }
 	    
 	    @Override
-	    public ApiResponse<String> assignPetToEmployee(Long employeeId, Long petId) {
+        public ApiResponse<String> assignPetToEmployee(Long employeeId, Long petId) {
 
-	        Employees emp = employeesRepository.findById(employeeId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+            Employees emp = employeesRepository.findById(employeeId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-	        Pets pet = petsRepository.findById(petId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+            Pets pet = petsRepository.findById(petId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	        List<Employees> employees = pet.getEmployees();
+            if (!emp.getPets().contains(pet)) {
+                emp.getPets().add(pet);
+            }
 
-	        if (!employees.contains(emp)) {
-	            employees.add(emp);
-	        }
+            if (!pet.getEmployees().contains(emp)) {
+                pet.getEmployees().add(emp);
+            }
 
-	        pet.setEmployees(employees);
-	        petsRepository.save(pet);
+            employeesRepository.save(emp);
+            petsRepository.save(pet);
 
-	        return new ApiResponse<>("Pet assigned to employee", true, null);
-	    }
+            return new ApiResponse<>("Pet assigned to employee", true, null);
+        }
 	    
 	    
 	    @Override
@@ -263,6 +252,7 @@ public class EmployeesService implements EmployeesInterface {
 
 	        List<PetsResponseDTO> data = emp.getPets()
 	                .stream()
+                    .sorted(Comparator.comparing(Pets::getPet_id))
 	                .map(pet -> {
 	                    PetsResponseDTO dto = new PetsResponseDTO();
 	                    dto.setPet_id(pet.getPet_id());
@@ -289,20 +279,24 @@ public class EmployeesService implements EmployeesInterface {
 	    }
 	    
 	    @Override
-	    public ApiResponse<String> removePetFromEmployee(Long employeeId, Long petId) {
+        public ApiResponse<String> removePetFromEmployee(Long employeeId, Long petId) {
 
-	        Employees emp = employeesRepository.findById(employeeId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+            Employees emp = employeesRepository.findById(employeeId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-	        Pets pet = petsRepository.findById(petId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+            Pets pet = petsRepository.findById(petId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
 
-	        pet.getEmployees().remove(emp);
+            emp.getPets().remove(pet);
+            pet.getEmployees().remove(emp);
 
-	        petsRepository.save(pet);
+            employeesRepository.save(emp);
+            petsRepository.save(pet);
 
-	        return new ApiResponse<>("Pet removed from employee", true, null);
-	    }
+            return new ApiResponse<>("Pet removed from employee", true, null);
+        }
+
+        @Override
 	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesHiredAfter(LocalDate date) {
 
 	        List<EmployeesResponseDTO> data =
@@ -314,3 +308,4 @@ public class EmployeesService implements EmployeesInterface {
 	        return new ApiResponse<>("Employees hired after date", true, data);
 	    }
     }
+

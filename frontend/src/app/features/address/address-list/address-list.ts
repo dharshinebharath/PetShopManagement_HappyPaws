@@ -1,77 +1,14 @@
-// import { ChangeDetectorRef, Component, inject } from '@angular/core';
-// import { ActivatedRoute, Router } from '@angular/router';
-// import { CommonModule } from '@angular/common';
-// import { AddressService } from '../../../core/services/address';
-
-// @Component({
-//   selector: 'app-address-list',
-//   standalone: true,
-//   imports: [CommonModule],
-//   templateUrl: './address-list.html'
-// })
-// export class AddressList {
-
-//   addressService = inject(AddressService);
-//   route = inject(ActivatedRoute);
-//   router = inject(Router);
-//   cdr = inject(ChangeDetectorRef);
-
-//   addressList: any[] = [];
-
-//   ngOnInit() {
-
-//     this.route.queryParams.subscribe(params => {
-
-//       const id = params['id'];
-
-//       // ❌ No ID → redirect
-//       if (!id) {
-//         alert('Please provide Address ID ❌');
-//         this.router.navigate(['/address']);
-//         return;
-//       }
-
-//       // ✅ GET BY ID ONLY
-//       this.addressService.getById(Number(id)).subscribe({
-//         next: (res: any) => {
-
-//           if (!res || !res.data) {
-//             alert('Address not found ❌');
-//             this.router.navigate(['/address']);
-//             return;
-//           }
-
-//           this.addressList = [res.data]; // wrap as array for table
-//           this.cdr.detectChanges();
-//         },
-
-//         error: (err) => {
-//           console.log(err);
-
-//           if (err.status === 404) {
-//             alert('Address ID not found ❌');
-//           } else if (err.status === 401) {
-//             alert('Unauthorized ❌');
-//           } else {
-//             alert('Something went wrong ⚠️');
-//           }
-
-//           this.router.navigate(['/address']);
-//         }
-//       });
-
-//     });
-//   }
-// }
+// This file holds the Angular logic for address list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AddressService } from '../../../core/services/address';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-address-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './address-list.html'
 })
 export class AddressList {
@@ -91,7 +28,6 @@ export class AddressList {
 
       if (id) {
 
-        // 🔹 GET BY ID
         this.addressService.getById(Number(id)).subscribe({
           next: (res: any) => {
             this.addressList = [res.data];
@@ -102,7 +38,6 @@ export class AddressList {
 
       } else {
 
-        // ✅ DEFAULT → GET ALL
         this.loadAll();
       }
     });
@@ -117,4 +52,19 @@ export class AddressList {
       error: () => alert('Failed to load addresses ❌')
     });
   }
+  currentPage = 1;
+  pageSize = 10;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+
+

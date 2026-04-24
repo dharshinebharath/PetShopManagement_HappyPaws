@@ -21,6 +21,9 @@ public interface GroomingServicesRepository extends JpaRepository <GroomingServi
 	    List<GroomingServices> findServicesByPriceRange(
 	            @Param("min") BigDecimal min,
 	            @Param("max") BigDecimal max);
+
+	@Query("SELECT g FROM GroomingServices g ORDER BY g.serviceId ASC")
+	List<GroomingServices> findAllSorted();
 	
 
 }

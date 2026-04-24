@@ -64,8 +64,6 @@ class PetsServiceTest {
         dto.setPrice(new BigDecimal("10000"));
         dto.setCategory_id(1L);
     }
-
-    // ✅ 1. ADD PETS (Positive)
     @Test
     void testAddAllPets_Positive() {
 
@@ -78,8 +76,6 @@ class PetsServiceTest {
         assertTrue(response.isSuccess());
         assertEquals(1, response.getData().size());
     }
-
-    // ❌ 2. ADD PETS (Invalid Name)
     @Test
     void testAddAllPets_InvalidName() {
 
@@ -88,8 +84,6 @@ class PetsServiceTest {
         assertThrows(InvalidDataException.class,
                 () -> petsService.addAllPets(List.of(dto)));
     }
-
-    // ❌ 3. ADD PETS (Category Not Found)
     @Test
     void testAddAllPets_CategoryNotFound() {
 
@@ -98,8 +92,6 @@ class PetsServiceTest {
         assertThrows(ResourceNotFoundException.class,
                 () -> petsService.addAllPets(List.of(dto)));
     }
-
-    // ✅ 4. GET PET BY ID (Positive)
     @Test
     void testGetPetById_Positive() {
 
@@ -110,8 +102,6 @@ class PetsServiceTest {
 
         assertEquals("Tommy", response.getData().getName());
     }
-
-    // ❌ 5. DELETE PET (Not Found)
     @Test
     void testDeletePet_NotFound() {
 

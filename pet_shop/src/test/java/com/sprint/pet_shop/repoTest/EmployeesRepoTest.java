@@ -25,8 +25,6 @@ public class EmployeesRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // ✅ 1. Positive: valid employee
     @Test
     void testValidEmployee() {
         Employees emp = new Employees();
@@ -41,8 +39,6 @@ public class EmployeesRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // ✅ 2. Positive: another valid employee (different data)
     @Test
     void testAnotherValidEmployee() {
         Employees emp = new Employees();
@@ -57,8 +53,6 @@ public class EmployeesRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // ❌ 3. Negative: first name is null
     @Test
     void testFirstNameNull() {
         Employees emp = new Employees();
@@ -73,8 +67,6 @@ public class EmployeesRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 4. Negative: position blank
     @Test
     void testPositionBlank() {
         Employees emp = new Employees();
@@ -89,8 +81,6 @@ public class EmployeesRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 5. Negative: email null
     @Test
     void testEmailNull() {
         Employees emp = new Employees();

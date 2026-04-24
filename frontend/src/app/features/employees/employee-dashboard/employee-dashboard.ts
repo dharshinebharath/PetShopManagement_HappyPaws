@@ -1,3 +1,4 @@
+// This file holds the Angular logic for employee dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -15,8 +16,6 @@ export class EmployeeDashboard {
   http = inject(HttpClient);
 
   private baseUrl = 'http://localhost:8081/api/v1/employees';
-
-  // AUTH HEADERS
   private getAuthHeaders() {
     const username = 'Priyadharshini';
     const password = 'Priya123';
@@ -29,13 +28,9 @@ export class EmployeeDashboard {
       }
     };
   }
-
-  // GET ALL
   goToList() {
     this.router.navigate(['/employee/list']);
   }
-
-  // GET BY ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -44,7 +39,6 @@ export class EmployeeDashboard {
 
     this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders()).subscribe({
       next: (res: any) => {
-        // if exists → go to list page with query param
         this.router.navigate(['/employee/list'], {
           queryParams: { id }
         });
@@ -53,13 +47,11 @@ export class EmployeeDashboard {
         if (err.status === 404) {
           alert('Employee ID not found ❌');
         } else {
-          alert('Something went wrong ⚠️');
+          alert('Something went wrong ⚠️Â');
         }
       }
     });
   }
-
-  // UPDATE (CHECK ID FIRST)
   updateEmployee(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -68,7 +60,6 @@ export class EmployeeDashboard {
 
     this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders()).subscribe({
       next: () => {
-        // ID exists → go to form
         this.router.navigate(['/employee/form'], {
           queryParams: { id }
         });
@@ -82,8 +73,6 @@ export class EmployeeDashboard {
       }
     });
   }
-
-  // DELETE
   deleteEmployee(id: string) {
     if (!id) {
       alert('Enter ID to delete');
@@ -102,3 +91,4 @@ export class EmployeeDashboard {
     });
   }
 }
+

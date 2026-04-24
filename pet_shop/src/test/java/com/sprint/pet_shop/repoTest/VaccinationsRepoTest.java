@@ -19,8 +19,6 @@ public class VaccinationsRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // 1️⃣ VALID CASE (Positive)
     @Test
     void testValidVaccination() {
         Vaccinations v = new Vaccinations();
@@ -33,8 +31,6 @@ public class VaccinationsRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // 2️⃣ NEGATIVE: Name blank
     @Test
     void testNameShouldNotBeBlank() {
         Vaccinations v = new Vaccinations();
@@ -46,8 +42,6 @@ public class VaccinationsRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 3️⃣ NEGATIVE: Price null
     @Test
     void testPriceShouldNotBeNull() {
         Vaccinations v = new Vaccinations();
@@ -59,8 +53,6 @@ public class VaccinationsRepoTest {
 
         assertFalse(violations.isEmpty());
     }
-
-    // 4️⃣ EDGE CASE: Description can be null (Valid)
     @Test
     void testDescriptionCanBeNull() {
         Vaccinations v = new Vaccinations();
@@ -73,8 +65,6 @@ public class VaccinationsRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // 5️⃣ EDGE CASE: Negative price allowed (since no constraint exists)
     @Test
     void testNegativePriceAllowedCurrently() {
         Vaccinations v = new Vaccinations();
@@ -83,8 +73,6 @@ public class VaccinationsRepoTest {
         v.setAvailable(true);
 
         Set<ConstraintViolation<Vaccinations>> violations = validator.validate(v);
-
-        // passes because no @Positive or @Min validation exists
         assertTrue(violations.isEmpty());
     }
 }

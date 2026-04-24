@@ -12,19 +12,13 @@ public class PetsResponseDTO {
     private BigDecimal price;
     private String description;
     private String image_url;
-
-    // Category info
     private Long category_id;
     private String categoryName;
-
-    // Relationships (IDs only)
     private List<Long> groomingServiceIds;
     private List<Long> vaccinationIds;
     private List<Long> foodIds;
     private List<Long> employeeIds;
     private List<Long> supplierIds;
-
-    // Getters & Setters
 
     public String getName() { return name; }
     public Long getPet_id() {
@@ -77,3 +71,4 @@ public class PetsResponseDTO {
     public List<Long> getSupplierIds() { return supplierIds; }
     public void setSupplierIds(List<Long> supplierIds) { this.supplierIds = supplierIds; }
 }
+

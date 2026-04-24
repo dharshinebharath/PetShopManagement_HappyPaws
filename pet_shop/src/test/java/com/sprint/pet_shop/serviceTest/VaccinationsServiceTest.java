@@ -51,8 +51,6 @@ class VaccinationsServiceTest {
         vaccination.setPrice(BigDecimal.valueOf(500));
         vaccination.setAvailable(true);
     }
-
-    // ✅ 1. Positive: Save Vaccinations
     @Test
     void saveAllVaccinations_success() {
 
@@ -70,8 +68,6 @@ class VaccinationsServiceTest {
 
         verify(vaccinationsRepository, times(1)).saveAll(anyList());
     }
-
-    // ❌ 2. Negative: Invalid price
     @Test
     void saveAllVaccinations_invalidPrice_throwsException() {
 
@@ -82,8 +78,6 @@ class VaccinationsServiceTest {
 
         verify(vaccinationsRepository, never()).saveAll(anyList());
     }
-
-    // ❌ 3. Negative: Duplicate vaccination
     @Test
     void saveAllVaccinations_duplicate_throwsException() {
 
@@ -95,8 +89,6 @@ class VaccinationsServiceTest {
 
         verify(vaccinationsRepository, never()).saveAll(anyList());
     }
-
-    // ✅ 4. Positive: Get by ID
     @Test
     void getVaccinationById_success() {
 
@@ -111,8 +103,6 @@ class VaccinationsServiceTest {
 
         verify(vaccinationsRepository).findById(1L);
     }
-
-    // ❌ 5. Negative: Not found
     @Test
     void getVaccinationById_notFound_throwsException() {
 

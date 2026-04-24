@@ -32,8 +32,6 @@ class GroomingServicesServiceTest {
     @InjectMocks
     private GroomingServicesService service;
     
-    //Positive Test
-    
     @Test
     void saveAllGroomingServices_success() {
 
@@ -60,8 +58,6 @@ class GroomingServicesServiceTest {
 
         verify(repository, times(1)).saveAll(anyList());
     }
-    
-    //Negative Test
 
     @Test
     void saveAllGroomingServices_duplicateService_throwsException() {
@@ -78,15 +74,13 @@ class GroomingServicesServiceTest {
 
         verify(repository, never()).saveAll(anyList());
     }
-    
-    //Negative Test
 
     @Test
     void saveAllGroomingServices_invalidPrice_throwsException() {
 
         GroomingServicesRequestDTO dto = new GroomingServicesRequestDTO();
         dto.setName("Bath");
-        dto.setPrice(BigDecimal.valueOf(-100)); // invalid
+        dto.setPrice(BigDecimal.valueOf(-100));
         dto.setAvailable(true);
 
         assertThrows(InvalidDataException.class,
@@ -94,8 +88,6 @@ class GroomingServicesServiceTest {
 
         verify(repository, never()).saveAll(anyList());
     }
-    
-    //Negative Test
     
     @Test
     void getGroomingServiceById_notFound() {
@@ -107,8 +99,6 @@ class GroomingServicesServiceTest {
 
         verify(repository, times(1)).findById(1L);
     }
-    
-    //Positive Test
 
     
     @Test

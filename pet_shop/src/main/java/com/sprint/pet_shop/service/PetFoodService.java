@@ -87,7 +87,7 @@ public class PetFoodService implements PetFoodInterface {
     public ApiResponse<List<PetFoodResponseDTO>> getAllPetFood() {
 
         List<PetFoodResponseDTO> data =
-                petFoodRepository.findAll()
+                petFoodRepository.findAllSorted()
                         .stream()
                         .map(this::toDto)
                         .toList();

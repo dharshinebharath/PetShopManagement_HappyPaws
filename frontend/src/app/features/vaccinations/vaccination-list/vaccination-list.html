@@ -1,54 +1,79 @@
-<div class="min-h-screen bg-gradient-to-br from-teal-50 via-slate-50 to-emerald-50 p-10">
+<!-- This template renders the page layout for vaccination list. -->
+<div class="min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 px-6 py-10">
 
-    <h2 class="text-3xl font-bold text-center text-teal-900 mb-8">
-        Vaccination Services
+  
+  <div class="max-w-6xl mx-auto mb-8 text-center">
+    <h2 class="text-4xl font-bold text-sage-900 tracking-tight">
+      Vaccination Services
     </h2>
+    <p class="mt-2 text-sm text-stone-600">
+      Structured vaccination records overview
+    </p>
+  </div>
 
-    <div class="flex justify-center">
+  
+  <div class="flex justify-center">
+    <div class="w-full max-w-6xl">
 
-        <div class="w-full max-w-5xl overflow-x-auto">
+      <div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm bg-white">
 
-            <table class="w-full bg-white/90 shadow-lg rounded-2xl overflow-hidden">
+        
+        <div class="overflow-x-auto">
 
-                <!-- HEADER -->
-                <thead class="bg-gradient-to-r from-teal-600 to-emerald-600 text-white">
-                    <tr>
-                        <th class="p-3 text-left">ID</th>
-                        <th class="p-3 text-left">Name</th>
-                        <th class="p-3 text-left">Price</th>
-                        <th class="p-3 text-left">Available</th>
-                    </tr>
-                </thead>
+          <table class="w-full text-sm">
 
-                <!-- BODY -->
-                <tbody>
+            
+            <thead class="bg-stone-100 text-sage-900 border-b border-stone-200">
+              <tr>
+                <th class="p-4 text-left font-semibold">ID</th>
+                <th class="p-4 text-left font-semibold">Name</th>
+                <th class="p-4 text-left font-semibold">Price</th>
+                <th class="p-4 text-left font-semibold">Status</th>
+              </tr>
+            </thead>
 
-                    <tr *ngFor="let v of vaccinationList" class="border-b hover:bg-teal-50 transition">
+            
+            <tbody class="divide-y divide-stone-100">
 
-                        <td class="p-3 text-blue-700 font-medium">
-                            {{ v.vaccinationId }}
-                        </td>
+              <tr *ngFor="let v of paginated(vaccinationList)" class="hover:bg-stone-50 transition">
 
-                        <td class="p-3 font-semibold text-teal-800">
-                            {{ v.name }}
-                        </td>
+                <td class="p-4 font-medium text-sage-900">
+                  {{ v.vaccinationId }}
+                </td>
 
-                        <td class="p-3 text-emerald-700">
-                            ₹ {{ v.price }}
-                        </td>
+                <td class="p-4 text-stone-700 font-medium">
+                  {{ v.name }}
+                </td>
 
-                        <td class="p-3">
-                            <span [ngClass]="v.available ? 'text-green-600' : 'text-red-500'">
-                                {{ v.available ? 'Available' : 'Not Available' }}
-                            </span>
-                        </td>
+                <td class="p-4 text-stone-700">
+                  <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">
+                    Rs. {{ v.price }}
+                  </span>
+                </td>
 
-                    </tr>
+                <td class="p-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="v.available
+                      ? 'bg-sage-100 text-sage-700'
+                      : 'bg-red-100 text-red-600'">
 
-                </tbody>
+                    {{ v.available ? 'Available' : 'Not Available' }}
+                  </span>
+                </td>
 
-            </table>
+              </tr>
+
+            </tbody>
+          </table>
 
         </div>
+      </div>
+
     </div>
+  </div>
+
 </div>
+
+
+<app-pagination [totalItems]="vaccinationList.length" [pageSize]="pageSize" [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+</app-pagination>

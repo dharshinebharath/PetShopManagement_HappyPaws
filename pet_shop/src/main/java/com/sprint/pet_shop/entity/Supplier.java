@@ -1,4 +1,3 @@
-
 package com.sprint.pet_shop.entity;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public class Supplier {
     private List<Pets> pets;
 
     @ManyToOne
-    @JoinColumn(name = "address_id")  // 🔥 creates FK column
+    @JoinColumn(name = "address_id")
     private Addresses address;
     
 	public Addresses getAddress() {

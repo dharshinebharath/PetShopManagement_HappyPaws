@@ -1,3 +1,4 @@
+// This file holds the Angular logic for vaccination form.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VaccinationService } from '../../../core/services/vaccinationService';
@@ -67,7 +68,6 @@ export class VaccinationForm {
   // ================= SUBMIT =================
   submit() {
 
-    // 🔥 FORCE VALIDATION CHECK
     if (this.form.invalid) {
 
       this.form.markAllAsTouched();
@@ -108,7 +108,6 @@ export class VaccinationForm {
         }
       }
 
-      // 🔥 FINAL ALERT
       alert('❌ Please fix errors:\n\n' + errors.join('\n'));
 
       return;

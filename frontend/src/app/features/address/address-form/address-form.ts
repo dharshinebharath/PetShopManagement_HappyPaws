@@ -1,118 +1,125 @@
+// This file holds the Angular logic for address form.
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddressService } from '../../../core/services/address';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-address-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './address-form.html'
 })
 export class AddressForm {
-
   addressService = inject(AddressService);
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
 
   addressId: number | null = null;
-
-  formData: any = {
-    street: '',
-    city: '',
-    state: '',
-    zipCode: ''
-  };
-
   isLoading = true;
 
-  // ================= INIT =================
+  form = new FormGroup({
+    street: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    city: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
+    state: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
+    zipCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5,6}$')])
+  });
+
   ngOnInit() {
-
     this.route.queryParams.subscribe(params => {
-
       if (params['id']) {
         this.addressId = Number(params['id']);
 
-        // ✅ FETCH EXISTING ADDRESS
         this.addressService.getById(this.addressId).subscribe({
           next: (res: any) => {
-
             const data = res.data;
 
-            // ✅ ASSIGN VALUES
-            this.formData.street = data.street;
-            this.formData.city = data.city;
-            this.formData.state = data.state;
-            this.formData.zipCode = data.zipCode;
+            this.form.patchValue({
+              street: data.street,
+              city: data.city,
+              state: data.state,
+              zipCode: data.zipCode
+            });
 
             this.isLoading = false;
-
-            // 🔥 FORCE UI UPDATE
             this.cdr.detectChanges();
           },
           error: () => {
-            alert('Address not found ❌');
+            alert('Address not found');
             this.router.navigate(['/address']);
           }
         });
-
       } else {
-        // CREATE MODE
         this.isLoading = false;
       }
     });
   }
 
-  // ================= SUBMIT =================
   submit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
 
-    // ✅ validation
-    if (!this.formData.street || !this.formData.city) {
-      alert('Please fill required fields ⚠️');
+      const errors: string[] = [];
+      const street = this.form.get('street');
+      const city = this.form.get('city');
+      const state = this.form.get('state');
+      const zipCode = this.form.get('zipCode');
+
+      if (street?.errors) {
+        if (street.errors['required']) errors.push('Street is required');
+        if (street.errors['minlength']) errors.push('Street must be at least 3 characters');
+      }
+      if (city?.errors) {
+        if (city.errors['required']) errors.push('City is required');
+        if (city.errors['minlength']) errors.push('City must be at least 2 characters');
+        if (city.errors['pattern']) errors.push('City must contain only letters');
+      }
+      if (state?.errors) {
+        if (state.errors['required']) errors.push('State is required');
+        if (state.errors['minlength']) errors.push('State must be at least 2 characters');
+        if (state.errors['pattern']) errors.push('State must contain only letters');
+      }
+      if (zipCode?.errors) {
+        if (zipCode.errors['required']) errors.push('Zip code is required');
+        if (zipCode.errors['pattern']) errors.push('Zip code must be 5 or 6 digits');
+      }
+
+      alert('Please fix errors:\n\n' + errors.join('\n'));
       return;
     }
 
-    // ================= UPDATE =================
-    if (this.addressId !== null && this.addressId !== undefined) {
+    const payload = {
+      street: this.form.value.street,
+      city: this.form.value.city,
+      state: this.form.value.state,
+      zipCode: this.form.value.zipCode
+    };
 
-      this.addressService.update(this.addressId, this.formData).subscribe({
+    if (this.addressId !== null && this.addressId !== undefined) {
+      this.addressService.update(this.addressId, payload).subscribe({
         next: () => {
-          alert('Address updated successfully ✅');
+          alert('Address updated successfully');
           this.router.navigate(['/address/list']);
         },
         error: (err) => {
           if (err.status === 404) {
-            alert('ID not found ❌');
+            alert('ID not found');
           } else {
-            alert('Update failed ❌');
+            alert('Update failed');
           }
         }
       });
-
-    } 
-    
-    // ================= CREATE =================
-    else {
-
-      const payload = [{
-  street: this.formData.street,
-  city: this.formData.city,
-  state: this.formData.state,
-  zipCode: this.formData.zipCode
-}];
-
-      console.log('POST PAYLOAD:', payload); // DEBUG
-
-      this.addressService.create(payload).subscribe({
+    } else {
+      this.addressService.create([payload]).subscribe({
         next: () => {
-          alert('Address created successfully ✅');
+          alert('Address created successfully');
           this.router.navigate(['/address/list']);
         },
         error: (err) => {
           console.log(err);
-          alert('Create failed ❌');
+          alert('Create failed');
         }
       });
     }

@@ -1,3 +1,4 @@
+// This file holds the Angular logic for grooming dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -53,7 +54,7 @@ export class GroomingDashboard {
       },
       error: (err) => {
         if (err.status === 404) {
-          alert('Cannot update, ID not found');
+          alert('Cannot update. ID not found');
         } else {
           alert('Error checking ID');
         }
@@ -72,8 +73,7 @@ export class GroomingDashboard {
         alert('Service deleted successfully');
         this.router.navigate(['/grooming/list']);
       },
-      error: (err) => {
-        console.error(err);
+      error: () => {
         alert('Delete failed');
       }
     });

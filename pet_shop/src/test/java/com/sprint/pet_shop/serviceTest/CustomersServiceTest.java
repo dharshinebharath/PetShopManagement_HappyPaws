@@ -62,8 +62,6 @@ class CustomersServiceTest {
         customer.setPhoneNumber("9876543210");
         customer.setAddress(address);
     }
-
-    // ✅ 1. Positive: Save Customer
     @Test
     void saveCustomers_success() {
 
@@ -84,8 +82,6 @@ class CustomersServiceTest {
 
         verify(customersRepository).saveAll(anyList());
     }
-
-    // ❌ 2. Negative: Invalid first name
     @Test
     void saveCustomers_invalidFirstName_throwsException() {
 
@@ -96,8 +92,6 @@ class CustomersServiceTest {
 
         verify(customersRepository, never()).saveAll(anyList());
     }
-
-    // ❌ 3. Negative: Duplicate email
     @Test
     void saveCustomers_duplicateEmail_throwsException() {
 
@@ -109,8 +103,6 @@ class CustomersServiceTest {
 
         verify(customersRepository, never()).saveAll(anyList());
     }
-
-    // ❌ 4. Negative: Address not found
     @Test
     void saveCustomers_addressNotFound_throwsException() {
 
@@ -125,8 +117,6 @@ class CustomersServiceTest {
 
         verify(customersRepository, never()).saveAll(anyList());
     }
-
-    // ✅ 5. Positive: Get customer by ID
     @Test
     void getCustomerById_success() {
 

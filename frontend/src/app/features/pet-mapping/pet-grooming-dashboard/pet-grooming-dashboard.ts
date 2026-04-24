@@ -1,3 +1,4 @@
+// This file holds the Angular logic for pet grooming dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,26 +20,21 @@ export class PetGroomingDashboard {
   postServiceId: string = '';
   deletePetId: string = '';
   deleteServiceId: string = '';
-
-  // ================= GET =================
  viewServices() {
   if (!this.getPetId) {
-    alert('Enter Pet ID ⚠️');
+    alert('Enter Pet ID ⚠️Â');
     return;
   }
 
-  // 🔥 CALL API FIRST
   this.service.getGroomingByPet(Number(this.getPetId)).subscribe({
     
     next: (res: any) => {
 
-      // ✅ CHECK DATA
       if (!res || !res.data || res.data.length === 0) {
         alert('No services found for this Pet ID ❌');
         return;
       }
 
-      // ✅ ONLY THEN NAVIGATE
       this.router.navigate(['/pet-mapping/grooming/list'], {
         queryParams: { petId: this.getPetId }
       });
@@ -47,15 +43,13 @@ export class PetGroomingDashboard {
     error: (err) => {
       console.log(err);
 
-      // ✅ INVALID PET ID
       alert('Invalid Pet ID ❌');
     }
   });
 }
-  // ================= POST =================
   assign() {
     if (!this.postPetId || !this.postServiceId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -66,7 +60,6 @@ export class PetGroomingDashboard {
       next: () => {
         alert('Assigned Successfully ✅');
 
-        // 🔥 REDIRECT AFTER SUCCESS
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.postPetId }
         });
@@ -74,11 +67,9 @@ export class PetGroomingDashboard {
       error: () => alert('Assign Failed ❌')
     });
   }
-
-  // ================= DELETE =================
   remove() {
     if (!this.deletePetId || !this.deleteServiceId) {
-      alert('Enter both IDs ⚠️');
+      alert('Enter both IDs ⚠️Â');
       return;
     }
 
@@ -89,7 +80,6 @@ export class PetGroomingDashboard {
       next: () => {
         alert('Deleted Successfully ✅');
 
-        // 🔥 REDIRECT AFTER DELETE
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.deletePetId }
         });
@@ -98,3 +88,4 @@ export class PetGroomingDashboard {
     });
   }
 }
+

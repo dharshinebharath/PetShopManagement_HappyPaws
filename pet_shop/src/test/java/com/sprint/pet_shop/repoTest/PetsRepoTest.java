@@ -33,52 +33,42 @@ public class PetsRepoTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
-    // ❌ 1. Name should not be blank (Negative)
     @Test
     void testNameShouldNotBeBlank() {
         Pets pet = getValidPet();
-        pet.setName(""); // invalid
+        pet.setName("");
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 2. Breed should not be blank (Negative)
     @Test
     void testBreedShouldNotBeBlank() {
         Pets pet = getValidPet();
-        pet.setBreed(""); // invalid
+        pet.setBreed("");
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 3. Price should not be null (Negative)
     @Test
     void testPriceShouldNotBeNull() {
         Pets pet = getValidPet();
-        pet.setPrice(null); // invalid
+        pet.setPrice(null);
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
         assertFalse(violations.isEmpty());
     }
-
-    // ❌ 4. Category should not be null (Negative)
     @Test
     void testCategoryShouldNotBeNull() {
         Pets pet = getValidPet();
-        pet.setCategory(null); // invalid
+        pet.setCategory(null);
 
         Set<ConstraintViolation<Pets>> violations = validator.validate(pet);
 
         assertFalse(violations.isEmpty());
     }
-
-    // ✅ 5. Valid Pet (Positive)
     @Test
     void testValidPet() {
         Pets pet = getValidPet();
@@ -87,8 +77,6 @@ public class PetsRepoTest {
 
         assertTrue(violations.isEmpty());
     }
-
-    // 🔥 Helper Method (VERY CLEAN)
     private Pets getValidPet() {
         Pets pet = new Pets();
         pet.setName("Dog");

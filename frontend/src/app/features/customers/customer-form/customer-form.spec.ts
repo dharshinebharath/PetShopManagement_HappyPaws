@@ -1,3 +1,4 @@
+// This test file checks the behavior around the customer form test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomerForm } from './customer-form';

@@ -1,9 +1,32 @@
-import { Component } from '@angular/core';
+// This shared component supports pagination across multiple screens.
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './pagination.html',
   styleUrl: './pagination.css',
 })
-export class Pagination {}
+export class PaginationComponent {
+  @Input() totalItems = 0;
+  @Input() pageSize = 10;
+  @Input() currentPage = 1;
+  @Output() pageChange = new EventEmitter<number>();
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.totalItems / this.pageSize));
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  goTo(page: number) {
+    if (page < 1 || page > this.totalPages || page === this.currentPage) {
+      return;
+    }
+    this.pageChange.emit(page);
+  }
+}

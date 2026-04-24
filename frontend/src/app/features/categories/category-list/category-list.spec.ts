@@ -1,3 +1,4 @@
+// This test file checks the behavior around the category list test flow.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CategoryList } from './category-list';

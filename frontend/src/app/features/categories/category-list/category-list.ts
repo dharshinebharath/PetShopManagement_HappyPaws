@@ -1,12 +1,14 @@
+// This file holds the Angular logic for category list.
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../core/services/categoryService';
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationComponent],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
 })
@@ -26,11 +28,10 @@ export class CategoryList {
       const id = params['id'];
 
       if (id) {
-        // 🔹 GET BY ID
         this.categoryService.getById(Number(id)).subscribe({
           next: (res: any) => {
 
-            console.log('GET BY ID RESPONSE 👉', res);
+            console.log('GET BY ID RESPONSE Ã°Å¸â€˜â€°', res);
 
             if (!res || !res.data) {
               alert('No category found ❌');
@@ -60,7 +61,7 @@ export class CategoryList {
     this.categoryService.getAll().subscribe({
       next: (res: any) => {
 
-        console.log('GET ALL RESPONSE 👉', res);
+        console.log('GET ALL RESPONSE Ã°Å¸â€˜â€°', res);
 
         this.categoryList = res.data;
         this.cdr.detectChanges();
@@ -71,4 +72,18 @@ export class CategoryList {
       }
     });
   }
+  currentPage = 1;
+  pageSize = 10;
+
+  paginated<T>(items: T[]): T[] {
+    const safe = items || [];
+    const start = (this.currentPage - 1) * this.pageSize;
+    return safe.slice(start, start + this.pageSize);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+  }
+
 }
+

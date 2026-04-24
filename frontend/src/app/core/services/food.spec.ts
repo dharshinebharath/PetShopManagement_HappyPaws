@@ -1,3 +1,4 @@
+// This test file checks the behavior around the food test flow.
 import { TestBed } from '@angular/core/testing';
 
 import { Food } from './food';

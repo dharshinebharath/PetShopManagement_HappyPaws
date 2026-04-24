@@ -1,0 +1,42 @@
+<!-- This template renders the page layout for inventory module. -->
+<div class="min-h-screen !bg-gradient-to-br from-emerald-100 via-stone-50 to-green-100 py-12 px-6">
+
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-4xl font-extrabold text-emerald-900 group-hover:text-stone-50 tracking-wide mb-2">
+      📦 Inventory Management
+    </h1>
+    <p class="text-stone-600 group-hover:text-stone-200 text-lg">
+      Centralized management for food inventory, suppliers, and pet inventory mappings.
+    </p>
+  </div>
+
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
+    <div routerLink="/food-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Pet Food</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Manage pet food inventory, stock levels, pricing, and product records.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
+
+    <div routerLink="/supplier-dashboard" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Suppliers</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Maintain supplier details, contacts, and vendor relationships with clarity.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
+
+    <div routerLink="/pet-mapping/food" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Pet &harr; Food Mapping</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Assign food items to pets and track dietary relationships efficiently.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
+
+    <div routerLink="/pet-mapping/suppliers" class="group cursor-pointer rounded-2xl border border-emerald-300 bg-gradient-to-br from-white to-emerald-50 hover:from-sage-700 hover:to-sage-900 p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
+      <div class="w-12 h-1 bg-emerald-500 group-hover:bg-stone-300 mb-5 rounded"></div>
+      <h2 class="text-2xl font-semibold text-emerald-900 group-hover:text-stone-50 mb-3">Pet &harr; Supplier Mapping</h2>
+      <p class="text-stone-600 group-hover:text-stone-200 leading-relaxed">Link suppliers with pets and manage supply relationships with better visibility.</p>
+      <div class="mt-6 text-emerald-700 group-hover:text-stone-300 font-medium opacity-0 group-hover:opacity-100 transition">View Dashboard &rarr;</div>
+    </div>
+  </div>
+</div>

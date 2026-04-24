@@ -1,10 +1,11 @@
+// This file holds the Angular logic for pets module.
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pets-module',
   standalone: true,
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink],
   templateUrl: './pets-module.html',
   styleUrl: './pets-module.css',
 })

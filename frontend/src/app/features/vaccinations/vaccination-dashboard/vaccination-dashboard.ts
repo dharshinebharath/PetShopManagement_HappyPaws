@@ -1,3 +1,4 @@
+// This file holds the Angular logic for vaccination dashboard.
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -18,7 +19,10 @@ export class VaccinationDashboard {
   }
 
   viewById(id: string) {
-    if (!id) return;
+    if (!id) {
+      alert('Please enter Vaccination ID');
+      return;
+    }
 
     this.vaccinationService.getById(Number(id)).subscribe({
       next: () => {
@@ -33,7 +37,10 @@ export class VaccinationDashboard {
   }
 
   updateVaccination(id: string) {
-    if (!id) return;
+    if (!id) {
+      alert('Enter Vaccination ID to update');
+      return;
+    }
 
     this.vaccinationService.getById(Number(id)).subscribe({
       next: () => {
@@ -46,7 +53,10 @@ export class VaccinationDashboard {
   }
 
   deleteVaccination(id: string) {
-    if (!id) return;
+    if (!id) {
+      alert('Enter Vaccination ID to delete');
+      return;
+    }
 
     this.vaccinationService.delete(Number(id)).subscribe({
       next: () => {
