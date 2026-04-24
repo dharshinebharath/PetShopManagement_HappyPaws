@@ -9,7 +9,7 @@ import { AddressService } from '../../../core/services/address';
 @Component({
   selector: 'app-customer-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule,FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './customer-form.html'
 })
 export class CustomerForm {

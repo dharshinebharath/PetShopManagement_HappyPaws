@@ -1,14 +1,14 @@
 // This test file checks the behavior around the supplier test flow.
 import { TestBed } from '@angular/core/testing';
 
-import { Supplier } from './supplier';
+import { SupplierService } from './supplier';
 
-describe('Supplier', () => {
-  let service: Supplier;
+describe('SupplierService', () => {
+  let service: SupplierService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Supplier);
+    service = TestBed.inject(SupplierService);
   });
 
   it('should be created', () => {

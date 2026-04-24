@@ -1,7 +1,7 @@
 // This shared component supports route back across multiple screens.
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-route-back',
@@ -12,6 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class RouteBackComponent {
   router = inject(Router);
+  route = inject(ActivatedRoute);
   currentUrl = this.router.url;
 
   constructor() {
@@ -60,7 +61,8 @@ export class RouteBackComponent {
     if (u.startsWith('/category/')) return this.router.navigate(['/category-dashboard']);
     if (u.startsWith('/grooming/')) return this.router.navigate(['/grooming-dashboard']);
     if (u.startsWith('/vaccination/')) return this.router.navigate(['/vaccination-dashboard']);
-    if (u.startsWith('/customer/') || u.startsWith('/address/')) return this.router.navigate(['/customers-dashboard']);
+    if (u.startsWith('/customer/')) return this.router.navigate(['/customers-dashboard'], { queryParams: { tab: 'customer' } });
+    if (u.startsWith('/address/')) return this.router.navigate(['/customers-dashboard'], { queryParams: { tab: 'address' } });
     if (u.startsWith('/transactions/')) return this.router.navigate(['/transactions-dashboard']);
     if (u.startsWith('/employee/')) return this.router.navigate(['/employee-dashboard']);
     if (u.startsWith('/food/')) return this.router.navigate(['/food-dashboard']);
