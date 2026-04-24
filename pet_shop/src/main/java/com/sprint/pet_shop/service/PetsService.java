@@ -503,4 +503,36 @@ public class PetsService implements PetsInterface {
 		}
 
 		if (pet.getSuppliers().contains(supplier)) {
-			throw new DuplicateResource
+			throw new DuplicateResourceException("Supplier already added");
+		}
+
+		pet.getSuppliers().add(supplier);
+		petsRepository.save(pet);
+
+		return new ApiResponse<>("Supplier added to pet", true, null);
+	}
+
+	@Override
+	public ApiResponse<List<SupplierResponseDTO>> getSuppliersByPet(Long petId) {
+		Pets pet = petsRepository.findById(petId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+
+		List<SupplierResponseDTO> data = pet.getSuppliers()
+				.stream()
+				.map(supplier -> {
+					SupplierResponseDTO dto = new SupplierResponseDTO();
+					dto.setSupplierId(supplier.getSupplierId());
+					dto.setName(supplier.getName());
+					dto.setContactPerson(supplier.getContactPerson());
+					dto.setPhoneNumber(supplier.getPhoneNumber());
+					dto.setEmail(supplier.getEmail());
+					if (supplier.getAddress() != null) {
+						dto.setAddressId(supplier.getAddress().getAddressId());
+					}
+					return dto;
+				})
+				.toList();
+
+		return new ApiResponse<>("Suppliers fetched", true, data);
+	}
+}
