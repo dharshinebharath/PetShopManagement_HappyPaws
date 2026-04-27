@@ -26,7 +26,7 @@ public class CustomersController {
     private TransactionsService transactionsService;
     @PostMapping
     public ResponseEntity<ApiResponse<List<CustomerResponseDTO>>> savecustomers(
-            @Valid @RequestBody List<CustomerRequestDTO> customers) {
+            @RequestBody List< @Valid CustomerRequestDTO> customers) {
         ApiResponse<List<CustomerResponseDTO>> response =
                 customersService.savecustomers(customers);
 
@@ -51,7 +51,7 @@ public class CustomersController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<CustomerResponseDTO>> updatecustomers(
-            @PathVariable long id,
+            @PathVariable Long id,
             @Valid @RequestBody CustomerRequestDTO customer) {
 
         ApiResponse<CustomerResponseDTO> response =
@@ -61,7 +61,7 @@ public class CustomersController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> deletecustomer(
-            @PathVariable long id) {
+            @PathVariable Long id) {
 
         ApiResponse<String> response =
                 customersService.deletecustomer(id);

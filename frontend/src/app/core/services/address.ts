@@ -14,7 +14,7 @@ export class AddressService {
   private getAuthHeaders() {
     const username = 'Revathi';
     const password = 'Reva123';
-
+//Encoding the username and password in Base64 format for Basic Authentication
     const auth = btoa(`${username}:${password}`);
 
     return {

@@ -10,6 +10,8 @@ public class CustomerRequestDTO {
     @NotNull(message = "Last name cannot be null")
     @NotBlank(message = "Last name cannot be empty")
     private String lastName;
+    @NotNull(message = "email cannot be null")
+    @NotBlank(message = "email cannot be empty")
     private String email;
     private String phoneNumber;
     private Long addressId;

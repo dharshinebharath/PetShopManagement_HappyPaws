@@ -19,21 +19,9 @@ public class Customers {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long customerId;
-	
-	@NotNull(message = "First name cannot be null")
-	@NotBlank(message = "First name cannot be empty")
-	@Column(length=50)
 	private String firstName;
-	
-	@NotNull(message = "Last name cannot be null")
-	@NotBlank(message = "Last name cannot be empty")
-	@Column(length=50)
 	private String lastName;
-	
-	@Column(length=100)
-	private String email;
-	
-	@Column(length=20)
+	private String email;	
 	private String phoneNumber;
 	
     @ManyToOne

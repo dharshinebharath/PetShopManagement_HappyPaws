@@ -16,16 +16,11 @@ public class Addresses {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="address_id")
 	private Long addressId;
-	
-	@Column(length=255)
 	private String street;
-	
-	@Column(length=100)
 	private String city;
-	@Column(length=50)
 	private String state;
 	
-	@Column(name="zip_code",length=20)
+	@Column(name="zip_code")
 	private String zipCode;
 
 	public Long getAddressId() {

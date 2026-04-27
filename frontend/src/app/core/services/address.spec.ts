@@ -1,14 +1,14 @@
 // This test file checks the behavior around the address test flow.
 import { TestBed } from '@angular/core/testing';
+import { AddressService } from './address';
 
-import { Address } from './address';
 
-describe('Address', () => {
-  let service: Address;
+describe('AddressService', () => {
+  let service: AddressService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Address);
+    service = TestBed.inject(AddressService);
   });
 
   it('should be created', () => {

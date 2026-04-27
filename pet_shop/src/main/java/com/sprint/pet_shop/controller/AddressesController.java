@@ -10,7 +10,7 @@ import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.service.AddressesService;
 
 import jakarta.validation.Valid;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/addresses")
 public class AddressesController {
@@ -35,7 +35,7 @@ public class AddressesController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> getaddressesbyId(
-            @PathVariable long id) {
+            @PathVariable Long id) {
 
         ApiResponse<AddressesResponseDTO> response =
                 addressesService.getaddressesByID(id);
@@ -44,7 +44,7 @@ public class AddressesController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> updateaddresses(
-            @PathVariable long id,
+            @PathVariable Long id,
             @Valid @RequestBody AddressesRequestDTO address) {
 
         ApiResponse<AddressesResponseDTO> response =
@@ -53,7 +53,7 @@ public class AddressesController {
         return ResponseEntity.ok(response);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
+    public ResponseEntity<ApiResponse<String>> delete(@PathVariable Long id) {
 
         ApiResponse<String> response =
                 addressesService.deleteaddress(id);

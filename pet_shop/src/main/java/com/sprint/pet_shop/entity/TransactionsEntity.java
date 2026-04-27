@@ -16,25 +16,20 @@ public class TransactionsEntity {
     @Column(name = "transaction_id")
     private Long transactionId;
 
-    @NotNull(message = "Transaction date cannot be null")
-    @Column(name = "transaction_date", nullable = false)
+    @Column(name = "transaction_date")
     private LocalDate transactionDate;
-
-    @NotNull(message = "Amount cannot be null")
-    @Column(nullable = false)
     private BigDecimal amount;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id")
     private Customers customer;
 
     @ManyToOne
-    @JoinColumn(name = "pet_id", nullable = false)
+    @JoinColumn(name = "pet_id")
     private Pets pet;
-
-    @NotNull(message = "Transaction status cannot be null")
+    
     @Enumerated(EnumType.STRING)
-    @Column(name = "transaction_status", nullable = false)
+    @Column(name = "transaction_status")
     private TransactionStatus transactionStatus;
 
     public Long getTransactionId() {
