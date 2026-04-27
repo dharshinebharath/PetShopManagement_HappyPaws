@@ -60,12 +60,5 @@ export class VaccinationDashboard {
     });
   }
 
-viewVaccination(arg0: string) {
-throw new Error('Method not implemented.');
-}
-deleteVaccination(arg0: string) {
-throw new Error('Method not implemented.');
-}
-
 }
 

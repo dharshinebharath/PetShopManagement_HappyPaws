@@ -8,10 +8,6 @@ import { GroomingDashboard } from './features/grooming/grooming-dashboard/groomi
 import { VaccinationDashboard } from './features/vaccinations/vaccination-dashboard/vaccination-dashboard';
 import { GroomingList } from './features/grooming/grooming-list/grooming-list';
 import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
-
-
-import { GroomingList } from './features/grooming/grooming-list/grooming-list';
-import { GroomingForm } from './features/grooming/grooming-form/grooming-form';
 import { VaccinationList } from './features/vaccinations/vaccination-list/vaccination-list';
 import { VaccinationForm } from './features/vaccinations/vaccination-form/vaccination-form';
 

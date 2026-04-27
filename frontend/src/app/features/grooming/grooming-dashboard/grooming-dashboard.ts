@@ -19,25 +19,12 @@ import { HttpClient } from '@angular/common/http';
 
   imports: [FormsModule, RouterModule],
 
-
-
-  imports: [FormsModule, RouterModule],
-
   templateUrl: './grooming-dashboard.html'
 })
 export class GroomingDashboard {
 
-
-
   router = inject(Router);
   groomingService = inject(GroomingService);
-
-
-
-  router = inject(Router);
-  groomingService = inject(GroomingService);
-
-
   // GET ALL
   goToList() {
     this.router.navigate(['/grooming/list']);
