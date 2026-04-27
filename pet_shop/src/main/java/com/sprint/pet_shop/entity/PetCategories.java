@@ -12,7 +12,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Represents a specific category or classification of pets (e.g., Dog, Cat, Bird).
+ * This helps us organize our pets inventory into logical groupings.
+ */
 @Entity
 @Table(name = "pet_categories")
 public class PetCategories {
@@ -22,8 +28,8 @@ public class PetCategories {
 	    @Column(name = "category_id")
 	    private Long categoryId;
 
-	    @NotBlank(message = "Category name cannot be empty")
-	    @Column(length = 100)
+	    @NotNull(message = "Category name cannot be null")
+		@Size(min = 2, max = 50, message = "Category name must be between 2 and 50 characters")
 	    private String name;
 	    
 	    @JsonIgnore

@@ -18,9 +18,18 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Represents a pet available in our Pet Shop.
+ * This is a core entity that links to many other parts of the system, 
+ * such as the pet's category, vaccinations received, grooming services, 
+ * and even the employees responsible for their care.
+ */
 @Entity
 @Table(name = "pets")
 
@@ -31,26 +40,29 @@ public class Pets {
 	    @Column(name = "pet_id")
 	    private Long pet_id;
 
-	    @NotBlank(message = "Pet name cannot be empty")
-	    @Column(length = 100)
+		@NotNull(message = "Pet name cannot be null")
+		@Size(min = 2, max = 50, message = "Pet name must be between 2 and 50 characters")
+	    @Column(nullable = false, length = 50)
 	    private String name;
 
-	    @NotBlank(message = "Breed cannot be empty")
-	    @Column(length = 100)
+		@NotNull(message = "Breed cannot be null")
+		@Size(min = 2, max = 50, message = "Breed must be between 2 and 50 characters")
+	    @Column(nullable = false, length = 50)
 	    private String breed;
 
-	    @NotNull(message = "Age cannot be null")
+		@Positive
 	    private Integer age;
 
-	    @NotNull(message = "Price cannot be null")
-	    @Column(precision = 10, scale = 2)
+		@Positive
+		@Digits(integer = 8, fraction = 2, message = "Price must have max 8 digits and 2 decimal places")
 	    private BigDecimal price;
 
-	    @NotBlank(message = "Description cannot be empty")
-	    @Column(columnDefinition = "TEXT",length = 255)
+		@NotBlank(message = "Description cannot be empty")
+		@Size(min = 2, max = 255, message = "Description must be between 2 and 255 characters")
 	    private String description;
 
-	    @NotBlank(message = "Image URL cannot be empty")
+		@NotBlank(message = "Image URL cannot be empty")
+		@Size(min = 2, max = 255, message = "Image URL must be between 2 and 255 characters")
 	    private String image_url;
 
 

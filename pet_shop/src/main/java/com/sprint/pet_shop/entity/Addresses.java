@@ -1,6 +1,5 @@
 package com.sprint.pet_shop.entity;
 
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -17,15 +19,19 @@ public class Addresses {
 	@Column(name="address_id")
 	private Long addressId;
 	
-	@Column(length=255)
+	@NotBlank(message = "Street cannot be empty")
+	@Size(min = 2, max = 255, message = "Street must be between 2 and 255 characters")
 	private String street;
 	
-	@Column(length=100)
+	@NotBlank(message = "City cannot be empty")
+	@Size(min = 2, max = 100, message = "City must be between 2 and 100 characters")
 	private String city;
-	@Column(length=50)
+
+	@NotBlank(message = "State cannot be empty")
+	@Size(min = 2, max = 50, message = "State must be between 2 and 50 characters")
 	private String state;
 	
-	@Column(name="zip_code",length=20)
+	@Pattern(regexp = "[0-9]{5}", message = "Zip code must be 5 digits")
 	private String zipCode;
 
 	public Long getAddressId() {

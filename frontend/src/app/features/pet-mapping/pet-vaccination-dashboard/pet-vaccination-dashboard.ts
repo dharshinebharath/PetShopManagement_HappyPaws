@@ -10,16 +10,21 @@ import { PetVaccinationMappingService } from '../../../core/services/pet-vaccina
   imports: [FormsModule],
   templateUrl: './pet-vaccination-dashboard.html'
 })
+// Logic for pet-vaccination dashboard
 export class PetVaccinationDashboard {
 
+  // Injecting required services
   service = inject(PetVaccinationMappingService);
   router = inject(Router);
 
+  // Form fields for pet and vaccination IDs
   getPetId: string = '';
   postPetId: string = '';
   postVaccinationId: string = '';
   deletePetId: string = '';
   deleteVaccinationId: string = '';
+
+  // Method to view vaccinations for a pet
   viewVaccinations() {
     if (!this.getPetId) {
       alert('Enter Pet ID ⚠️Â');
@@ -41,9 +46,11 @@ export class PetVaccinationDashboard {
       error: () => alert('Invalid Pet ID ❌')
     });
   }
+
+  // Method to assign a vaccination to a pet
   assign() {
     if (!this.postPetId || !this.postVaccinationId) {
-      alert('Enter both IDs ⚠️Â');
+      alert('Enter both IDs ⚠️ ');
       return;
     }
 
@@ -61,9 +68,11 @@ export class PetVaccinationDashboard {
       error: () => alert('Assign Failed ❌')
     });
   }
+
+  // Method to remove a vaccination from a pet
   remove() {
     if (!this.deletePetId || !this.deleteVaccinationId) {
-      alert('Enter both IDs ⚠️Â');
+      alert('Enter both IDs ⚠️ ');
       return;
     }
 

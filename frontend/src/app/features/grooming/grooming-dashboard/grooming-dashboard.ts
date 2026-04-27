@@ -4,20 +4,25 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { GroomingService } from '../../../core/services/groomingService';
 
+// Dashboard component for grooming services
 @Component({
   selector: 'app-grooming-dashboard',
   standalone: true,
   imports: [FormsModule, RouterModule],
   templateUrl: './grooming-dashboard.html'
 })
+
 export class GroomingDashboard {
+  // Injecting required services
   router = inject(Router);
   groomingService = inject(GroomingService);
 
   goToList() {
+    // Navigating to the list of grooming services
     this.router.navigate(['/grooming/list']);
   }
 
+  // View service by ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -40,6 +45,7 @@ export class GroomingDashboard {
     });
   }
 
+  // Update service by ID
   updateService(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -62,6 +68,7 @@ export class GroomingDashboard {
     });
   }
 
+  // Delete service by ID
   deleteService(id: string) {
     if (!id) {
       alert('Enter ID to delete');

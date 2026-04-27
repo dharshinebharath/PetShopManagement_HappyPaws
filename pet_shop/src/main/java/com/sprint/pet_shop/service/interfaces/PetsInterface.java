@@ -13,6 +13,11 @@ import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
 import com.sprint.pet_shop.entity.Pets;
 
+/**
+ * The core business logic interface for Pets.
+ * This handles everything from basic pet CRUD to complex operations like assigning 
+ * a pet to an employee, feeding them, or scheduling grooming services.
+ */
 public interface PetsInterface {
     ApiResponse<List<PetsResponseDTO>> addAllPets(List<PetsRequestDTO> dtos);
     ApiResponse<List<PetsResponseDTO>> getAllPets();

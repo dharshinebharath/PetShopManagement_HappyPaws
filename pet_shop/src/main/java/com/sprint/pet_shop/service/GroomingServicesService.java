@@ -17,14 +17,17 @@ import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.GroomingServicesRepository;
 import com.sprint.pet_shop.service.interfaces.GroomingServicesInterface;
 
-import jakarta.validation.Valid;
 
+//  Implementation of the GroomingServicesInterface.
+//  Processes new grooming services, ensuring prices aren't negative and preventing 
+//  duplicate service names from being registered.
 @Service
 public class GroomingServicesService implements GroomingServicesInterface {
 
 	@Autowired
 	private GroomingServicesRepository groomingServicesRepository;
 	
+	//  Converts a database entity to a response DTO
 	private GroomingServicesResponseDTO toDto(GroomingServices entity) {
 
 	    GroomingServicesResponseDTO dto = new GroomingServicesResponseDTO();
@@ -37,6 +40,8 @@ public class GroomingServicesService implements GroomingServicesInterface {
 
 	    return dto;
 	}
+
+	//  Adds new grooming services to the database after validation
 	@Override
 	public ApiResponse<List<GroomingServicesResponseDTO>> saveAllGroomingServices(List<GroomingServicesRequestDTO> dtos) {
 
@@ -75,6 +80,7 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	
 	}
 
+	//  Retrieves all grooming services from the database
 	@Override
 	public ApiResponse<List<GroomingServicesResponseDTO>> getAllGroomingServices() {
 
@@ -92,6 +98,7 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    return response;
 	}
 
+	//  Retrieves a single grooming service by its ID
 	@Override
 	public ApiResponse<GroomingServicesResponseDTO> getGroomingServiceById(long id) {
 
@@ -106,6 +113,7 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    return response;
 	}
 	
+	//  Removes a grooming service from the database by ID
 	@Override
 	public ApiResponse<String> deleteGroomingServiceById(long id) {
 
@@ -122,6 +130,8 @@ public class GroomingServicesService implements GroomingServicesInterface {
 
 	    return response;
 	}
+
+	//  Updates an existing grooming service by ID after validating the new data
 	@Override
 	public ApiResponse<GroomingServicesResponseDTO> updateGroomingService(long id, GroomingServicesRequestDTO dto) {
 
@@ -147,20 +157,7 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    return response;
 	}
 
-	public GroomingServices updateGroomingService(long id, @Valid GroomingServices service) {
-		GroomingServices existing = groomingServicesRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Services Not Found with id:"+id));
-
-		if (service.getPrice().doubleValue() < 0) {
-		    throw new InvalidDataException("Price must be positive");
-		}
-	    existing.setName(service.getName());
-	    existing.setDescription(service.getDescription());
-	    existing.setPrice(service.getPrice());
-	    existing.setAvailable(service.isAvailable());
-
-	    return groomingServicesRepository.save(existing);
-	}
+	//  Retrieves grooming services that fall within a specified price range
 	@Override
 	public ApiResponse<List<GroomingServicesResponseDTO>> getServicesByPriceRange(BigDecimal min, BigDecimal max) {
 

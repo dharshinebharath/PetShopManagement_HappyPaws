@@ -13,25 +13,25 @@ import { NotificationService } from '../../../core/services/notification';
   templateUrl: './login.html'
 })
 export class Login {
-
+  // Injecting required services
   router = inject(Router);
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
   notificationService = inject(NotificationService);
-
+  // Login form
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
-
+  // Login method
   login() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-
+      // Array to store validation errors
       const errors: string[] = [];
       const username = this.loginForm.get('username');
       const password = this.loginForm.get('password');
-
+      // Checking for validation errors
       if (username?.errors) {
         if (username.errors['required']) errors.push('Username is required');
         if (username.errors['minlength']) errors.push('Username must be at least 3 characters');
@@ -46,10 +46,12 @@ export class Login {
       return;
     }
 
+    // Getting username, password, and module key from the login form
     const username = this.loginForm.value.username!.trim();
     const password = this.loginForm.value.password!;
     const moduleKey = (this.route.snapshot.paramMap.get('module') ?? '').trim();
 
+    // Module credentials
     const moduleCredentials: Record<string, { route: string; username: string; password: string; label: string; role: string }> = {
       'pets-module': { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module', role: 'Pet Admin' },
       pets: { route: '/pets-module', username: 'Mahakarpagam', password: 'Maha123', label: 'Maha Karpagam Module', role: 'Pet Admin' },
@@ -65,12 +67,15 @@ export class Login {
 
     const moduleConfig = moduleCredentials[moduleKey];
 
+    // Checking if the module is valid
     if (!moduleConfig) {
       alert('Invalid module selection');
       return;
     }
 
+    // Set of valid credentials
     const validCredentials = new Set<string>([`${moduleConfig.username}:${moduleConfig.password}`]);
+    // Adding valid credentials for customers module
     if (moduleKey === 'customers-module' || moduleKey === 'customers' || moduleKey === 'custoners-module') {
       validCredentials.add('Revathi:Reva123');
       validCredentials.add('Revati:Rev123');
@@ -80,11 +85,13 @@ export class Login {
       alert(`Use the correct username and password for ${moduleConfig.route}`);
       return;
     }
-
+    
+    // Creating headers for authentication
     const headers = {
       Authorization: 'Basic ' + btoa(username + ':' + password)
     };
 
+    // Making a GET request to the API
     this.http.get('http://localhost:8081/api/v1/me', { headers })
       .subscribe({
         next: (res: any) => {
@@ -93,9 +100,11 @@ export class Login {
             return;
           }
 
+          // Get username and role from the response
           const userName = res?.username || moduleConfig.username;
           const userRole = this.formatRole(res?.role) || moduleConfig.role;
 
+          // Setting active module label, route, username, and role in session storage
           sessionStorage.setItem('activeModuleLabel', moduleConfig.label);
           sessionStorage.setItem('activeModuleRoute', moduleConfig.route);
           sessionStorage.setItem('activeUserName', userName);
@@ -103,6 +112,7 @@ export class Login {
           this.notificationService.showSuccess(`${userName} logged in successfully as ${userRole}.`);
           this.router.navigateByUrl(moduleConfig.route);
         },
+        // Error handling
         error: (err: HttpErrorResponse) => {
           if (err.status === 0) {
             alert('Backend server is not running (http://localhost:8081). Please start backend first.');
@@ -113,12 +123,13 @@ export class Login {
             alert('Invalid credentials');
             return;
           }
+          // Show error notification
 
           alert(`Login failed (${err.status}). Please try again.`);
         }
       });
   }
-
+  // Formatting the role
   private formatRole(role: string | null | undefined): string {
     const normalized = (role ?? '')
       .replace(/[\[\]]/g, '')
@@ -131,6 +142,7 @@ export class Login {
       return '';
     }
 
+    
     return normalized
       .split('_')
       .map(part => {

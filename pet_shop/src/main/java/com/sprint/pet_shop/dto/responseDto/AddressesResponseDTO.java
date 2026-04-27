@@ -1,5 +1,9 @@
 package com.sprint.pet_shop.dto.responseDto;
 
+/**
+ * Data Transfer Object for sending address details back to the client.
+ * This ensures we only expose necessary information when a user requests address data.
+ */
 public class AddressesResponseDTO {
 	private Long addressId;
     private String street;

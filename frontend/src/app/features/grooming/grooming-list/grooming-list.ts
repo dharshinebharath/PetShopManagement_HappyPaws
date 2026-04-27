@@ -12,7 +12,9 @@ import { GroomingService } from '../../../core/services/groomingService';
   templateUrl: './grooming-list.html',
   styleUrl: './grooming-list.css',
 })
+// Component for displaying list of grooming services
 export class GroomingList {
+  // Injecting required services
   groomingService = inject(GroomingService);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -20,10 +22,12 @@ export class GroomingList {
 
   groomingList: any[] = [];
 
+  // Initialize the component
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
 
+      // Load grooming service by ID if provided
       if (id) {
         this.groomingService.getById(Number(id)).subscribe({
           next: (res: any) => {
@@ -40,7 +44,7 @@ export class GroomingList {
             console.log(err);
 
             if (err.status === 404) {
-              alert('Service ID not found');
+              alert(err.error.message);
             } else if (err.status === 401) {
               alert('Unauthorized. Please login again');
             } else {
@@ -51,11 +55,13 @@ export class GroomingList {
           }
         });
       } else {
+        // Load all grooming services if no ID is provided
         this.loadAll();
       }
     });
   }
 
+  // Load all grooming services
   loadAll() {
     this.groomingService.getAll().subscribe({
       next: (res: any) => {
@@ -68,9 +74,11 @@ export class GroomingList {
       }
     });
   }
+  // Pagination
   currentPage = 1;
   pageSize = 10;
 
+  // Method to get paginated list of items
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;

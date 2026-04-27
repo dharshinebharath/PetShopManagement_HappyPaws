@@ -16,7 +16,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Represents an employee working at the Pet Shop.
+ * We use this to keep track of staff members, their roles (positions), 
+ * contact details, and the specific pets they are assigned to care for.
+ */
 @Entity
 @Table(name = "employees") 
 
@@ -27,34 +35,28 @@ public class Employees {
     @Column(name = "employee_id")
     private Long employeeId;
 
-    @Column(length = 50, name = "first_name")
     @NotNull(message = "First name cannot be null")
-    @NotBlank(message = "First name cannot be empty")
+	@Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
     private String firstName;
 
-    @Column(length = 50, name = "last_name")
     @NotNull(message = "Last name cannot be null")
-    @NotBlank(message = "Last name cannot be empty")
+	@Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
 
-    @Column(length = 50)
-    @NotNull(message = "Position cannot be null")
     @NotBlank(message = "Position cannot be empty")
+	@Size(min = 2, max = 50, message = "Position must be between 2 and 50 characters")
     private String position;
 
-
-	@Column(length = 50, name = "hire_date")
     @NotNull(message = "Hire date cannot be null")
     private LocalDate hireDate;
 
-    @Column(length = 20, name = "phone_number")
-    @NotNull(message = "Phone number cannot be null")
     @NotBlank(message = "Phone number cannot be empty")
+	@Pattern(regexp = "[0-9]{10}", message = "Phone number must be 10 digits")
     private String phoneNumber;
 
-    @Column(length = 100)
-    @NotNull(message = "Email cannot be null")
-    @NotBlank(message = "Email cannot be empty")
+	@Size(min = 2, max = 100, message = "Email must be between 2 and 100 characters")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+	@Email(message = "Invalid email address")
     private String email;
 
     @ManyToMany(mappedBy = "employees")

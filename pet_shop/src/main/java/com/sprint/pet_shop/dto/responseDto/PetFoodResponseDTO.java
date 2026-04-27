@@ -2,6 +2,10 @@ package com.sprint.pet_shop.dto.responseDto;
 
 import java.math.BigDecimal;
 
+/**
+ * Data Transfer Object representing a pet food item in our inventory.
+ * Used to display available food types, brands, and prices to the end user.
+ */
 public class PetFoodResponseDTO {
 
     private Long foodId;

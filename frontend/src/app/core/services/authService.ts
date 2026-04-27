@@ -5,16 +5,21 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+// This service is used to authenticate users and authorize their access to the system.
 export class AuthService {
 
+  // Constructor for dependency injection
   constructor(private http: HttpClient) {}
 
+  // Method to handle user login
   login(username: string, password: string) {
 
+    // Creating headers for authentication
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + btoa(username + ':' + password)
     });
 
+    // Making a GET request to the server for authentication
     return this.http.get('http://localhost:8081/api/v1/pets', {
       headers,
       responseType: 'json'

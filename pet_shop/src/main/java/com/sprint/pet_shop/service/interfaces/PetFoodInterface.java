@@ -6,6 +6,10 @@ import com.sprint.pet_shop.dto.requestDto.PetFoodRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 
+/**
+ * Defines the operations allowed for our Pet Food inventory.
+ * We use this interface to track what food items we sell and handle CRUD operations.
+ */
 public interface PetFoodInterface {
 
     ApiResponse<List<PetFoodResponseDTO>> saveAllPetFood(List<PetFoodRequestDTO> dtos);

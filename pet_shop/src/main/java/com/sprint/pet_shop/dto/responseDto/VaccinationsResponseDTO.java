@@ -2,13 +2,22 @@ package com.sprint.pet_shop.dto.responseDto;
 
 import java.math.BigDecimal;
 
+
+//  Data Transfer Object for Vaccination details.
+//  Used to show pet owners what medical treatments are available and their costs.
+
+
 public class VaccinationsResponseDTO {
 
+
+	// Vaccination details
     private Long vaccinationId;
     private String name;
     private String description;
     private BigDecimal price;
     private boolean available;
+	
+	// Getters and setters
 	public Long getVaccinationId() {
 		return vaccinationId;
 	}

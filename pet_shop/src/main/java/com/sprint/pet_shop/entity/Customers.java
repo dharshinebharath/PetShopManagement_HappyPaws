@@ -13,7 +13,15 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Represents a customer in our Pet Shop. 
+ * This entity tracks the customer's personal details, contact information, 
+ * their associated address, and any transactions they've made with us.
+ */
 @Entity
 public class Customers {
 	@Id
@@ -21,23 +29,25 @@ public class Customers {
 	private Long customerId;
 	
 	@NotNull(message = "First name cannot be null")
-	@NotBlank(message = "First name cannot be empty")
-	@Column(length=50)
+	@Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
 	private String firstName;
 	
 	@NotNull(message = "Last name cannot be null")
-	@NotBlank(message = "Last name cannot be empty")
-	@Column(length=50)
+	@Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
 	private String lastName;
 	
-	@Column(length=100)
+	@Email(message = "Invalid email address")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+	@Size(min = 2, max = 100, message = "Email must be between 2 and 100 characters")
 	private String email;
 	
-	@Column(length=20)
+	@Pattern(regexp = "[0-9]{10}", message = "Phone number must be 10 digits")
+	@NotBlank(message = "Phone number cannot be empty")
 	private String phoneNumber;
 	
     @ManyToOne
     @JoinColumn(name = "address_id")
+	@NotNull(message="Address cannot be null")
     private Addresses address;
 
     @OneToMany(mappedBy = "customer")

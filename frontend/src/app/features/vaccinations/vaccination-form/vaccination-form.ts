@@ -23,17 +23,18 @@ export class VaccinationForm {
 
   // ================= FORM GROUP =================
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
     price: new FormControl(0, [Validators.required, Validators.min(1)]),
     available: new FormControl(true)
   });
 
-  // ================= INIT =================
+  // Initialize the component
   ngOnInit() {
-
+    // Subscribe to route query parameters
     this.route.queryParams.subscribe(params => {
 
+      // Check if vaccination ID exists
       if (params['id']) {
 
         this.serviceId = Number(params['id']);
@@ -53,8 +54,9 @@ export class VaccinationForm {
             this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: () => {
-            alert('Vaccination not found ❌');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Vaccination not found ❌');
+            alert(msg);
             this.router.navigate(['/vaccination']);
           }
         });
@@ -65,9 +67,10 @@ export class VaccinationForm {
     });
   }
 
-  // ================= SUBMIT =================
+  // Submit handler
   submit() {
 
+    // Check if form is invalid
     if (this.form.invalid) {
 
       this.form.markAllAsTouched();
@@ -78,30 +81,27 @@ export class VaccinationForm {
       const desc = this.form.get('description');
       const price = this.form.get('price');
 
-      // ================= NAME =================
       if (name?.errors) {
         if (name.errors['required']) {
-          errors.push('Name is required');
+          errors.push('Vaccination name cannot be empty');
         }
-        if (name.errors['minlength']) {
-          errors.push('Name must be at least 3 characters');
+        if (name.errors['minlength'] || name.errors['maxlength']) {
+          errors.push('Vaccination name must be between 2 and 50 characters');
         }
       }
 
-      // ================= DESCRIPTION =================
       if (desc?.errors) {
         if (desc.errors['required']) {
-          errors.push('Description is required');
+          errors.push('Description cannot be empty');
         }
-        if (desc.errors['minlength']) {
-          errors.push('Description must be at least 5 characters');
+        if (desc.errors['minlength'] || desc.errors['maxlength']) {
+          errors.push('Description must be between 2 and 255 characters');
         }
       }
 
-      // ================= PRICE =================
       if (price?.errors) {
         if (price.errors['required']) {
-          errors.push('Price is required');
+          errors.push('Price cannot be null');
         }
         if (price.errors['min']) {
           errors.push('Price must be greater than 0');
@@ -113,20 +113,25 @@ export class VaccinationForm {
       return;
     }
 
-    // ================= VALID FORM =================
+    // Get payload
     const payload = this.form.value;
 
     if (this.serviceId) {
-
+      // Update vaccination
       this.vaccinationService.update(this.serviceId, payload).subscribe({
         next: () => {
           alert('Updated successfully ✅');
           this.router.navigate(['/vaccination/list']);
         },
-        error: () => alert('Update failed ❌')
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed ❌');
+          alert(msg);
+        }
       });
 
-    } else {
+    } 
+    // Create vaccination
+    else {
 
       const createPayload = [{
         name: this.form.value.name,
@@ -140,7 +145,11 @@ export class VaccinationForm {
           alert('Created successfully ✅');
           this.router.navigate(['/vaccination/list']);
         },
-        error: () => alert('Create failed ❌')
+        error: (err) => {
+          console.log("Full error:", err);
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed ❌');
+          alert(msg);
+        }
       });
 
     }

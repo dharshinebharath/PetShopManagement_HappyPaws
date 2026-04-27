@@ -1,85 +1,84 @@
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.Addresses;
+import com.sprint.pet_shop.repository.AddressesRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AddressesRepoTest {
-    @Test
-    void testValidAddress() {
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+class AddressesRepoTest {
+
+    @Autowired
+    private AddressesRepository addressesRepository;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    private Addresses createAddress(String street, String city) {
         Addresses address = new Addresses();
-        address.setAddressId(1L);
-        address.setStreet("123 Main Street");
-        address.setCity("Chennai");
-        address.setState("Tamil Nadu");
-        address.setZipCode("600001");
-
-        assertEquals(1L, address.getAddressId());
-        assertEquals("123 Main Street", address.getStreet());
-        assertEquals("Chennai", address.getCity());
-        assertEquals("Tamil Nadu", address.getState());
-        assertEquals("600001", address.getZipCode());
-    }
-    @Test
-    void testNullValuesAllowed() {
-        Addresses address = new Addresses();
-
-        address.setStreet(null);
-        address.setCity(null);
-        address.setState(null);
-        address.setZipCode(null);
-
-        assertNull(address.getStreet());
-        assertNull(address.getCity());
-        assertNull(address.getState());
-        assertNull(address.getZipCode());
-    }
-    @Test
-    void testEmptyValues() {
-        Addresses address = new Addresses();
-
-        address.setStreet("");
-        address.setCity("");
-        address.setState("");
-        address.setZipCode("");
-
-        assertEquals("", address.getStreet());
-        assertEquals("", address.getCity());
-        assertEquals("", address.getState());
-        assertEquals("", address.getZipCode());
-    }
-    @Test
-    void testMaxLengthValues() {
-        Addresses address = new Addresses();
-
-        String street = "A".repeat(255);
-        String city = "B".repeat(100);
-        String state = "C".repeat(50);
-        String zip = "9".repeat(20);
-
         address.setStreet(street);
         address.setCity(city);
-        address.setState(state);
-        address.setZipCode(zip);
-
-        assertEquals(255, address.getStreet().length());
-        assertEquals(100, address.getCity().length());
-        assertEquals(50, address.getState().length());
-        assertEquals(20, address.getZipCode().length());
+        address.setState("State");
+        address.setZipCode("12345");
+        return addressesRepository.save(address);
     }
+
     @Test
-    void testSpecialCharacterValues() {
-        Addresses address = new Addresses();
+    void testCreateAddress() {
+        Addresses address = createAddress("123 Main St", "City");
+        assertNotNull(address.getAddressId());
+    }
 
-        address.setStreet("@@@ ### !!!");
-        address.setCity("Chennai@123");
-        address.setState("TN$%^");
-        address.setZipCode("6000@#");
+    @Test
+    void testFindAddressById() {
+        Addresses address = createAddress("456 Elm St", "Town");
+        Optional<Addresses> found = addressesRepository.findById(address.getAddressId());
+        assertTrue(found.isPresent());
+        assertEquals("456 Elm St", found.get().getStreet());
+    }
 
-        assertEquals("@@@ ### !!!", address.getStreet());
-        assertEquals("Chennai@123", address.getCity());
-        assertEquals("TN$%^", address.getState());
-        assertEquals("6000@#", address.getZipCode());
+    @Test
+    void testUpdateAddress() {
+        Addresses address = createAddress("789 Oak St", "Village");
+        address.setCity("New Village");
+        Addresses updated = addressesRepository.save(address);
+        assertEquals("New Village", updated.getCity());
+    }
+
+    @Test
+    void testDeleteAddress() {
+        Addresses address = createAddress("101 Pine St", "Hamlet");
+        addressesRepository.delete(address);
+        Optional<Addresses> found = addressesRepository.findById(address.getAddressId());
+        assertFalse(found.isPresent());
+    }
+
+    @Test
+    void testGetAddressesByCity() {
+        createAddress("111 Cedar St", "TargetCity");
+        createAddress("222 Birch St", "TargetCity");
+        List<Addresses> found = addressesRepository.getAddressesByCity("TargetCity");
+        assertEquals(2, found.size());
+    }
+
+    @Test
+    void testFindAllSorted() {
+        createAddress("B St", "City");
+        createAddress("A St", "City");
+        List<Addresses> sorted = addressesRepository.findAllSorted();
+        assertTrue(sorted.size() >= 2);
     }
 }

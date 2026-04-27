@@ -3,52 +3,60 @@ package com.sprint.pet_shop.dto.responseDto;
 
 import java.math.BigDecimal;
 
+
+//   Data Transfer Object for Grooming Services.
+//   Used to send available grooming options (like baths, haircuts) and their pricing back to the frontend application.
+
+
 public class GroomingServicesResponseDTO {
 
-	 private Long serviceId;
-	    private String name;
-	    private String description;
-	    private BigDecimal price;
-	    private boolean available;
 
-	    public Long getServiceId() {
-	        return serviceId;
-	    }
+	// Grooming Service details
+	private Long serviceId;
+	private String name;
+	private String description;
+	private BigDecimal price;
+	private boolean available;
 
-	    public void setServiceId(Long serviceId) {
-	        this.serviceId = serviceId;
-	    }
+	// Getters and setters
+	public Long getServiceId() {
+	    return serviceId;
+	}
 
-	    public String getName() {
-	        return name;
-	    }
+	public void setServiceId(Long serviceId) {
+	    this.serviceId = serviceId;
+	}
 
-	    public void setName(String name) {
-	        this.name = name;
-	    }
+	public String getName() {
+	    return name;
+	}
 
-	    public String getDescription() {
-	        return description;
-	    }
+	public void setName(String name) {
+	    this.name = name;
+	}
 
-	    public void setDescription(String description) {
-	        this.description = description;
-	    }
+	public String getDescription() {
+	    return description;
+	}
 
-	    public BigDecimal getPrice() {
-	        return price;
-	    }
+	public void setDescription(String description) {
+	    this.description = description;
+	}
 
-	    public void setPrice(BigDecimal price) {
-	        this.price = price;
-	    }
+	public BigDecimal getPrice() {
+	    return price;
+	}
 
-	    public boolean isAvailable() {
-	        return available;
-	    }
+	public void setPrice(BigDecimal price) {
+	    this.price = price;
+	}
 
-	    public void setAvailable(boolean available) {
-	        this.available = available;
-	    }
+	public boolean isAvailable() {
+	    return available;
+	}
+
+	public void setAvailable(boolean available) {
+	    this.available = available;
+	}
 
 }

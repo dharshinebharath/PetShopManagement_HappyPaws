@@ -16,6 +16,11 @@ import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.PetFoodRepository;
 import com.sprint.pet_shop.service.interfaces.PetFoodInterface;
 
+/**
+ * Implementation of the PetFoodInterface.
+ * Handles inventory rules for pet food, ensuring quantities and prices are positive, 
+ * and preventing duplicate brand+name entries.
+ */
 @Service
 public class PetFoodService implements PetFoodInterface {
 
@@ -126,6 +131,12 @@ public class PetFoodService implements PetFoodInterface {
 
         if (dto.getPrice().doubleValue() < 0) {
             throw new InvalidDataException("Price must be positive");
+        }
+
+        if (!existing.getName().equalsIgnoreCase(dto.getName()) || !existing.getBrand().equalsIgnoreCase(dto.getBrand())) {
+            if (petFoodRepository.existsByNameAndBrand(dto.getName(), dto.getBrand())) {
+                throw new DuplicateResourceException("Food already exists: " + dto.getName() + " (" + dto.getBrand() + ")");
+            }
         }
 
         existing.setName(dto.getName());

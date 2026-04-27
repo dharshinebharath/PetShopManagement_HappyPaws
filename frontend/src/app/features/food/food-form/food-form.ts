@@ -21,9 +21,9 @@ export class FoodForm {
   isLoading = true;
 
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    brand: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    type: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    brand: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    type: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
     quantity: new FormControl(0, [Validators.required, Validators.min(0)]),
     price: new FormControl(0, [Validators.required, Validators.min(1)])
   });
@@ -48,8 +48,9 @@ export class FoodForm {
             this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: () => {
-            alert('Food item not found');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Food item not found');
+            alert(msg);
             this.router.navigate(['/food-dashboard']);
           }
         });
@@ -71,23 +72,23 @@ export class FoodForm {
       const price = this.form.get('price');
 
       if (name?.errors) {
-        if (name.errors['required']) errors.push('Name is required');
-        if (name.errors['minlength']) errors.push('Name must be at least 3 characters');
+        if (name.errors['required']) errors.push('Food name cannot be empty');
+        if (name.errors['minlength'] || name.errors['maxlength']) errors.push('Food name must be between 2 and 50 characters');
       }
       if (brand?.errors) {
-        if (brand.errors['required']) errors.push('Brand is required');
-        if (brand.errors['minlength']) errors.push('Brand must be at least 2 characters');
+        if (brand.errors['required']) errors.push('Brand cannot be empty');
+        if (brand.errors['minlength'] || brand.errors['maxlength']) errors.push('Brand must be between 2 and 50 characters');
       }
       if (type?.errors) {
-        if (type.errors['required']) errors.push('Type is required');
-        if (type.errors['minlength']) errors.push('Type must be at least 2 characters');
+        if (type.errors['required']) errors.push('Type cannot be empty');
+        if (type.errors['minlength'] || type.errors['maxlength']) errors.push('Type must be between 2 and 50 characters');
       }
       if (quantity?.errors) {
-        if (quantity.errors['required']) errors.push('Quantity is required');
+        if (quantity.errors['required']) errors.push('Quantity cannot be null');
         if (quantity.errors['min']) errors.push('Quantity cannot be negative');
       }
       if (price?.errors) {
-        if (price.errors['required']) errors.push('Price is required');
+        if (price.errors['required']) errors.push('Price cannot be null');
         if (price.errors['min']) errors.push('Price must be greater than 0');
       }
 
@@ -103,7 +104,10 @@ export class FoodForm {
           alert('Updated successfully');
           this.router.navigate(['/food/list']);
         },
-        error: () => alert('Update failed')
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
+        }
       });
     } else {
       this.foodService.create([payload]).subscribe({
@@ -111,7 +115,10 @@ export class FoodForm {
           alert('Created successfully');
           this.router.navigate(['/food/list']);
         },
-        error: () => alert('Create failed')
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          alert(msg);
+        }
       });
     }
   }

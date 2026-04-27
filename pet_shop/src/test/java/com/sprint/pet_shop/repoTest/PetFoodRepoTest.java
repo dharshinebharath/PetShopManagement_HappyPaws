@@ -1,87 +1,92 @@
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.PetFood;
-import jakarta.validation.*;
-import org.junit.jupiter.api.BeforeEach;
+import com.sprint.pet_shop.repository.PetFoodRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PetFoodRepoTest {
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+class PetFoodRepoTest {
 
-    private Validator validator;
+    @Autowired
+    private PetFoodRepository petFoodRepository;
 
-    @BeforeEach
-    void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
-    @Test
-    void testValidPetFood() {
+    @Autowired
+    private EntityManager entityManager;
+
+    private PetFood createPetFood(String name, String brand) {
         PetFood food = new PetFood();
-        food.setName("Dog Food");
-        food.setBrand("Pedigree");
+        food.setName(name);
+        food.setBrand(brand);
         food.setType("Dry");
-        food.setQuantity(10);
-        food.setPrice(new BigDecimal("250.00"));
-
-        Set<ConstraintViolation<PetFood>> violations = validator.validate(food);
-
-        assertTrue(violations.isEmpty());
+        food.setQuantity(100);
+        food.setPrice(new BigDecimal("25.00"));
+        return petFoodRepository.save(food);
     }
+
     @Test
-    void testNameShouldNotBeBlank() {
-        PetFood food = new PetFood();
-        food.setName("");
-        food.setBrand("Pedigree");
-        food.setType("Dry");
-        food.setQuantity(10);
-        food.setPrice(new BigDecimal("250.00"));
-
-        Set<ConstraintViolation<PetFood>> violations = validator.validate(food);
-
-        assertFalse(violations.isEmpty());
+    void testCreatePetFood() {
+        PetFood food = createPetFood("Premium Kibble", "BrandX");
+        assertNotNull(food.getFoodId());
     }
+
     @Test
-    void testBrandShouldNotBeBlank() {
-        PetFood food = new PetFood();
-        food.setName("Cat Food");
-        food.setBrand("");
-        food.setType("Wet");
-        food.setQuantity(5);
-        food.setPrice(new BigDecimal("150.00"));
-
-        Set<ConstraintViolation<PetFood>> violations = validator.validate(food);
-
-        assertFalse(violations.isEmpty());
+    void testFindPetFoodById() {
+        PetFood food = createPetFood("Wet Food", "BrandY");
+        Optional<PetFood> found = petFoodRepository.findById(food.getFoodId());
+        assertTrue(found.isPresent());
+        assertEquals("Wet Food", found.get().getName());
     }
+
     @Test
-    void testTypeShouldNotBeBlank() {
-        PetFood food = new PetFood();
-        food.setName("Rabbit Food");
-        food.setBrand("Happypet");
-        food.setType("");
-        food.setQuantity(8);
-        food.setPrice(new BigDecimal("180.00"));
-
-        Set<ConstraintViolation<PetFood>> violations = validator.validate(food);
-
-        assertFalse(violations.isEmpty());
+    void testUpdatePetFood() {
+        PetFood food = createPetFood("Puppy Chow", "BrandZ");
+        food.setPrice(new BigDecimal("30.00"));
+        PetFood updated = petFoodRepository.save(food);
+        assertEquals(new BigDecimal("30.00"), updated.getPrice());
     }
+
     @Test
-    void testPriceShouldNotBeNull() {
-        PetFood food = new PetFood();
-        food.setName("Fish Food");
-        food.setBrand("AquaCare");
-        food.setType("Dry");
-        food.setQuantity(12);
-        food.setPrice(null);
+    void testDeletePetFood() {
+        PetFood food = createPetFood("Senior Diet", "BrandA");
+        petFoodRepository.delete(food);
+        Optional<PetFood> found = petFoodRepository.findById(food.getFoodId());
+        assertFalse(found.isPresent());
+    }
 
-        Set<ConstraintViolation<PetFood>> violations = validator.validate(food);
+    @Test
+    void testGetAllPetFood() {
+        createPetFood("Food 1", "Brand1");
+        List<PetFood> all = petFoodRepository.getAllPetFood();
+        assertFalse(all.isEmpty());
+    }
 
-        assertFalse(violations.isEmpty());
+    @Test
+    void testFindAllSorted() {
+        createPetFood("Food 2", "Brand2");
+        createPetFood("Food 3", "Brand3");
+        List<PetFood> sorted = petFoodRepository.findAllSorted();
+        assertTrue(sorted.size() >= 2);
+    }
+
+    @Test
+    void testExistsByNameAndBrand() {
+        createPetFood("Specific Food", "Specific Brand");
+        assertTrue(petFoodRepository.existsByNameAndBrand("Specific Food", "Specific Brand"));
+        assertFalse(petFoodRepository.existsByNameAndBrand("Unknown Food", "Specific Brand"));
     }
 }

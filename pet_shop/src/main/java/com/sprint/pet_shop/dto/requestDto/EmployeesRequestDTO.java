@@ -1,28 +1,45 @@
 package com.sprint.pet_shop.dto.requestDto;
 
 import java.time.LocalDate;
-import java.util.Date;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Data Transfer Object representing incoming employee data.
+ * Used when hiring a new employee or updating their details like role,
+ * contact information, and assigned address.
+ */
 public class EmployeesRequestDTO {
-	
-    private String firstName;
 
-    private String lastName;
+	@NotNull(message = "First name cannot be null")
+	@Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
+	private String firstName;
 
-    private String position;
+	@NotNull(message = "Last name cannot be null")
+	@Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
+	private String lastName;
 
-    
-    private LocalDate hireDate;
+	@NotBlank(message = "Position cannot be empty")
+	private String position;
 
-    private String phoneNumber;
+	@NotNull(message = "Hire date cannot be null")
+	private LocalDate hireDate;
 
-    private String email;
+	@NotBlank(message = "Phone number cannot be empty")
+	@Pattern(regexp = "[0-9]{10}", message = "Phone number must be 10 digits")
+	private String phoneNumber;
 
-    
-    private Long addressId;
+	@Email(message = "Invalid email address")
+	@Size(min = 2, max = 100, message = "Email must be between 2 and 100 characters")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+	private String email;
+
+	@NotNull(message = "Address ID cannot be null")
+	private Long addressId;
 
 	public String getFirstName() {
 		return firstName;
@@ -79,6 +96,5 @@ public class EmployeesRequestDTO {
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
-    
 
 }

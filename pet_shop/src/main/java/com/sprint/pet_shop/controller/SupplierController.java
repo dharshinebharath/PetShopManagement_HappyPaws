@@ -13,6 +13,11 @@ import com.sprint.pet_shop.service.SupplierService;
 
 import jakarta.validation.Valid;
 
+/**
+ * REST Controller for vendor and supplier management.
+ * Facilitates the addition of new suppliers and linking them to the specific 
+ * animals they provide to the shop.
+ */
 @RestController
 @RequestMapping("/api/v1/suppliers")
 public class SupplierController {

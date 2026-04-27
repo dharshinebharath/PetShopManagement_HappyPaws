@@ -16,6 +16,11 @@ import com.sprint.pet_shop.service.TransactionsService;
 
 import jakarta.validation.Valid;
 @CrossOrigin(origins = "http://localhost:4200")
+/**
+ * REST Controller for managing customers.
+ * Handles HTTP requests for registering new customers, updating their details, 
+ * and viewing their transaction history.
+ */
 @RestController
 @RequestMapping("/api/v1/customers")
 public class CustomersController {

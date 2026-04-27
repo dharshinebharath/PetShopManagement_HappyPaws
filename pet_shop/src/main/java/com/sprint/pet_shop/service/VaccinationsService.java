@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.sprint.pet_shop.dto.requestDto.VaccinationsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
@@ -19,12 +17,17 @@ import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.VaccinationsRepository;
 import com.sprint.pet_shop.service.interfaces.VaccinationsInterface;
 
+//  Implementation of the VaccinationsInterface.
+//  Secures the creation and updating of vaccination records, making sure prices 
+//  are valid and there are no duplicate entries.
 @Service
 public class VaccinationsService implements VaccinationsInterface {
 
+    //   Dependency injection for the repository
 	@Autowired
 	private VaccinationsRepository vaccinationsRepository;
 	
+    //  Converts a database entity to a response DTO
     private VaccinationsResponseDTO toDto(Vaccinations entity) {
         VaccinationsResponseDTO dto = new VaccinationsResponseDTO();
 
@@ -37,6 +40,7 @@ public class VaccinationsService implements VaccinationsInterface {
         return dto;
     }
 
+    //  Adds new vaccinations to the database after validation  
 	@Override
 	  public ApiResponse<List<VaccinationsResponseDTO>> saveAllVaccinations(List<VaccinationsRequestDTO> dtos) {
 
@@ -75,6 +79,8 @@ public class VaccinationsService implements VaccinationsInterface {
         return response;
     }
 	
+
+	//  Retrieves all vaccinations from the database    
 	@Override	
 	  public ApiResponse<List<VaccinationsResponseDTO>> getAllVaccinations() {
 
@@ -92,6 +98,7 @@ public class VaccinationsService implements VaccinationsInterface {
         return response;
     }
 	
+    //  Retrieves a single vaccination by its ID
 	@Override
 	public ApiResponse<VaccinationsResponseDTO> getVaccinationsById(long id) {
 
@@ -106,7 +113,9 @@ public class VaccinationsService implements VaccinationsInterface {
         return response;
     }
 	
+    //  Removes a vaccination from the database by ID
 	@Override	
+    
 	 public ApiResponse<String> deleteVaccinationsById(long id) {
 
         Vaccinations existing = vaccinationsRepository.findById(id)
@@ -122,6 +131,7 @@ public class VaccinationsService implements VaccinationsInterface {
         return response;
     }
 	
+    //  Updates an existing vaccination by ID after validation
 	@Override
 	 public ApiResponse<VaccinationsResponseDTO> updateVaccinationById(long id, VaccinationsRequestDTO dto) {
 
@@ -147,9 +157,11 @@ public class VaccinationsService implements VaccinationsInterface {
         return response;
 	}
 
+    //  Retrieves vaccinations that fall within a specified price range
 	 @Override
 	    public ApiResponse<List<VaccinationsResponseDTO>> getVaccinationsByPrice(BigDecimal min, BigDecimal max) {
 
+            
 	        List<VaccinationsResponseDTO> data = vaccinationsRepository.findByPriceRange(min, max)
 	                .stream()
 	                .map(this::toDto)

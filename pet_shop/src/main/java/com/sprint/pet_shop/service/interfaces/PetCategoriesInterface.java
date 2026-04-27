@@ -7,6 +7,11 @@ import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.PetCategoriesResponseDTO;
 import com.sprint.pet_shop.entity.PetCategories;
 
+/**
+ * Service interface for handling Pet Categories.
+ * Provides the outline for retrieving, updating, and removing categories 
+ * like "Reptiles" or "Dogs".
+ */
 public interface PetCategoriesInterface {
 
 	ApiResponse<List<PetCategoriesResponseDTO>> addAll(

@@ -17,6 +17,11 @@ import com.sprint.pet_shop.service.EmployeesService;
 
 import jakarta.validation.Valid;
 @CrossOrigin(origins = "http://localhost:4200")
+/**
+ * REST Controller for employee management.
+ * Provides endpoints for HR-related tasks like onboarding new staff, assigning pets, 
+ * and querying employees by position or hire date.
+ */
 @RestController
 @RequestMapping("/api/v1/employees")
 public class EmployeesController {

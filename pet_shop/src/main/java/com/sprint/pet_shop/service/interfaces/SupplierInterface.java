@@ -6,6 +6,10 @@ import com.sprint.pet_shop.dto.requestDto.SupplierRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 
+/**
+ * Defines the service layer operations for managing our Suppliers.
+ * Essential for linking suppliers to the products and pets they provide us.
+ */
 public interface SupplierInterface {
 
     ApiResponse<List<SupplierResponseDTO>> saveAll(List<SupplierRequestDTO> suppliers);

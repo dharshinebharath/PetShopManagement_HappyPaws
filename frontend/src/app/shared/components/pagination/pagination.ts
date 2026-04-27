@@ -9,20 +9,25 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './pagination.html',
   styleUrl: './pagination.css',
 })
+// Pagination component
 export class PaginationComponent {
+  // Pagination properties
   @Input() totalItems = 0;
   @Input() pageSize = 10;
   @Input() currentPage = 1;
   @Output() pageChange = new EventEmitter<number>();
 
+  // Method to get total pages
   get totalPages(): number {
     return Math.max(1, Math.ceil(this.totalItems / this.pageSize));
   }
 
+  // Method to get pages
   get pages(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
+  // Method to go to page
   goTo(page: number) {
     if (page < 1 || page > this.totalPages || page === this.currentPage) {
       return;

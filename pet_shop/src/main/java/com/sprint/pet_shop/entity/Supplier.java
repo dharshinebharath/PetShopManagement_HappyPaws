@@ -13,7 +13,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Represents a supplier or vendor who provides us with pets or pet food.
+ * We use this to maintain their contact details and physical addresses.
+ */
 @Entity
 @Table(name="suppliers")
 public class Supplier {
@@ -23,24 +30,20 @@ public class Supplier {
     @Column(name = "supplier_id")
     private Long supplierId;
 
-    @Column(length = 100)
     @NotNull(message = "Name cannot be null")
-    @NotBlank(message = "Name cannot be empty")
+	@Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     private String name;
 
-    @Column(length = 50, name = "contact_person")
-    @NotNull(message = "Contact person cannot be null")
     @NotBlank(message = "Contact person cannot be empty")
+	@Size(min = 2, max = 100, message = "Contact person must be between 2 and 50 characters")
     private String contactPerson;
 
-    @Column(length = 20, name = "phone_number")
-    @NotNull(message = "Phone number cannot be null")
-    @NotBlank(message = "Phone number cannot be empty")
+	@Pattern(regexp = "[0-9]{10}", message = "Phone number must be 10 digits")
     private String phoneNumber;
 
-    @Column(length = 100)
-    @NotNull(message = "Email cannot be null")
-    @NotBlank(message = "Email cannot be empty")
+	@Email(message = "Invalid email address")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+	@Size(min = 2, max = 100, message = "Email must be between 2 and 100 characters")
     private String email;
 
     @ManyToMany(mappedBy = "suppliers")

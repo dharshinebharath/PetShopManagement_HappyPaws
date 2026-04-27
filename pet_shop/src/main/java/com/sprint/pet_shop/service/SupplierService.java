@@ -17,6 +17,11 @@ import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.SupplierRepository;
 import com.sprint.pet_shop.service.interfaces.SupplierInterface;
 
+/**
+ * Implementation of the SupplierInterface.
+ * Responsible for managing the vendor records and associating their physical addresses 
+ * during the creation process.
+ */
 @Service
 public class SupplierService implements SupplierInterface {
 
@@ -139,7 +144,7 @@ public class SupplierService implements SupplierInterface {
         if (dto.getEmail() != null &&
         	    supplierRepository.existsByEmail(dto.getEmail()) &&
         	    !existing.getEmail().equals(dto.getEmail())) {
-        	    throw new DuplicateResourceException("Email already exists");
+        	    throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
         	}
 
         if (dto.getName() != null) {

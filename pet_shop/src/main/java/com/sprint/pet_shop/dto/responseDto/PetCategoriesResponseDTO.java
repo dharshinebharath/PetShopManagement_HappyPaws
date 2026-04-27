@@ -2,6 +2,10 @@ package com.sprint.pet_shop.dto.responseDto;
 
 import java.util.List;
 
+/**
+ * Data Transfer Object for Pet Categories.
+ * Provides a clean list of available categories (e.g., Dogs, Cats) to the client.
+ */
 public class PetCategoriesResponseDTO {
 
 	private Long category_id;

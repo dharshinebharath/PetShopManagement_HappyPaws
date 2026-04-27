@@ -11,11 +11,17 @@ import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.PetCategoriesResponseDTO;
 import com.sprint.pet_shop.entity.PetCategories;
 import com.sprint.pet_shop.entity.Pets;
+import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.PetCategoriesRepository;
 import com.sprint.pet_shop.service.interfaces.PetCategoriesInterface;
 
+/**
+ * Implementation of the PetCategoriesInterface.
+ * A straightforward service to manage pet classifications. Verifies category names 
+ * before saving them to the database.
+ */
 @Service
 public class PetCategoriesService implements PetCategoriesInterface{
 	
@@ -43,6 +49,12 @@ public class PetCategoriesService implements PetCategoriesInterface{
 
 	            if (dto.getName() == null || dto.getName().isBlank()) {
 	                throw new InvalidDataException("Category name cannot be empty");
+	            }
+
+	            boolean exists = petCategoryRepository.findAllSorted().stream()
+	                    .anyMatch(c -> c.getName().equalsIgnoreCase(dto.getName()));
+	            if (exists) {
+	                throw new DuplicateResourceException("Category already exists: " + dto.getName());
 	            }
 
 	            PetCategories entity = new PetCategories();

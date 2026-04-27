@@ -26,13 +26,13 @@ export class EmployeeForm {
   addresses: any[] = [];
 
   form = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    position: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+    position: new FormControl('', [Validators.required]),
     hireDate: new FormControl('', [Validators.required]),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3}-[0-9]{4}$')]),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    addressId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+    addressId: new FormControl<number | null>(null, [Validators.required])
   });
 
   private getAuthHeaders() {
@@ -72,8 +72,9 @@ export class EmployeeForm {
               this.isLoading = false;
               this.cdr.detectChanges();
             },
-            error: () => {
-              alert('Employee not found');
+            error: (err) => {
+              const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Employee not found');
+              alert(msg);
               this.router.navigate(['/employee/list']);
             }
           });
@@ -109,29 +110,27 @@ export class EmployeeForm {
       const addressId = this.form.get('addressId');
 
       if (firstName?.errors) {
-        if (firstName.errors['required']) errors.push('First name is required');
-        if (firstName.errors['minlength']) errors.push('First name must be at least 2 characters');
+        if (firstName.errors['required']) errors.push('First name cannot be empty');
+        if (firstName.errors['minlength'] || firstName.errors['maxlength']) errors.push('First name must be between 2 and 30 characters');
       }
       if (lastName?.errors) {
-        if (lastName.errors['required']) errors.push('Last name is required');
-        if (lastName.errors['minlength']) errors.push('Last name must be at least 2 characters');
+        if (lastName.errors['required']) errors.push('Last name cannot be empty');
+        if (lastName.errors['minlength'] || lastName.errors['maxlength']) errors.push('Last name must be between 2 and 30 characters');
       }
       if (position?.errors) {
-        if (position.errors['required']) errors.push('Position is required');
-        if (position.errors['minlength']) errors.push('Position must be at least 2 characters');
+        if (position.errors['required']) errors.push('Position cannot be empty');
       }
-      if (hireDate?.errors) errors.push('Hire date is required');
+      if (hireDate?.errors) errors.push('Hire date cannot be null');
       if (phoneNumber?.errors) {
-        if (phoneNumber.errors['required']) errors.push('Phone number is required');
-        if (phoneNumber.errors['pattern']) errors.push('Phone number must be in 555-1234 format');
+        if (phoneNumber.errors['required']) errors.push('Phone number cannot be empty');
+        if (phoneNumber.errors['pattern']) errors.push('Phone number must be 10 digits');
       }
       if (email?.errors) {
-        if (email.errors['required']) errors.push('Email is required');
-        if (email.errors['email']) errors.push('Email must be valid');
+        if (email.errors['required']) errors.push('Email cannot be empty');
+        if (email.errors['email']) errors.push('Invalid email address');
       }
       if (addressId?.errors) {
-        if (addressId.errors['required']) errors.push('Address ID is required');
-        if (addressId.errors['min']) errors.push('Address ID must be greater than 0');
+        if (addressId.errors['required']) errors.push('Address ID cannot be null');
       }
 
       alert('Please fix errors:\n\n' + errors.join('\n'));
@@ -151,13 +150,8 @@ export class EmployeeForm {
         },
         error: (err) => {
           console.log('FULL ERROR:', err);
-          console.log('BACKEND MSG:', err.error);
-
-          if (err.status === 404) {
-            alert('Employee not found');
-          } else {
-            alert('Update failed');
-          }
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
         }
       });
     } else {
@@ -169,7 +163,8 @@ export class EmployeeForm {
           },
           error: (err) => {
             console.log(err);
-            alert('Create failed');
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+            alert(msg);
           }
         });
     }

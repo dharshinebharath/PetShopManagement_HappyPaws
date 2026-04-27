@@ -17,13 +17,21 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+// Core security configuration for the application.
+// Sets up in-memory users for different roles (e.g., PET_ADMIN, MEDICAL, HR_ADMIN), 
+// configures CORS for the frontend, and maps specific endpoints to required roles.
+
 @Configuration
+// Enables Spring Security's web security features
 @EnableWebSecurity
 public class SecurityConfig {
+
+    // Configures password encoding
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    //  Defines the in-memory user database for different roles
     @Bean
     public UserDetailsService userDetailsService() {
 
@@ -62,6 +70,8 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(
                 petAdmin, medical, customerAdmin, inventory, hr);
     }
+
+    //  Configures Cross-Origin Resource Sharing (CORS) to allow the frontend to connect
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
@@ -77,6 +87,8 @@ public class SecurityConfig {
 
         return source;
     }
+
+    //  Configures the main security filter chain to manage requests
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 

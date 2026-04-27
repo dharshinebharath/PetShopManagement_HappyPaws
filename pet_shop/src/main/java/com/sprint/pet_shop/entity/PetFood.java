@@ -10,9 +10,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Represents the different types of pet food we sell.
+ * This entity tracks inventory details like the food name, brand, 
+ * type, current stock quantity, and price.
+ */
 @Entity
 @Table(name="pet_food")
 public class PetFood {
@@ -22,23 +30,23 @@ public class PetFood {
 	@Column(name="food_id")
 	private Long foodId;
 	
-    @NotBlank(message = "Food name cannot be empty")
-	@Column(length=255)
+	@NotNull(message = "Food name cannot be null")
+	@Size(min = 2, max = 255, message = "Food name must be between 2 and 255 characters")
 	private String name;
 	
     @NotBlank(message = "Brand cannot be empty")
-	@Column(length=100)
+	@Size(min = 2, max = 100, message = "Brand must be between 2 and 100 characters")
 	private String brand;
 	
     @NotBlank(message = "Type cannot be empty")
-	@Column(length=50)
+	@Size(min = 2, max = 50, message = "Type must be between 2 and 50 characters")
 	private String type;
 	
-    @NotNull(message = "Quantity cannot be null")
+	@Positive
 	private Integer quantity;
 	
-    @NotNull(message = "Price cannot be null")
-	@Column(precision=10, scale=2)
+	@Positive
+@Digits(integer = 8, fraction = 2, message = "Price must have max 8 digits and 2 decimal places")
 	private BigDecimal price;
     
     @ManyToMany(mappedBy = "foods")

@@ -4,6 +4,31 @@
     <h2 class="text-4xl font-bold text-sage-900 tracking-tight">Grooming Services</h2>
     <p class="mt-2 text-sm text-stone-600">Structured grooming records overview</p>
   </div>
-  <div class="flex justify-center"><div class="w-full max-w-6xl"><div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm bg-white"><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-stone-100 text-sage-900 border-b border-stone-200"><tr><th class="p-4 text-left font-semibold">ID</th><th class="p-4 text-left font-semibold">Name</th><th class="p-4 text-left font-semibold">Price</th><th class="p-4 text-left font-semibold">Status</th></tr></thead><tbody class="divide-y divide-stone-100"><tr *ngFor="let g of paginated(groomingList)" class="hover:bg-stone-50 transition"><td class="p-4 font-medium text-sage-900">{{ g.serviceId }}</td><td class="p-4 text-stone-700 font-medium">{{ g.name }}</td><td class="p-4 text-stone-700"><span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">Rs. {{ g.price }}</span></td><td class="p-4"><span class="px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="g.available ? 'bg-sage-100 text-sage-700' : 'bg-red-100 text-red-600'">{{ g.available ? 'Available' : 'Not Available' }}</span></td></tr></tbody></table></div></div></div></div>
+  <div class="flex justify-center">
+    <div class="w-full max-w-6xl">
+      <div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm bg-white">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-stone-100 text-sage-900 border-b border-stone-200">
+              <tr>
+                <th class="p-4 text-left font-semibold">ID</th>
+                <th class="p-4 text-left font-semibold">Name</th>
+                <th class="p-4 text-left font-semibold">Price</th>
+                <th class="p-4 text-left font-semibold">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-100">
+              <tr *ngFor="let g of paginated(groomingList)" class="hover:bg-stone-50 transition">
+                <td class="p-4 font-medium text-sage-900">{{ g.serviceId }}</td>
+                <td class="p-4 text-stone-700 font-medium">{{ g.name }}</td>
+                <td class="p-4 text-stone-700"><span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">Rs. {{ g.price }}</span></td>
+                <td class="p-4"><span class="px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="g.available ? 'bg-sage-100 text-sage-700' : 'bg-red-100 text-red-600'">{{ g.available ? 'Available' : 'Not Available' }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <app-pagination [totalItems]="groomingList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>

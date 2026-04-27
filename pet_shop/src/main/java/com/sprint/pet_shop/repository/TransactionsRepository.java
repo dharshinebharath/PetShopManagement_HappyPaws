@@ -10,10 +10,13 @@ import org.springframework.data.repository.query.Param;
 import com.sprint.pet_shop.entity.TransactionStatus;
 import com.sprint.pet_shop.entity.TransactionsEntity;
 
+/**
+ * Repository for accessing purchase and transaction histories.
+ * Allows us to filter transactions by customer, date ranges, or transaction status.
+ */
+
 public interface TransactionsRepository extends JpaRepository<TransactionsEntity,Long>{
 	
-	
-
 	List<TransactionsEntity> findByCustomerCustomerId(Long customerId);
 
 	List<TransactionsEntity> findByTransactionStatus(TransactionStatus status);

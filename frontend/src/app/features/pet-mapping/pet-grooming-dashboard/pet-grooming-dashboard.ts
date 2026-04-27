@@ -4,25 +4,30 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PetGroomingMappingService } from '../../../core/services/pet-grooming-mapping-service';
 
+// Dashboard component for managing pet-grooming mappings
 @Component({
   selector: 'app-pet-grooming-dashboard',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './pet-grooming-dashboard.html'
 })
+// Logic for pet-grooming dashboard
 export class PetGroomingDashboard {
-
+  // Injecting required services
   service = inject(PetGroomingMappingService);
   router = inject(Router);
 
+  // Form fields for pet and service IDs
   getPetId: string = '';
   postPetId: string = '';
   postServiceId: string = '';
   deletePetId: string = '';
   deleteServiceId: string = '';
- viewServices() {
+
+  // View grooming services
+  viewServices() {
   if (!this.getPetId) {
-    alert('Enter Pet ID ⚠️Â');
+    alert('Enter Pet ID ⚠️ ');
     return;
   }
 
@@ -47,9 +52,10 @@ export class PetGroomingDashboard {
     }
   });
 }
+// Assign grooming service
   assign() {
     if (!this.postPetId || !this.postServiceId) {
-      alert('Enter both IDs ⚠️Â');
+      alert('Enter both IDs ⚠️ ');
       return;
     }
 
@@ -67,9 +73,10 @@ export class PetGroomingDashboard {
       error: () => alert('Assign Failed ❌')
     });
   }
+  // Remove grooming service
   remove() {
     if (!this.deletePetId || !this.deleteServiceId) {
-      alert('Enter both IDs ⚠️Â');
+      alert('Enter both IDs ⚠️ ');
       return;
     }
 

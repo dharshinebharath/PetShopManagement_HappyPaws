@@ -21,10 +21,10 @@ export class AddressForm {
   isLoading = true;
 
   form = new FormGroup({
-    street: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    city: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
-    state: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
-    zipCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5,6}$')])
+    street: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    city: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    state: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    zipCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5}$')])
   });
 
   ngOnInit() {
@@ -46,8 +46,9 @@ export class AddressForm {
             this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: () => {
-            alert('Address not found');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Address not found');
+            alert(msg);
             this.router.navigate(['/address']);
           }
         });
@@ -68,22 +69,20 @@ export class AddressForm {
       const zipCode = this.form.get('zipCode');
 
       if (street?.errors) {
-        if (street.errors['required']) errors.push('Street is required');
-        if (street.errors['minlength']) errors.push('Street must be at least 3 characters');
+        if (street.errors['required']) errors.push('Street cannot be empty');
+        if (street.errors['minlength'] || street.errors['maxlength']) errors.push('Street must be between 2 and 50 characters');
       }
       if (city?.errors) {
-        if (city.errors['required']) errors.push('City is required');
-        if (city.errors['minlength']) errors.push('City must be at least 2 characters');
-        if (city.errors['pattern']) errors.push('City must contain only letters');
+        if (city.errors['required']) errors.push('City cannot be empty');
+        if (city.errors['minlength'] || city.errors['maxlength']) errors.push('City must be between 2 and 50 characters');
       }
       if (state?.errors) {
-        if (state.errors['required']) errors.push('State is required');
-        if (state.errors['minlength']) errors.push('State must be at least 2 characters');
-        if (state.errors['pattern']) errors.push('State must contain only letters');
+        if (state.errors['required']) errors.push('State cannot be empty');
+        if (state.errors['minlength'] || state.errors['maxlength']) errors.push('State must be between 2 and 50 characters');
       }
       if (zipCode?.errors) {
-        if (zipCode.errors['required']) errors.push('Zip code is required');
-        if (zipCode.errors['pattern']) errors.push('Zip code must be 5 or 6 digits');
+        if (zipCode.errors['required']) errors.push('Zip code cannot be null');
+        if (zipCode.errors['pattern']) errors.push('Zip code must be 5 digits');
       }
 
       alert('Please fix errors:\n\n' + errors.join('\n'));
@@ -104,11 +103,8 @@ export class AddressForm {
           this.router.navigate(['/address/list']);
         },
         error: (err) => {
-          if (err.status === 404) {
-            alert('ID not found');
-          } else {
-            alert('Update failed');
-          }
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
         }
       });
     } else {
@@ -119,7 +115,8 @@ export class AddressForm {
         },
         error: (err) => {
           console.log(err);
-          alert('Create failed');
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          alert(msg);
         }
       });
     }

@@ -1,79 +1,93 @@
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.GroomingServices;
-import jakarta.validation.*;
-import org.junit.jupiter.api.BeforeEach;
+import com.sprint.pet_shop.repository.GroomingServicesRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GroomingServicesRepoTest {
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+class GroomingServicesRepoTest {
 
-    private Validator validator;
+    @Autowired
+    private GroomingServicesRepository groomingServicesRepository;
 
-    @BeforeEach
-    void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
-    @Test
-    void testValidGroomingService() {
+    @Autowired
+    private EntityManager entityManager;
+
+    private GroomingServices createGroomingService(String name, BigDecimal price) {
         GroomingServices service = new GroomingServices();
-        service.setName("Full Grooming");
-        service.setDescription("Complete pet grooming service");
-        service.setPrice(new BigDecimal("500.00"));
+        service.setName(name);
+        service.setDescription("Description for " + name);
+        service.setPrice(price);
         service.setAvailable(true);
-
-        Set<ConstraintViolation<GroomingServices>> violations = validator.validate(service);
-
-        assertTrue(violations.isEmpty());
+        return groomingServicesRepository.save(service);
     }
+
     @Test
-    void testNameShouldNotBeBlank() {
-        GroomingServices service = new GroomingServices();
-        service.setName("");
-        service.setPrice(new BigDecimal("300.00"));
-        service.setAvailable(true);
-
-        Set<ConstraintViolation<GroomingServices>> violations = validator.validate(service);
-
-        assertFalse(violations.isEmpty());
+    void testCreateGroomingService() {
+        GroomingServices service = createGroomingService("Basic Wash", new BigDecimal("50.00"));
+        assertNotNull(service.getServiceId());
     }
+
     @Test
-    void testPriceShouldNotBeNull() {
-        GroomingServices service = new GroomingServices();
-        service.setName("Bath Service");
-        service.setPrice(null);
-        service.setAvailable(true);
-
-        Set<ConstraintViolation<GroomingServices>> violations = validator.validate(service);
-
-        assertFalse(violations.isEmpty());
+    void testFindGroomingServiceById() {
+        GroomingServices service = createGroomingService("Premium Wash", new BigDecimal("100.00"));
+        Optional<GroomingServices> found = groomingServicesRepository.findById(service.getServiceId());
+        assertTrue(found.isPresent());
+        assertEquals("Premium Wash", found.get().getName());
     }
+
     @Test
-    void testDescriptionCanBeNull() {
-        GroomingServices service = new GroomingServices();
-        service.setName("Nail Cutting");
-        service.setPrice(new BigDecimal("150.00"));
-        service.setAvailable(true);
-        service.setDescription(null);
-
-        Set<ConstraintViolation<GroomingServices>> violations = validator.validate(service);
-
-        assertTrue(violations.isEmpty());
+    void testUpdateGroomingService() {
+        GroomingServices service = createGroomingService("Haircut", new BigDecimal("75.00"));
+        service.setPrice(new BigDecimal("80.00"));
+        GroomingServices updated = groomingServicesRepository.save(service);
+        assertEquals(new BigDecimal("80.00"), updated.getPrice());
     }
+
     @Test
-    void testZeroPriceAllowedAsBoundary() {
-        GroomingServices service = new GroomingServices();
-        service.setName("Free Checkup");
-        service.setPrice(BigDecimal.ZERO);
-        service.setAvailable(true);
+    void testDeleteGroomingService() {
+        GroomingServices service = createGroomingService("Nail Clipping", new BigDecimal("20.00"));
+        groomingServicesRepository.delete(service);
+        Optional<GroomingServices> found = groomingServicesRepository.findById(service.getServiceId());
+        assertFalse(found.isPresent());
+    }
 
-        Set<ConstraintViolation<GroomingServices>> violations = validator.validate(service);
+    @Test
+    void testExistsByName() {
+        createGroomingService("Ear Cleaning", new BigDecimal("30.00"));
+        assertTrue(groomingServicesRepository.existsByName("Ear Cleaning"));
+        assertFalse(groomingServicesRepository.existsByName("Unknown Service"));
+    }
 
-        assertTrue(violations.isEmpty());
+    @Test
+    void testFindServicesByPriceRange() {
+        createGroomingService("Service A", new BigDecimal("40.00"));
+        createGroomingService("Service B", new BigDecimal("150.00"));
+        List<GroomingServices> found = groomingServicesRepository.findServicesByPriceRange(new BigDecimal("30.00"), new BigDecimal("50.00"));
+        assertFalse(found.isEmpty());
+        assertTrue(found.stream().allMatch(s -> s.getPrice().compareTo(new BigDecimal("50.00")) <= 0));
+    }
+
+    @Test
+    void testFindAllSorted() {
+        createGroomingService("Service C", new BigDecimal("10.00"));
+        createGroomingService("Service D", new BigDecimal("20.00"));
+        List<GroomingServices> sorted = groomingServicesRepository.findAllSorted();
+        assertTrue(sorted.size() >= 2);
     }
 }

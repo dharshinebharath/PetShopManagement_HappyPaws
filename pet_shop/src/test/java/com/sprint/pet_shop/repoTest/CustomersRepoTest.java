@@ -1,74 +1,112 @@
 package com.sprint.pet_shop.repoTest;
 
+import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
-import jakarta.validation.*;
-import org.junit.jupiter.api.BeforeAll;
+import com.sprint.pet_shop.repository.AddressesRepository;
+import com.sprint.pet_shop.repository.CustomersRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CustomersRepoTest {
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+class CustomersRepoTest {
 
-    private static Validator validator;
+    @Autowired
+    private CustomersRepository customersRepository;
 
-    @BeforeAll
-    static void setup() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
+    @Autowired
+    private AddressesRepository addressesRepository;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    private Addresses createAddress() {
+        Addresses address = new Addresses();
+        address.setStreet("123 Main St");
+        address.setCity("City");
+        address.setState("State");
+        address.setZipCode("12345");
+        return addressesRepository.save(address);
     }
-    @Test
-    void testValidCustomer() {
+
+    private Customers createCustomer(String firstName, String email) {
         Customers customer = new Customers();
-        customer.setFirstName("Revathi");
-        customer.setLastName("Kandan");
-        customer.setEmail("revathi@gmail.com");
-        customer.setPhoneNumber("9876543210");
-
-        Set<ConstraintViolation<Customers>> violations = validator.validate(customer);
-
-        assertTrue(violations.isEmpty());
+        customer.setFirstName(firstName);
+        customer.setLastName("Doe");
+        customer.setEmail(email);
+        customer.setPhoneNumber("1234567890");
+        customer.setAddress(createAddress());
+        return customersRepository.save(customer);
     }
+
     @Test
-    void testFirstNameNull() {
-        Customers customer = new Customers();
-        customer.setFirstName(null);
-        customer.setLastName("Kandan");
-
-        Set<ConstraintViolation<Customers>> violations = validator.validate(customer);
-
-        assertFalse(violations.isEmpty());
+    void testCreateCustomer() {
+        Customers customer = createCustomer("John", "john@example.com");
+        assertNotNull(customer.getCustomerId());
     }
+
     @Test
-    void testFirstNameBlank() {
-        Customers customer = new Customers();
-        customer.setFirstName("");
-        customer.setLastName("Kandan");
-
-        Set<ConstraintViolation<Customers>> violations = validator.validate(customer);
-
-        assertFalse(violations.isEmpty());
+    void testFindCustomerById() {
+        Customers customer = createCustomer("Jane", "jane@example.com");
+        Optional<Customers> found = customersRepository.findById(customer.getCustomerId());
+        assertTrue(found.isPresent());
+        assertEquals("Jane", found.get().getFirstName());
     }
+
     @Test
-    void testLastNameNull() {
-        Customers customer = new Customers();
-        customer.setFirstName("Revathi");
-        customer.setLastName(null);
-
-        Set<ConstraintViolation<Customers>> violations = validator.validate(customer);
-
-        assertFalse(violations.isEmpty());
+    void testUpdateCustomer() {
+        Customers customer = createCustomer("Alice", "alice@example.com");
+        customer.setLastName("Smith");
+        Customers updated = customersRepository.save(customer);
+        assertEquals("Smith", updated.getLastName());
     }
-    @Test
-    void testInvalidEmailAndPhoneStillPasses() {
-        Customers customer = new Customers();
-        customer.setFirstName("Revathi");
-        customer.setLastName("Kandan");
-        customer.setEmail("invalid@@email###");
-        customer.setPhoneNumber("ABC123@@@");
 
-        Set<ConstraintViolation<Customers>> violations = validator.validate(customer);
-        assertTrue(violations.isEmpty());
+    @Test
+    void testDeleteCustomer() {
+        Customers customer = createCustomer("Bob", "bob@example.com");
+        customersRepository.delete(customer);
+        Optional<Customers> found = customersRepository.findById(customer.getCustomerId());
+        assertFalse(found.isPresent());
+    }
+
+    @Test
+    void testExistsByEmail() {
+        createCustomer("Charlie", "charlie@example.com");
+        assertTrue(customersRepository.existsByEmail("charlie@example.com"));
+        assertFalse(customersRepository.existsByEmail("unknown@example.com"));
+    }
+
+    @Test
+    void testGetAll() {
+        createCustomer("Dave", "dave@example.com");
+        List<Customers> all = customersRepository.getAll();
+        assertFalse(all.isEmpty());
+    }
+
+    @Test
+    void testFindCustomersWithNoTransactions() {
+        createCustomer("Eve", "eve@example.com");
+        List<Customers> noTrans = customersRepository.findCustomersWithNoTransactions();
+        assertFalse(noTrans.isEmpty());
+    }
+
+    @Test
+    void testFindAllSorted() {
+        createCustomer("Frank", "frank@example.com");
+        createCustomer("Grace", "grace@example.com");
+        List<Customers> sorted = customersRepository.findAllSorted();
+        assertTrue(sorted.size() >= 2);
     }
 }

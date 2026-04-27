@@ -9,11 +9,17 @@ import com.sprint.pet_shop.dto.requestDto.AddressesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.AddressesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.entity.Addresses;
+import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.service.interfaces.AddressesInterface;
 
+/**
+ * Implementation of the AddressesInterface.
+ * This class contains the actual business logic for validating and saving physical addresses 
+ * before they reach the database.
+ */
 @Service
 public class AddressesService implements AddressesInterface {
 
@@ -35,6 +41,16 @@ public class AddressesService implements AddressesInterface {
             }
             if (dto.getZipCode() == null || dto.getZipCode().trim().isEmpty()) {
                 throw new InvalidDataException("Zip code cannot be empty");
+            }
+
+            boolean duplicate = addressesRepository.findAllSorted().stream()
+                    .anyMatch(a -> a.getStreet().equalsIgnoreCase(dto.getStreet()) &&
+                                   a.getCity().equalsIgnoreCase(dto.getCity()) &&
+                                   a.getState().equalsIgnoreCase(dto.getState()) &&
+                                   a.getZipCode().equalsIgnoreCase(dto.getZipCode()));
+            
+            if (duplicate) {
+                throw new DuplicateResourceException("Address already exists");
             }
             Addresses entity = new Addresses();
             entity.setStreet(dto.getStreet());
@@ -117,6 +133,17 @@ public class AddressesService implements AddressesInterface {
         }
         if (updatedaddress.getZipCode() == null || updatedaddress.getZipCode().trim().isEmpty()) {
             throw new InvalidDataException("Zip code cannot be empty");
+        }
+
+        boolean duplicate = addressesRepository.findAllSorted().stream()
+                .anyMatch(a -> a.getAddressId() != id &&
+                               a.getStreet().equalsIgnoreCase(updatedaddress.getStreet()) &&
+                               a.getCity().equalsIgnoreCase(updatedaddress.getCity()) &&
+                               a.getState().equalsIgnoreCase(updatedaddress.getState()) &&
+                               a.getZipCode().equalsIgnoreCase(updatedaddress.getZipCode()));
+        
+        if (duplicate) {
+            throw new DuplicateResourceException("Address already exists");
         }
 
         existing.setCity(updatedaddress.getCity());

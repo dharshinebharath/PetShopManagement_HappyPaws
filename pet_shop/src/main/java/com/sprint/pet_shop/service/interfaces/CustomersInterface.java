@@ -8,6 +8,11 @@ import com.sprint.pet_shop.dto.responseDto.CustomerResponseDTO;
 
 import jakarta.validation.Valid;
 
+/**
+ * Defines the business rules for managing Customers.
+ * It outlines what operations we support for customers, including creating accounts, 
+ * updating profiles, and finding customers who haven't made a purchase yet.
+ */
 public interface CustomersInterface {
 	ApiResponse<List<CustomerResponseDTO>> savecustomers(List<CustomerRequestDTO> customers);
 

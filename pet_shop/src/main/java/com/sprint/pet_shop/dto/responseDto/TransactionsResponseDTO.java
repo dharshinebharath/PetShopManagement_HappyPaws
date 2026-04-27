@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * Data Transfer Object representing a completed or failed transaction.
+ * Returned to the client as a receipt or history record of a purchase.
+ */
 public class TransactionsResponseDTO {
 
     private Long transactionId;

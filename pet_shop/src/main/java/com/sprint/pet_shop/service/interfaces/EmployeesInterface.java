@@ -9,6 +9,11 @@ import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.entity.Employees;
 
+/**
+ * Service interface for Employee operations.
+ * Outlines how we handle staff data, assign them to care for specific pets, 
+ * and fetch their details based on their role or hire date.
+ */
 public interface EmployeesInterface {
 
     ApiResponse<List<EmployeesResponseDTO>> saveAll(List<EmployeesRequestDTO> employees);

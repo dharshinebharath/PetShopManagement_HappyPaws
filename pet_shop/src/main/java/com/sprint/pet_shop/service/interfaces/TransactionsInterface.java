@@ -9,6 +9,10 @@ import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
 import com.sprint.pet_shop.entity.TransactionsEntity;
 
+/**
+ * Outlines the business rules for processing Transactions.
+ * Responsible for handling customer purchases, filtering by date, and returning receipts.
+ */
 public interface TransactionsInterface {
 
 	ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto);

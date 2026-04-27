@@ -13,6 +13,7 @@
             <thead class="bg-stone-100 text-sage-900 border-b border-stone-200">
               <tr>
                 <th class="p-4 text-left font-semibold">Pet ID</th>
+                <th class="p-4 text-left font-semibold">Image</th>
                 <th class="p-4 text-left font-semibold">Name</th>
                 <th class="p-4 text-left font-semibold">Breed</th>
                 <th class="p-4 text-left font-semibold">Age</th>
@@ -25,6 +26,7 @@
             <tbody class="divide-y divide-stone-100">
               <tr *ngFor="let p of paginated(petsList)" class="hover:bg-stone-50 transition">
                 <td class="p-4 font-medium text-sage-900">{{ p.pet_id }}</td>
+                <td class="p-4"><img [src]="p.image_url || 'https://via.placeholder.com/50'" alt="Pet Image" class="w-12 h-12 rounded-lg object-cover border border-stone-200"></td>
                 <td class="p-4 text-stone-700 font-medium">{{ p.name }}</td>
                 <td class="p-4 text-stone-700">{{ p.breed }}</td>
                 <td class="p-4 text-stone-700">{{ p.age }}</td>

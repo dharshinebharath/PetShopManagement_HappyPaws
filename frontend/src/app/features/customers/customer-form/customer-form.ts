@@ -23,11 +23,11 @@ export class CustomerForm {
   addresses: any[] = [];
 
   form = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
-    lastName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Za-z ]+$')]),
+    firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+    lastName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
-    addressId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+    addressId: new FormControl<number | null>(null, [Validators.required])
   });
 
   ngOnInit() {
@@ -67,8 +67,9 @@ export class CustomerForm {
 
             this.isLoading = false;
           },
-          error: () => {
-            alert('Error fetching customer');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Error fetching customer');
+            alert(msg);
             this.router.navigate(['/customer/list']);
           }
         });
@@ -100,26 +101,23 @@ export class CustomerForm {
       const addressId = this.form.get('addressId');
 
       if (firstName?.errors) {
-        if (firstName.errors['required']) errors.push('First name is required');
-        if (firstName.errors['minlength']) errors.push('First name must be at least 2 characters');
-        if (firstName.errors['pattern']) errors.push('First name must contain only letters');
+        if (firstName.errors['required']) errors.push('First name cannot be empty');
+        if (firstName.errors['minlength'] || firstName.errors['maxlength']) errors.push('First name must be between 2 and 30 characters');
       }
       if (lastName?.errors) {
-        if (lastName.errors['required']) errors.push('Last name is required');
-        if (lastName.errors['minlength']) errors.push('Last name must be at least 2 characters');
-        if (lastName.errors['pattern']) errors.push('Last name must contain only letters');
+        if (lastName.errors['required']) errors.push('Last name cannot be empty');
+        if (lastName.errors['minlength'] || lastName.errors['maxlength']) errors.push('Last name must be between 2 and 30 characters');
       }
       if (email?.errors) {
-        if (email.errors['required']) errors.push('Email is required');
-        if (email.errors['email']) errors.push('Email must be valid');
+        if (email.errors['required']) errors.push('Email cannot be empty');
+        if (email.errors['email']) errors.push('Invalid email address');
       }
       if (phoneNumber?.errors) {
-        if (phoneNumber.errors['required']) errors.push('Phone number is required');
-        if (phoneNumber.errors['pattern']) errors.push('Phone number must be a 10-digit number like 5555678001');
+        if (phoneNumber.errors['required']) errors.push('Phone number cannot be empty');
+        if (phoneNumber.errors['pattern']) errors.push('Phone number must be 10 digits');
       }
       if (addressId?.errors) {
-        if (addressId.errors['required']) errors.push('Address ID is required');
-        if (addressId.errors['min']) errors.push('Address ID must be greater than 0');
+        if (addressId.errors['required']) errors.push('Address ID cannot be null');
       }
 
       alert('Please fix errors:\n\n' + errors.join('\n'));
@@ -151,7 +149,8 @@ export class CustomerForm {
         },
         error: (err) => {
           console.log(err);
-          alert(err.error?.message || 'Update failed');
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
         }
       });
     } else {
@@ -162,7 +161,8 @@ export class CustomerForm {
         },
         error: (err) => {
           console.log(err);
-          alert(err.error?.message || 'Create failed');
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          alert(msg);
         }
       });
     }

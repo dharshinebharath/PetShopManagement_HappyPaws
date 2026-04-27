@@ -24,11 +24,11 @@ export class SupplierForm {
   addresses: any[] = [];
 
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    contactPerson: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3}-[0-9]{3}-[0-9]{4}$')]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    contactPerson: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+    phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    addressId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+    addressId: new FormControl<number | null>(null, [Validators.required])
   });
 
   ngOnInit() {
@@ -53,8 +53,9 @@ export class SupplierForm {
             this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: () => {
-            alert('Supplier not found');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Supplier not found');
+            alert(msg);
             this.router.navigate(['/supplier-dashboard']);
           }
         });
@@ -88,24 +89,23 @@ export class SupplierForm {
       const addressId = this.form.get('addressId');
 
       if (name?.errors) {
-        if (name.errors['required']) errors.push('Name is required');
-        if (name.errors['minlength']) errors.push('Name must be at least 3 characters');
+        if (name.errors['required']) errors.push('Supplier name cannot be empty');
+        if (name.errors['minlength'] || name.errors['maxlength']) errors.push('Supplier name must be between 2 and 50 characters');
       }
       if (contactPerson?.errors) {
-        if (contactPerson.errors['required']) errors.push('Contact person is required');
-        if (contactPerson.errors['minlength']) errors.push('Contact person must be at least 3 characters');
+        if (contactPerson.errors['required']) errors.push('Contact person cannot be empty');
+        if (contactPerson.errors['minlength'] || contactPerson.errors['maxlength']) errors.push('Contact person must be between 2 and 30 characters');
       }
       if (phoneNumber?.errors) {
-        if (phoneNumber.errors['required']) errors.push('Phone number is required');
-        if (phoneNumber.errors['pattern']) errors.push('Phone number must be in 123-456-7890 format');
+        if (phoneNumber.errors['required']) errors.push('Phone number cannot be empty');
+        if (phoneNumber.errors['pattern']) errors.push('Phone number must be 10 digits');
       }
       if (email?.errors) {
-        if (email.errors['required']) errors.push('Email is required');
-        if (email.errors['email']) errors.push('Email must be valid');
+        if (email.errors['required']) errors.push('Email cannot be empty');
+        if (email.errors['email']) errors.push('Invalid email address');
       }
       if (addressId?.errors) {
-        if (addressId.errors['required']) errors.push('Address ID is required');
-        if (addressId.errors['min']) errors.push('Address ID must be greater than 0');
+        if (addressId.errors['required']) errors.push('Address ID cannot be null');
       }
 
       alert('Please fix errors:\n\n' + errors.join('\n'));
@@ -120,7 +120,10 @@ export class SupplierForm {
           alert('Updated successfully');
           this.router.navigate(['/supplier/list']);
         },
-        error: () => alert('Update failed')
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
+        }
       });
     } else {
       this.supplierService.create([payload]).subscribe({
@@ -128,7 +131,10 @@ export class SupplierForm {
           alert('Created successfully');
           this.router.navigate(['/supplier/list']);
         },
-        error: () => alert('Create failed')
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          alert(msg);
+        }
       });
     }
   }

@@ -7,6 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.sprint.pet_shop.entity.PetFood;
 
+/**
+ * Repository interface for managing our Pet Food inventory.
+ * Gives us tools to check if certain brands exist and pull our full inventory list.
+ */
 public interface PetFoodRepository extends JpaRepository<PetFood, Long> {
 
 	 @Query("SELECT p FROM PetFood p")

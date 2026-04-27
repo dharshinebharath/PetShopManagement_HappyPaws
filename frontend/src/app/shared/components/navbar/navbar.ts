@@ -11,7 +11,9 @@ import { NotificationService } from '../../../core/services/notification';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
+// Navbar component
 export class NavbarComponent {
+  // Injecting required services
   router = inject(Router);
   notification = inject(NotificationService);
   currentUrl = '';
@@ -28,10 +30,12 @@ export class NavbarComponent {
     this.syncDisplayName();
   }
 
+  // Method to check if navbar should be shown
   get showNavbar(): boolean {
     return this.currentUrl !== '/' && !this.currentUrl.startsWith('/login');
   }
 
+  // Method to sync display name
   private syncDisplayName() {
     const byStorage = sessionStorage.getItem('activeUserName');
     if (byStorage) {
@@ -75,6 +79,7 @@ export class NavbarComponent {
     }
   }
 
+  // Logout method
   logout() {
     sessionStorage.removeItem('activeModuleLabel');
     sessionStorage.removeItem('activeModuleRoute');

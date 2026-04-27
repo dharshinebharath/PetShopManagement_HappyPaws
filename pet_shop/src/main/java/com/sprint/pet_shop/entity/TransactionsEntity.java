@@ -1,12 +1,18 @@
 package com.sprint.pet_shop.entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
+/**
+ * Represents a purchase or service transaction made by a customer.
+ * This entity links the customer, the pet involved, the date of transaction, 
+ * the monetary amount, and the current status (e.g., SUCCESS or FAILED).
+ */
 @Entity
 @Table(name = "transactions")
 public class TransactionsEntity {
@@ -17,19 +23,21 @@ public class TransactionsEntity {
     private Long transactionId;
 
     @NotNull(message = "Transaction date cannot be null")
-    @Column(name = "transaction_date", nullable = false)
     private LocalDate transactionDate;
 
     @NotNull(message = "Amount cannot be null")
-    @Column(nullable = false)
+    @Digits(integer = 8, fraction = 2, message = "Price must have max 8 digits and 2 decimal places")
+	@Positive
     private BigDecimal amount;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @NotNull(message = "Customer ID cannot be null")
+    @JoinColumn(name = "customer_id")
     private Customers customer;
 
     @ManyToOne
-    @JoinColumn(name = "pet_id", nullable = false)
+    @NotNull(message = "Pet ID cannot be null")
+    @JoinColumn(name = "pet_id")
     private Pets pet;
 
     @NotNull(message = "Transaction status cannot be null")

@@ -3,6 +3,10 @@ package com.sprint.pet_shop.dto.responseDto;
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * Data Transfer Object for returning employee information to the API client.
+ * Hides internal database mapping and only exposes relevant employee details.
+ */
 public class EmployeesResponseDTO {
 	private Long employeeId;
     private String firstName;

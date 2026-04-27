@@ -1,78 +1,92 @@
 package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.Vaccinations;
-import jakarta.validation.*;
-import org.junit.jupiter.api.BeforeEach;
+import com.sprint.pet_shop.repository.VaccinationsRepository;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class VaccinationsRepoTest {
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+class VaccinationsRepoTest {
 
-    private Validator validator;
+    @Autowired
+    private VaccinationsRepository vaccinationsRepository;
 
-    @BeforeEach
-    void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
+    @Autowired
+    private EntityManager entityManager;
+
+    private Vaccinations createVaccination(String name, BigDecimal price) {
+        Vaccinations vaccination = new Vaccinations();
+        vaccination.setName(name);
+        vaccination.setDescription("Description for " + name);
+        vaccination.setPrice(price);
+        vaccination.setAvailable(true);
+        return vaccinationsRepository.save(vaccination);
     }
+
     @Test
-    void testValidVaccination() {
-        Vaccinations v = new Vaccinations();
-        v.setName("Rabies Vaccine");
-        v.setDescription("Prevents rabies infection");
-        v.setPrice(new BigDecimal("500.00"));
-        v.setAvailable(true);
-
-        Set<ConstraintViolation<Vaccinations>> violations = validator.validate(v);
-
-        assertTrue(violations.isEmpty());
+    void testCreateVaccination() {
+        Vaccinations vaccination = createVaccination("Rabies", new BigDecimal("50.00"));
+        assertNotNull(vaccination.getVaccinationId());
     }
+
     @Test
-    void testNameShouldNotBeBlank() {
-        Vaccinations v = new Vaccinations();
-        v.setName("");
-        v.setPrice(new BigDecimal("300.00"));
-        v.setAvailable(true);
-
-        Set<ConstraintViolation<Vaccinations>> violations = validator.validate(v);
-
-        assertFalse(violations.isEmpty());
+    void testFindVaccinationById() {
+        Vaccinations vaccination = createVaccination("Parvovirus", new BigDecimal("60.00"));
+        Optional<Vaccinations> found = vaccinationsRepository.findById(vaccination.getVaccinationId());
+        assertTrue(found.isPresent());
+        assertEquals("Parvovirus", found.get().getName());
     }
+
     @Test
-    void testPriceShouldNotBeNull() {
-        Vaccinations v = new Vaccinations();
-        v.setName("Parvo Vaccine");
-        v.setPrice(null);
-        v.setAvailable(true);
-
-        Set<ConstraintViolation<Vaccinations>> violations = validator.validate(v);
-
-        assertFalse(violations.isEmpty());
+    void testUpdateVaccination() {
+        Vaccinations vaccination = createVaccination("Distemper", new BigDecimal("40.00"));
+        vaccination.setPrice(new BigDecimal("45.00"));
+        Vaccinations updated = vaccinationsRepository.save(vaccination);
+        assertEquals(new BigDecimal("45.00"), updated.getPrice());
     }
+
     @Test
-    void testDescriptionCanBeNull() {
-        Vaccinations v = new Vaccinations();
-        v.setName("Distemper Vaccine");
-        v.setPrice(new BigDecimal("250.00"));
-        v.setAvailable(true);
-        v.setDescription(null);
-
-        Set<ConstraintViolation<Vaccinations>> violations = validator.validate(v);
-
-        assertTrue(violations.isEmpty());
+    void testDeleteVaccination() {
+        Vaccinations vaccination = createVaccination("Hepatitis", new BigDecimal("35.00"));
+        vaccinationsRepository.delete(vaccination);
+        Optional<Vaccinations> found = vaccinationsRepository.findById(vaccination.getVaccinationId());
+        assertFalse(found.isPresent());
     }
-    @Test
-    void testNegativePriceAllowedCurrently() {
-        Vaccinations v = new Vaccinations();
-        v.setName("Test Vaccine");
-        v.setPrice(new BigDecimal("-100.00"));
-        v.setAvailable(true);
 
-        Set<ConstraintViolation<Vaccinations>> violations = validator.validate(v);
-        assertTrue(violations.isEmpty());
+    @Test
+    void testExistsByName() {
+        createVaccination("Lyme Disease", new BigDecimal("55.00"));
+        assertTrue(vaccinationsRepository.existsByName("Lyme Disease"));
+        assertFalse(vaccinationsRepository.existsByName("Unknown Vaccine"));
+    }
+
+    @Test
+    void testFindByPriceRange() {
+        createVaccination("Vaccine A", new BigDecimal("20.00"));
+        createVaccination("Vaccine B", new BigDecimal("100.00"));
+        List<Vaccinations> found = vaccinationsRepository.findByPriceRange(new BigDecimal("10.00"), new BigDecimal("30.00"));
+        assertEquals(1, found.size());
+    }
+
+    @Test
+    void testFindAllSorted() {
+        createVaccination("Vaccine C", new BigDecimal("25.00"));
+        createVaccination("Vaccine D", new BigDecimal("30.00"));
+        List<Vaccinations> sorted = vaccinationsRepository.findAllSorted();
+        assertTrue(sorted.size() >= 2);
     }
 }

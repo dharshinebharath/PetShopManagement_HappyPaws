@@ -23,12 +23,18 @@ import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
+import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
 import com.sprint.pet_shop.entity.Pets;
 import com.sprint.pet_shop.service.EmployeesService;
 import com.sprint.pet_shop.service.PetsService;
 
 import jakarta.validation.Valid;
 
+/**
+ * REST Controller for managing pets.
+ * This is a highly active controller that handles pet profiles, including assigning 
+ * vaccinations, linking to suppliers, and associating foods and grooming services.
+ */
 @RestController
 @RequestMapping("/api/v1/pets")
 public class PetsController {
@@ -142,7 +148,7 @@ public class PetsController {
 	    }
 
 	    @GetMapping("/{petId}/vaccinations")
-	    public ApiResponse<List<Long>> getVaccinations(@PathVariable Long petId) {
+	    public ApiResponse<List<VaccinationsResponseDTO>> getVaccinations(@PathVariable Long petId) {
 	        return petsService.getVaccinationsByPet(petId);
 	    }
 

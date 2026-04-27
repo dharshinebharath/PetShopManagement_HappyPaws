@@ -20,28 +20,37 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sprint.pet_shop.dto.requestDto.GroomingServicesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
-import com.sprint.pet_shop.entity.GroomingServices;
 import com.sprint.pet_shop.service.GroomingServicesService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+// Allow the frontend to connect
+@CrossOrigin(origins = "http://localhost:4200")
+
+//  REST Controller for grooming services.
+//  Allows the frontend to fetch available grooming services, update pricing and manage the catalog of services offered.
+
 @RestController
+
+// Base URL for the API
 @RequestMapping("/api/v1/grooming-services")
 public class GroomingServicesController {
 
+	// Inject the service
 	@Autowired
 	private GroomingServicesService groomingServicesService;
 
+	// HTTP Post request to add new grooming services
 	@PostMapping
 	public ResponseEntity<ApiResponse<List<GroomingServicesResponseDTO>>> saveAll(
-			@Valid @RequestBody List<GroomingServicesRequestDTO> dtos) {
+			 @RequestBody List<@Valid GroomingServicesRequestDTO> dtos) {
 
 		ApiResponse<List<GroomingServicesResponseDTO>> response = groomingServicesService.saveAllGroomingServices(dtos);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
+	// HTTP Get request to fetch all grooming services
 	@GetMapping
 	public ResponseEntity<ApiResponse<List<GroomingServicesResponseDTO>>> getAll() {
 
@@ -50,6 +59,7 @@ public class GroomingServicesController {
 		return ResponseEntity.ok(response);
 	}
 
+	// HTTP Get request to fetch a grooming service by ID
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<GroomingServicesResponseDTO>> getById(
 			@PathVariable long id) {
@@ -59,6 +69,7 @@ public class GroomingServicesController {
 		return ResponseEntity.ok(response);
 	}
 
+	// HTTP Delete request to delete a grooming service by ID
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ApiResponse<String>> deleteGroomingServiceById(
 			@PathVariable("id") long id) {
@@ -68,16 +79,18 @@ public class GroomingServicesController {
 		return ResponseEntity.ok(response);
 	}
 
+	// HTTP Put request to update a grooming service by ID
 	@PutMapping("/{id}")
 	public ResponseEntity<ApiResponse<GroomingServicesResponseDTO>> update(
 			@PathVariable long id,
-			@Valid @RequestBody GroomingServicesRequestDTO dto) {
+			 @RequestBody @Valid GroomingServicesRequestDTO dto) {
 
 		ApiResponse<GroomingServicesResponseDTO> response = groomingServicesService.updateGroomingService(id, dto);
 
 		return ResponseEntity.ok(response);
 	}
 
+	// HTTP Get request to fetch grooming services by price range
 	@GetMapping("/price-range")
 	public ApiResponse<List<GroomingServicesResponseDTO>> getByPrice(
 			@RequestParam BigDecimal min,

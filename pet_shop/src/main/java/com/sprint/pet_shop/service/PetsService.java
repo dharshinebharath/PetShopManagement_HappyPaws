@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.sprint.pet_shop.dto.requestDto.PetsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
-import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
@@ -25,6 +24,7 @@ import com.sprint.pet_shop.entity.Supplier;
 import com.sprint.pet_shop.entity.Vaccinations;
 import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
+
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.EmployeesRepository;
 import com.sprint.pet_shop.repository.GroomingServicesRepository;
@@ -35,6 +35,11 @@ import com.sprint.pet_shop.repository.SupplierRepository;
 import com.sprint.pet_shop.repository.VaccinationsRepository;
 import com.sprint.pet_shop.service.interfaces.PetsInterface;
 
+/**
+ * Implementation of the PetsInterface.
+ * This is a major hub of business logic. It handles the complex mapping between pets 
+ * and their categories, foods, grooming services, caretakers, and suppliers.
+ */
 @Service
 public class PetsService implements PetsInterface {
 
@@ -145,6 +150,14 @@ public class PetsService implements PetsInterface {
 			if (dto.getAge() == null || dto.getAge() < 0) {
 				throw new InvalidDataException("Age cannot be negative");
 			}
+			
+			boolean exists = petsRepository.findAllSorted().stream()
+			        .anyMatch(p -> p.getName().equalsIgnoreCase(dto.getName()) && 
+			                       p.getBreed().equalsIgnoreCase(dto.getBreed()));
+			if (exists) {
+			    throw new DuplicateResourceException("Pet already exists with name: " + dto.getName());
+			}
+
 			PetCategories category = categoryRepository.findById(dto.getCategory_id())
 					.orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
@@ -434,7 +447,7 @@ public class PetsService implements PetsInterface {
 	}
 
 	@Override
-public ApiResponse getVaccinationsByPet(Long petId) {
+public ApiResponse<List<VaccinationsResponseDTO>> getVaccinationsByPet(Long petId) {
 
     Pets pet = petsRepository.findById(petId)
             .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));

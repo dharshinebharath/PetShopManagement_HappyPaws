@@ -14,7 +14,8 @@
         <div class="space-y-1">
           <label class="text-xs font-medium text-stone-600">Category Name</label>
           <input formControlName="name" placeholder="e.g. Dogs" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-          <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Category name is required and must be at least 3 characters</p>
+          <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">Category name cannot be empty</p>
+          <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && (form.get('name')?.hasError('minlength') || form.get('name')?.hasError('maxlength'))">Category name must be between 2 and 50 characters</p>
         </div>
         <button type="button" (click)="submit()" class="w-full py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium hover:bg-stone-800 transition shadow-sm">Save Category</button>
       </form>

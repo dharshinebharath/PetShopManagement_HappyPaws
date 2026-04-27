@@ -1,228 +1,150 @@
 package com.sprint.pet_shop.repoTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.sprint.pet_shop.entity.*;
+import com.sprint.pet_shop.repository.*;
+import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import com.sprint.pet_shop.entity.TransactionsEntity;
-import com.sprint.pet_shop.entity.Customers;
-import com.sprint.pet_shop.entity.Pets;
-import com.sprint.pet_shop.entity.TransactionStatus;
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+class TransactionsRepoTest {
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
+    @Autowired
+    private TransactionsRepository transactionsRepository;
 
-public class TransactionsRepoTest {
-    @Test
-    void testValidTransactionCreation() {
+    @Autowired
+    private CustomersRepository customersRepository;
+
+    @Autowired
+    private PetsRepository petsRepository;
+
+    @Autowired
+    private PetCategoriesRepository petCategoriesRepository;
+
+    @Autowired
+    private AddressesRepository addressesRepository;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    private Addresses createAddress() {
+        Addresses address = new Addresses();
+        address.setStreet("123 Main St");
+        address.setCity("City");
+        address.setState("State");
+        address.setZipCode("12345");
+        return addressesRepository.save(address);
+    }
+
+    private Customers createCustomer() {
+        Customers customer = new Customers();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("john.t@example.com");
+        customer.setPhoneNumber("1234567890");
+        customer.setAddress(createAddress());
+        return customersRepository.save(customer);
+    }
+
+    private Pets createPet() {
+        PetCategories category = new PetCategories();
+        category.setName("Dogs");
+        petCategoriesRepository.save(category);
+
+        Pets pet = new Pets();
+        pet.setName("Rex");
+        pet.setBreed("German Shepherd");
+        pet.setAge(2);
+        pet.setPrice(new BigDecimal("500.00"));
+        pet.setDescription("Desc");
+        pet.setImage_url("url");
+        pet.setCategory(category);
+        return petsRepository.save(pet);
+    }
+
+    private TransactionsEntity createTransaction(Customers customer, Pets pet, TransactionStatus status) {
         TransactionsEntity transaction = new TransactionsEntity();
-
         transaction.setTransactionDate(LocalDate.now());
-        transaction.setAmount(BigDecimal.valueOf(1500));
-        transaction.setTransactionStatus(TransactionStatus.SUCCESS);
-
-        Customers customer = new Customers();
-        customer.setCustomerId(5L);
-
-        Pets pet = new Pets();
-        pet.setPet_id(8L);
-
+        transaction.setAmount(new BigDecimal("500.00"));
         transaction.setCustomer(customer);
         transaction.setPet(pet);
-
-        assertNotNull(transaction.getCustomer());
-        assertNotNull(transaction.getPet());
+        transaction.setTransactionStatus(status);
+        return transactionsRepository.save(transaction);
     }
 
     @Test
-    void testLargeAmountTransaction() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        transaction.setAmount(BigDecimal.valueOf(9999999.99));
-
-        assertEquals(BigDecimal.valueOf(9999999.99), transaction.getAmount());
+    void testCreateTransaction() {
+        TransactionsEntity transaction = createTransaction(createCustomer(), createPet(), TransactionStatus.SUCCESS);
+        assertNotNull(transaction.getTransactionId());
     }
 
     @Test
-    void testSuccessfulStatusAssignment() {
-        TransactionsEntity transaction = new TransactionsEntity();
+    void testFindTransactionById() {
+        TransactionsEntity transaction = createTransaction(createCustomer(), createPet(), TransactionStatus.SUCCESS);
+        Optional<TransactionsEntity> found = transactionsRepository.findById(transaction.getTransactionId());
+        assertTrue(found.isPresent());
+        assertEquals(TransactionStatus.SUCCESS, found.get().getTransactionStatus());
+    }
 
+    @Test
+    void testUpdateTransaction() {
+        TransactionsEntity transaction = createTransaction(createCustomer(), createPet(), TransactionStatus.PENDING);
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
-
-        assertEquals(TransactionStatus.SUCCESS, transaction.getTransactionStatus());
+        TransactionsEntity updated = transactionsRepository.save(transaction);
+        assertEquals(TransactionStatus.SUCCESS, updated.getTransactionStatus());
     }
 
     @Test
-    void testFailedStatusAssignment() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        transaction.setTransactionStatus(TransactionStatus.FAILED);
-
-        assertEquals(TransactionStatus.FAILED, transaction.getTransactionStatus());
+    void testDeleteTransaction() {
+        TransactionsEntity transaction = createTransaction(createCustomer(), createPet(), TransactionStatus.FAILED);
+        transactionsRepository.delete(transaction);
+        Optional<TransactionsEntity> found = transactionsRepository.findById(transaction.getTransactionId());
+        assertFalse(found.isPresent());
     }
 
     @Test
-    void testCustomerAndPetAssignment() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        Customers customer = new Customers();
-        customer.setCustomerId(101L);
-
-        Pets pet = new Pets();
-        pet.setPet_id(202L);
-
-        transaction.setCustomer(customer);
-        transaction.setPet(pet);
-
-        assertEquals(101L, transaction.getCustomer().getCustomerId());
-        assertEquals(202L, transaction.getPet().getPet_id());
+    void testFindByCustomerCustomerId() {
+        Customers customer = createCustomer();
+        createTransaction(customer, createPet(), TransactionStatus.SUCCESS);
+        List<TransactionsEntity> found = transactionsRepository.findByCustomerCustomerId(customer.getCustomerId());
+        assertFalse(found.isEmpty());
     }
 
     @Test
-    void testNullCustomer() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        transaction.setCustomer(null);
-
-        assertNull(transaction.getCustomer());
+    void testFindByTransactionStatus() {
+        createTransaction(createCustomer(), createPet(), TransactionStatus.FAILED);
+        List<TransactionsEntity> found = transactionsRepository.findByTransactionStatus(TransactionStatus.FAILED);
+        assertFalse(found.isEmpty());
     }
 
     @Test
-    void testNullPet() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        transaction.setPet(null);
-
-        assertNull(transaction.getPet());
+    void testFindByTransactionDateBetween() {
+        createTransaction(createCustomer(), createPet(), TransactionStatus.SUCCESS);
+        List<TransactionsEntity> found = transactionsRepository.findByTransactionDateBetween(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
+        assertFalse(found.isEmpty());
     }
 
     @Test
-    void testNullTransactionStatus() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        transaction.setTransactionStatus(null);
-
-        assertNull(transaction.getTransactionStatus());
+    void testFindAllSorted() {
+        Customers customer = createCustomer();
+        Pets pet = createPet();
+        createTransaction(customer, pet, TransactionStatus.SUCCESS);
+        createTransaction(customer, pet, TransactionStatus.PENDING);
+        List<TransactionsEntity> sorted = transactionsRepository.findAllSorted();
+        assertTrue(sorted.size() >= 2);
     }
-
-    @Test
-    void testNegativeAmount() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        transaction.setAmount(BigDecimal.valueOf(-500));
-
-        assertEquals(BigDecimal.valueOf(-500), transaction.getAmount());
-    }
-
-    @Test
-    void testNullTransactionDate() {
-        TransactionsEntity transaction = new TransactionsEntity();
-
-        transaction.setTransactionDate(null);
-
-        assertNull(transaction.getTransactionDate());
-    }
-
-    private Validator validator;
-
-    @BeforeEach
-    void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
-
-    @Test
-    void testValidTransaction1() {
-        TransactionsEntity t = createValidTransaction();
-        assertTrue(validator.validate(t).isEmpty());
-    }
-
-    @Test
-    void testValidTransaction2() {
-        TransactionsEntity t = createValidTransaction();
-        t.setAmount(new BigDecimal("1000.00"));
-        assertTrue(validator.validate(t).isEmpty());
-    }
-
-    @Test
-    void testValidTransaction3() {
-        TransactionsEntity t = createValidTransaction();
-        t.setTransactionStatus(TransactionStatus.PENDING);
-        assertTrue(validator.validate(t).isEmpty());
-    }
-
-    @Test
-    void testValidTransaction4() {
-        TransactionsEntity t = createValidTransaction();
-        t.setAmount(new BigDecimal("0.01"));
-        assertTrue(validator.validate(t).isEmpty());
-    }
-
-    @Test
-    void testValidTransaction5() {
-        TransactionsEntity t = createValidTransaction();
-        t.setTransactionDate(LocalDate.now());
-        assertTrue(validator.validate(t).isEmpty());
-    }
-
-    @Test
-    void testTransactionDateNull() {
-        TransactionsEntity t = createValidTransaction();
-        t.setTransactionDate(null);
-
-        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    void testAmountNull() {
-        TransactionsEntity t = createValidTransaction();
-        t.setAmount(null);
-
-        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    void testStatusNull() {
-        TransactionsEntity t = createValidTransaction();
-        t.setTransactionStatus(null);
-
-        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    void testAllFieldsNull() {
-        TransactionsEntity t = new TransactionsEntity();
-
-        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    void testMissingAmountOnly() {
-        TransactionsEntity t = createValidTransaction();
-        t.setAmount(null);
-
-        Set<ConstraintViolation<TransactionsEntity>> violations = validator.validate(t);
-        assertFalse(violations.isEmpty());
-    }
-
-    private TransactionsEntity createValidTransaction() {
-        TransactionsEntity t = new TransactionsEntity();
-        t.setTransactionDate(LocalDate.now());
-        t.setAmount(new BigDecimal("500.00"));
-        t.setTransactionStatus(TransactionStatus.SUCCESS);
-        return t;
-    }
-
 }

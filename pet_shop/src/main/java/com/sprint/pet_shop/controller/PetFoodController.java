@@ -15,6 +15,11 @@ import com.sprint.pet_shop.service.interfaces.PetFoodInterface;
 
 import jakarta.validation.Valid;
 
+/**
+ * REST Controller for pet food inventory.
+ * Exposes endpoints to track food stock levels, update product details, 
+ * and remove items that are no longer sold.
+ */
 @RestController
 @RequestMapping("/api/v1/food")
 public class PetFoodController {

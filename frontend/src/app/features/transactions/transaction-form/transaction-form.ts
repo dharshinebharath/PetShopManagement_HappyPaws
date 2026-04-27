@@ -4,6 +4,8 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { transaction } from '../../../core/services/transaction';
+import { customer } from '../../../core/services/customer';
+import { PetsService } from '../../../core/services/petsService';
 
 @Component({
   selector: 'app-transaction-form',
@@ -13,22 +15,34 @@ import { transaction } from '../../../core/services/transaction';
 })
 export class TransactionForm {
   transactionService = inject(transaction);
+  customerService = inject(customer);
+  petsService = inject(PetsService);
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
 
   transactionId: number | null = null;
   isLoading = true;
+  customers: any[] = [];
+  pets: any[] = [];
 
   form = new FormGroup({
     amount: new FormControl(0, [Validators.required, Validators.min(1)]),
     transactionDate: new FormControl('', [Validators.required]),
     transactionStatus: new FormControl('', [Validators.required]),
-    customerId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
-    petId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+    customerId: new FormControl<number | null>(null, [Validators.required]),
+    petId: new FormControl<number | null>(null, [Validators.required])
   });
 
   ngOnInit() {
+    this.customerService.getAllCustomers().subscribe((res: any) => {
+      this.customers = res.data || res;
+    });
+
+    this.petsService.getAll().subscribe((res: any) => {
+      this.pets = res.data || res;
+    });
+
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.transactionId = Number(params['id']);
@@ -48,8 +62,9 @@ export class TransactionForm {
             this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: () => {
-            alert('Transaction not found');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Transaction not found');
+            alert(msg);
             this.router.navigate(['/transactions']);
           }
         });
@@ -71,18 +86,16 @@ export class TransactionForm {
       const petId = this.form.get('petId');
 
       if (amount?.errors) {
-        if (amount.errors['required']) errors.push('Amount is required');
+        if (amount.errors['required']) errors.push('Amount cannot be null');
         if (amount.errors['min']) errors.push('Amount must be greater than 0');
       }
-      if (transactionDate?.errors) errors.push('Transaction date is required');
-      if (transactionStatus?.errors) errors.push('Transaction status is required');
+      if (transactionDate?.errors) errors.push('Transaction date cannot be null');
+      if (transactionStatus?.errors) errors.push('Transaction status cannot be null');
       if (customerId?.errors) {
-        if (customerId.errors['required']) errors.push('Customer ID is required');
-        if (customerId.errors['min']) errors.push('Customer ID must be greater than 0');
+        if (customerId.errors['required']) errors.push('Customer ID cannot be null');
       }
       if (petId?.errors) {
-        if (petId.errors['required']) errors.push('Pet ID is required');
-        if (petId.errors['min']) errors.push('Pet ID must be greater than 0');
+        if (petId.errors['required']) errors.push('Pet ID cannot be null');
       }
 
       alert('Please fix errors:\n\n' + errors.join('\n'));
@@ -119,7 +132,10 @@ export class TransactionForm {
           alert('Updated successfully');
           this.router.navigate(['/transactions/list']);
         },
-        error: () => alert('Update failed')
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
+        }
       });
     } else {
       this.transactionService.create(payload).subscribe({
@@ -127,7 +143,10 @@ export class TransactionForm {
           alert('Created successfully');
           this.router.navigate(['/transactions/list']);
         },
-        error: () => alert('Create failed')
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          alert(msg);
+        }
       });
     }
   }

@@ -11,11 +11,18 @@ import com.sprint.pet_shop.service.AddressesService;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "http://localhost:4200")
+
+//  REST Controller for managing addresses.
+//  Exposes endpoints for creating, retrieving, updating, and deleting physical addresses.
 @RestController
+
 @RequestMapping("/api/v1/addresses")
 public class AddressesController {
+
     @Autowired
     private AddressesService addressesService;
+
     @PostMapping
     public ResponseEntity<ApiResponse<List<AddressesResponseDTO>>> saveaddresses(
             @Valid @RequestBody List<AddressesRequestDTO> addresses) {
@@ -25,6 +32,7 @@ public class AddressesController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
     @GetMapping
     public ResponseEntity<ApiResponse<List<AddressesResponseDTO>>> getaddresses() {
 
@@ -33,6 +41,7 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> getaddressesbyId(
             @PathVariable long id) {
@@ -42,6 +51,7 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
+    
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> updateaddresses(
             @PathVariable long id,
@@ -52,6 +62,7 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
 
@@ -60,7 +71,7 @@ public class AddressesController {
 
         return ResponseEntity.ok(response);
     }
-    
+
     @GetMapping("/city")
     public ApiResponse<List<AddressesResponseDTO>> getByCity(@RequestParam String city) {
         return addressesService.getAddressesByCity(city);

@@ -24,12 +24,13 @@ export class PetForm {
   categories: any[] = [];
 
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    breed: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    age: new FormControl(0, [Validators.required, Validators.min(0)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    breed: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
+    age: new FormControl(0, [Validators.required, Validators.min(1)]),
     price: new FormControl(0, [Validators.required, Validators.min(1)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    categoryId: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+    description: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
+    image_url: new FormControl('', [Validators.required]),
+    categoryId: new FormControl<number | null>(null, [Validators.required])
   });
 
   ngOnInit() {
@@ -49,14 +50,16 @@ export class PetForm {
               age: data.age,
               price: data.price,
               description: data.description,
+              image_url: data.image_url,
               categoryId: data.category_id
             });
 
             this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: () => {
-            alert('Pet not found');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Pet not found');
+            alert(msg);
             this.router.navigate(['/pets']);
           }
         });
@@ -88,31 +91,34 @@ export class PetForm {
       const age = this.form.get('age');
       const price = this.form.get('price');
       const description = this.form.get('description');
+      const imageUrl = this.form.get('image_url');
       const categoryId = this.form.get('categoryId');
 
       if (name?.errors) {
-        if (name.errors['required']) errors.push('Pet name is required');
-        if (name.errors['minlength']) errors.push('Pet name must be at least 3 characters');
+        if (name.errors['required']) errors.push('Pet name cannot be empty');
+        if (name.errors['minlength'] || name.errors['maxlength']) errors.push('Pet name must be between 2 and 50 characters');
       }
       if (breed?.errors) {
-        if (breed.errors['required']) errors.push('Breed is required');
-        if (breed.errors['minlength']) errors.push('Breed must be at least 2 characters');
+        if (breed.errors['required']) errors.push('Breed cannot be empty');
+        if (breed.errors['minlength'] || breed.errors['maxlength']) errors.push('Breed must be between 2 and 50 characters');
       }
       if (age?.errors) {
-        if (age.errors['required']) errors.push('Age is required');
-        if (age.errors['min']) errors.push('Age cannot be negative');
+        if (age.errors['required']) errors.push('Age cannot be null');
+        if (age.errors['min']) errors.push('Age must be greater than 0');
       }
       if (price?.errors) {
-        if (price.errors['required']) errors.push('Price is required');
+        if (price.errors['required']) errors.push('Price cannot be null');
         if (price.errors['min']) errors.push('Price must be greater than 0');
       }
       if (description?.errors) {
-        if (description.errors['required']) errors.push('Description is required');
-        if (description.errors['minlength']) errors.push('Description must be at least 5 characters');
+        if (description.errors['required']) errors.push('Description cannot be empty');
+        if (description.errors['minlength'] || description.errors['maxlength']) errors.push('Description must be between 2 and 255 characters');
+      }
+      if (imageUrl?.errors) {
+        if (imageUrl.errors['required']) errors.push('Image URL cannot be empty');
       }
       if (categoryId?.errors) {
-        if (categoryId.errors['required']) errors.push('Category ID is required');
-        if (categoryId.errors['min']) errors.push('Category ID must be greater than 0');
+        if (categoryId.errors['required']) errors.push('Category ID cannot be null');
       }
 
       alert('Please fix errors:\n\n' + errors.join('\n'));
@@ -125,8 +131,8 @@ export class PetForm {
       age: Number(this.form.value.age),
       price: Number(this.form.value.price),
       description: this.form.value.description,
-      category_id: Number(this.form.value.categoryId),
-      image_url: 'default.jpg'
+      image_url: this.form.value.image_url,
+      category_id: Number(this.form.value.categoryId)
     };
 
     if (this.petId !== null && this.petId !== undefined) {
@@ -139,7 +145,8 @@ export class PetForm {
         },
         error: (err) => {
           console.log(err);
-          alert('Update failed');
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
         }
       });
     } else {
@@ -150,7 +157,8 @@ export class PetForm {
         },
         error: (err) => {
           console.log(err);
-          alert('Create failed');
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          alert(msg);
         }
       });
     }

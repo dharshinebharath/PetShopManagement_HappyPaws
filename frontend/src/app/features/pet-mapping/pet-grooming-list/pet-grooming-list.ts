@@ -12,26 +12,31 @@ import { PetGroomingMappingService } from '../../../core/services/pet-grooming-m
   imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-grooming-list.html'
 })
+// Component for displaying list of grooming services
 export class PetGroomingList {
-
+  // Injecting required services
   route = inject(ActivatedRoute);
   service = inject(PetGroomingMappingService);
   cdr = inject(ChangeDetectorRef);
 
+  // Properties for pet ID and services list
   petId: number | null = null;
   services: any[] = [];
 
+  // Initialize the component
   ngOnInit() {
+    // Subscribe to route query parameters
     this.route.queryParams.subscribe(params => {
-
+      // Get pet ID from route parameters
       this.petId = Number(params['petId']);
-
+      // Load grooming services if pet ID is present
       if (this.petId) {
         this.load();
       }
     });
   }
 
+  // Load grooming services
   load() {
     this.service.getGroomingByPet(this.petId!).subscribe({
       next: (res: any) => {
@@ -52,6 +57,7 @@ export class PetGroomingList {
     });
   }
 
+  // Remove grooming service
   remove(serviceId: number) {
     this.service.removeGrooming(this.petId!, serviceId).subscribe({
       next: () => {
@@ -61,15 +67,18 @@ export class PetGroomingList {
       error: () => alert('Delete failed ❌')
     });
   }
+  // Pagination properties
   currentPage = 1;
   pageSize = 10;
 
+  // Method to get paginated list of items
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Method to handle page change
   onPageChange(page: number) {
     this.currentPage = page;
   }

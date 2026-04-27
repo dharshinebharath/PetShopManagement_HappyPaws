@@ -10,14 +10,19 @@ import { VaccinationService } from '../../../core/services/vaccinationService';
   imports: [FormsModule, RouterModule],
   templateUrl: './vaccination-dashboard.html'
 })
+// Logic for vaccination dashboard
 export class VaccinationDashboard {
+
+  // Injecting required services
   router = inject(Router);
   vaccinationService = inject(VaccinationService);
 
+  // Method to navigate to vaccination list
   goToList() {
     this.router.navigate(['/vaccination/list']);
   }
 
+  // Method to view vaccination by ID
   viewById(id: string) {
     if (!id) {
       alert('Please enter Vaccination ID');
@@ -36,6 +41,7 @@ export class VaccinationDashboard {
     });
   }
 
+  // Method to update vaccination
   updateVaccination(id: string) {
     if (!id) {
       alert('Enter Vaccination ID to update');
@@ -52,6 +58,7 @@ export class VaccinationDashboard {
     });
   }
 
+  // Method to delete vaccination
   deleteVaccination(id: string) {
     if (!id) {
       alert('Enter Vaccination ID to delete');

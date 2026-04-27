@@ -1,6 +1,10 @@
 package com.sprint.pet_shop.dto.responseDto;
 
 
+/**
+ * Data Transfer Object for Supplier details.
+ * Useful for internal admin dashboards to view which vendors supply our shop.
+ */
 public class SupplierResponseDTO {
 	private Long supplierId;
     private String name;

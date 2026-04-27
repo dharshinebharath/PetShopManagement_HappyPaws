@@ -8,6 +8,11 @@ import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 
 import jakarta.validation.Valid;
 
+/**
+ * Service interface for managing Addresses.
+ * Defines the contract for all address-related business logic, such as 
+ * retrieving addresses by city, creating new ones, or updating existing ones.
+ */
 public interface AddressesInterface {
 
     ApiResponse<List<AddressesResponseDTO>> saveaddresses(@Valid List<AddressesRequestDTO> addresses);

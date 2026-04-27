@@ -10,7 +10,9 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
   templateUrl: './route-back.html',
   styleUrl: './route-back.css',
 })
+// Route back component
 export class RouteBackComponent {
+  // Injecting required services
   router = inject(Router);
   route = inject(ActivatedRoute);
   currentUrl = this.router.url;
@@ -24,14 +26,17 @@ export class RouteBackComponent {
     });
   }
 
+  // Method to check if route back should be shown
   get show(): boolean {
     return this.isDashboardRoute || this.currentUrl.includes('list') || this.currentUrl.includes('/form') || this.currentUrl.includes('/add') || this.currentUrl.includes('/edit') || this.currentUrl.includes('/assignment');
   }
 
+  // Method to get button label
   get buttonLabel(): string {
     return this.isDashboardRoute ? 'Back To Module' : 'Back To Dashboard';
   }
 
+  // Method to check if dashboard route
   private get isDashboardRoute(): boolean {
     // These routes act as entry points for each module, so they should return to the module card page.
     const dashboards = [
@@ -56,6 +61,7 @@ export class RouteBackComponent {
     return dashboards.includes(this.currentUrl);
   }
 
+  // Method to go back to dashboard
   goBackToDashboard() {
     const u = this.currentUrl;
     if (u.startsWith('/pets/')) return this.router.navigate(['/pets-dashboard']);
@@ -78,6 +84,7 @@ export class RouteBackComponent {
     return this.router.navigate(['/']);
   }
 
+  // Method to go back
   goBack() {
     if (!this.isDashboardRoute) {
       return this.goBackToDashboard();

@@ -23,6 +23,11 @@ import com.sprint.pet_shop.repository.EmployeesRepository;
 import com.sprint.pet_shop.repository.PetsRepository;
 import com.sprint.pet_shop.service.interfaces.EmployeesInterface;
 
+/**
+ * Implementation of the EmployeesInterface.
+ * Manages our staff records. Contains logic to safely remove an employee and automatically 
+ * reassign or unlink the pets they were responsible for.
+ */
 @Service
 public class EmployeesService implements EmployeesInterface {
 
@@ -70,7 +75,7 @@ public class EmployeesService implements EmployeesInterface {
 
             if (dto.getEmail() != null &&
                     employeesRepository.existsByEmail(dto.getEmail())) {
-                throw new DuplicateResourceException("Employee email already exists");
+                throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
             }
 
             emp.setFirstName(dto.getFirstName());
@@ -171,7 +176,7 @@ public class EmployeesService implements EmployeesInterface {
         	    employeesRepository.existsByEmail(dto.getEmail()) &&
         	    !existing.getEmail().equals(dto.getEmail())) {
 
-        	    throw new DuplicateResourceException("Employee email already exists");
+        	    throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
         	}
 
         if (dto.getFirstName() != null) {

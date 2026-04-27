@@ -23,6 +23,11 @@ import com.sprint.pet_shop.service.PetCategoriesService;
 
 import jakarta.validation.Valid;
 
+/**
+ * REST Controller for pet categories.
+ * Provides basic CRUD operations for organizing pets into different species or types 
+ * (like Dogs, Cats, Birds, etc.).
+ */
 @RestController
 @RequestMapping("api/v1/categories")
 public class PetCategoriesController {

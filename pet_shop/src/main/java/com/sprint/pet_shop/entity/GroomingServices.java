@@ -11,35 +11,46 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+ 
+
+//   Represents the grooming services available at the Pet Shop.
+//   This entity stores details like the service name, description, 
+//   price, and whether the service is currently available to customers.
  
 @Entity
 @Table(name="grooming_services")
 public class GroomingServices {
 
+	// Grooming Service details
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="service_id")
 	private Long serviceId;
 
-    @NotBlank(message = "Service name cannot be empty")
-	@Column(length=100)
+	@NotNull(message = "Service name cannot be null")
+	@Size(min = 2, max = 100, message = "Service name must be between 2 and 100 characters")
 	private String name;
 	
-	@Column(columnDefinition="TEXT")
+    @NotBlank(message = "Description cannot be empty")
+	@Size(min = 2, max = 255, message = "Description must be between 2 and 255 characters")
 	private String description;
 	
-    @NotNull(message = "Price cannot be null")
-	@Column(precision =10, scale=2)
+	@Positive
+	@Digits(integer = 8, fraction = 2, message = "Price must have max 8 digits and 2 decimal places")
 	private BigDecimal price;
 	
-    @NotNull(message = "Availability cannot be null")
-	private boolean available=true;
+    
+	private boolean available = true;
 
     @ManyToMany(mappedBy = "groomingServices", cascade = CascadeType.ALL)
 	private List<Pets> pets;
 
+	// Getters and setters
 	public Long getServiceId() {
 		return serviceId;
 	}

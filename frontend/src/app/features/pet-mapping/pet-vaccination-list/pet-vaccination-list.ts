@@ -11,16 +11,20 @@ import { PetVaccinationMappingService } from '../../../core/services/pet-vaccina
   imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-vaccination-list.html'
 })
+// Component for displaying list of vaccinations for a pet
 export class PetVaccinationList {
-
+  // Injecting required services
   route = inject(ActivatedRoute);
   service = inject(PetVaccinationMappingService);
   cdr = inject(ChangeDetectorRef);
 
+  // Properties for pet ID and vaccinations list
   petId: number | null = null;
   vaccinations: any[] = [];
 
+  // Initialize the component
   ngOnInit() {
+    // Subscribe to route query parameters
     this.route.queryParams.subscribe(params => {
 
       this.petId = Number(params['petId']);
@@ -30,6 +34,7 @@ export class PetVaccinationList {
       }
     });
   }
+  // Method to load vaccinations for a pet
   load() {
     this.service.getVaccinationByPet(this.petId!).subscribe({
       next: (res: any) => {
@@ -48,6 +53,7 @@ export class PetVaccinationList {
       }
     });
   }
+  // Method to remove a vaccination for a pet
   remove(vaccinationId: number) {
     this.service.removeVaccination(this.petId!, vaccinationId).subscribe({
       next: () => {
@@ -57,15 +63,18 @@ export class PetVaccinationList {
       error: () => alert('Delete failed ❌')
     });
   }
+  // Pagination properties
   currentPage = 1;
   pageSize = 10;
 
+  // Method to get paginated list of items
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Method to handle page change
   onPageChange(page: number) {
     this.currentPage = page;
   }

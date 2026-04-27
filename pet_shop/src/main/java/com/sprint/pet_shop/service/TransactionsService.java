@@ -14,6 +14,7 @@ import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.entity.Pets;
 import com.sprint.pet_shop.entity.TransactionStatus;
 import com.sprint.pet_shop.entity.TransactionsEntity;
+import com.sprint.pet_shop.exception.DuplicateResourceException;
 import com.sprint.pet_shop.exception.InvalidDataException;
 import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.CustomersRepository;
@@ -21,6 +22,11 @@ import com.sprint.pet_shop.repository.PetsRepository;
 import com.sprint.pet_shop.repository.TransactionsRepository;
 import com.sprint.pet_shop.service.interfaces.TransactionsInterface;
 
+/**
+ * Implementation of the TransactionsInterface.
+ * Ties everything together when a purchase happens. It links the customer to the pet 
+ * and logs the transaction amount and date.
+ */
 @Service
 public class TransactionsService implements TransactionsInterface {
 
@@ -32,6 +38,7 @@ public class TransactionsService implements TransactionsInterface {
 
     @Autowired
     private PetsRepository petsRepository;
+
     private TransactionsResponseDTO toDto(TransactionsEntity entity) {
 
         TransactionsResponseDTO dto = new TransactionsResponseDTO();
@@ -45,6 +52,8 @@ public class TransactionsService implements TransactionsInterface {
 
         return dto;
     }
+
+
     @Override
     public ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto) {
 
@@ -57,6 +66,16 @@ public class TransactionsService implements TransactionsInterface {
 
         Pets pet = petsRepository.findById(dto.getPetId())
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+
+        boolean duplicate = transactionsRepository.findAllSorted().stream()
+                .anyMatch(t -> t.getCustomer().getCustomerId().equals(dto.getCustomerId()) &&
+                               t.getPet().getPet_id().equals(dto.getPetId()) &&
+                               t.getTransactionDate().equals(dto.getTransactionDate()) &&
+                               t.getAmount().compareTo(dto.getAmount()) == 0);
+
+        if (duplicate) {
+            throw new DuplicateResourceException("Duplicate transaction found");
+        }
 
         TransactionsEntity entity = new TransactionsEntity();
         entity.setTransactionDate(dto.getTransactionDate());
@@ -77,7 +96,7 @@ public class TransactionsService implements TransactionsInterface {
         List<TransactionsResponseDTO> data = transactionsRepository.findAllSorted()
                 .stream()
                 .map(this::toDto)
-                .collect(Collectors.toList());
+                .toList();
 
         return new ApiResponse<>("Fetched all transactions", true, data);
     }
@@ -118,6 +137,7 @@ public class TransactionsService implements TransactionsInterface {
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(LocalDate start, LocalDate end) {
 
+        
         List<TransactionsResponseDTO> data = transactionsRepository.findByTransactionDateBetween(start, end)
                 .stream()
                 .map(this::toDto)

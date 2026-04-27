@@ -10,6 +10,11 @@ import com.sprint.pet_shop.entity.TransactionStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+/**
+ * Data Transfer Object for processing a new transaction.
+ * Contains the crucial details: who is buying (customerId), what pet is involved, 
+ * the transaction date, and the total amount to be charged.
+ */
 public class TransactionsRequestDTO {
 
     @NotNull(message = "Transaction date cannot be null")

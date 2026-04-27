@@ -3,6 +3,11 @@ package com.sprint.pet_shop.dto.responseDto;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Data Transfer Object for Pet details.
+ * Sends comprehensive pet information to the client, including links to 
+ * their grooming services, food, vaccinations, and caretakers.
+ */
 public class PetsResponseDTO {
 
 	private Long pet_id;

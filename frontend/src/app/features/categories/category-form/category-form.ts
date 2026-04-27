@@ -21,7 +21,7 @@ export class CategoryForm {
   isLoading = true;
 
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)])
+    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)])
   });
 
   ngOnInit() {
@@ -40,8 +40,9 @@ export class CategoryForm {
             this.isLoading = false;
             this.cdr.detectChanges();
           },
-          error: () => {
-            alert('Category not found');
+          error: (err) => {
+            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Category not found');
+            alert(msg);
             this.router.navigate(['/categories']);
           }
         });
@@ -53,8 +54,13 @@ export class CategoryForm {
 
   submit() {
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      alert('Please fix errors:\n\nCategory name is required and must be at least 3 characters');
+      const name = this.form.get('name');
+      const errors: string[] = [];
+      if (name?.errors) {
+        if (name.errors['required']) errors.push('Category name cannot be empty');
+        if (name.errors['minlength'] || name.errors['maxlength']) errors.push('Category name must be between 2 and 50 characters');
+      }
+      alert('Please fix errors:\n\n' + errors.join('\n'));
       return;
     }
 
@@ -68,8 +74,9 @@ export class CategoryForm {
           alert('Updated successfully');
           this.router.navigate(['/category/list']);
         },
-        error: () => {
-          alert('Update failed');
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          alert(msg);
         }
       });
     } else {
@@ -78,8 +85,9 @@ export class CategoryForm {
           alert('Created successfully');
           this.router.navigate(['/category/list']);
         },
-        error: () => {
-          alert('Create failed');
+        error: (err) => {
+          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          alert(msg);
         }
       });
     }

@@ -3,27 +3,40 @@ package com.sprint.pet_shop.dto.requestDto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
+/**
+ * Data Transfer Object for registering or updating a pet.
+ * It's quite detailed as it includes not just basic pet info, but also 
+ * IDs to link the pet to categories, grooming services, vaccinations, food, employees, and suppliers.
+ */
 public class PetsRequestDTO {
 
-	 @NotBlank(message = "Pet name cannot be empty")
+	 @NotNull(message = "Pet name cannot be null")
+	 @Size(min = 2, max = 50, message = "Pet name must be between 2 and 50 characters")
 	    private String name;
 
-	    @NotBlank(message = "Breed cannot be empty")
+	    @NotNull(message = "Breed cannot be null")
+		@Size(min = 2, max = 50, message = "Breed must be between 2 and 50 characters")
 	    private String breed;
 
-	    @NotNull(message = "Age cannot be null")
+		@Positive
 	    private Integer age;
 
-	    @NotNull(message = "Price cannot be null")
+		@Positive
+		@Digits(integer = 8, fraction = 2, message = "Price must have max 8 digits and 2 decimal places")
 	    private BigDecimal price;
 
 	    @NotBlank(message = "Description cannot be empty")
+		@Size(min = 2, max = 255, message = "Description must be between 2 and 255 characters")
 	    private String description;
 
 	    @NotBlank(message = "Image URL cannot be empty")
+		@Size(min = 2, max = 255, message = "Image URL must be between 2 and 255 characters")
 	    private String image_url;
 
 	    @NotNull(message = "Category ID cannot be null")
