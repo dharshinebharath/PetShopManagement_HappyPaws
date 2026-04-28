@@ -56,7 +56,16 @@ export class SupplierForm {
             this.cdr.detectChanges();
           },
           error: (err) => {
-            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Supplier not found');
+            let msg = 'Supplier not found';
+            if (err.error) {
+              if (err.error.message) {
+                msg = err.error.message;
+              } else if (err.error.errors) {
+                msg = err.error.errors.join('\n');
+              } else if (typeof err.error === 'string') {
+                msg = err.error;
+              }
+            }
             alert(msg);
             this.router.navigate(['/supplier-dashboard']);
           }
@@ -73,9 +82,19 @@ export class SupplierForm {
       next: (res: any) => {
         this.addresses = res?.data || [];
       },
-      error: () => {
+      error: (err) => {
         this.addresses = [];
-        alert('Unable to load addresses for selection');
+        let msg = 'Unable to load addresses for selection';
+        if (err.error) {
+          if (err.error.message) {
+            msg = err.error.message;
+          } else if (err.error.errors) {
+            msg = err.error.errors.join('\n');
+          } else if (typeof err.error === 'string') {
+            msg = err.error;
+          }
+        }
+        alert(msg);
       }
     });
   }
@@ -126,7 +145,16 @@ export class SupplierForm {
           this.router.navigate(['/supplier/list']);
         },
         error: (err) => {
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          let msg = 'Update failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });
@@ -139,7 +167,16 @@ export class SupplierForm {
           this.router.navigate(['/supplier/list']);
         },
         error: (err) => {
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          let msg = 'Create failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });

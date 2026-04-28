@@ -32,7 +32,12 @@ export class NavbarComponent {
 
   // Method to check if navbar should be shown
   get showNavbar(): boolean {
-    return this.currentUrl !== '/' && !this.currentUrl.startsWith('/login');
+    return this.currentUrl !== '/';
+  }
+
+  // Method to check if current page is Home or Login
+  get isSpecialPage(): boolean {
+    return this.currentUrl === '/' || this.currentUrl.startsWith('/login');
   }
 
   // Method to sync display name

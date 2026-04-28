@@ -24,17 +24,6 @@ export class PetsService {
     };
   }
 
-  private getFilterAuthHeaders() {
-    const username = 'Priyadharshini';
-    const password = 'Priya123';
-    const auth = btoa(`${username}:${password}`);
-
-    return {
-      headers: {
-        Authorization: `Basic ${auth}`
-      }
-    };
-  }
   // Get all pets.
 getAll() {
   return this.http.get(this.baseUrl, this.getAuthHeaders());
@@ -60,18 +49,18 @@ delete(id: number) {
 }
 // Get pets by category.
 getByCategory(id: number) {
-  return this.http.get(`${this.baseUrl}/category/${id}`, this.getFilterAuthHeaders());
+  return this.http.get(`${this.baseUrl}/category/${id}`, this.getAuthHeaders());
 }
 // Get pets by breed.
 getByBreed(breed: string) {
-  return this.http.get(`${this.baseUrl}/breed/${encodeURIComponent(breed)}`, this.getFilterAuthHeaders());
+  return this.http.get(`${this.baseUrl}/breed/${encodeURIComponent(breed)}`, this.getAuthHeaders());
 }
 
 // Get pets by price range.
 getByPrice(min: number, max: number) {
   return this.http.get(
     `${this.baseUrl}/price?min=${min}&max=${max}`,
-    this.getFilterAuthHeaders()
+    this.getAuthHeaders()
   );
 }
 }

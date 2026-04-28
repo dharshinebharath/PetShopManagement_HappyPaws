@@ -47,11 +47,16 @@ export class EmployeeDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Employee ID not found ❌');
-        } else {
-          alert('Something went wrong ⚠️Â ');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -69,11 +74,16 @@ export class EmployeeDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Cannot update ❌ Employee not found');
-        } else {
-          alert('Error checking employee');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -90,8 +100,16 @@ export class EmployeeDashboard {
         this.router.navigate(['/employee/list']);
       },
       error: (err) => {
-        console.error(err);
-        alert('Delete failed ❌');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }

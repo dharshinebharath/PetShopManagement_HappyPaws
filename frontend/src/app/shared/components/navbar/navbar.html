@@ -2,25 +2,43 @@
 <header
   *ngIf="showNavbar"
   class="sticky top-0 z-50 mx-3 mt-3 flex items-center justify-between rounded-2xl border border-stone-200 bg-white/90 px-5 py-3 shadow-sm backdrop-blur md:mx-6">
-  <div class="flex min-w-0 items-center gap-3">
-    <span class="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-stone-50 text-sage-700 shadow-sm" aria-hidden="true">
-      <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" focusable="false">
-        <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-3.87 0-7 2.24-7 5v1h14v-1c0-2.76-3.13-5-7-5Z" />
-      </svg>
-    </span>
+  <ng-container *ngIf="!isSpecialPage; else homeOnly">
+    <div class="flex min-w-0 items-center gap-3">
+      <span class="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-stone-50 text-sage-700 shadow-sm" aria-hidden="true">
+        <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" focusable="false">
+          <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-3.87 0-7 2.24-7 5v1h14v-1c0-2.76-3.13-5-7-5Z" />
+        </svg>
+      </span>
 
-    <div class="min-w-0">
-      <p class="truncate text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Happy Paws Admin</p>
-      <span class="truncate text-base font-bold tracking-wide text-sage-900">{{ displayName }}</span>
+      <div class="min-w-0">
+        <p class="truncate text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Happy Paws Admin</p>
+        <span class="truncate text-base font-bold tracking-wide text-sage-900">{{ displayName }}</span>
+      </div>
     </div>
-  </div>
 
-  <button
-    type="button"
-    (click)="logout()"
-    class="rounded-lg border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-semibold text-sage-900 shadow-sm transition duration-300 hover:bg-sage-700 hover:text-stone-50">
-    Log Out
-  </button>
+    <button
+      type="button"
+      (click)="logout()"
+      class="rounded-lg border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-semibold text-sage-900 shadow-sm transition duration-300 hover:bg-sage-700 hover:text-stone-50">
+      Log Out
+    </button>
+  </ng-container>
+
+  <ng-template #homeOnly>
+    <div class="flex items-center gap-3">
+      <span class="flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-stone-50 text-sage-700 shadow-sm" aria-hidden="true">
+        <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" focusable="false">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </svg>
+      </span>
+<p class="truncate text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Happy Paws</p>    </div>
+
+    <a
+      href="/"
+      class="rounded-lg border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-semibold text-sage-900 shadow-sm transition duration-300 hover:bg-sage-700 hover:text-stone-50">
+      Home
+    </a>
+  </ng-template>
 </header>
 
 

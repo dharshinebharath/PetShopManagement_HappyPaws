@@ -34,8 +34,17 @@ export class VaccinationDashboard {
           queryParams: { id }
         });
       },
-      error: () => {
-        alert('Vaccination ID not found');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -53,7 +62,18 @@ export class VaccinationDashboard {
           queryParams: { id }
         });
       },
-      error: () => alert('ID not found')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 
@@ -69,7 +89,18 @@ export class VaccinationDashboard {
         alert('Deleted successfully');
         this.router.navigate(['/vaccination/list']);
       },
-      error: () => alert('Delete failed')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 }

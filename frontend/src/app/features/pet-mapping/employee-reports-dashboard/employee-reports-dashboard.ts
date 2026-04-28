@@ -60,7 +60,18 @@ export class EmployeeReportsDashboard {
           queryParams: { type: 'role', value: this.role }
         });
       },
-      error: () => alert('Error ❌')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 
@@ -83,7 +94,18 @@ export class EmployeeReportsDashboard {
           queryParams: { type: 'date', value: this.date }
         });
       },
-      error: () => alert('Error ❌')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 }

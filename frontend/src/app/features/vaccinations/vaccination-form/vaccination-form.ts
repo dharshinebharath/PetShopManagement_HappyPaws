@@ -53,7 +53,16 @@ export class VaccinationForm {
             this.cdr.detectChanges();
           },
           error: (err) => {
-            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Vaccination not found ❌');
+            let msg = 'Vaccination not found';
+            if (err.error) {
+              if (err.error.message) {
+                msg = err.error.message;
+              } else if (err.error.errors) {
+                msg = err.error.errors.join('\n');
+              } else if (typeof err.error === 'string') {
+                msg = err.error;
+              }
+            }
             alert(msg);
             this.router.navigate(['/vaccination']);
           }
@@ -121,7 +130,16 @@ export class VaccinationForm {
           this.router.navigate(['/vaccination/list']);
         },
         error: (err) => {
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed ❌');
+          let msg = 'Update failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });
@@ -143,8 +161,16 @@ export class VaccinationForm {
           this.router.navigate(['/vaccination/list']);
         },
         error: (err) => {
-          console.log("Full error:", err);
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed ❌');
+          let msg = 'Create failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });

@@ -57,8 +57,17 @@ public class TransactionsService implements TransactionsInterface {
     @Override
     public ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto) {
 
+        if (dto.getTransactionDate() == null) {
+            throw new InvalidDataException("Transaction date is required");
+        }
+        if (dto.getAmount() == null || dto.getAmount().doubleValue() <= 0) {
+            throw new InvalidDataException("Amount must be greater than zero");
+        }
         if (dto.getCustomerId() == null || dto.getPetId() == null) {
             throw new InvalidDataException("Customer ID and Pet ID cannot be null");
+        }
+        if (dto.getTransactionStatus() == null) {
+            throw new InvalidDataException("Transaction status is required");
         }
 
         Customers customer = customersRepository.findById(dto.getCustomerId())
@@ -113,6 +122,16 @@ public class TransactionsService implements TransactionsInterface {
     // Update transaction.
     @Override
     public ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto) {
+
+        if (dto.getTransactionDate() == null) {
+            throw new InvalidDataException("Transaction date is required");
+        }
+        if (dto.getAmount() == null || dto.getAmount().doubleValue() <= 0) {
+            throw new InvalidDataException("Amount must be greater than zero");
+        }
+        if (dto.getTransactionStatus() == null) {
+            throw new InvalidDataException("Transaction status is required");
+        }
 
         TransactionsEntity existing = transactionsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));

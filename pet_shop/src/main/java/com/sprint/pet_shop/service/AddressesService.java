@@ -42,6 +42,9 @@ public class AddressesService implements AddressesInterface {
             if (dto.getZipCode() == null || dto.getZipCode().trim().isEmpty()) {
                 throw new InvalidDataException("Zip code cannot be empty");
             }
+            if (!dto.getZipCode().matches("[0-9]{5}")) {
+                throw new InvalidDataException("Zip code must be 5 digits");
+            }
 
             boolean duplicate = addressesRepository.findAllSorted().stream()
                     .anyMatch(a -> a.getStreet().equalsIgnoreCase(dto.getStreet()) &&
@@ -139,6 +142,9 @@ public class AddressesService implements AddressesInterface {
         }
         if (updatedaddress.getZipCode() == null || updatedaddress.getZipCode().trim().isEmpty()) {
             throw new InvalidDataException("Zip code cannot be empty");
+        }
+        if (!updatedaddress.getZipCode().matches("[0-9]{5}")) {
+            throw new InvalidDataException("Zip code must be 5 digits");
         }
 
         boolean duplicate = addressesRepository.findAllSorted().stream()

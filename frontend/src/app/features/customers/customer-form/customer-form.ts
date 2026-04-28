@@ -71,7 +71,16 @@ export class CustomerForm {
             this.isLoading = false;
           },
           error: (err) => {
-            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Error fetching customer');
+            let msg = 'Error fetching customer';
+            if (err.error) {
+              if (err.error.message) {
+                msg = err.error.message;
+              } else if (err.error.errors) {
+                msg = err.error.errors.join('\n');
+              } else if (typeof err.error === 'string') {
+                msg = err.error;
+              }
+            }
             alert(msg);
             this.router.navigate(['/customer/list']);
           }
@@ -85,9 +94,19 @@ export class CustomerForm {
       next: (res: any) => {
         this.addresses = res?.data || [];
       },
-      error: () => {
+      error: (err) => {
         this.addresses = [];
-        alert('Unable to load addresses for selection');
+        let msg = 'Unable to load addresses for selection';
+        if (err.error) {
+          if (err.error.message) {
+            msg = err.error.message;
+          } else if (err.error.errors) {
+            msg = err.error.errors.join('\n');
+          } else if (typeof err.error === 'string') {
+            msg = err.error;
+          }
+        }
+        alert(msg);
       }
     });
   }
@@ -153,8 +172,16 @@ export class CustomerForm {
           this.router.navigate(['/customer/list']);
         },
         error: (err) => {
-          console.log(err);
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          let msg = 'Update failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });
@@ -167,8 +194,16 @@ export class CustomerForm {
           this.router.navigate(['/customer/list']);
         },
         error: (err) => {
-          console.log(err);
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          let msg = 'Create failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });

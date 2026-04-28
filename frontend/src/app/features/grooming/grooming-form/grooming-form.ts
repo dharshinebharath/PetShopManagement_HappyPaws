@@ -113,9 +113,25 @@ export class GroomingForm {
         },
         error: (err) => {
           console.log("Full error:", err);
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed ❌');
+
+          let msg = 'Create failed ❌';
+
+          if (err.error) {
+
+            if (err.error.message) {
+              msg = err.error.message;  // ✅ duplicate case
+            }
+            else if (err.error.errors) {
+              msg = err.error.errors.join('\n');  // ✅ validation
+            }
+            else if (typeof err.error === 'string') {
+              msg = err.error;  // ✅ plain string
+            }
+          }
+
           alert(msg);
-        }      });
+        }    
+      });
     }
   }
 }

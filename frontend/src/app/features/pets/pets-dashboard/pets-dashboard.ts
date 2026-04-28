@@ -33,8 +33,17 @@ export class PetsDashboard {
           queryParams: { id }
         });
       },
-      error: () => {
-        alert('Pet not found ❌');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -52,8 +61,17 @@ export class PetsDashboard {
           queryParams: { id }
         });
       },
-      error: () => {
-        alert('Cannot update ❌ ID not found');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -70,8 +88,17 @@ export class PetsDashboard {
         alert('Pet deleted successfully ✅');
         this.router.navigate(['/pets/list']);
       },
-      error: () => {
-        alert('Delete failed ❌');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }

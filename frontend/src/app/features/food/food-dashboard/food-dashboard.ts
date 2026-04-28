@@ -33,11 +33,16 @@ export class FoodDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Food ID not found ❌');
-        } else {
-          alert('Something went wrong ⚠️Â ');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -55,11 +60,16 @@ export class FoodDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Cannot update ❌ ID not found');
-        } else {
-          alert('Error checking ID');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -76,8 +86,16 @@ export class FoodDashboard {
         this.router.navigate(['/food/list']);
       },
       error: (err) => {
-        console.error(err);
-        alert('Delete failed ❌');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }

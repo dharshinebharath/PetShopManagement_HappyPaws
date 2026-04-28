@@ -33,11 +33,16 @@ export class TransactionDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Transaction not found');
-        } else {
-          alert('Something went wrong');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -55,7 +60,18 @@ export class TransactionDashboard {
           queryParams: { customerId }
         });
       },
-      error: () => alert('Failed to fetch transactions')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 
@@ -73,11 +89,16 @@ export class TransactionDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('No transactions found for status');
-        } else {
-          alert('Something went wrong');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -101,11 +122,16 @@ export class TransactionDashboard {
         }
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('No transactions found for the specified date range');
-        } else {
-          alert('Something went wrong');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }

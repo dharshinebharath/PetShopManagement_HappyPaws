@@ -52,10 +52,27 @@ public class CustomersService implements CustomersInterface {
 
         for (CustomerRequestDTO dto : dtos) {
 
+            if (dto.getFirstName() == null || dto.getFirstName().isBlank()) {
+                throw new InvalidDataException("First name cannot be empty or null");
+            }
+            if (dto.getLastName() == null || dto.getLastName().isBlank()) {
+                throw new InvalidDataException("Last name cannot be empty or null");
+            }
+            if (dto.getEmail() == null || dto.getEmail().isBlank()) {
+                throw new InvalidDataException("Email cannot be empty or null");
+            }
+            if (!dto.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                throw new InvalidDataException("Invalid email format");
+            }
+            if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().matches("[0-9]{10}")) {
+                throw new InvalidDataException("Phone number must be 10 digits");
+            }
+            if (dto.getAddressId() == null) {
+                throw new InvalidDataException("Address ID is required");
+            }
+
             if (customersRepository.existsByEmail(dto.getEmail())) {
-
                 throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
-
             }
 
             Customers entity = new Customers();
@@ -137,14 +154,29 @@ public class CustomersService implements CustomersInterface {
 
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
 
-        if (customersRepository.existsByEmail(dto.getEmail())) {
-
-            throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
-
+        if (dto.getFirstName() == null || dto.getFirstName().isBlank()) {
+            throw new InvalidDataException("First name cannot be empty or null");
+        }
+        if (dto.getLastName() == null || dto.getLastName().isBlank()) {
+            throw new InvalidDataException("Last name cannot be empty or null");
+        }
+        if (dto.getEmail() == null || dto.getEmail().isBlank()) {
+            throw new InvalidDataException("Email cannot be empty or null");
+        }
+        if (!dto.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            throw new InvalidDataException("Invalid email format");
+        }
+        if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().matches("[0-9]{10}")) {
+            throw new InvalidDataException("Phone number must be 10 digits");
+        }
+        if (dto.getAddressId() == null) {
+            throw new InvalidDataException("Address ID is required");
         }
 
-        // ❌ Email should not be changed
         if (dto.getEmail() != null && !existing.getEmail().equalsIgnoreCase(dto.getEmail())) {
+            if (customersRepository.existsByEmail(dto.getEmail())) {
+                throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
+            }
             throw new InvalidDataException("Email cannot be updated");
         }
 

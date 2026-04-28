@@ -51,7 +51,16 @@ export class FoodForm {
             this.cdr.detectChanges();
           },
           error: (err) => {
-            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Food item not found');
+            let msg = 'Food item not found';
+            if (err.error) {
+              if (err.error.message) {
+                msg = err.error.message;
+              } else if (err.error.errors) {
+                msg = err.error.errors.join('\n');
+              } else if (typeof err.error === 'string') {
+                msg = err.error;
+              }
+            }
             alert(msg);
             this.router.navigate(['/food-dashboard']);
           }
@@ -109,7 +118,16 @@ export class FoodForm {
           this.router.navigate(['/food/list']);
         },
         error: (err) => {
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          let msg = 'Update failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });
@@ -122,7 +140,16 @@ export class FoodForm {
           this.router.navigate(['/food/list']);
         },
         error: (err) => {
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          let msg = 'Create failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });

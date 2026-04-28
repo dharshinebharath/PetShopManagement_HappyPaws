@@ -76,7 +76,16 @@ export class EmployeeForm {
               this.cdr.detectChanges();
             },
             error: (err) => {
-              const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Employee not found');
+              let msg = 'Employee not found';
+              if (err.error) {
+                if (err.error.message) {
+                  msg = err.error.message;
+                } else if (err.error.errors) {
+                  msg = err.error.errors.join('\n');
+                } else if (typeof err.error === 'string') {
+                  msg = err.error;
+                }
+              }
               alert(msg);
               this.router.navigate(['/employee/list']);
             }
@@ -93,9 +102,19 @@ export class EmployeeForm {
       next: (res: any) => {
         this.addresses = res?.data || [];
       },
-      error: () => {
+      error: (err) => {
         this.addresses = [];
-        alert('Unable to load addresses for selection');
+        let msg = 'Unable to load addresses for selection';
+        if (err.error) {
+          if (err.error.message) {
+            msg = err.error.message;
+          } else if (err.error.errors) {
+            msg = err.error.errors.join('\n');
+          } else if (typeof err.error === 'string') {
+            msg = err.error;
+          }
+        }
+        alert(msg);
       }
     });
   }
@@ -155,8 +174,16 @@ export class EmployeeForm {
           this.router.navigate(['/employee/list']);
         },
         error: (err) => {
-          console.log('FULL ERROR:', err);
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          let msg = 'Update failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });
@@ -170,8 +197,16 @@ export class EmployeeForm {
             this.router.navigate(['/employee/list']);
           },
           error: (err) => {
-            console.log(err);
-            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+            let msg = 'Create failed ❌';
+            if (err.error) {
+              if (err.error.message) {
+                msg = err.error.message;
+              } else if (err.error.errors) {
+                msg = err.error.errors.join('\n');
+              } else if (typeof err.error === 'string') {
+                msg = err.error;
+              }
+            }
             alert(msg);
           }
         });

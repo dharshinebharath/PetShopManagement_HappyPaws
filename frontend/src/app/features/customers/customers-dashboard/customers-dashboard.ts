@@ -49,7 +49,18 @@ export class CustomersDashboard implements OnInit {
           queryParams: { id }
         });
       },
-      error: () => alert('Customer not found')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 
@@ -67,11 +78,16 @@ export class CustomersDashboard implements OnInit {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Cannot update, ID not found');
-        } else {
-          alert('Error checking ID');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -87,7 +103,18 @@ export class CustomersDashboard implements OnInit {
       next: () => {
         alert('Deleted successfully');
       },
-      error: () => alert('Delete failed')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 
@@ -105,11 +132,16 @@ export class CustomersDashboard implements OnInit {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Address ID not found');
-        } else {
-          alert('Something went wrong');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -128,11 +160,16 @@ export class CustomersDashboard implements OnInit {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Cannot update. ID not found');
-        } else {
-          alert('Error checking ID');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -148,7 +185,18 @@ export class CustomersDashboard implements OnInit {
       next: () => {
         alert('Address deleted successfully');
       },
-      error: () => alert('Delete failed')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 }

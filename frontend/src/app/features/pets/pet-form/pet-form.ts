@@ -60,7 +60,16 @@ export class PetForm {
             this.cdr.detectChanges();
           },
           error: (err) => {
-            const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Pet not found');
+            let msg = 'Pet not found';
+            if (err.error) {
+              if (err.error.message) {
+                msg = err.error.message;
+              } else if (err.error.errors) {
+                msg = err.error.errors.join('\n');
+              } else if (typeof err.error === 'string') {
+                msg = err.error;
+              }
+            }
             alert(msg);
             this.router.navigate(['/pets']);
           }
@@ -77,9 +86,19 @@ export class PetForm {
       next: (res: any) => {
         this.categories = res?.data || [];
       },
-      error: () => {
+      error: (err) => {
         this.categories = [];
-        alert('Unable to load categories for selection');
+        let msg = 'Unable to load categories for selection';
+        if (err.error) {
+          if (err.error.message) {
+            msg = err.error.message;
+          } else if (err.error.errors) {
+            msg = err.error.errors.join('\n');
+          } else if (typeof err.error === 'string') {
+            msg = err.error;
+          }
+        }
+        alert(msg);
       }
     });
   }
@@ -150,8 +169,16 @@ export class PetForm {
           });
         },
         error: (err) => {
-          console.log(err);
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Update failed');
+          let msg = 'Update failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });
@@ -164,8 +191,16 @@ export class PetForm {
           this.router.navigate(['/pets/list']);
         },
         error: (err) => {
-          console.log(err);
-          const msg = err.error?.errors?.join('\n') || (typeof err.error === 'string' ? err.error : 'Create failed');
+          let msg = 'Create failed ❌';
+          if (err.error) {
+            if (err.error.message) {
+              msg = err.error.message;
+            } else if (err.error.errors) {
+              msg = err.error.errors.join('\n');
+            } else if (typeof err.error === 'string') {
+              msg = err.error;
+            }
+          }
           alert(msg);
         }
       });

@@ -45,10 +45,17 @@ export class PetGroomingDashboard {
     },
 
     error: (err) => {
-      console.log(err);
+        let msg = 'Something went wrong';
 
-      alert('Invalid Pet ID ❌');
-    }
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
   });
 }
 // Assign grooming service
@@ -69,7 +76,18 @@ export class PetGroomingDashboard {
           queryParams: { petId: this.postPetId }
         });
       },
-      error: () => alert('Assign Failed ❌')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
   // Remove grooming service
@@ -90,7 +108,18 @@ export class PetGroomingDashboard {
           queryParams: { petId: this.deletePetId }
         });
       },
-      error: () => alert('Delete Failed ❌')
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
+      }
     });
   }
 }

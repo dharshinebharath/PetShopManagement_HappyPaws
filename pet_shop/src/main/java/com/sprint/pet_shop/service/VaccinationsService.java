@@ -48,8 +48,16 @@ public class VaccinationsService implements VaccinationsInterface {
 
         for (VaccinationsRequestDTO dto : dtos) {
 
+            if (dto.getName() == null || dto.getName().isBlank()) {
+                throw new InvalidDataException("Vaccination name cannot be empty or null");
+            }
+
+            if (dto.getDescription() == null || dto.getDescription().isBlank()) {
+                throw new InvalidDataException("Description cannot be empty or null");
+            }
+
             if (dto.getPrice().doubleValue() < 0) {
-                throw new InvalidDataException("Invalid price for Vaccination Service: " + dto.getName());
+                throw new InvalidDataException("Price must be positive for Vaccination Service: " + dto.getName());
             }
 
             if (vaccinationsRepository.existsByName(dto.getName())) {
@@ -138,8 +146,22 @@ public class VaccinationsService implements VaccinationsInterface {
         Vaccinations existing = vaccinationsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vaccination Service not found with id: " + id));
 
+        if (dto.getName() == null || dto.getName().isBlank()) {
+            throw new InvalidDataException("Vaccination name cannot be empty or null");
+        }
+
+        if (dto.getDescription() == null || dto.getDescription().isBlank()) {
+            throw new InvalidDataException("Description cannot be empty or null");
+        }
+
         if (dto.getPrice().doubleValue() < 0) {
             throw new InvalidDataException("Price must be positive");
+        }
+
+        if (!existing.getName().equalsIgnoreCase(dto.getName())) {
+            if (vaccinationsRepository.existsByName(dto.getName())) {
+                throw new DuplicateResourceException("Vaccination Service already exists: " + dto.getName());
+            }
         }
 
         existing.setName(dto.getName());

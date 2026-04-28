@@ -52,6 +52,27 @@ public class SupplierService implements SupplierInterface {
 
         List<Supplier> entities = suppliers.stream().map(dto -> {
 
+            if (dto.getName() == null || dto.getName().isBlank()) {
+                throw new InvalidDataException("Supplier name cannot be empty or null");
+            }
+            if (dto.getContactPerson() == null || dto.getContactPerson().isBlank()) {
+                throw new InvalidDataException("Contact person cannot be empty or null");
+            }
+            if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().matches("[0-9]{10}")) {
+                throw new InvalidDataException("Phone number must be 10 digits");
+            }
+            if (dto.getEmail() != null) {
+                if (dto.getEmail().isBlank()) {
+                    throw new InvalidDataException("Email cannot be blank");
+                }
+                if (!dto.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                    throw new InvalidDataException("Invalid email format");
+                }
+            }
+            if (dto.getAddressId() == null) {
+                throw new InvalidDataException("Address ID is required");
+            }
+
             if (dto.getEmail() != null &&
                     supplierRepository.existsByEmail(dto.getEmail())) {
                 throw new DuplicateResourceException("Supplier with email " + dto.getEmail() + " already exists");
@@ -148,9 +169,30 @@ public class SupplierService implements SupplierInterface {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Supplier not found with id: " + id));
 
+        if (dto.getName() == null || dto.getName().isBlank()) {
+            throw new InvalidDataException("Supplier name cannot be empty or null");
+        }
+        if (dto.getContactPerson() == null || dto.getContactPerson().isBlank()) {
+            throw new InvalidDataException("Contact person cannot be empty or null");
+        }
+        if (dto.getPhoneNumber() != null && !dto.getPhoneNumber().matches("[0-9]{10}")) {
+            throw new InvalidDataException("Phone number must be 10 digits");
+        }
+        if (dto.getEmail() != null) {
+            if (dto.getEmail().isBlank()) {
+                throw new InvalidDataException("Email cannot be blank");
+            }
+            if (!dto.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                throw new InvalidDataException("Invalid email format");
+            }
+        }
+        if (dto.getAddressId() == null) {
+            throw new InvalidDataException("Address ID is required");
+        }
+
         if (dto.getEmail() != null &&
         	    supplierRepository.existsByEmail(dto.getEmail()) &&
-        	    !existing.getEmail().equals(dto.getEmail())) {
+        	    !existing.getEmail().equalsIgnoreCase(dto.getEmail())) {
         	    throw new DuplicateResourceException("Supplier with email " + dto.getEmail() + " already exists");
         	}
 

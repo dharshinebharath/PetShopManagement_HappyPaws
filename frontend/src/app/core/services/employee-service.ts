@@ -24,7 +24,7 @@ export class EmployeeService {
       }
     };
   }
-  
+
   // Get all employees.
   getAll() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());

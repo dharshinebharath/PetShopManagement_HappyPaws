@@ -49,8 +49,16 @@ public class GroomingServicesService implements GroomingServicesInterface {
 
 	    for (GroomingServicesRequestDTO dto : dtos) {
 
+	        if (dto.getName() == null || dto.getName().isBlank()) {
+	            throw new InvalidDataException("Service name cannot be empty or null");
+	        }
+
+	        if (dto.getDescription() == null || dto.getDescription().isBlank()) {
+	            throw new InvalidDataException("Description cannot be empty or null");
+	        }
+
 	        if (dto.getPrice().doubleValue() < 0) {
-	            throw new InvalidDataException("Invalid price for grooming service: " + dto.getName());
+	            throw new InvalidDataException("Price must be positive for grooming service: " + dto.getName());
 	        }
 
 	        if (groomingServicesRepository.existsByName(dto.getName())) {
@@ -138,8 +146,22 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    GroomingServices existing = groomingServicesRepository.findById(id)
 	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Service not found with id: " + id));
 
+	    if (dto.getName() == null || dto.getName().isBlank()) {
+	        throw new InvalidDataException("Service name cannot be empty or null");
+	    }
+
+	    if (dto.getDescription() == null || dto.getDescription().isBlank()) {
+	        throw new InvalidDataException("Description cannot be empty or null");
+	    }
+
 	    if (dto.getPrice().doubleValue() < 0) {
 	        throw new InvalidDataException("Price must be positive");
+	    }
+
+	    if (!existing.getName().equalsIgnoreCase(dto.getName())) {
+	        if (groomingServicesRepository.existsByName(dto.getName())) {
+	            throw new DuplicateResourceException("Grooming Service already exists: " + dto.getName());
+	        }
 	    }
 
 	    existing.setName(dto.getName());

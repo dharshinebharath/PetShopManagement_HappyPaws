@@ -31,8 +31,17 @@ export class CategoryDashboard {
           queryParams: { id }
         });
       },
-      error: () => {
-        alert('Category not found ❌');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message;
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n');
+        }
+
+        alert(msg);
       }
     });
   }
@@ -49,8 +58,17 @@ export class CategoryDashboard {
           queryParams: { id }
         });
       },
-      error: () => {
-        alert('Cannot update ❌ ID not found');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message;
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n');
+        }
+
+        alert(msg);
       }
     });
   }
@@ -66,8 +84,17 @@ export class CategoryDashboard {
         alert('Category deleted successfully ✅');
         this.router.navigate(['/category/list']);
       },
-      error: () => {
-        alert('Delete failed ❌');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message;
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n');
+        }
+
+        alert(msg);
       }
     });
   }

@@ -144,19 +144,35 @@ public class PetsService implements PetsInterface {
 				throw new InvalidDataException("Pet name cannot be empty");
 			}
 
-			if (dto.getPrice() == null || dto.getPrice().doubleValue() < 0) {
-				throw new InvalidDataException("Price must be positive");
+			if (dto.getBreed() == null || dto.getBreed().isBlank()) {
+				throw new InvalidDataException("Breed cannot be empty");
 			}
 
 			if (dto.getAge() == null || dto.getAge() < 0) {
 				throw new InvalidDataException("Age cannot be negative");
+			}
+
+			if (dto.getPrice() == null || dto.getPrice().doubleValue() < 0) {
+				throw new InvalidDataException("Price must be positive");
+			}
+
+			if (dto.getDescription() == null || dto.getDescription().isBlank()) {
+				throw new InvalidDataException("Description cannot be empty");
+			}
+
+			if (dto.getImage_url() == null || dto.getImage_url().isBlank()) {
+				throw new InvalidDataException("Image URL cannot be empty");
+			}
+
+			if (dto.getCategory_id() == null) {
+				throw new InvalidDataException("Category ID is required");
 			}
 			
 			boolean exists = petsRepository.findAllSorted().stream()
 			        .anyMatch(p -> p.getName().equalsIgnoreCase(dto.getName()) && 
 			                       p.getBreed().equalsIgnoreCase(dto.getBreed()));
 			if (exists) {
-			    throw new DuplicateResourceException("Pet already exists with name: " + dto.getName());
+			    throw new DuplicateResourceException("Pet already exists with name: " + dto.getName() + " and breed: " + dto.getBreed());
 			}
 
 			PetCategories category = categoryRepository.findById(dto.getCategory_id())
@@ -229,8 +245,41 @@ public class PetsService implements PetsInterface {
 		Pets existing = petsRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Pet with id " + id + " not found"));
 
-		if (dto.getPrice().doubleValue() < 0) {
+		if (dto.getName() == null || dto.getName().isBlank()) {
+			throw new InvalidDataException("Pet name cannot be empty");
+		}
+
+		if (dto.getBreed() == null || dto.getBreed().isBlank()) {
+			throw new InvalidDataException("Breed cannot be empty");
+		}
+
+		if (dto.getAge() == null || dto.getAge() < 0) {
+			throw new InvalidDataException("Age cannot be negative");
+		}
+
+		if (dto.getPrice() == null || dto.getPrice().doubleValue() < 0) {
 			throw new InvalidDataException("Price must be positive");
+		}
+
+		if (dto.getDescription() == null || dto.getDescription().isBlank()) {
+			throw new InvalidDataException("Description cannot be empty");
+		}
+
+		if (dto.getImage_url() == null || dto.getImage_url().isBlank()) {
+			throw new InvalidDataException("Image URL cannot be empty");
+		}
+
+		if (dto.getCategory_id() == null) {
+			throw new InvalidDataException("Category ID is required");
+		}
+
+		if (!existing.getName().equalsIgnoreCase(dto.getName()) || !existing.getBreed().equalsIgnoreCase(dto.getBreed())) {
+			boolean exists = petsRepository.findAllSorted().stream()
+			        .anyMatch(p -> p.getName().equalsIgnoreCase(dto.getName()) && 
+			                       p.getBreed().equalsIgnoreCase(dto.getBreed()));
+			if (exists) {
+			    throw new DuplicateResourceException("Pet already exists with name: " + dto.getName() + " and breed: " + dto.getBreed());
+			}
 		}
 
 		existing.setName(dto.getName());
