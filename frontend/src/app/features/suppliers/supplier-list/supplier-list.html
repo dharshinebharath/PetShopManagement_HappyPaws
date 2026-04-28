@@ -21,14 +21,16 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-stone-100">
-              <tr *ngFor="let s of paginated(supplierList)" class="hover:bg-stone-50 transition">
-                <td class="p-4 font-medium text-sage-900">{{ s.supplierId }}</td>
-                <td class="p-4 text-stone-700 font-medium">{{ s.name }}</td>
-                <td class="p-4 text-stone-700">{{ s.contactPerson }}</td>
-                <td class="p-4 text-stone-700">{{ s.phoneNumber }}</td>
-                <td class="p-4 text-stone-700">{{ s.email }}</td>
-                <td class="p-4 text-stone-700">{{ s.addressId }}</td>
-              </tr>
+              @for (s of paginated(supplierList); track s.supplierId) {
+                <tr class="hover:bg-stone-50 transition">
+                  <td class="p-4 font-medium text-sage-900">{{ s.supplierId }}</td>
+                  <td class="p-4 text-stone-700 font-medium">{{ s.name }}</td>
+                  <td class="p-4 text-stone-700">{{ s.contactPerson }}</td>
+                  <td class="p-4 text-stone-700">{{ s.phoneNumber }}</td>
+                  <td class="p-4 text-stone-700">{{ s.email }}</td>
+                  <td class="p-4 text-stone-700">{{ s.addressId }}</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>

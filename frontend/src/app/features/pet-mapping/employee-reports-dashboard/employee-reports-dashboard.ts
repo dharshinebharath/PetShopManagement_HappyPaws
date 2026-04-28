@@ -44,7 +44,7 @@ export class EmployeeReportsDashboard {
   // Get reports by role.
   getByRole() {
     if (!this.role) {
-      alert('Enter role ⚠️Â ');
+      alert('Enter role');
       return;
     }
 
@@ -52,7 +52,7 @@ export class EmployeeReportsDashboard {
       next: (res: any) => {
 
         if (!res?.data?.length) {
-          alert('No employees found ❌');
+          alert('No employees found');
           return;
         }
 
@@ -78,7 +78,7 @@ export class EmployeeReportsDashboard {
   // Get reports by date.
   getByDate() {
     if (!this.date) {
-      alert('Select date ⚠️Â ');
+      alert('Select date');
       return;
     }
 
@@ -86,7 +86,7 @@ export class EmployeeReportsDashboard {
       next: (res: any) => {
 
         if (!res?.data?.length) {
-          alert('No employees found ❌');
+          alert('No employees found');
           return;
         }
 

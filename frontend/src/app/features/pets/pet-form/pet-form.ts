@@ -169,7 +169,7 @@ export class PetForm {
           });
         },
         error: (err) => {
-          let msg = 'Update failed ❌';
+          let msg = 'Update failed';
           if (err.error) {
             if (err.error.message) {
               msg = err.error.message;
@@ -191,7 +191,7 @@ export class PetForm {
           this.router.navigate(['/pets/list']);
         },
         error: (err) => {
-          let msg = 'Create failed ❌';
+          let msg = 'Create failed';
           if (err.error) {
             if (err.error.message) {
               msg = err.error.message;

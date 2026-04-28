@@ -81,7 +81,7 @@ export class CategoryDashboard {
 
     this.categoryService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Category deleted successfully ✅');
+        alert('Category deleted successfully');
         this.router.navigate(['/category/list']);
       },
       error: (err) => {

@@ -32,47 +32,24 @@
             </thead>
 
             
-            <tbody *ngIf="pets.length > 0; else noData" class="divide-y divide-stone-100">
-
-              <tr *ngFor="let p of paginated(pets)" class="hover:bg-stone-50 transition">
-
-                <td class="p-4 font-medium text-sage-900">
-                  {{ p.pet_id }}
-                </td>
-
-                <td class="p-4 text-stone-700 font-medium">
-                  {{ p.name }}
-                </td>
-
-                <td class="p-4 text-stone-600">
-                  {{ p.breed }}
-                </td>
-
-                <td class="p-4">
-                  <span class="px-3 py-1 rounded-full bg-sage-100 text-sage-800 text-xs font-medium">
-                    ₹ {{ p.price }}
-                  </span>
-                </td>
-
-              </tr>
-
+            <tbody class="divide-y divide-stone-100">
+              @for (p of paginated(pets); track p.pet_id) {
+                <tr class="hover:bg-stone-50 transition">
+                  <td class="p-4 font-medium text-sage-900">{{ p.pet_id }}</td>
+                  <td class="p-4 text-stone-700 font-medium">{{ p.name }}</td>
+                  <td class="p-4 text-stone-600">{{ p.breed }}</td>
+                  <td class="p-4">
+                    <span class="px-3 py-1 rounded-full bg-sage-100 text-sage-800 text-xs font-medium">
+                      ₹ {{ p.price }}
+                    </span>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="4" class="p-4 text-center text-stone-500 text-lg">No pets found</td>
+                </tr>
+              }
             </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
-  
-  <ng-template #noData>
-    <div class="text-center mt-10">
-      <p class="text-stone-500 text-lg">No pets found</p>
-    </div>
-  </ng-template>
 
 </div>
 

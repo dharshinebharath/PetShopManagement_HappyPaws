@@ -18,26 +18,20 @@
                 </tr>
             </thead>
 
-            <tbody *ngIf="employees.length > 0; else noData">
-
-                <tr *ngFor="let e of paginated(employees)" class="border-b border-slate-700 hover:bg-slate-700">
-                    <td class="p-3 text-center">{{ e.employeeId }}</td>
-                    <td class="p-3 text-center">{{ e.firstName }}</td>
-                    <td class="p-3 text-center">{{ e.position }}</td>
-                    <td class="p-3 text-center">{{ e.hireDate }}</td>
+            <tbody class="divide-y divide-slate-700">
+              @for (e of paginated(employees); track e.employeeId) {
+                <tr class="hover:bg-slate-700 transition">
+                  <td class="p-3 text-center text-slate-300">{{ e.employeeId }}</td>
+                  <td class="p-3 text-center text-slate-300">{{ e.firstName }}</td>
+                  <td class="p-3 text-center text-slate-300">{{ e.position }}</td>
+                  <td class="p-3 text-center text-slate-300">{{ e.hireDate }}</td>
                 </tr>
-
+              } @empty {
+                <tr>
+                  <td colspan="4" class="p-4 text-center text-slate-300 text-lg">No data found</td>
+                </tr>
+              }
             </tbody>
-
-        </table>
-
-    </div>
-
-    <ng-template #noData>
-        <p class="text-center mt-6 text-slate-300 text-lg">
-            No data found ❌
-        </p>
-    </ng-template>
 
 </div>
 <app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>

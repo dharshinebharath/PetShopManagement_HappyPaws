@@ -26,7 +26,7 @@ export class PetGroomingDashboard {
   // View grooming services
   viewServices() {
   if (!this.getPetId) {
-    alert('Enter Pet ID ⚠️ ');
+    alert('Enter Pet ID');
     return;
   }
 
@@ -35,7 +35,7 @@ export class PetGroomingDashboard {
     next: (res: any) => {
 
       if (!res || !res.data || res.data.length === 0) {
-        alert('No services found for this Pet ID ❌');
+        alert('No services found for this Pet ID');
         return;
       }
 
@@ -61,7 +61,7 @@ export class PetGroomingDashboard {
 // Assign grooming service
   assign() {
     if (!this.postPetId || !this.postServiceId) {
-      alert('Enter both IDs ⚠️ ');
+      alert('Enter both IDs');
       return;
     }
 
@@ -70,7 +70,7 @@ export class PetGroomingDashboard {
       Number(this.postServiceId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully ✅');
+        alert('Assigned Successfully');
 
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.postPetId }
@@ -93,7 +93,7 @@ export class PetGroomingDashboard {
   // Remove grooming service
   remove() {
     if (!this.deletePetId || !this.deleteServiceId) {
-      alert('Enter both IDs ⚠️ ');
+      alert('Enter both IDs');
       return;
     }
 
@@ -102,7 +102,7 @@ export class PetGroomingDashboard {
       Number(this.deleteServiceId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully ✅');
+        alert('Deleted Successfully');
 
         this.router.navigate(['/pet-mapping/grooming/list'], {
           queryParams: { petId: this.deletePetId }

@@ -45,7 +45,7 @@ export class PetVaccinationList {
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('No vaccinations found ❌');
+        alert('No vaccinations assigned to this pet');
         this.vaccinations = [];
       }
     });
@@ -54,10 +54,10 @@ export class PetVaccinationList {
   remove(vaccinationId: number) {
     this.service.removeVaccination(this.petId!, vaccinationId).subscribe({
       next: () => {
-        alert('Removed successfully ✅');
+        alert('Removed successfully');
         this.load();
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed')
     });
   }
   // Pagination properties

@@ -183,7 +183,7 @@ export class CustomersDashboard implements OnInit {
 
     this.addressService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Address deleted successfully');
+        alert('Deleted successfully');
       },
       error: (err) => {
         let msg = 'Something went wrong';

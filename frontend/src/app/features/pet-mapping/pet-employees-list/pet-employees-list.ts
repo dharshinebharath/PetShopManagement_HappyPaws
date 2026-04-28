@@ -43,7 +43,7 @@ export class PetEmployeesList {
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('No employees found ❌');
+        alert('No employees assigned to this pet');
         this.employees = [];
       }
     });

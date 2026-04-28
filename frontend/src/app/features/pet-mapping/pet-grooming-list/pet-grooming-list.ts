@@ -48,7 +48,7 @@ export class PetGroomingList {
       },
       error: (err) => {
         console.log(err);
-        alert('No services found ❌');
+        alert('No services assigned to this pet');
         this.services = [];
       }
     });
@@ -58,10 +58,10 @@ export class PetGroomingList {
   remove(serviceId: number) {
     this.service.removeGrooming(this.petId!, serviceId).subscribe({
       next: () => {
-        alert('Removed successfully ✅');
+        alert('Removed successfully');
         this.load();
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed')
     });
   }
   // Pagination properties

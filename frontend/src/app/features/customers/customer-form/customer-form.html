@@ -20,56 +20,48 @@
             <label class="text-xs font-medium text-stone-600">First Name</label>
             <input formControlName="firstName" placeholder="First Name"
               class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('firstName')?.touched && form.get('firstName')?.hasError('required')">
-              First name cannot be empty
-            </p>
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('firstName')?.touched && (form.get('firstName')?.hasError('minlength') || form.get('firstName')?.hasError('maxlength'))">
-              First name must be between 2 and 30 characters
-            </p>
+            @if (form.get('firstName')?.touched && form.get('firstName')?.hasError('required')) {
+              <p class="text-xs text-red-500">First name cannot be empty</p>
+            }
+            @if (form.get('firstName')?.touched && (form.get('firstName')?.hasError('minlength') || form.get('firstName')?.hasError('maxlength'))) {
+              <p class="text-xs text-red-500">First name must be between 2 and 30 characters</p>
+            }
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Last Name</label>
             <input formControlName="lastName" placeholder="Last Name"
               class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('lastName')?.touched && form.get('lastName')?.hasError('required')">
-              Last name cannot be empty
-            </p>
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('lastName')?.touched && (form.get('lastName')?.hasError('minlength') || form.get('lastName')?.hasError('maxlength'))">
-              Last name must be between 2 and 30 characters
-            </p>
+            @if (form.get('lastName')?.touched && form.get('lastName')?.hasError('required')) {
+              <p class="text-xs text-red-500">Last name cannot be empty</p>
+            }
+            @if (form.get('lastName')?.touched && (form.get('lastName')?.hasError('minlength') || form.get('lastName')?.hasError('maxlength'))) {
+              <p class="text-xs text-red-500">Last name must be between 2 and 30 characters</p>
+            }
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Email</label>
             <input formControlName="email" placeholder="Email"
               class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">
-              Email cannot be empty
-            </p>
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')">
-              Invalid email address
-            </p>
+            @if (form.get('email')?.touched && form.get('email')?.hasError('required')) {
+              <p class="text-xs text-red-500">Email cannot be empty</p>
+            }
+            @if (form.get('email')?.touched && form.get('email')?.hasError('email')) {
+              <p class="text-xs text-red-500">Invalid email address</p>
+            }
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Phone Number</label>
             <input formControlName="phoneNumber" placeholder="Phone Number"
               class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('required')">
-              Phone number cannot be empty
-            </p>
-            <p class="text-xs text-red-500"
-              *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('pattern')">
-              Phone number must be 10 digits
-            </p>
+            @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('required')) {
+              <p class="text-xs text-red-500">Phone number cannot be empty</p>
+            }
+            @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('pattern')) {
+              <p class="text-xs text-red-500">Phone number must be 10 digits</p>
+            }
           </div>
         </div>
 
@@ -78,14 +70,15 @@
           <select formControlName="addressId"
             class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300">
             <option [ngValue]="null">Select Address</option>
-            <option *ngFor="let a of addresses" [ngValue]="a.addressId">
-              {{ a.addressId }} - {{ a.street }}, {{ a.city }}
-            </option>
+            @for (a of addresses; track a.addressId) {
+              <option [ngValue]="a.addressId">
+                {{ a.addressId }} - {{ a.street }}, {{ a.city }}
+              </option>
+            }
           </select>
-          <p class="text-xs text-red-500"
-            *ngIf="form.get('addressId')?.touched && form.get('addressId')?.invalid">
-            Address ID cannot be null
-          </p>
+          @if (form.get('addressId')?.touched && form.get('addressId')?.invalid) {
+            <p class="text-xs text-red-500">Address ID cannot be null</p>
+          }
         </div>
 
         <button type="button" (click)="submitCustomer()"

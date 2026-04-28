@@ -39,12 +39,12 @@
             <input type="text" formControlName="name" placeholder="e.g. Rabies Vaccine" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
               focus:outline-none focus:ring-1 focus:ring-sage-300" />
 
-            <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">
-              Vaccination name cannot be empty
-            </p>
-            <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && (form.get('name')?.hasError('minlength') || form.get('name')?.hasError('maxlength'))">
-              Vaccination name must be between 2 and 50 characters
-            </p>
+            @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
+              <p class="text-xs text-red-500">Vaccination name cannot be empty</p>
+            }
+            @if (form.get('name')?.touched && (form.get('name')?.hasError('minlength') || form.get('name')?.hasError('maxlength'))) {
+              <p class="text-xs text-red-500">Vaccination name must be between 2 and 50 characters</p>
+            }
           </div>
 
           
@@ -53,12 +53,12 @@
             <input type="number" formControlName="price" placeholder="e.g. 250" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
               focus:outline-none focus:ring-1 focus:ring-sage-300" />
 
-            <p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.hasError('required')">
-              Price cannot be null
-            </p>
-            <p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.hasError('min')">
-              Price must be greater than 0
-            </p>
+            @if (form.get('price')?.touched && form.get('price')?.hasError('required')) {
+              <p class="text-xs text-red-500">Price cannot be null</p>
+            }
+            @if (form.get('price')?.touched && form.get('price')?.hasError('min')) {
+              <p class="text-xs text-red-500">Price must be greater than 0</p>
+            }
           </div>
 
         </div>
@@ -69,12 +69,12 @@
           <textarea rows="3" formControlName="description" placeholder="Enter vaccination details..." class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
             focus:outline-none focus:ring-1 focus:ring-sage-300"></textarea>
 
-          <p class="text-xs text-red-500" *ngIf="form.get('description')?.touched && form.get('description')?.hasError('required')">
-            Description cannot be empty
-          </p>
-          <p class="text-xs text-red-500" *ngIf="form.get('description')?.touched && (form.get('description')?.hasError('minlength') || form.get('description')?.hasError('maxlength'))">
-            Description must be between 2 and 255 characters
-          </p>
+          @if (form.get('description')?.touched && form.get('description')?.hasError('required')) {
+            <p class="text-xs text-red-500">Description cannot be empty</p>
+          }
+          @if (form.get('description')?.touched && (form.get('description')?.hasError('minlength') || form.get('description')?.hasError('maxlength'))) {
+            <p class="text-xs text-red-500">Description must be between 2 and 255 characters</p>
+          }
         </div>
 
         

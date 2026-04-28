@@ -28,19 +28,35 @@ export class EmployeeReportsList {
       const value = params['value'];
 
       if (type === 'role') {
-  this.service.getByRole(value).subscribe((res: any) => {
-    this.employees = res?.data || [];
-    this.cdr.detectChanges();
-  });
-}
+        this.service.getByRole(value).subscribe({
+          next: (res: any) => {
+            this.employees = res?.data || [];
+            if (!this.employees.length) {
+              alert('No employees found');
+            }
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            alert('Query failed');
+          }
+        });
+      }
 
-// Get employees by date.
-if (type === 'date') {
-  this.service.getByHireDate(value).subscribe((res: any) => {
-    this.employees = res?.data || [];
-    this.cdr.detectChanges();
-  });
-}
+      // Get employees by date.
+      if (type === 'date') {
+        this.service.getByHireDate(value).subscribe({
+          next: (res: any) => {
+            this.employees = res?.data || [];
+            if (!this.employees.length) {
+              alert('No employees found');
+            }
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            alert('Query failed');
+          }
+        });
+      }
 
     });
   }
@@ -60,4 +76,3 @@ if (type === 'date') {
   }
 
 }
-

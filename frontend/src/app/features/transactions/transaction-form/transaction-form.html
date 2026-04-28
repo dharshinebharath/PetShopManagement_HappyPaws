@@ -2,7 +2,70 @@
 <div class="min-h-full w-full bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 flex justify-center items-start pt-8 pb-8 px-6 py-8">
   <div class="w-full max-w-3xl">
     <div class="text-center mb-8"><h1 class="text-4xl font-bold text-sage-900 tracking-tight">{{ transactionId ? 'Update Transaction' : 'Add Transaction' }}</h1><p class="mt-2 text-sm text-stone-600">Structured financial transaction management module</p></div>
-    <div class="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden"><div class="px-6 py-4 border-b border-stone-200 bg-stone-50"><h2 class="text-sm font-semibold text-sage-900">Transaction Details</h2><p class="text-xs text-stone-500">Enter validated information to maintain system consistency</p></div><form [formGroup]="form" class="p-6 space-y-6"><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="space-y-1"><label class="text-xs font-medium text-stone-600">Amount</label><input formControlName="amount" type="number" placeholder="Enter amount" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" /><p class="text-xs text-red-500" *ngIf="form.get('amount')?.touched && form.get('amount')?.hasError('required')">Amount cannot be null</p><p class="text-xs text-red-500" *ngIf="form.get('amount')?.touched && form.get('amount')?.hasError('min')">Amount must be greater than 0</p></div><div class="space-y-1"><label class="text-xs font-medium text-stone-600">Transaction Date</label><input formControlName="transactionDate" type="date" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" /><p class="text-xs text-red-500" *ngIf="form.get('transactionDate')?.touched && form.get('transactionDate')?.invalid">Transaction date cannot be null</p></div><div class="space-y-1"><label class="text-xs font-medium text-stone-600">Status</label><select formControlName="transactionStatus" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300"><option value="">Select status</option><option value="SUCCESS">SUCCESS</option><option value="FAILED">FAILED</option><option value="PENDING">PENDING</option></select><p class="text-xs text-red-500" *ngIf="form.get('transactionStatus')?.touched && form.get('transactionStatus')?.invalid">Transaction status cannot be null</p></div><div class="space-y-1"><label class="text-xs font-medium text-stone-600">Customer</label><select formControlName="customerId" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300"><option [ngValue]="null">Select customer</option><option *ngFor="let customer of customers" [value]="customer.customerId">{{ customer.customerId }} - {{ customer.firstName }} {{ customer.lastName }}</option></select><p class="text-xs text-red-500" *ngIf="form.get('customerId')?.touched && form.get('customerId')?.invalid">Customer ID cannot be null</p></div></div><div class="space-y-1"><label class="text-xs font-medium text-stone-600">Pet</label><select formControlName="petId" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300"><option [ngValue]="null">Select pet</option><option *ngFor="let pet of pets" [value]="pet.pet_id">{{ pet.pet_id }} - {{ pet.name }}</option></select><p class="text-xs text-red-500" *ngIf="form.get('petId')?.touched && form.get('petId')?.invalid">Pet ID cannot be null</p></div><button type="button" (click)="submit()" class="w-full py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium hover:bg-stone-800 transition shadow-sm">Save Transaction</button></form></div>
+    <div class="bg-white border border-stone-200 rounded-2xl shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-stone-200 bg-stone-50">
+        <h2 class="text-sm font-semibold text-sage-900">Transaction Details</h2>
+        <p class="text-xs text-stone-500">Enter validated information to maintain system consistency</p>
+      </div>
+      <form [formGroup]="form" class="p-6 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Amount</label>
+            <input formControlName="amount" type="number" placeholder="Enter amount" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+            @if (form.get('amount')?.touched && form.get('amount')?.hasError('required')) {
+              <p class="text-xs text-red-500">Amount cannot be null</p>
+            }
+            @if (form.get('amount')?.touched && form.get('amount')?.hasError('min')) {
+              <p class="text-xs text-red-500">Amount must be greater than 0</p>
+            }
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Transaction Date</label>
+            <input formControlName="transactionDate" type="date" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
+            @if (form.get('transactionDate')?.touched && form.get('transactionDate')?.invalid) {
+              <p class="text-xs text-red-500">Transaction date cannot be null</p>
+            }
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Status</label>
+            <select formControlName="transactionStatus" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300">
+              <option value="">Select status</option>
+              <option value="SUCCESS">SUCCESS</option>
+              <option value="FAILED">FAILED</option>
+              <option value="PENDING">PENDING</option>
+            </select>
+            @if (form.get('transactionStatus')?.touched && form.get('transactionStatus')?.invalid) {
+              <p class="text-xs text-red-500">Transaction status cannot be null</p>
+            }
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-stone-600">Customer</label>
+            <select formControlName="customerId" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300">
+              <option [ngValue]="null">Select customer</option>
+              @for (customer of customers; track customer.customerId) {
+                <option [value]="customer.customerId">{{ customer.customerId }} - {{ customer.firstName }} {{ customer.lastName }}</option>
+              }
+            </select>
+            @if (form.get('customerId')?.touched && form.get('customerId')?.invalid) {
+              <p class="text-xs text-red-500">Customer ID cannot be null</p>
+            }
+          </div>
+        </div>
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-stone-600">Pet</label>
+          <select formControlName="petId" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300">
+            <option [ngValue]="null">Select pet</option>
+            @for (pet of pets; track pet.pet_id) {
+              <option [value]="pet.pet_id">{{ pet.pet_id }} - {{ pet.name }}</option>
+            }
+          </select>
+          @if (form.get('petId')?.touched && form.get('petId')?.invalid) {
+            <p class="text-xs text-red-500">Pet ID cannot be null</p>
+          }
+        </div>
+        <button type="button" (click)="submit()" class="w-full py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium hover:bg-stone-800 transition shadow-sm">Save Transaction</button>
+      </form>
+    </div>
   </div>
 </div>
 

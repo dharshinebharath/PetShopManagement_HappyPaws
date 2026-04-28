@@ -119,13 +119,13 @@ export class GroomingForm {
           if (err.error) {
 
             if (err.error.message) {
-              msg = err.error.message;  // ✅ duplicate case
+              msg = err.error.message;  // duplicate case
             }
             else if (err.error.errors) {
-              msg = err.error.errors.join('\n');  // ✅ validation
+              msg = err.error.errors.join('\n');  // validation
             }
             else if (typeof err.error === 'string') {
-              msg = err.error;  // ✅ plain string
+              msg = err.error;  // plain string
             }
           }
 

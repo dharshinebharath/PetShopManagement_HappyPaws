@@ -18,23 +18,35 @@
             <label class="text-xs font-medium text-stone-600">Service Name</label>
             <input type="text" formControlName="name" placeholder="e.g. Premium Wash"
               class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">Service name cannot be empty</p>
-            <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && (form.get('name')?.hasError('minlength') || form.get('name')?.hasError('maxlength'))">Service name must be between 2 and 50 characters</p>
+            @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
+              <p class="text-xs text-red-500">Service name cannot be empty</p>
+            }
+            @if (form.get('name')?.touched && (form.get('name')?.hasError('minlength') || form.get('name')?.hasError('maxlength'))) {
+              <p class="text-xs text-red-500">Service name must be between 2 and 50 characters</p>
+            }
           </div>
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Price</label>
             <input type="number" formControlName="price" placeholder="e.g. 450"
               class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.hasError('required')">Price cannot be null</p>
-            <p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.hasError('min')">Price must be greater than 0</p>
+            @if (form.get('price')?.touched && form.get('price')?.hasError('required')) {
+              <p class="text-xs text-red-500">Price cannot be null</p>
+            }
+            @if (form.get('price')?.touched && form.get('price')?.hasError('min')) {
+              <p class="text-xs text-red-500">Price must be greater than 0</p>
+            }
           </div>
         </div>
         <div class="space-y-1">
           <label class="text-xs font-medium text-stone-600">Description</label>
           <textarea rows="3" formControlName="description" placeholder="Enter grooming details..."
             class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300"></textarea>
-          <p class="text-xs text-red-500" *ngIf="form.get('description')?.touched && form.get('description')?.hasError('required')">Description cannot be empty</p>
-          <p class="text-xs text-red-500" *ngIf="form.get('description')?.touched && (form.get('description')?.hasError('minlength') || form.get('description')?.hasError('maxlength'))">Description must be between 2 and 255 characters</p>
+          @if (form.get('description')?.touched && form.get('description')?.hasError('required')) {
+            <p class="text-xs text-red-500">Description cannot be empty</p>
+          }
+          @if (form.get('description')?.touched && (form.get('description')?.hasError('minlength') || form.get('description')?.hasError('maxlength'))) {
+            <p class="text-xs text-red-500">Description must be between 2 and 255 characters</p>
+          }
         </div>
         <div class="flex items-center justify-between bg-stone-50 border border-stone-200 rounded-lg px-4 py-3">
           <div>

@@ -17,52 +17,78 @@
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Pet Name</label>
             <input formControlName="name" placeholder="e.g. Bruno" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">Pet name cannot be empty</p>
-            <p class="text-xs text-red-500" *ngIf="form.get('name')?.touched && (form.get('name')?.hasError('minlength') || form.get('name')?.hasError('maxlength'))">Pet name must be between 2 and 50 characters</p>
+            @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
+              <p class="text-xs text-red-500">Pet name cannot be empty</p>
+            }
+            @if (form.get('name')?.touched && (form.get('name')?.hasError('minlength') || form.get('name')?.hasError('maxlength'))) {
+              <p class="text-xs text-red-500">Pet name must be between 2 and 50 characters</p>
+            }
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Breed</label>
             <input formControlName="breed" placeholder="e.g. Golden Retriever" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500" *ngIf="form.get('breed')?.touched && form.get('breed')?.hasError('required')">Breed cannot be empty</p>
-            <p class="text-xs text-red-500" *ngIf="form.get('breed')?.touched && (form.get('breed')?.hasError('minlength') || form.get('breed')?.hasError('maxlength'))">Breed must be between 2 and 50 characters</p>
+            @if (form.get('breed')?.touched && form.get('breed')?.hasError('required')) {
+              <p class="text-xs text-red-500">Breed cannot be empty</p>
+            }
+            @if (form.get('breed')?.touched && (form.get('breed')?.hasError('minlength') || form.get('breed')?.hasError('maxlength'))) {
+              <p class="text-xs text-red-500">Breed must be between 2 and 50 characters</p>
+            }
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Age</label>
             <input formControlName="age" type="number" placeholder="e.g. 2" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500" *ngIf="form.get('age')?.touched && form.get('age')?.hasError('required')">Age cannot be null</p>
-            <p class="text-xs text-red-500" *ngIf="form.get('age')?.touched && form.get('age')?.hasError('min')">Age must be greater than 0</p>
+            @if (form.get('age')?.touched && form.get('age')?.hasError('required')) {
+              <p class="text-xs text-red-500">Age cannot be null</p>
+            }
+            @if (form.get('age')?.touched && form.get('age')?.hasError('min')) {
+              <p class="text-xs text-red-500">Age must be greater than 0</p>
+            }
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-medium text-stone-600">Price</label>
             <input formControlName="price" type="number" placeholder="e.g. 4000" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-            <p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.hasError('required')">Price cannot be null</p>
-            <p class="text-xs text-red-500" *ngIf="form.get('price')?.touched && form.get('price')?.hasError('min')">Price must be greater than 0</p>
+            @if (form.get('price')?.touched && form.get('price')?.hasError('required')) {
+              <p class="text-xs text-red-500">Price cannot be null</p>
+            }
+            @if (form.get('price')?.touched && form.get('price')?.hasError('min')) {
+              <p class="text-xs text-red-500">Price must be greater than 0</p>
+            }
           </div>
         </div>
 
         <div class="space-y-1">
           <label class="text-xs font-medium text-stone-600">Description</label>
           <textarea rows="3" formControlName="description" placeholder="Enter pet details..." class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300"></textarea>
-          <p class="text-xs text-red-500" *ngIf="form.get('description')?.touched && form.get('description')?.hasError('required')">Description cannot be empty</p>
-          <p class="text-xs text-red-500" *ngIf="form.get('description')?.touched && (form.get('description')?.hasError('minlength') || form.get('description')?.hasError('maxlength'))">Description must be between 2 and 255 characters</p>
+          @if (form.get('description')?.touched && form.get('description')?.hasError('required')) {
+            <p class="text-xs text-red-500">Description cannot be empty</p>
+          }
+          @if (form.get('description')?.touched && (form.get('description')?.hasError('minlength') || form.get('description')?.hasError('maxlength'))) {
+            <p class="text-xs text-red-500">Description must be between 2 and 255 characters</p>
+          }
         </div>
 
         <div class="space-y-1">
           <label class="text-xs font-medium text-stone-600">Image URL</label>
           <input formControlName="image_url" placeholder="https://example.com/pet.jpg" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300" />
-          <p class="text-xs text-red-500" *ngIf="form.get('image_url')?.touched && form.get('image_url')?.hasError('required')">Image URL cannot be empty</p>
+          @if (form.get('image_url')?.touched && form.get('image_url')?.hasError('required')) {
+            <p class="text-xs text-red-500">Image URL cannot be empty</p>
+          }
         </div>
 
         <div class="space-y-1">
           <label class="text-xs font-medium text-stone-600">Category</label>
           <select formControlName="categoryId" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sage-300">
             <option [ngValue]="null">Select Category</option>
-            <option *ngFor="let c of categories" [ngValue]="c.category_id ?? c.categoryId">{{ c.category_id ?? c.categoryId }} - {{ c.name }}</option>
+            @for (c of categories; track (c.category_id ?? c.categoryId)) {
+              <option [ngValue]="c.category_id ?? c.categoryId">{{ c.category_id ?? c.categoryId }} - {{ c.name }}</option>
+            }
           </select>
-          <p class="text-xs text-red-500" *ngIf="form.get('categoryId')?.touched && form.get('categoryId')?.invalid">Category ID cannot be null</p>
+          @if (form.get('categoryId')?.touched && form.get('categoryId')?.invalid) {
+            <p class="text-xs text-red-500">Category ID cannot be null</p>
+          }
         </div>
 
         <button type="button" (click)="submit()" class="w-full py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium hover:bg-stone-800 transition shadow-sm">Save Pet</button>

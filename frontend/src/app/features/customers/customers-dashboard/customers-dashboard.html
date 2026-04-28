@@ -29,7 +29,8 @@
     </div>
 
     
-    <div *ngIf="activeTab === 'customer'" class="space-y-6">
+    @if (activeTab === 'customer') {
+      <div class="space-y-6">
 
       
       <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
@@ -108,10 +109,12 @@
         </div>
       </div>
 
-    </div>
+      </div>
+    }
 
     
-    <div *ngIf="activeTab === 'address'" class="space-y-6">
+    @if (activeTab === 'address') {
+      <div class="space-y-6">
 
       
       <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
@@ -176,7 +179,8 @@
         </div>
       </div>
 
-    </div>
+      </div>
+    }
 
   </div>
 </div>

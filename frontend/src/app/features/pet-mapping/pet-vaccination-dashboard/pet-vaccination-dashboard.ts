@@ -24,7 +24,7 @@ export class PetVaccinationDashboard {
   // Method to view vaccinations for a pet
   viewVaccinations() {
     if (!this.getPetId) {
-      alert('Enter Pet ID ⚠️Â');
+      alert('Enter Pet ID');
       return;
     }
 
@@ -32,7 +32,7 @@ export class PetVaccinationDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No vaccinations found ❌');
+          alert('No vaccinations found');
           return;
         }
 
@@ -58,7 +58,7 @@ export class PetVaccinationDashboard {
   // Method to assign a vaccination to a pet
   assign() {
     if (!this.postPetId || !this.postVaccinationId) {
-      alert('Enter both IDs ⚠️ ');
+      alert('Enter both IDs');
       return;
     }
 
@@ -67,7 +67,7 @@ export class PetVaccinationDashboard {
       Number(this.postVaccinationId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully ✅');
+        alert('Assigned Successfully');
 
         this.router.navigate(['/pet-mapping/vaccination/list'], {
           queryParams: { petId: this.postPetId }
@@ -91,7 +91,7 @@ export class PetVaccinationDashboard {
   // Method to remove a vaccination from a pet
   remove() {
     if (!this.deletePetId || !this.deleteVaccinationId) {
-      alert('Enter both IDs ⚠️ ');
+      alert('Enter both IDs');
       return;
     }
 
@@ -100,7 +100,7 @@ export class PetVaccinationDashboard {
       Number(this.deleteVaccinationId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully ✅');
+        alert('Deleted Successfully');
 
         this.router.navigate(['/pet-mapping/vaccination/list'], {
           queryParams: { petId: this.deletePetId }

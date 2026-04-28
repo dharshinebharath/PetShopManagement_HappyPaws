@@ -82,7 +82,7 @@ export class FoodDashboard {
 
     this.foodService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Food deleted successfully ✅');
+        alert('Food deleted successfully');
         this.router.navigate(['/food/list']);
       },
       error: (err) => {

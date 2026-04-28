@@ -36,7 +36,7 @@ export class EmployeePetList {
         this.cdr.detectChanges();
       },
       error: () => {
-        alert('No pets found ❌');
+        alert('No pets assigned to this employee');
         this.pets = [];
       }
     });
@@ -46,10 +46,10 @@ export class EmployeePetList {
   remove(petId: number) {
     this.service.removePet(this.employeeId!, petId).subscribe({
       next: () => {
-        alert('Removed successfully ✅');
+        alert('Removed successfully');
         this.load();
       },
-      error: () => alert('Delete failed ❌')
+      error: () => alert('Delete failed')
     });
   }
   currentPage = 1;

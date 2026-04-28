@@ -42,7 +42,9 @@
           <select [(ngModel)]="breed" class="flex-1 rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm
             text-stone-800 focus:outline-none focus:ring-1 focus:ring-sage-300">
             <option value="">Select Breed</option>
-            <option *ngFor="let b of breedOptions" [value]="b">{{ b }}</option>
+            @for (b of breedOptions; track b) {
+              <option [value]="b">{{ b }}</option>
+            }
           </select>
 
           <button (click)="byBreed()" class="w-32 py-2.5 rounded-lg bg-stone-700 text-stone-100 text-sm font-medium

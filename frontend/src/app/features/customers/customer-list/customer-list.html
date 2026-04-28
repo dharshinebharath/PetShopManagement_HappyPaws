@@ -20,17 +20,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngIf="customers.length === 0">
-          <td colspan="6" class="p-4 text-center text-stone-600">No customer data available</td>
-        </tr>
-        <tr *ngFor="let c of paginated(customers)" class="border-b border-stone-100 hover:bg-stone-50 transition duration-200">
-          <td class="p-4 font-medium text-sage-900">{{ c.customerId }}</td>
-          <td class="p-4 text-stone-700">{{ c.firstName }}</td>
-          <td class="p-4 text-stone-700">{{ c.lastName }}</td>
-          <td class="p-4 text-stone-700">{{ c.email }}</td>
-          <td class="p-4 text-stone-700">{{ c.phoneNumber }}</td>
-          <td class="p-4 text-stone-700">{{ c.address?.addressId }}</td>
-        </tr>
+        @if (customers.length === 0) {
+          <tr>
+            <td colspan="6" class="p-4 text-center text-stone-600">No customer data available</td>
+          </tr>
+        }
+        @for (c of paginated(customers); track c.customerId) {
+          <tr class="border-b border-stone-100 hover:bg-stone-50 transition duration-200">
+            <td class="p-4 font-medium text-sage-900">{{ c.customerId }}</td>
+            <td class="p-4 text-stone-700">{{ c.firstName }}</td>
+            <td class="p-4 text-stone-700">{{ c.lastName }}</td>
+            <td class="p-4 text-stone-700">{{ c.email }}</td>
+            <td class="p-4 text-stone-700">{{ c.phoneNumber }}</td>
+            <td class="p-4 text-stone-700">{{ c.address?.addressId }}</td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>

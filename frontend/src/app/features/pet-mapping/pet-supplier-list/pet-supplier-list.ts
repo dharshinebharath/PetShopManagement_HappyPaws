@@ -38,7 +38,7 @@ export class PetSupplierList {
       },
       error: (err) => {
         console.log(err);
-        alert('No suppliers found');
+        alert('No suppliers assigned to this pet');
         this.suppliers = [];
       }
     });

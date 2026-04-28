@@ -85,7 +85,7 @@ export class PetsDashboard {
 
     this.petService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Pet deleted successfully ✅');
+        alert('Pet deleted successfully');
         this.router.navigate(['/pets/list']);
       },
       error: (err) => {

@@ -13,10 +13,16 @@
               <tr><th class="p-4 text-left font-semibold">Category ID</th><th class="p-4 text-left font-semibold">Name</th></tr>
             </thead>
             <tbody class="divide-y divide-stone-100">
-              <tr *ngFor="let c of paginated(categoryList)" class="hover:bg-stone-50 transition">
-                <td class="p-4 font-medium text-sage-900">{{ c.category_id }}</td>
-                <td class="p-4 text-stone-700 font-medium">{{ c.name }}</td>
-              </tr>
+              @for (c of paginated(categoryList); track c.category_id) {
+                <tr class="hover:bg-stone-50 transition">
+                  <td class="p-4 font-medium text-sage-900">{{ c.category_id }}</td>
+                  <td class="p-4 text-stone-700 font-medium">{{ c.name }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="2" class="p-4 text-center text-stone-600">No categories found</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>

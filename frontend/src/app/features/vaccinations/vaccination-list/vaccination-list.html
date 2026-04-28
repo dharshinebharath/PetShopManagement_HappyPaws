@@ -35,32 +35,28 @@
             
             <tbody class="divide-y divide-stone-100">
 
-              <tr *ngFor="let v of paginated(vaccinationList)" class="hover:bg-stone-50 transition">
-
-                <td class="p-4 font-medium text-sage-900">
-                  {{ v.vaccinationId }}
-                </td>
-
-                <td class="p-4 text-stone-700 font-medium">
-                  {{ v.name }}
-                </td>
-
-                <td class="p-4 text-stone-700">
-                  <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">
-                    Rs. {{ v.price }}
-                  </span>
-                </td>
-
-                <td class="p-4">
-                  <span class="px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="v.available
-                      ? 'bg-sage-100 text-sage-700'
-                      : 'bg-red-100 text-red-600'">
-
-                    {{ v.available ? 'Available' : 'Not Available' }}
-                  </span>
-                </td>
-
-              </tr>
+              @for (v of paginated(vaccinationList); track v.vaccinationId) {
+                <tr class="hover:bg-stone-50 transition">
+                  <td class="p-4 font-medium text-sage-900">{{ v.vaccinationId }}</td>
+                  <td class="p-4 text-stone-700 font-medium">{{ v.name }}</td>
+                  <td class="p-4 text-stone-700">
+                    <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">
+                      Rs. {{ v.price }}
+                    </span>
+                  </td>
+                  <td class="p-4">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold" [ngClass]="v.available
+                        ? 'bg-sage-100 text-sage-700'
+                        : 'bg-red-100 text-red-600'">
+                      {{ v.available ? 'Available' : 'Not Available' }}
+                    </span>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="4" class="p-4 text-center text-stone-600">No vaccinations found</td>
+                </tr>
+              }
 
             </tbody>
           </table>

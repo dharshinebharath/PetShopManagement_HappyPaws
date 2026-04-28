@@ -20,13 +20,19 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-stone-100">
-              <tr *ngFor="let a of paginated(addressList)" class="hover:bg-stone-50 transition">
-                <td class="p-4 font-medium text-sage-900">{{ a.addressId }}</td>
-                <td class="p-4 text-stone-700 font-medium">{{ a.street }}</td>
-                <td class="p-4 text-stone-700">{{ a.city }}</td>
-                <td class="p-4 text-stone-700">{{ a.state }}</td>
-                <td class="p-4 text-stone-700">{{ a.zipCode }}</td>
-              </tr>
+              @for (a of paginated(addressList); track a.addressId) {
+                <tr class="hover:bg-stone-50 transition">
+                  <td class="p-4 font-medium text-sage-900">{{ a.addressId }}</td>
+                  <td class="p-4 text-stone-700 font-medium">{{ a.street }}</td>
+                  <td class="p-4 text-stone-700">{{ a.city }}</td>
+                  <td class="p-4 text-stone-700">{{ a.state }}</td>
+                  <td class="p-4 text-stone-700">{{ a.zipCode }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="5" class="p-4 text-center text-stone-600">No addresses found</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>

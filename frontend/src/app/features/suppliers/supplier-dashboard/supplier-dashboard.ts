@@ -86,7 +86,7 @@ export class SupplierDashboard {
 
     this.supplierService.delete(Number(id)).subscribe({
       next: () => {
-        alert('Supplier deleted successfully ✅');
+        alert('Supplier deleted successfully');
         this.router.navigate(['/supplier/list']);
       },
       error: (err) => {

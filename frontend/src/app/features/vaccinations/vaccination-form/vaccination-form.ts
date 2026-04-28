@@ -114,7 +114,7 @@ export class VaccinationForm {
         }
       }
 
-      alert('❌ Please fix errors:\n\n' + errors.join('\n'));
+      alert('Please fix errors:\n\n' + errors.join('\n'));
 
       return;
     }
@@ -126,11 +126,11 @@ export class VaccinationForm {
       // Update vaccination
       this.vaccinationService.update(this.serviceId, payload).subscribe({
         next: () => {
-          alert('Updated successfully ✅');
+          alert('Updated successfully');
           this.router.navigate(['/vaccination/list']);
         },
         error: (err) => {
-          let msg = 'Update failed ❌';
+          let msg = 'Update failed';
           if (err.error) {
             if (err.error.message) {
               msg = err.error.message;
@@ -157,11 +157,11 @@ export class VaccinationForm {
 
       this.vaccinationService.create(createPayload).subscribe({
         next: () => {
-          alert('Created successfully ✅');
+          alert('Created successfully');
           this.router.navigate(['/vaccination/list']);
         },
         error: (err) => {
-          let msg = 'Create failed ❌';
+          let msg = 'Create failed';
           if (err.error) {
             if (err.error.message) {
               msg = err.error.message;

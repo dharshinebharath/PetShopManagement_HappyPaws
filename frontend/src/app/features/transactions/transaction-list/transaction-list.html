@@ -21,18 +21,24 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-stone-100">
-              <tr *ngFor="let t of paginated(transactionList)" class="hover:bg-stone-50 transition">
-                <td class="p-4 font-medium text-sage-900">{{ t.transactionId }}</td>
-                <td class="p-4 text-stone-700">{{ t.transactionDate }}</td>
-                <td class="p-4 text-stone-700">
-                  <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">
-                    Rs. {{ t.amount }}
-                  </span>
-                </td>
-                <td class="p-4 text-stone-700">{{ t.transactionStatus }}</td>
-                <td class="p-4 text-stone-700">{{ t.customerId }}</td>
-                <td class="p-4 text-stone-700">{{ t.petId }}</td>
-              </tr>
+              @for (t of paginated(transactionList); track t.transactionId) {
+                <tr class="hover:bg-stone-50 transition">
+                  <td class="p-4 font-medium text-sage-900">{{ t.transactionId }}</td>
+                  <td class="p-4 text-stone-700">{{ t.transactionDate }}</td>
+                  <td class="p-4 text-stone-700">
+                    <span class="px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-medium">
+                      Rs. {{ t.amount }}
+                    </span>
+                  </td>
+                  <td class="p-4 text-stone-700">{{ t.transactionStatus }}</td>
+                  <td class="p-4 text-stone-700">{{ t.customerId }}</td>
+                  <td class="p-4 text-stone-700">{{ t.petId }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="p-4 text-center text-stone-600">No transactions found</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>

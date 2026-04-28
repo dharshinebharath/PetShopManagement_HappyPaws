@@ -31,7 +31,9 @@
           focus:outline-none focus:ring-1 focus:ring-sage-400 focus:border-sage-400">
 
                     <option value="">Select Role</option>
-                    <option *ngFor="let r of roleOptions" [value]="r">{{ r }}</option>
+                    @for (r of roleOptions; track r) {
+                      <option [value]="r">{{ r }}</option>
+                    }
                 </select>
 
                 <button (click)="getByRole()" class="px-5 py-2 rounded-md bg-stone-700 text-stone-100 text-sm font-medium

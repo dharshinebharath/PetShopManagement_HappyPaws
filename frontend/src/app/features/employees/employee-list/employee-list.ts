@@ -48,7 +48,7 @@ export class EmployeeList {
             next: (res) => {
 
               if (!res || !res.data) {
-                alert('No employee found with this ID ❌');
+                alert('No employee found with this ID');
                 this.router.navigate(['/employee']);
                 return;
               }
@@ -61,11 +61,11 @@ export class EmployeeList {
               console.log(err);
 
               if (err.status === 404) {
-                alert('Employee ID not found ❌');
+                alert('Employee ID not found');
               } else if (err.status === 401) {
-                alert('Unauthorized ❌ Please login again');
+                alert('Unauthorized Please login again');
               } else {
-                alert('Something went wrong ⚠️Â');
+                alert('Something went wrong');
               }
 
               this.router.navigate(['/employee']);

@@ -87,7 +87,7 @@ export class CategoryForm {
           this.router.navigate(['/category/list']);
         },
         error: (err) => {
-          let msg = 'Update failed ❌';
+          let msg = 'Update failed';
           if (err.error) {
             if (err.error.message) {
               msg = err.error.message;
@@ -109,7 +109,7 @@ export class CategoryForm {
           this.router.navigate(['/category/list']);
         },
         error: (err) => {
-          let msg = 'Create failed ❌';
+          let msg = 'Create failed';
           if (err.error) {
             if (err.error.message) {
               msg = err.error.message;

@@ -96,7 +96,7 @@ export class EmployeeDashboard {
 
     this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders()).subscribe({
       next: () => {
-        alert('Employee deleted successfully ✅');
+        alert('Employee deleted successfully');
         this.router.navigate(['/employee/list']);
       },
       error: (err) => {

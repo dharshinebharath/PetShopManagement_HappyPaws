@@ -25,7 +25,7 @@ export class EmployeePetDashboard {
   // View pets of an employee.
   viewPets() {
     if (!this.getEmployeeId) {
-      alert('Enter Employee ID ⚠️Â ');
+      alert('Enter Employee ID');
       return;
     }
 
@@ -33,7 +33,7 @@ export class EmployeePetDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No pets found ❌');
+          alert('No pets found');
           return;
         }
 
@@ -57,7 +57,7 @@ export class EmployeePetDashboard {
   }
   assign() {
     if (!this.postEmployeeId || !this.postPetId) {
-      alert('Enter both IDs ⚠️Â');
+      alert('Enter both IDs');
       return;
     }
 
@@ -66,7 +66,7 @@ export class EmployeePetDashboard {
       Number(this.postPetId)
     ).subscribe({
       next: () => {
-        alert('Assigned Successfully ✅');
+        alert('Assigned Successfully');
 
         this.router.navigate(['/employee-pet-mapping/list'], {
           queryParams: { employeeId: this.postEmployeeId }
@@ -90,7 +90,7 @@ export class EmployeePetDashboard {
   // View employees of a pet.
   viewEmployees() {
     if (!this.getPetId) {
-      alert('Enter Pet ID ⚠️Â ');
+      alert('Enter Pet ID');
       return;
     }
 
@@ -98,7 +98,7 @@ export class EmployeePetDashboard {
       next: (res: any) => {
 
         if (!res || !res.data || res.data.length === 0) {
-          alert('No employees found ❌');
+          alert('No employees found');
           return;
         }
 
@@ -124,7 +124,7 @@ export class EmployeePetDashboard {
   // Remove a pet-employee mapping.
   remove() {
     if (!this.deleteEmployeeId || !this.deletePetId) {
-      alert('Enter both IDs ⚠️Â ');
+      alert('Enter both IDs');
       return;
     }
 
@@ -133,7 +133,7 @@ export class EmployeePetDashboard {
       Number(this.deletePetId)
     ).subscribe({
       next: () => {
-        alert('Deleted Successfully ✅');
+        alert('Deleted Successfully');
 
         this.router.navigate(['/employee-pet-mapping/list'], {
           queryParams: { employeeId: this.deleteEmployeeId }
