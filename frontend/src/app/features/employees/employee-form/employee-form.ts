@@ -19,6 +19,7 @@ export class EmployeeForm {
   cdr = inject(ChangeDetectorRef);
   addressService = inject(AddressService);
 
+  // Base URL for API requests.
   private baseUrl = 'http://localhost:8081/api/v1/employees';
 
   employeeId: number | null = null;
@@ -47,9 +48,11 @@ export class EmployeeForm {
     };
   }
 
+  // Initialize the component.
   ngOnInit() {
+    // Load addresses.
     this.loadAddresses();
-
+    // Get employee ID from query params.
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.employeeId = Number(params['id']);
@@ -84,6 +87,7 @@ export class EmployeeForm {
     });
   }
 
+  // Load addresses.
   private loadAddresses() {
     this.addressService.getAll().subscribe({
       next: (res: any) => {
@@ -96,6 +100,7 @@ export class EmployeeForm {
     });
   }
 
+  // Submit the form.
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -142,6 +147,7 @@ export class EmployeeForm {
       hireDate: this.form.value.hireDate ? this.form.value.hireDate.split('T')[0] : ''
     };
 
+    // Update an existing employee.
     if (this.employeeId !== null && this.employeeId !== undefined) {
       this.http.put(`${this.baseUrl}/${this.employeeId}`, payload, this.getAuthHeaders()).subscribe({
         next: () => {
@@ -154,7 +160,9 @@ export class EmployeeForm {
           alert(msg);
         }
       });
-    } else {
+    }
+    // Create a new employee.
+    else {
       this.http.post(this.baseUrl, [payload], this.getAuthHeaders())
         .subscribe({
           next: () => {

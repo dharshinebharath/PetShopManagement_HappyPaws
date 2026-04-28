@@ -11,13 +11,12 @@ import { PetGroomingMappingService } from '../../../core/services/pet-grooming-m
   imports: [FormsModule],
   templateUrl: './pet-grooming-dashboard.html'
 })
-// Logic for pet-grooming dashboard
+
 export class PetGroomingDashboard {
-  // Injecting required services
+
   service = inject(PetGroomingMappingService);
   router = inject(Router);
 
-  // Form fields for pet and service IDs
   getPetId: string = '';
   postPetId: string = '';
   postServiceId: string = '';

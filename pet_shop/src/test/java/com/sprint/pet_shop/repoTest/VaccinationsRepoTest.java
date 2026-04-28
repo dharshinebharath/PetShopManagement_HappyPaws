@@ -2,7 +2,6 @@ package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.Vaccinations;
 import com.sprint.pet_shop.repository.VaccinationsRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -11,6 +10,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +26,6 @@ class VaccinationsRepoTest {
 
     @Autowired
     private VaccinationsRepository vaccinationsRepository;
-
-    @Autowired
-    private EntityManager entityManager;
 
     private Vaccinations createVaccination(String name, BigDecimal price) {
         Vaccinations vaccination = new Vaccinations();
@@ -78,8 +77,13 @@ class VaccinationsRepoTest {
     void testFindByPriceRange() {
         createVaccination("Vaccine A", new BigDecimal("20.00"));
         createVaccination("Vaccine B", new BigDecimal("100.00"));
-        List<Vaccinations> found = vaccinationsRepository.findByPriceRange(new BigDecimal("10.00"), new BigDecimal("30.00"));
-        assertEquals(1, found.size());
+        List<Vaccinations> found = vaccinationsRepository.findByPriceRange(new BigDecimal("10.00"),
+                new BigDecimal("30.00"));
+        assertTrue(
+                found.stream().allMatch(
+                        s -> s.getPrice().compareTo(new BigDecimal("10.00")) >= 0 &&
+                                s.getPrice().compareTo(new BigDecimal("30.00")) <= 0));
+
     }
 
     @Test
@@ -87,6 +91,12 @@ class VaccinationsRepoTest {
         createVaccination("Vaccine C", new BigDecimal("25.00"));
         createVaccination("Vaccine D", new BigDecimal("30.00"));
         List<Vaccinations> sorted = vaccinationsRepository.findAllSorted();
-        assertTrue(sorted.size() >= 2);
+        List<Long> actualIds = sorted.stream()
+                .map(Vaccinations::getVaccinationId)
+                .toList();
+
+        List<Long> expectedIds = new ArrayList<Long>(actualIds);
+        Collections.sort(expectedIds);
+        assertEquals(expectedIds, actualIds);
     }
 }

@@ -8,7 +8,6 @@ import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.EmployeesRepository;
 import com.sprint.pet_shop.repository.PetCategoriesRepository;
 import com.sprint.pet_shop.repository.PetsRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -42,8 +41,7 @@ class PetsRepoTest {
     @Autowired
     private AddressesRepository addressesRepository;
 
-    @Autowired
-    private EntityManager entityManager;
+  
 
     private PetCategories createCategory() {
         PetCategories category = new PetCategories();

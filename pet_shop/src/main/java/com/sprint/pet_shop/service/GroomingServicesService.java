@@ -50,11 +50,11 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	    for (GroomingServicesRequestDTO dto : dtos) {
 
 	        if (dto.getPrice().doubleValue() < 0) {
-	            throw new InvalidDataException("Invalid price for service: " + dto.getName());
+	            throw new InvalidDataException("Invalid price for grooming service: " + dto.getName());
 	        }
 
 	        if (groomingServicesRepository.existsByName(dto.getName())) {
-	            throw new DuplicateResourceException("Service already exists: " + dto.getName());
+	            throw new DuplicateResourceException("Grooming Service already exists: " + dto.getName());
 	        }
 
 	        GroomingServices entity = new GroomingServices();
@@ -103,10 +103,10 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	public ApiResponse<GroomingServicesResponseDTO> getGroomingServiceById(long id) {
 
 	    GroomingServices entity = groomingServicesRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
+	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Service not found with id: " + id));
 
 	    ApiResponse<GroomingServicesResponseDTO> response = new ApiResponse<>();
-	    response.setMessage("Service fetched successfully");
+	    response.setMessage("Grooming Service fetched successfully");
 	    response.setSuccess(true);
 	    response.setData(toDto(entity));
 
@@ -136,7 +136,7 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	public ApiResponse<GroomingServicesResponseDTO> updateGroomingService(long id, GroomingServicesRequestDTO dto) {
 
 	    GroomingServices existing = groomingServicesRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
+	            .orElseThrow(() -> new ResourceNotFoundException("Grooming Service not found with id: " + id));
 
 	    if (dto.getPrice().doubleValue() < 0) {
 	        throw new InvalidDataException("Price must be positive");

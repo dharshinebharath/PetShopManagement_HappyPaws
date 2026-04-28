@@ -6,7 +6,6 @@ import com.sprint.pet_shop.dto.requestDto.CustomerRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.CustomerResponseDTO;
 
-import jakarta.validation.Valid;
 
 /**
  * Defines the business rules for managing Customers.

@@ -35,8 +35,9 @@ export class EmployeeList {
     };
   }
 
+  // Initialize the component.
   ngOnInit() {
-
+    // Get employee ID from query params.
     this.route.queryParams.subscribe(params => {
 
       const id = params['id'];
@@ -77,6 +78,7 @@ export class EmployeeList {
     });
   }
 
+  // Load all employees.
   loadAll() {
     this.http.get<any>(this.baseUrl, this.getAuthHeaders())
       .subscribe({
@@ -92,15 +94,19 @@ export class EmployeeList {
         }
       });
   }
+  
+  // Pagination.
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate employees.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Handle page change.
   onPageChange(page: number) {
     this.currentPage = page;
   }

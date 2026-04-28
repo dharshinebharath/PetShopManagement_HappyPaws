@@ -15,6 +15,7 @@ export class CategoryService {
     const username = 'Mahakarpagam';
     const password = 'Maha123';
 
+    // encode username and password in base64
     const auth = btoa(`${username}:${password}`);
 
     return {
@@ -23,18 +24,23 @@ export class CategoryService {
       }
     };
   }
+  // Get all categories.
   getAll() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
+  // Get category by ID.
   getById(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+  // Create a new category.
   create(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
+  // Update a category.
   update(id: number, data: any) {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
+  // Delete a category.
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }

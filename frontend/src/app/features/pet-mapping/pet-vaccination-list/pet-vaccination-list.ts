@@ -11,20 +11,17 @@ import { PetVaccinationMappingService } from '../../../core/services/pet-vaccina
   imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-vaccination-list.html'
 })
-// Component for displaying list of vaccinations for a pet
 export class PetVaccinationList {
-  // Injecting required services
   route = inject(ActivatedRoute);
   service = inject(PetVaccinationMappingService);
   cdr = inject(ChangeDetectorRef);
 
-  // Properties for pet ID and vaccinations list
   petId: number | null = null;
   vaccinations: any[] = [];
 
   // Initialize the component
   ngOnInit() {
-    // Subscribe to route query parameters
+
     this.route.queryParams.subscribe(params => {
 
       this.petId = Number(params['petId']);

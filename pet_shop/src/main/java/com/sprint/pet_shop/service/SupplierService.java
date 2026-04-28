@@ -17,11 +17,9 @@ import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.SupplierRepository;
 import com.sprint.pet_shop.service.interfaces.SupplierInterface;
 
-/**
- * Implementation of the SupplierInterface.
- * Responsible for managing the vendor records and associating their physical addresses 
- * during the creation process.
- */
+// Implementation of the SupplierInterface.
+// Responsible for managing the vendor records and associating their physical addresses 
+// during the creation process.
 @Service
 public class SupplierService implements SupplierInterface {
 
@@ -43,6 +41,8 @@ public class SupplierService implements SupplierInterface {
 
         return dto;
     }
+
+    	// Implementation of adding supplier
     @Override
     public ApiResponse<List<SupplierResponseDTO>> saveAll(List<SupplierRequestDTO> suppliers) {
 
@@ -54,7 +54,7 @@ public class SupplierService implements SupplierInterface {
 
             if (dto.getEmail() != null &&
                     supplierRepository.existsByEmail(dto.getEmail())) {
-                throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
+                throw new DuplicateResourceException("Supplier with email " + dto.getEmail() + " already exists");
             }
 
             Supplier s = new Supplier();
@@ -66,7 +66,7 @@ public class SupplierService implements SupplierInterface {
             if (dto.getAddressId() != null) {
 
                 Addresses address = addressesRepository.findById(dto.getAddressId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Address with id " + dto.getAddressId() + " not found"));
 
                 s.setAddress(address);
             }
@@ -88,6 +88,8 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
+    
+    // Implementation of getting all suppliers
     @Override
     public ApiResponse<List<SupplierResponseDTO>> getAll() {
 
@@ -104,6 +106,8 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
+    
+    // Implementation of getting supplier by ID
     @Override
     public ApiResponse<SupplierResponseDTO> getSupplierById(long supplierId) {
 
@@ -118,6 +122,8 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
+    
+    // Implementation of deleting supplier
     @Override
     public ApiResponse<String> deleteSupplier(long supplierId) {
 
@@ -134,6 +140,7 @@ public class SupplierService implements SupplierInterface {
 
         return response;
     }
+    // Implementation of updating supplier
     @Override
     public ApiResponse<SupplierResponseDTO> updateSupplier(Long id, SupplierRequestDTO dto) {
 
@@ -144,7 +151,7 @@ public class SupplierService implements SupplierInterface {
         if (dto.getEmail() != null &&
         	    supplierRepository.existsByEmail(dto.getEmail()) &&
         	    !existing.getEmail().equals(dto.getEmail())) {
-        	    throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
+        	    throw new DuplicateResourceException("Supplier with email " + dto.getEmail() + " already exists");
         	}
 
         if (dto.getName() != null) {
@@ -163,7 +170,7 @@ public class SupplierService implements SupplierInterface {
         if (dto.getAddressId() != null) {
 
             Addresses address = addressesRepository.findById(dto.getAddressId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Address with id " + dto.getAddressId() + " not found"));
 
             existing.setAddress(address);
         }
@@ -179,6 +186,7 @@ public class SupplierService implements SupplierInterface {
         return response;
     }
     
+    // Implementation of getting supplier by pet name
     @Override
     public ApiResponse<List<SupplierResponseDTO>> getSuppliersByPet(String petName) {
 

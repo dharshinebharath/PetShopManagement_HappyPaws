@@ -11,14 +11,12 @@ import java.math.BigDecimal;
 public class GroomingServicesResponseDTO {
 
 
-	// Grooming Service details
 	private Long serviceId;
 	private String name;
 	private String description;
 	private BigDecimal price;
 	private boolean available;
 
-	// Getters and setters
 	public Long getServiceId() {
 	    return serviceId;
 	}

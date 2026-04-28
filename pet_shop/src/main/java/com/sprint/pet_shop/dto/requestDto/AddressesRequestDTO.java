@@ -1,15 +1,14 @@
 package com.sprint.pet_shop.dto.requestDto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/**
- * Data Transfer Object for capturing address details from incoming requests.
- * We use this to validate and transport the physical address information 
- * before saving it to the database.
- */
+	/**
+	 * Data Transfer Object for capturing address details from incoming requests.
+	 * We use this to validate and transport the physical address information 
+	 * before saving it to the database.
+	 */
 public class AddressesRequestDTO{
 	 @NotBlank(message = "Street cannot be empty")
 	    private String street;

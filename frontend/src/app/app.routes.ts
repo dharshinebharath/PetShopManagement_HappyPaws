@@ -55,7 +55,6 @@ import { AddressForm } from './features/address/address-form/address-form';
 import { EmployeeDashboard } from './features/employees/employee-dashboard/employee-dashboard';
 import { EmployeeList } from './features/employees/employee-list/employee-list';
 import { EmployeeForm } from './features/employees/employee-form/employee-form';
-import { Assignment } from './features/employees/assignment/assignment';
 
 import { FoodDashboard } from './features/food/food-dashboard/food-dashboard';
 import { FoodList } from './features/food/food-list/food-list';
@@ -125,7 +124,6 @@ export const routes: Routes = [
   { path: 'supplier/form', component: SupplierForm },
   { path: 'employee/list', component: EmployeeList },
   { path: 'employee/form', component: EmployeeForm },
-  { path: 'employee/assignment', component: Assignment },
 
   { path: '**', redirectTo: '' }
 ];

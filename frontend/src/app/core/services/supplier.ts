@@ -15,6 +15,7 @@ export class SupplierService {
     const username = 'Shirlly';
     const password = 'Shirl123';
 
+    // encode username and password in base64
     const auth = btoa(`${username}:${password}`);
 
     return {
@@ -23,18 +24,28 @@ export class SupplierService {
       }
     };
   }
+
+  // Get all suppliers.
   getAll() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
+  
+  // Get supplier by ID.
   getById(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+  
+  // Create a new supplier.
   create(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
+  
+  // Update a supplier.
   update(id: number, data: any) {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
+  
+  // Delete a supplier.
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }

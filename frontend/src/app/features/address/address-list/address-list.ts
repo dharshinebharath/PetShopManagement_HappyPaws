@@ -20,10 +20,10 @@ export class AddressList {
 
   addressList: any[] = [];
 
+  // Initialize the component.
   ngOnInit() {
-
+    // Get address id from query params.
     this.route.queryParams.subscribe(params => {
-
       const id = params['id'];
 
       if (id) {
@@ -36,13 +36,15 @@ export class AddressList {
           error: () => alert('Address not found ❌')
         });
 
-      } else {
-
+      } 
+      // Load all addresses.
+      else {
         this.loadAll();
       }
     });
   }
 
+  // Load all addresses.
   loadAll() {
     this.addressService.getAll().subscribe({
       next: (res: any) => {
@@ -55,12 +57,14 @@ export class AddressList {
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate addresses.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Handle page change.
   onPageChange(page: number) {
     this.currentPage = page;
   }

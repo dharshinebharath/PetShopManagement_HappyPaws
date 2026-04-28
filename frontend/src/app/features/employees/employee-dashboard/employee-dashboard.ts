@@ -20,6 +20,7 @@ export class EmployeeDashboard {
     const username = 'Priyadharshini';
     const password = 'Priya123';
 
+    // encode username and password in base64
     const auth = btoa(`${username}:${password}`);
 
     return {
@@ -28,9 +29,11 @@ export class EmployeeDashboard {
       }
     };
   }
+  // Go to employee list.
   goToList() {
     this.router.navigate(['/employee/list']);
   }
+  // View employee by ID.
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -47,11 +50,12 @@ export class EmployeeDashboard {
         if (err.status === 404) {
           alert('Employee ID not found ❌');
         } else {
-          alert('Something went wrong ⚠️Â');
+          alert('Something went wrong ⚠️Â ');
         }
       }
     });
   }
+  // Update employee by ID.
   updateEmployee(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -73,6 +77,7 @@ export class EmployeeDashboard {
       }
     });
   }
+  // Delete employee by ID.
   deleteEmployee(id: string) {
     if (!id) {
       alert('Enter ID to delete');

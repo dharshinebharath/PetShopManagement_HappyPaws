@@ -20,6 +20,7 @@ export class PetFoodDashboard {
   deletePetId: string = '';
   deleteFoodId: string = '';
 
+  // View food by pet ID.
   viewFood() {
     if (!this.getPetId) {
       alert('Enter Pet ID');
@@ -44,6 +45,7 @@ export class PetFoodDashboard {
     });
   }
 
+  // Assign food to a pet.
   assign() {
     if (!this.postPetId || !this.postFoodId) {
       alert('Enter both IDs');
@@ -61,6 +63,7 @@ export class PetFoodDashboard {
     });
   }
 
+  // Remove a pet-food mapping.
   remove() {
     if (!this.deletePetId || !this.deleteFoodId) {
       alert('Enter both IDs');

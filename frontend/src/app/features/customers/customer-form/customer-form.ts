@@ -30,7 +30,9 @@ export class CustomerForm {
     addressId: new FormControl<number | null>(null, [Validators.required])
   });
 
+  // Initialize the component.
   ngOnInit() {
+    // Load addresses.
     this.loadAddresses();
 
     this.route.queryParamMap.subscribe(queryParams => {
@@ -51,6 +53,7 @@ export class CustomerForm {
           next: (res: any) => {
             const data = res.data;
 
+            // Customer not found.
             if (!data) {
               alert('Customer not found');
               this.router.navigate(['/customer/list']);
@@ -100,6 +103,7 @@ export class CustomerForm {
       const phoneNumber = this.form.get('phoneNumber');
       const addressId = this.form.get('addressId');
 
+      // Validate form.
       if (firstName?.errors) {
         if (firstName.errors['required']) errors.push('First name cannot be empty');
         if (firstName.errors['minlength'] || firstName.errors['maxlength']) errors.push('First name must be between 2 and 30 characters');
@@ -141,6 +145,7 @@ export class CustomerForm {
       addressId: this.form.value.addressId
     };
 
+    // Update an existing customer.
     if (this.customerId) {
       this.customerService.updateCustomer(this.customerId.toString(), payload).subscribe({
         next: () => {
@@ -153,7 +158,9 @@ export class CustomerForm {
           alert(msg);
         }
       });
-    } else {
+    }
+    // Create a new customer.
+    else {
       this.customerService.addCustomer([payload]).subscribe({
         next: () => {
           alert('Customer created successfully');

@@ -35,6 +35,7 @@ class PetFoodServiceTest {
     private PetFoodRequestDTO requestDTO;
     private PetFood petFood;
 
+    // Test setup.
     @BeforeEach
     void setUp() {
 
@@ -53,6 +54,8 @@ class PetFoodServiceTest {
         petFood.setQuantity(10);
         petFood.setPrice(BigDecimal.valueOf(500));
     }
+
+    // Test to check saving pet food successfully.
     @Test
     void saveAllPetFood_success() {
 
@@ -70,6 +73,8 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository, times(1)).saveAll(anyList());
     }
+
+    // Test to check saving pet food when quantity is invalid.
     @Test
     void saveAllPetFood_invalidQuantity_throwsException() {
 
@@ -80,6 +85,8 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository, never()).saveAll(anyList());
     }
+    
+    // Test to check saving pet food when pet food is duplicate.
     @Test
     void saveAllPetFood_duplicateFood_throwsException() {
 
@@ -91,6 +98,8 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository, never()).saveAll(anyList());
     }
+
+    // Test to check getting pet food by ID successfully.
     @Test
     void getPetFoodById_success() {
 
@@ -105,6 +114,8 @@ class PetFoodServiceTest {
 
         verify(petFoodRepository).findById(1L);
     }
+
+    // Test to check getting pet food by ID when pet food is not found.
     @Test
     void getPetFoodById_notFound_throwsException() {
 

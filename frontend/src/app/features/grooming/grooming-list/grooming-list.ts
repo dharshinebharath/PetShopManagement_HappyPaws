@@ -12,9 +12,9 @@ import { GroomingService } from '../../../core/services/groomingService';
   templateUrl: './grooming-list.html',
   styleUrl: './grooming-list.css',
 })
-// Component for displaying list of grooming services
+
 export class GroomingList {
-  // Injecting required services
+
   groomingService = inject(GroomingService);
   route = inject(ActivatedRoute);
   router = inject(Router);

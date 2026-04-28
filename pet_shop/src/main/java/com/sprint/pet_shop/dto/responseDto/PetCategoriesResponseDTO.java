@@ -1,6 +1,5 @@
 package com.sprint.pet_shop.dto.responseDto;
 
-import java.util.List;
 
 /**
  * Data Transfer Object for Pet Categories.

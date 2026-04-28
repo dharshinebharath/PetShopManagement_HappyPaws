@@ -4,16 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { GroomingService } from '../../../core/services/groomingService';
 
-// Dashboard component for grooming services
 @Component({
   selector: 'app-grooming-dashboard',
   standalone: true,
-  imports: [FormsModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './grooming-dashboard.html'
 })
 
 export class GroomingDashboard {
-  // Injecting required services
+
   router = inject(Router);
   groomingService = inject(GroomingService);
 
@@ -36,11 +35,16 @@ export class GroomingDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Service ID not found');
-        } else {
-          alert('Something went wrong');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -59,11 +63,16 @@ export class GroomingDashboard {
         });
       },
       error: (err) => {
-        if (err.status === 404) {
-          alert('Cannot update. ID not found');
-        } else {
-          alert('Error checking ID');
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
         }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }
@@ -80,8 +89,17 @@ export class GroomingDashboard {
         alert('Service deleted successfully');
         this.router.navigate(['/grooming/list']);
       },
-      error: () => {
-        alert('Delete failed');
+      error: (err) => {
+        let msg = 'Something went wrong';
+
+        if (err.error?.message) {
+          msg = err.error.message; // for 404, duplicate, etc.
+        }
+        else if (err.error?.errors) {
+          msg = err.error.errors.join('\n'); // for validation list
+        }
+
+        alert(msg);
       }
     });
   }

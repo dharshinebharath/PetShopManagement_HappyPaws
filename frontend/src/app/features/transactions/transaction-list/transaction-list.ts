@@ -28,6 +28,7 @@ export class TransactionList {
       const from = params['fromDate'];
       const to = params['toDate'];
 
+      // Get transaction by ID.
       if (id) {
         this.transactionService.getById(Number(id)).subscribe({
           next: (res: any) => {
@@ -77,6 +78,7 @@ export class TransactionList {
     });
   }
 
+  // Load all transactions.
   loadAll() {
     this.transactionService.getAll().subscribe({
       next: (res: any) => {
@@ -86,15 +88,18 @@ export class TransactionList {
       error: () => alert('Failed to load transactions')
     });
   }
+  
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate transactions.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Handle page change.
   onPageChange(page: number) {
     this.currentPage = page;
   }

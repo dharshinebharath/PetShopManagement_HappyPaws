@@ -5,13 +5,11 @@ import java.util.List;
 
 import com.sprint.pet_shop.dto.requestDto.PetsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
-import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.GroomingServicesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetFoodResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.SupplierResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.VaccinationsResponseDTO;
-import com.sprint.pet_shop.entity.Pets;
 
 /**
  * The core business logic interface for Pets.

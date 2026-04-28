@@ -28,7 +28,9 @@ export class FoodForm {
     price: new FormControl(0, [Validators.required, Validators.min(1)])
   });
 
+  // Initialize the component.
   ngOnInit() {
+    // Get food ID from query params.
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.foodId = Number(params['id']);
@@ -71,6 +73,7 @@ export class FoodForm {
       const quantity = this.form.get('quantity');
       const price = this.form.get('price');
 
+      // Check for validation errors.
       if (name?.errors) {
         if (name.errors['required']) errors.push('Food name cannot be empty');
         if (name.errors['minlength'] || name.errors['maxlength']) errors.push('Food name must be between 2 and 50 characters');
@@ -98,6 +101,7 @@ export class FoodForm {
 
     const payload = this.form.value;
 
+    // Update an existing food item.
     if (this.foodId) {
       this.foodService.update(this.foodId, payload).subscribe({
         next: () => {
@@ -109,7 +113,9 @@ export class FoodForm {
           alert(msg);
         }
       });
-    } else {
+    }
+    // Create a new food item.
+    else {
       this.foodService.create([payload]).subscribe({
         next: () => {
           alert('Created successfully');

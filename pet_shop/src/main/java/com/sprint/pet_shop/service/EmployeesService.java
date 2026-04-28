@@ -2,7 +2,6 @@ package com.sprint.pet_shop.service;
 
 import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class EmployeesService implements EmployeesInterface {
     @Autowired
     private PetsRepository petsRepository;
     
-    
+    // converting employees to dto
     private EmployeesResponseDTO toDto(Employees entity) {
 
         EmployeesResponseDTO dto = new EmployeesResponseDTO();
@@ -58,6 +57,7 @@ public class EmployeesService implements EmployeesInterface {
         	);
         return dto;
     }
+    // saving employees into the database
     @Override
     public ApiResponse<List<EmployeesResponseDTO>> saveAll(List<EmployeesRequestDTO> employees) {
 
@@ -88,7 +88,7 @@ public class EmployeesService implements EmployeesInterface {
             if (dto.getAddressId() != null) {
 
                 Addresses address = addressesRepository.findById(dto.getAddressId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Address with id " + dto.getAddressId() + " not found"));
 
                 emp.setAddress(address);
             }
@@ -109,6 +109,7 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
+    // get all employees 
     @Override
     public ApiResponse<List<EmployeesResponseDTO>> getAll() {
 
@@ -125,6 +126,7 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
+    // get employees by id 
     @Override
     public ApiResponse<EmployeesResponseDTO> getEmployeesById(long employeesId) {
 
@@ -139,7 +141,7 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-
+    // deleting employees 
     @Override
     public ApiResponse<String> deleteEmployee(long employeeId) {
 
@@ -161,7 +163,7 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
-
+    // updating employees 
     @Override
     public ApiResponse<EmployeesResponseDTO> updateEmployee(Long id, EmployeesRequestDTO dto) {
 
@@ -199,7 +201,7 @@ public class EmployeesService implements EmployeesInterface {
         }
         if (dto.getAddressId() != null) {
             Addresses address = addressesRepository.findById(dto.getAddressId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Address not found with id: " + dto.getAddressId()));
 
             existing.setAddress(address);
         }
@@ -213,6 +215,7 @@ public class EmployeesService implements EmployeesInterface {
 
         return response;
     }
+    // get employees by position
 	    @Override
 	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPosition(String position) {
 	
@@ -224,15 +227,15 @@ public class EmployeesService implements EmployeesInterface {
 	
 	        return new ApiResponse<>("Employees fetched by position", true, data);
 	    }
-	    
+        // assign pet to employee
 	    @Override
         public ApiResponse<String> assignPetToEmployee(Long employeeId, Long petId) {
 
             Employees emp = employeesRepository.findById(employeeId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
 
             Pets pet = petsRepository.findById(petId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + petId));
 
             if (!emp.getPets().contains(pet)) {
                 emp.getPets().add(pet);
@@ -247,13 +250,12 @@ public class EmployeesService implements EmployeesInterface {
 
             return new ApiResponse<>("Pet assigned to employee", true, null);
         }
-	    
-	    
+	    // get pets by employee
 	    @Override
 	    public ApiResponse<List<PetsResponseDTO>> getPetsByEmployee(Long employeeId) {
 
 	        Employees emp = employeesRepository.findById(employeeId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+	                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
 
 	        List<PetsResponseDTO> data = emp.getPets()
 	                .stream()
@@ -268,12 +270,12 @@ public class EmployeesService implements EmployeesInterface {
 
 	        return new ApiResponse<>("Pets of employee", true, data);
 	    }
-	    
+	    // get employees by pet
 	    @Override
 	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesByPet(Long petId) {
 
 	        Pets pet = petsRepository.findById(petId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+	                .orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + petId));
 
 	        List<EmployeesResponseDTO> data = pet.getEmployees()
 	                .stream()
@@ -282,15 +284,15 @@ public class EmployeesService implements EmployeesInterface {
 
 	        return new ApiResponse<>("Employees handling pet", true, data);
 	    }
-	    
+	    // remove pet from employee
 	    @Override
         public ApiResponse<String> removePetFromEmployee(Long employeeId, Long petId) {
 
             Employees emp = employeesRepository.findById(employeeId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
 
             Pets pet = petsRepository.findById(petId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + petId));
 
             emp.getPets().remove(pet);
             pet.getEmployees().remove(emp);
@@ -300,7 +302,7 @@ public class EmployeesService implements EmployeesInterface {
 
             return new ApiResponse<>("Pet removed from employee", true, null);
         }
-
+        // get employees hired after date
         @Override
 	    public ApiResponse<List<EmployeesResponseDTO>> getEmployeesHiredAfter(LocalDate date) {
 

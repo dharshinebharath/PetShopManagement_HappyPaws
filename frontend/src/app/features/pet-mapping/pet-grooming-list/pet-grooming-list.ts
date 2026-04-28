@@ -12,24 +12,21 @@ import { PetGroomingMappingService } from '../../../core/services/pet-grooming-m
   imports: [CommonModule, PaginationComponent],
   templateUrl: './pet-grooming-list.html'
 })
-// Component for displaying list of grooming services
+
 export class PetGroomingList {
-  // Injecting required services
   route = inject(ActivatedRoute);
   service = inject(PetGroomingMappingService);
   cdr = inject(ChangeDetectorRef);
 
-  // Properties for pet ID and services list
   petId: number | null = null;
   services: any[] = [];
 
   // Initialize the component
   ngOnInit() {
-    // Subscribe to route query parameters
     this.route.queryParams.subscribe(params => {
       // Get pet ID from route parameters
       this.petId = Number(params['petId']);
-      // Load grooming services if pet ID is present
+
       if (this.petId) {
         this.load();
       }

@@ -7,7 +7,6 @@ import com.sprint.pet_shop.dto.requestDto.EmployeesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.EmployeesResponseDTO;
 import com.sprint.pet_shop.dto.responseDto.PetsResponseDTO;
-import com.sprint.pet_shop.entity.Employees;
 
 /**
  * Service interface for Employee operations.

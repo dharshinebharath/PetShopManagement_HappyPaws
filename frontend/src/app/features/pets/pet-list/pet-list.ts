@@ -21,8 +21,9 @@ export class PetsList {
 
   petsList: any[] = [];
 
+  // Initialize the component.
   ngOnInit() {
-
+    // Get pet ID from query params.
     this.route.queryParams.subscribe(params => {
 
       const id = params['id'];
@@ -65,6 +66,7 @@ export class PetsList {
     });
   }
 
+  // Load all pets.
   loadAll() {
     this.petService.getAll().subscribe({
       next: (res: any) => {
@@ -82,12 +84,14 @@ export class PetsList {
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate pets.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Handle page change.
   onPageChange(page: number) {
     this.currentPage = page;
   }

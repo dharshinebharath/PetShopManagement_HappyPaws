@@ -2,7 +2,6 @@ package com.sprint.pet_shop.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +21,11 @@ import com.sprint.pet_shop.repository.PetsRepository;
 import com.sprint.pet_shop.repository.TransactionsRepository;
 import com.sprint.pet_shop.service.interfaces.TransactionsInterface;
 
-/**
- * Implementation of the TransactionsInterface.
- * Ties everything together when a purchase happens. It links the customer to the pet 
- * and logs the transaction amount and date.
- */
+
+//  Implementation of the TransactionsInterface.
+//  Ties everything together when a purchase happens. It links the customer to the pet 
+//  and logs the transaction amount and date.
+
 @Service
 public class TransactionsService implements TransactionsInterface {
 
@@ -54,6 +53,7 @@ public class TransactionsService implements TransactionsInterface {
     }
 
 
+    // Create a new transaction.
     @Override
     public ApiResponse<TransactionsResponseDTO> save(TransactionsRequestDTO dto) {
 
@@ -62,10 +62,10 @@ public class TransactionsService implements TransactionsInterface {
         }
 
         Customers customer = customersRepository.findById(dto.getCustomerId())
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found with id: " + dto.getCustomerId()));
 
         Pets pet = petsRepository.findById(dto.getPetId())
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + dto.getPetId()));
 
         boolean duplicate = transactionsRepository.findAllSorted().stream()
                 .anyMatch(t -> t.getCustomer().getCustomerId().equals(dto.getCustomerId()) &&
@@ -90,6 +90,7 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transaction saved successfully", true, toDto(saved));
     }
+    // Fetch all transactions.
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getAll() {
 
@@ -100,6 +101,7 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Fetched all transactions", true, data);
     }
+    // Fetch transaction by ID.
     @Override
     public ApiResponse<TransactionsResponseDTO> getById(Long id) {
 
@@ -108,6 +110,7 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transaction fetched successfully", true, toDto(entity));
     }
+    // Update transaction.
     @Override
     public ApiResponse<TransactionsResponseDTO> update(Long id, TransactionsRequestDTO dto) {
 
@@ -123,6 +126,7 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transaction updated successfully", true, toDto(updated));
     }
+    // Delete transaction.
     @Override
     public ApiResponse<String> delete(Long id) {
 
@@ -134,6 +138,7 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Deleted successfully", true, "Deleted ID: " + id);
     }
+    // Fetch transactions by date range.
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByDateRange(LocalDate start, LocalDate end) {
 
@@ -145,6 +150,7 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transactions by date range", true, data);
     }
+    // Fetch transactions by customer.
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByCustomer(Long customerId) {
 
@@ -160,6 +166,7 @@ public class TransactionsService implements TransactionsInterface {
 
         return new ApiResponse<>("Transactions for customer", true, data);
     }
+    // Fetch transactions by status.
     @Override
     public ApiResponse<List<TransactionsResponseDTO>> getByStatus(String status) {
 

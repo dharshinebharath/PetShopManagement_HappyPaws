@@ -10,9 +10,9 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
   templateUrl: './route-back.html',
   styleUrl: './route-back.css',
 })
-// Route back component
+
 export class RouteBackComponent {
-  // Injecting required services
+
   router = inject(Router);
   route = inject(ActivatedRoute);
   currentUrl = this.router.url;

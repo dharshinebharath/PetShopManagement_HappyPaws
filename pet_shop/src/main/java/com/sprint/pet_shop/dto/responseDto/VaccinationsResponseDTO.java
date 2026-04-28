@@ -10,14 +10,12 @@ import java.math.BigDecimal;
 public class VaccinationsResponseDTO {
 
 
-	// Vaccination details
     private Long vaccinationId;
     private String name;
     private String description;
     private BigDecimal price;
     private boolean available;
 	
-	// Getters and setters
 	public Long getVaccinationId() {
 		return vaccinationId;
 	}

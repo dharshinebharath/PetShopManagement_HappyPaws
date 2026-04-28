@@ -13,21 +13,19 @@ import { NotificationService } from '../../../core/services/notification';
   templateUrl: './login.html'
 })
 export class Login {
-  // Injecting required services
   router = inject(Router);
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
   notificationService = inject(NotificationService);
-  // Login form
+
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
-  // Login method
+  
   login() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      // Array to store validation errors
       const errors: string[] = [];
       const username = this.loginForm.get('username');
       const password = this.loginForm.get('password');
@@ -67,19 +65,13 @@ export class Login {
 
     const moduleConfig = moduleCredentials[moduleKey];
 
-    // Checking if the module is valid
     if (!moduleConfig) {
       alert('Invalid module selection');
       return;
     }
 
-    // Set of valid credentials
     const validCredentials = new Set<string>([`${moduleConfig.username}:${moduleConfig.password}`]);
-    // Adding valid credentials for customers module
-    if (moduleKey === 'customers-module' || moduleKey === 'customers' || moduleKey === 'custoners-module') {
-      validCredentials.add('Revathi:Reva123');
-      validCredentials.add('Revati:Rev123');
-    }
+    
 
     if (!validCredentials.has(`${username}:${password}`)) {
       alert(`Use the correct username and password for ${moduleConfig.route}`);
@@ -112,7 +104,6 @@ export class Login {
           this.notificationService.showSuccess(`${userName} logged in successfully as ${userRole}.`);
           this.router.navigateByUrl(moduleConfig.route);
         },
-        // Error handling
         error: (err: HttpErrorResponse) => {
           if (err.status === 0) {
             alert('Backend server is not running (http://localhost:8081). Please start backend first.');
@@ -123,7 +114,6 @@ export class Login {
             alert('Invalid credentials');
             return;
           }
-          // Show error notification
 
           alert(`Login failed (${err.status}). Please try again.`);
         }

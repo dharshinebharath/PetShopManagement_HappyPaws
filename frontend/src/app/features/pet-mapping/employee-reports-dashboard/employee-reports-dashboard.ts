@@ -22,6 +22,7 @@ export class EmployeeReportsDashboard {
   date: string = '';
   roleOptions: string[] = [];
 
+  // Load all employees and get roles.
   ngOnInit() {
     this.employeeService.getAll().subscribe({
       next: (res: any) => {
@@ -39,9 +40,11 @@ export class EmployeeReportsDashboard {
       }
     });
   }
+
+  // Get reports by role.
   getByRole() {
     if (!this.role) {
-      alert('Enter role ⚠️Â');
+      alert('Enter role ⚠️Â ');
       return;
     }
 
@@ -60,9 +63,11 @@ export class EmployeeReportsDashboard {
       error: () => alert('Error ❌')
     });
   }
+
+  // Get reports by date.
   getByDate() {
     if (!this.date) {
-      alert('Select date ⚠️Â');
+      alert('Select date ⚠️Â ');
       return;
     }
 

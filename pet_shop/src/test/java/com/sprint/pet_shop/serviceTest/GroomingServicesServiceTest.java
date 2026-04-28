@@ -40,14 +40,12 @@ class GroomingServicesServiceTest {
     @Test
     void saveAllGroomingServices_success() {
 
-        // Create a request DTO
         GroomingServicesRequestDTO dto = new GroomingServicesRequestDTO();
         dto.setName("Bath");
         dto.setDescription("Full bath service");
         dto.setPrice(BigDecimal.valueOf(500));
         dto.setAvailable(true);
 
-        // Create an entity
         GroomingServices entity = new GroomingServices();
         entity.setServiceId(1L);
         entity.setName("Bath");
@@ -55,13 +53,11 @@ class GroomingServicesServiceTest {
         entity.setPrice(BigDecimal.valueOf(500));
         entity.setAvailable(true);
 
-        // Mock repository methods
         when(repository.existsByName("Bath")).thenReturn(false);
         when(repository.saveAll(anyList())).thenReturn(List.of(entity));
 
         ApiResponse<?> response = service.saveAllGroomingServices(List.of(dto));
 
-        // Assertions for success
         assertTrue(response.isSuccess());
         assertEquals("Grooming services saved successfully", response.getMessage());
 
@@ -72,16 +68,13 @@ class GroomingServicesServiceTest {
     @Test
     void saveAllGroomingServices_duplicateService_throwsException() {
 
-        // Create a request DTO
         GroomingServicesRequestDTO dto = new GroomingServicesRequestDTO();
         dto.setName("Bath");
         dto.setPrice(BigDecimal.valueOf(500));
         dto.setAvailable(true);
 
-        // Mock repository methods
         when(repository.existsByName("Bath")).thenReturn(true);
 
-        // Assertions for duplicate service
         assertThrows(DuplicateResourceException.class,
                 () -> service.saveAllGroomingServices(List.of(dto)));
 
@@ -92,13 +85,11 @@ class GroomingServicesServiceTest {
     @Test
     void saveAllGroomingServices_invalidPrice_throwsException() {
 
-        // Create a request DTO
         GroomingServicesRequestDTO dto = new GroomingServicesRequestDTO();
         dto.setName("Bath");
         dto.setPrice(BigDecimal.valueOf(-100));
         dto.setAvailable(true);
 
-        // Assertions for invalid price
         assertThrows(InvalidDataException.class,
                 () -> service.saveAllGroomingServices(List.of(dto)));
 
@@ -109,10 +100,8 @@ class GroomingServicesServiceTest {
     @Test
     void getGroomingServiceById_notFound() {
 
-        // Mock repository methods
         when(repository.findById(1L)).thenReturn(Optional.empty());
 
-        // Assertions for not found
         assertThrows(ResourceNotFoundException.class,
                 () -> service.getGroomingServiceById(1L));
 
@@ -123,16 +112,13 @@ class GroomingServicesServiceTest {
     @Test
     void deleteGroomingService_success() {
 
-        // Create an entity
         GroomingServices entity = new GroomingServices();
         entity.setServiceId(1L);
 
-        // Mock repository methods
         when(repository.findById(1L)).thenReturn(Optional.of(entity));
 
         ApiResponse<String> response = service.deleteGroomingServiceById(1L);
 
-        // Assertions for success
         assertTrue(response.isSuccess());
         assertEquals("Deleted successfully", response.getMessage());
 

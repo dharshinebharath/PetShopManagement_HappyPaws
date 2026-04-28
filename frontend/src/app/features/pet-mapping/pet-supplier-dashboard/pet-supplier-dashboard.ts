@@ -18,6 +18,7 @@ export class PetSupplierDashboard {
   postPetId: string = '';
   postSupplierId: string = '';
 
+  // View suppliers for a pet.
   viewSuppliers() {
     if (!this.getPetId) {
       alert('Enter Pet ID');
@@ -42,6 +43,7 @@ export class PetSupplierDashboard {
     });
   }
 
+  // Assign a supplier to a pet.
   assign() {
     if (!this.postPetId || !this.postSupplierId) {
       alert('Enter both IDs');

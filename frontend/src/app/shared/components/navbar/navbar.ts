@@ -11,9 +11,9 @@ import { NotificationService } from '../../../core/services/notification';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-// Navbar component
+
 export class NavbarComponent {
-  // Injecting required services
+
   router = inject(Router);
   notification = inject(NotificationService);
   currentUrl = '';

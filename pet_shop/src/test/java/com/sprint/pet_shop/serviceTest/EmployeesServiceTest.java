@@ -40,6 +40,7 @@ public class EmployeesServiceTest {
 
 	    @InjectMocks
 	    private EmployeesService employeesService;
+		// Test to check saving employees successfully.	
 	    @Test
 	    void testSaveAll_Positive() {
 	        EmployeesRequestDTO dto = new EmployeesRequestDTO();
@@ -61,11 +62,13 @@ public class EmployeesServiceTest {
 
 	        verify(employeesRepository).saveAll(anyList());
 	    }
+		// Test to check saving employees when the list is empty.
 	    @Test
 	    void testSaveAll_EmptyList() {
 	        assertThrows(InvalidDataException.class,
 	                () -> employeesService.saveAll(List.of()));
 	    }
+		// Test to check saving employees when email is duplicate.
 	    @Test
 	    void testSaveAll_DuplicateEmail() {
 	        EmployeesRequestDTO dto = new EmployeesRequestDTO();
@@ -76,6 +79,7 @@ public class EmployeesServiceTest {
 	        assertThrows(DuplicateResourceException.class,
 	                () -> employeesService.saveAll(List.of(dto)));
 	    }
+		// Test to check getting all employees successfully.
 	    @Test
 	    void testGetAll() {
 	        Employees emp = new Employees();
@@ -91,6 +95,7 @@ public class EmployeesServiceTest {
 
 	        verify(employeesRepository).findAll();
 	    }
+		// Test to check getting employee by ID when employee is not found.
 	    @Test
 	    void testGetEmployeeById_NotFound() {
 	        when(employeesRepository.findById(1L)).thenReturn(Optional.empty());

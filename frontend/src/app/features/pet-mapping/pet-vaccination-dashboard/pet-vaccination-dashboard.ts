@@ -10,14 +10,11 @@ import { PetVaccinationMappingService } from '../../../core/services/pet-vaccina
   imports: [FormsModule],
   templateUrl: './pet-vaccination-dashboard.html'
 })
-// Logic for pet-vaccination dashboard
 export class PetVaccinationDashboard {
 
-  // Injecting required services
   service = inject(PetVaccinationMappingService);
   router = inject(Router);
 
-  // Form fields for pet and vaccination IDs
   getPetId: string = '';
   postPetId: string = '';
   postVaccinationId: string = '';

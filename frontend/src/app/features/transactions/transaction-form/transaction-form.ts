@@ -34,6 +34,7 @@ export class TransactionForm {
     petId: new FormControl<number | null>(null, [Validators.required])
   });
 
+  // Load customers and pets.
   ngOnInit() {
     this.customerService.getAllCustomers().subscribe((res: any) => {
       this.customers = res.data || res;
@@ -74,6 +75,7 @@ export class TransactionForm {
     });
   }
 
+
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -85,6 +87,7 @@ export class TransactionForm {
       const customerId = this.form.get('customerId');
       const petId = this.form.get('petId');
 
+      // Check for validation errors.
       if (amount?.errors) {
         if (amount.errors['required']) errors.push('Amount cannot be null');
         if (amount.errors['min']) errors.push('Amount must be greater than 0');
@@ -126,6 +129,7 @@ export class TransactionForm {
       customerId: this.form.value.customerId,
       petId: this.form.value.petId
     };
+    // Update an existing transaction.
     if (this.transactionId) {
       this.transactionService.update(this.transactionId, payload).subscribe({
         next: () => {
@@ -137,7 +141,9 @@ export class TransactionForm {
           alert(msg);
         }
       });
-    } else {
+    }
+    // Create a new transaction.
+    else {
       this.transactionService.create(payload).subscribe({
         next: () => {
           alert('Created successfully');

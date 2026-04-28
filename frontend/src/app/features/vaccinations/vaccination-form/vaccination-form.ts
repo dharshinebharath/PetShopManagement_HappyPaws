@@ -21,7 +21,6 @@ export class VaccinationForm {
   serviceId: number | null = null;
   isLoading = true;
 
-  // ================= FORM GROUP =================
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
     description: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
@@ -31,10 +30,9 @@ export class VaccinationForm {
 
   // Initialize the component
   ngOnInit() {
-    // Subscribe to route query parameters
+
     this.route.queryParams.subscribe(params => {
 
-      // Check if vaccination ID exists
       if (params['id']) {
 
         this.serviceId = Number(params['id']);
@@ -67,7 +65,6 @@ export class VaccinationForm {
     });
   }
 
-  // Submit handler
   submit() {
 
     // Check if form is invalid

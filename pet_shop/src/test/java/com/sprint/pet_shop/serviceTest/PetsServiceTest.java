@@ -43,6 +43,7 @@ class PetsServiceTest {
     private PetsRequestDTO dto;
     private PetCategories category;
 
+    // Test setup.
     @BeforeEach
     void setUp() {
         category = new PetCategories();
@@ -64,6 +65,8 @@ class PetsServiceTest {
         dto.setPrice(new BigDecimal("10000"));
         dto.setCategory_id(1L);
     }
+
+    // Test to check saving pets successfully.
     @Test
     void testAddAllPets_Positive() {
 
@@ -76,6 +79,8 @@ class PetsServiceTest {
         assertTrue(response.isSuccess());
         assertEquals(1, response.getData().size());
     }
+
+    // Test to check saving pets when name is invalid.
     @Test
     void testAddAllPets_InvalidName() {
 
@@ -84,6 +89,7 @@ class PetsServiceTest {
         assertThrows(InvalidDataException.class,
                 () -> petsService.addAllPets(List.of(dto)));
     }
+    // Test to check saving pets when category is not found.
     @Test
     void testAddAllPets_CategoryNotFound() {
 
@@ -92,6 +98,7 @@ class PetsServiceTest {
         assertThrows(ResourceNotFoundException.class,
                 () -> petsService.addAllPets(List.of(dto)));
     }
+    // Test to check getting pet by ID successfully.
     @Test
     void testGetPetById_Positive() {
 
@@ -102,6 +109,8 @@ class PetsServiceTest {
 
         assertEquals("Tommy", response.getData().getName());
     }
+    
+    // Test to check deleting pet when pet is not found.
     @Test
     void testDeletePet_NotFound() {
 

@@ -15,9 +15,11 @@ export class FoodDashboard {
 
   router = inject(Router);
   foodService = inject(FoodService);
+  // Go to food list.
   goToList() {
     this.router.navigate(['/food/list']);
   }
+  // View food by ID.
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -34,11 +36,12 @@ export class FoodDashboard {
         if (err.status === 404) {
           alert('Food ID not found ❌');
         } else {
-          alert('Something went wrong ⚠️Â');
+          alert('Something went wrong ⚠️Â ');
         }
       }
     });
   }
+  // Update food by ID.
   updateFood(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -60,6 +63,7 @@ export class FoodDashboard {
       }
     });
   }
+  // Delete food by ID.
   deleteFood(id: string) {
     if (!id) {
       alert('Enter ID to delete');

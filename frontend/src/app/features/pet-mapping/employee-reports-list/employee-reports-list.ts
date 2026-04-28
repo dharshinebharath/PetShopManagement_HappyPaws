@@ -20,6 +20,7 @@ export class EmployeeReportsList {
 
   employees: any[] = [];
 
+  // Load all employees by role or date.
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
 
@@ -33,6 +34,7 @@ export class EmployeeReportsList {
   });
 }
 
+// Get employees by date.
 if (type === 'date') {
   this.service.getByHireDate(value).subscribe((res: any) => {
     this.employees = res?.data || [];
@@ -45,12 +47,14 @@ if (type === 'date') {
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate employees.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Handle page change.
   onPageChange(page: number) {
     this.currentPage = page;
   }

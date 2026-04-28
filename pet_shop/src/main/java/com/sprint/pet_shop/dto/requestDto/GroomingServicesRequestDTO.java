@@ -31,7 +31,6 @@ public class GroomingServicesRequestDTO {
     // Default value
     private boolean available = true;
 
-    // Getters and setters
     public String getName() {
         return name;
     }

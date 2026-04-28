@@ -14,7 +14,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
  
 
@@ -40,8 +39,8 @@ public class GroomingServices {
 	@Size(min = 2, max = 255, message = "Description must be between 2 and 255 characters")
 	private String description;
 	
-	@Positive
-	@Digits(integer = 8, fraction = 2, message = "Price must have max 8 digits and 2 decimal places")
+	@NotNull
+    @Digits(integer = 8, fraction = 2, message = "Price must have max 8 digits and 2 decimal places")
 	private BigDecimal price;
 	
     

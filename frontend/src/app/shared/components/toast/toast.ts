@@ -10,12 +10,9 @@ import { NotificationService } from '../../../core/services/notification';
   templateUrl: './toast.html',
   styleUrl: './toast.css',
 })
-// Toast component
 export class ToastComponent {
-  // Injecting required services
   notification = inject(NotificationService);
 
-  // Method to dismiss toast
   dismiss() {
     this.notification.clear();
   }

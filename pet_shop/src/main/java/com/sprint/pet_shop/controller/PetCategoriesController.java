@@ -17,24 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sprint.pet_shop.dto.requestDto.PetCategoriesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.PetCategoriesResponseDTO;
-import com.sprint.pet_shop.entity.PetCategories;
-import com.sprint.pet_shop.entity.Pets;
+
 import com.sprint.pet_shop.service.PetCategoriesService;
 
 import jakarta.validation.Valid;
 
-/**
- * REST Controller for pet categories.
- * Provides basic CRUD operations for organizing pets into different species or types 
- * (like Dogs, Cats, Birds, etc.).
- */
+// REST Controller for pet categories.
+// Provides basic CRUD operations for organizing pets into different species or types 
+//(like Dogs, Cats, Birds, etc.).
+
 @RestController
+// Base URL for all endpoints in this controller.
 @RequestMapping("api/v1/categories")
 public class PetCategoriesController {
 
 	@Autowired
 	private PetCategoriesService service;
 	
+
+    // POST /api/v1/categories - Add a list of pet categories.
     @PostMapping
     public ResponseEntity<ApiResponse<List<PetCategoriesResponseDTO>>> addAll(
             @Valid @RequestBody List<PetCategoriesRequestDTO> dtos) {
@@ -45,6 +46,8 @@ public class PetCategoriesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    
+    // GET /api/v1/categories - Get all pet categories.
     @GetMapping
     public ResponseEntity<ApiResponse<List<PetCategoriesResponseDTO>>> getAll() {
 
@@ -54,6 +57,8 @@ public class PetCategoriesController {
         return ResponseEntity.ok(response);
     }
 
+
+    // GET /api/v1/categories/{id} - Get pet category by ID.
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<PetCategoriesResponseDTO>> getById(
             @PathVariable long id) {
@@ -64,6 +69,7 @@ public class PetCategoriesController {
         return ResponseEntity.ok(response);
     }
 
+    // PUT /api/v1/categories/{id} - Update pet category by ID.
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<PetCategoriesResponseDTO>> update(
             @PathVariable long id,
@@ -75,6 +81,7 @@ public class PetCategoriesController {
         return ResponseEntity.ok(response);
     }
 
+    // DELETE /api/v1/categories/{id} - Delete pet category by ID.
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(
             @PathVariable long id) {

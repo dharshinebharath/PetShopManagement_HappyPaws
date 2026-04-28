@@ -17,12 +17,14 @@ import jakarta.validation.Valid;
 //  Exposes endpoints for creating, retrieving, updating, and deleting physical addresses.
 @RestController
 
+//  Base URL for all endpoints in this controller.
 @RequestMapping("/api/v1/addresses")
 public class AddressesController {
 
     @Autowired
     private AddressesService addressesService;
 
+    //  POST /api/v1/addresses - Save a list of addresses.
     @PostMapping
     public ResponseEntity<ApiResponse<List<AddressesResponseDTO>>> saveaddresses(
             @Valid @RequestBody List<AddressesRequestDTO> addresses) {
@@ -33,6 +35,7 @@ public class AddressesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    //  GET /api/v1/addresses - Get all addresses.
     @GetMapping
     public ResponseEntity<ApiResponse<List<AddressesResponseDTO>>> getaddresses() {
 
@@ -42,6 +45,7 @@ public class AddressesController {
         return ResponseEntity.ok(response);
     }
 
+    //  GET /api/v1/addresses/{id} - Get an address by ID.
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> getaddressesbyId(
             @PathVariable long id) {
@@ -52,6 +56,7 @@ public class AddressesController {
         return ResponseEntity.ok(response);
     }
     
+    //  PUT /api/v1/addresses/{id} - Update an address.
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<AddressesResponseDTO>> updateaddresses(
             @PathVariable long id,
@@ -63,6 +68,7 @@ public class AddressesController {
         return ResponseEntity.ok(response);
     }
 
+    //  DELETE /api/v1/addresses/{id} - Delete an address.
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> delete(@PathVariable long id) {
 
@@ -72,6 +78,7 @@ public class AddressesController {
         return ResponseEntity.ok(response);
     }
 
+    //  GET /api/v1/addresses/city - Get addresses by city.
     @GetMapping("/city")
     public ApiResponse<List<AddressesResponseDTO>> getByCity(@RequestParam String city) {
         return addressesService.getAddressesByCity(city);

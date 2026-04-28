@@ -14,9 +14,11 @@ export class CategoryDashboard {
 
   router = inject(Router);
   categoryService = inject(CategoryService);
+  // Navigate to list.
   goToList() {
     this.router.navigate(['/category/list']);
   }
+  // View by ID.
   viewById(id: string) {
     if (!id) {
       alert('Please enter ID');
@@ -34,6 +36,7 @@ export class CategoryDashboard {
       }
     });
   }
+  // Update by ID.
   updateCategory(id: string) {
     if (!id) {
       alert('Enter ID to update');
@@ -51,6 +54,7 @@ export class CategoryDashboard {
       }
     });
   }
+  // Delete by ID.
   deleteCategory(id: string) {
     if (!id) {
       alert('Enter ID to delete');

@@ -20,6 +20,7 @@ export class PetEmployeesList {
   petId: number | null = null;
   employees: any[] = [];
 
+  // Load all employees assigned to a pet.
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
 
@@ -50,6 +51,7 @@ export class PetEmployeesList {
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate employees.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;

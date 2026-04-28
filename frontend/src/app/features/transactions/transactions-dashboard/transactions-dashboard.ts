@@ -14,10 +14,12 @@ export class TransactionDashboard {
   router = inject(Router);
   transactionService = inject(transaction);
 
+  // Go to transaction list.
   goToList() {
     this.router.navigate(['/transactions/list']);
   }
 
+  // View a transaction.
   viewTransaction(id: string) {
     if (!id) {
       alert('Please enter Transaction ID');
@@ -40,6 +42,7 @@ export class TransactionDashboard {
     });
   }
 
+  // Get transactions by customer ID.
   getCustomerTransactions(customerId: string) {
     if (!customerId) {
       alert('Enter Customer ID');
@@ -56,6 +59,7 @@ export class TransactionDashboard {
     });
   }
 
+  // Get transactions by status.
   getByStatus(status: string) {
     if (!status) {
       alert('Enter Status');
@@ -78,6 +82,7 @@ export class TransactionDashboard {
     });
   }
 
+  // Get transactions by date range.
   getByDateRange(fromDate: string, toDate: string) {
     if (!fromDate || !toDate) {
       alert('Select both dates');

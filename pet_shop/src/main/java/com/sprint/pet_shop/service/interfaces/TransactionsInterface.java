@@ -1,13 +1,11 @@
 package com.sprint.pet_shop.service.interfaces;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.sprint.pet_shop.dto.requestDto.TransactionsRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.TransactionsResponseDTO;
-import com.sprint.pet_shop.entity.TransactionsEntity;
 
 /**
  * Outlines the business rules for processing Transactions.

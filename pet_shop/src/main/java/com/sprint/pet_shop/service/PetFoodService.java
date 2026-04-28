@@ -16,11 +16,9 @@ import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.PetFoodRepository;
 import com.sprint.pet_shop.service.interfaces.PetFoodInterface;
 
-/**
- * Implementation of the PetFoodInterface.
- * Handles inventory rules for pet food, ensuring quantities and prices are positive, 
- * and preventing duplicate brand+name entries.
- */
+// Implementation of the PetFoodInterface.
+// Handles inventory rules for pet food, ensuring quantities and prices are positive, 
+// and preventing duplicate brand+name entries.
 @Service
 public class PetFoodService implements PetFoodInterface {
 
@@ -40,6 +38,7 @@ public class PetFoodService implements PetFoodInterface {
         return dto;
     }
 
+    // Implementation of saving pet food
     @Override
     public ApiResponse<List<PetFoodResponseDTO>> saveAllPetFood(List<PetFoodRequestDTO> dtos) {
 
@@ -56,7 +55,7 @@ public class PetFoodService implements PetFoodInterface {
             }
 
             if (dto.getName() == null || dto.getName().isBlank()) {
-                throw new InvalidDataException("Food name cannot be empty");
+                throw new InvalidDataException("Food name cannot be empty or null");
             }
 
             if (petFoodRepository.existsByNameAndBrand(dto.getName(), dto.getBrand())) {
@@ -88,6 +87,7 @@ public class PetFoodService implements PetFoodInterface {
         return response;
     }
 
+    // Implementation of getting all pet food
     @Override
     public ApiResponse<List<PetFoodResponseDTO>> getAllPetFood() {
 
@@ -105,6 +105,7 @@ public class PetFoodService implements PetFoodInterface {
         return response;
     }
 
+    // Implementation of getting pet food by ID
     @Override
     public ApiResponse<PetFoodResponseDTO> getPetFoodById(long id) {
 
@@ -119,6 +120,7 @@ public class PetFoodService implements PetFoodInterface {
         return response;
     }
 
+    // Implementation of updating pet food by ID
     @Override
     public ApiResponse<PetFoodResponseDTO> updatePetFood(long id, PetFoodRequestDTO dto) {
 
@@ -155,6 +157,7 @@ public class PetFoodService implements PetFoodInterface {
         return response;
     }
 
+    // Implementation of deleting pet food by ID
     @Override
     public ApiResponse<String> deletePetFoodById(long id) {
 

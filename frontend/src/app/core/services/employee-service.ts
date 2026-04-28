@@ -15,6 +15,7 @@ export class EmployeeService {
     const username = 'Priyadharshini';
     const password = 'Priya123';
 
+    // encode username and password in base64
     const auth = btoa(`${username}:${password}`);
 
     return {
@@ -23,18 +24,25 @@ export class EmployeeService {
       }
     };
   }
+  
+  // Get all employees.
   getAll() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
+  // Get employee by ID.
   getById(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+
+  // Create a new employee.
   create(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
+  // Update an employee.
   update(id: number, data: any) {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
+  // Delete an employee.
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }

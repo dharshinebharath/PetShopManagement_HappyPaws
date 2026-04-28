@@ -22,6 +22,7 @@ export class PetsFilterDashboard {
   max = '';
   breedOptions: string[] = [];
 
+  // Get all breeds for the dropdown.
   ngOnInit() {
     this.service.getAll().subscribe({
       next: (res: any) => {
@@ -40,6 +41,7 @@ export class PetsFilterDashboard {
     });
   }
 
+  // Get pets by category.
   byCategory() {
     if (!this.categoryId) {
       alert('Enter Category ID');
@@ -62,6 +64,7 @@ export class PetsFilterDashboard {
     });
   }
 
+  // Get pets by breed.
   byBreed() {
     if (!this.breed) {
       alert('Enter Breed');
@@ -84,6 +87,7 @@ export class PetsFilterDashboard {
     });
   }
 
+  // Get pets by price.
   byPrice() {
     if (!this.min || !this.max) {
       alert('Enter Min & Max');

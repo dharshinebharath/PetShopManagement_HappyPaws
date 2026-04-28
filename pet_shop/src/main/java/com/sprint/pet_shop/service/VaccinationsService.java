@@ -49,11 +49,11 @@ public class VaccinationsService implements VaccinationsInterface {
         for (VaccinationsRequestDTO dto : dtos) {
 
             if (dto.getPrice().doubleValue() < 0) {
-                throw new InvalidDataException("Invalid price: " + dto.getName());
+                throw new InvalidDataException("Invalid price for Vaccination Service: " + dto.getName());
             }
 
             if (vaccinationsRepository.existsByName(dto.getName())) {
-                throw new DuplicateResourceException("Already exists: " + dto.getName());
+                throw new DuplicateResourceException("Vaccination Service already exists: " + dto.getName());
             }
 
             Vaccinations entity = new Vaccinations();
@@ -103,7 +103,7 @@ public class VaccinationsService implements VaccinationsInterface {
 	public ApiResponse<VaccinationsResponseDTO> getVaccinationsById(long id) {
 
         Vaccinations entity = vaccinationsRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Vaccination Service not found with id: " + id));
 
         ApiResponse<VaccinationsResponseDTO> response = new ApiResponse<>();
         response.setMessage("Vaccination fetched successfully");
@@ -119,7 +119,7 @@ public class VaccinationsService implements VaccinationsInterface {
 	 public ApiResponse<String> deleteVaccinationsById(long id) {
 
         Vaccinations existing = vaccinationsRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Vaccination Service not found with id: " + id));
 
         vaccinationsRepository.delete(existing);
 
@@ -136,7 +136,7 @@ public class VaccinationsService implements VaccinationsInterface {
 	 public ApiResponse<VaccinationsResponseDTO> updateVaccinationById(long id, VaccinationsRequestDTO dto) {
 
         Vaccinations existing = vaccinationsRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Vaccination Service not found with id: " + id));
 
         if (dto.getPrice().doubleValue() < 0) {
             throw new InvalidDataException("Price must be positive");

@@ -21,9 +21,11 @@ export class EmployeePetDashboard {
   getPetId: string = '';
   deleteEmployeeId: string = '';
   deletePetId: string = '';
+  
+  // View pets of an employee.
   viewPets() {
     if (!this.getEmployeeId) {
-      alert('Enter Employee ID ⚠️Â');
+      alert('Enter Employee ID ⚠️Â ');
       return;
     }
 
@@ -62,9 +64,11 @@ export class EmployeePetDashboard {
       error: () => alert('Assign Failed ❌')
     });
   }
+  
+  // View employees of a pet.
   viewEmployees() {
     if (!this.getPetId) {
-      alert('Enter Pet ID ⚠️Â');
+      alert('Enter Pet ID ⚠️Â ');
       return;
     }
 
@@ -83,9 +87,11 @@ export class EmployeePetDashboard {
       error: () => alert('Invalid Pet ID ❌')
     });
   }
+  
+  // Remove a pet-employee mapping.
   remove() {
     if (!this.deleteEmployeeId || !this.deletePetId) {
-      alert('Enter both IDs ⚠️Â');
+      alert('Enter both IDs ⚠️Â ');
       return;
     }
 

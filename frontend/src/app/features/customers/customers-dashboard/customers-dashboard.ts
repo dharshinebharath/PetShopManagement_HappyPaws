@@ -20,7 +20,9 @@ export class CustomersDashboard implements OnInit {
 
   activeTab: string = 'customer';
 
+  // Initialize the component.
   ngOnInit() {
+    // Get active tab from query params.
     this.route.queryParamMap.subscribe(queryParams => {
       const tab = queryParams.get('tab');
       if (tab === 'customer' || tab === 'address') {
@@ -29,10 +31,12 @@ export class CustomersDashboard implements OnInit {
     });
   }
 
+  // Select tab.
   selectTab(tab: string) {
     this.activeTab = tab;
   }
 
+  // View customer.
   viewCustomer(id: string) {
     if (!id) {
       alert('Enter Customer ID');
@@ -49,6 +53,7 @@ export class CustomersDashboard implements OnInit {
     });
   }
 
+  // Edit customer.
   editCustomer(id: string) {
     if (!id) {
       alert('Enter Customer ID');
@@ -71,6 +76,7 @@ export class CustomersDashboard implements OnInit {
     });
   }
 
+  // Delete customer.
   deleteCustomer(id: string) {
     if (!id) {
       alert('Enter Customer ID');
@@ -85,6 +91,7 @@ export class CustomersDashboard implements OnInit {
     });
   }
 
+  // View address.
   viewAddress(id: string) {
     if (!id) {
       alert('Enter Address ID');
@@ -107,6 +114,7 @@ export class CustomersDashboard implements OnInit {
     });
   }
 
+  // Edit address.
   editAddress(id: string) {
     if (!id) {
       alert('Enter Address ID');
@@ -129,6 +137,7 @@ export class CustomersDashboard implements OnInit {
     });
   }
 
+  // Delete address.
   deleteAddress(id: string) {
     if (!id) {
       alert('Enter Address ID');

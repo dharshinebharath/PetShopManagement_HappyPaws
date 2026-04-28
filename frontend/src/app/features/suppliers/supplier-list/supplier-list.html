@@ -4,6 +4,42 @@
     <h2 class="text-4xl font-bold text-sage-900 tracking-tight">Suppliers</h2>
     <p class="mt-2 text-sm text-stone-600">Structured supplier records overview</p>
   </div>
-  <div class="flex justify-center"><div class="w-full max-w-6xl"><div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm bg-white"><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-stone-100 text-sage-900 border-b border-stone-200"><tr><th class="p-4 text-left font-semibold">ID</th><th class="p-4 text-left font-semibold">Name</th><th class="p-4 text-left font-semibold">Contact Person</th><th class="p-4 text-left font-semibold">Phone</th><th class="p-4 text-left font-semibold">Email</th><th class="p-4 text-left font-semibold">Address ID</th></tr></thead><tbody class="divide-y divide-stone-100"><tr *ngFor="let s of paginated(supplierList)" class="hover:bg-stone-50 transition"><td class="p-4 font-medium text-sage-900">{{ s.supplierId }}</td><td class="p-4 text-stone-700 font-medium">{{ s.name }}</td><td class="p-4 text-stone-700">{{ s.contactPerson }}</td><td class="p-4 text-stone-700">{{ s.phoneNumber }}</td><td class="p-4 text-stone-700">{{ s.email }}</td><td class="p-4 text-stone-700">{{ s.addressId }}</td></tr></tbody></table></div></div></div></div>
+
+  <div class="flex justify-center">
+    <div class="w-full max-w-6xl">
+      <div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm bg-white">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-stone-100 text-sage-900 border-b border-stone-200">
+              <tr>
+                <th class="p-4 text-left font-semibold">ID</th>
+                <th class="p-4 text-left font-semibold">Name</th>
+                <th class="p-4 text-left font-semibold">Contact Person</th>
+                <th class="p-4 text-left font-semibold">Phone</th>
+                <th class="p-4 text-left font-semibold">Email</th>
+                <th class="p-4 text-left font-semibold">Address ID</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-100">
+              <tr *ngFor="let s of paginated(supplierList)" class="hover:bg-stone-50 transition">
+                <td class="p-4 font-medium text-sage-900">{{ s.supplierId }}</td>
+                <td class="p-4 text-stone-700 font-medium">{{ s.name }}</td>
+                <td class="p-4 text-stone-700">{{ s.contactPerson }}</td>
+                <td class="p-4 text-stone-700">{{ s.phoneNumber }}</td>
+                <td class="p-4 text-stone-700">{{ s.email }}</td>
+                <td class="p-4 text-stone-700">{{ s.addressId }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<app-pagination [totalItems]="supplierList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+<app-pagination
+  [totalItems]="supplierList.length"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+</app-pagination>

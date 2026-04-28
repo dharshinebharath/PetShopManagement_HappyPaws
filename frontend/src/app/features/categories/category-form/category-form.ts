@@ -24,11 +24,14 @@ export class CategoryForm {
     name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)])
   });
 
+  // Initialize the component.
   ngOnInit() {
+    // Get category id from query params.
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.categoryId = Number(params['id']);
 
+        // Get category by ID.
         this.categoryService.getById(this.categoryId).subscribe({
           next: (res: any) => {
             const data = res.data;
@@ -67,7 +70,7 @@ export class CategoryForm {
     const payload = {
       name: this.form.value.name
     };
-
+    // Update an existing category.
     if (this.categoryId !== null && this.categoryId !== undefined) {
       this.categoryService.update(this.categoryId, payload).subscribe({
         next: () => {
@@ -79,7 +82,9 @@ export class CategoryForm {
           alert(msg);
         }
       });
-    } else {
+    } 
+    // Create a new category.
+    else {
       this.categoryService.create([payload]).subscribe({
         next: () => {
           alert('Created successfully');

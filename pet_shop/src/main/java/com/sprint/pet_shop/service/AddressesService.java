@@ -15,16 +15,16 @@ import com.sprint.pet_shop.exception.ResourceNotFoundException;
 import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.service.interfaces.AddressesInterface;
 
-/**
- * Implementation of the AddressesInterface.
- * This class contains the actual business logic for validating and saving physical addresses 
- * before they reach the database.
- */
+//  Implementation of the AddressesInterface.
+//  This class contains the actual business logic for validating and saving physical addresses 
+//  before they reach the database.
 @Service
 public class AddressesService implements AddressesInterface {
 
     @Autowired
     private AddressesRepository addressesRepository;
+
+    //Saving addresses to the database
     @Override
     public ApiResponse<List<AddressesResponseDTO>> saveaddresses(List<AddressesRequestDTO> addresses) {
 
@@ -67,6 +67,8 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Addresses created successfully", true, data);
     }
+
+    // Retrieving all addresses from the database
     @Override
     public ApiResponse<List<AddressesResponseDTO>> getaddresses() {
 
@@ -77,6 +79,7 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Addresses fetched successfully", true, data);
     }
+    // Retrieving addresses by ID from the database
     @Override
     public ApiResponse<AddressesResponseDTO> getaddressesByID(long id) {
 
@@ -85,6 +88,7 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Address found", true, toDto(address));
     }
+    // Retrieving all addresses by city from the database
     @Override
     public ApiResponse<List<AddressesResponseDTO>> getAddressesByCity(String city) {
 
@@ -105,6 +109,7 @@ public class AddressesService implements AddressesInterface {
         return new ApiResponse<>("Addresses fetched successfully", true, data);
     }
 
+    // Deleting addresses from the database
     @Override
     public ApiResponse<String> deleteaddress(long id) {
 
@@ -116,6 +121,7 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Address deleted successfully", true, "Deleted ID: " + id);
     }
+    // Updating addresses in the database
     @Override
     public ApiResponse<AddressesResponseDTO> updateaddress(long id, AddressesRequestDTO updatedaddress) {
 
@@ -156,6 +162,7 @@ public class AddressesService implements AddressesInterface {
         return new ApiResponse<>("Address updated successfully", true, toDto(saved));
     }
 
+    // converting addresses to dto
     private AddressesResponseDTO toDto(Addresses entity) {
         AddressesResponseDTO dto = new AddressesResponseDTO();
         dto.setAddressId(entity.getAddressId());

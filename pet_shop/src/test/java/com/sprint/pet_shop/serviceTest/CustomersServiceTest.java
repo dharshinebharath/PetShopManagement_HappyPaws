@@ -40,6 +40,7 @@ class CustomersServiceTest {
     private Customers customer;
     private Addresses address;
 
+// Test setup.
     @BeforeEach
     void setUp() {
 
@@ -62,6 +63,7 @@ class CustomersServiceTest {
         customer.setPhoneNumber("9876543210");
         customer.setAddress(address);
     }
+    // Test to check saving customers successfully.
     @Test
     void saveCustomers_success() {
 
@@ -82,6 +84,7 @@ class CustomersServiceTest {
 
         verify(customersRepository).saveAll(anyList());
     }
+    // Test to check saving customers when first name is empty.
     @Test
     void saveCustomers_invalidFirstName_throwsException() {
 
@@ -92,6 +95,7 @@ class CustomersServiceTest {
 
         verify(customersRepository, never()).saveAll(anyList());
     }
+    // Test to check saving customers when email is duplicate.
     @Test
     void saveCustomers_duplicateEmail_throwsException() {
 
@@ -103,6 +107,7 @@ class CustomersServiceTest {
 
         verify(customersRepository, never()).saveAll(anyList());
     }
+    // Test to check saving customers when address is not found. 
     @Test
     void saveCustomers_addressNotFound_throwsException() {
 
@@ -117,6 +122,7 @@ class CustomersServiceTest {
 
         verify(customersRepository, never()).saveAll(anyList());
     }
+    // Test to check getting customer by ID successfully.
     @Test
     void getCustomerById_success() {
 

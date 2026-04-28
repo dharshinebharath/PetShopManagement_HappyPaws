@@ -1,6 +1,43 @@
 <!-- This template renders the page layout for address list. -->
 <div class="min-h-full w-full bg-gradient-to-br from-stone-50 via-stone-100 to-sage-50 px-6 py-10">
-  <div class="max-w-5xl mx-auto mb-8 text-center"><h2 class="text-4xl font-bold text-sage-900 tracking-tight">Addresses</h2><p class="mt-2 text-sm text-stone-600">Structured address records overview</p></div>
-  <div class="flex justify-center"><div class="w-full max-w-5xl"><div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm bg-white"><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-stone-100 text-sage-900 border-b border-stone-200"><tr><th class="p-4 text-left font-semibold">ID</th><th class="p-4 text-left font-semibold">Street</th><th class="p-4 text-left font-semibold">City</th><th class="p-4 text-left font-semibold">State</th><th class="p-4 text-left font-semibold">Zip Code</th></tr></thead><tbody class="divide-y divide-stone-100"><tr *ngFor="let a of paginated(addressList)" class="hover:bg-stone-50 transition"><td class="p-4 font-medium text-sage-900">{{ a.addressId }}</td><td class="p-4 text-stone-700 font-medium">{{ a.street }}</td><td class="p-4 text-stone-700">{{ a.city }}</td><td class="p-4 text-stone-700">{{ a.state }}</td><td class="p-4 text-stone-700">{{ a.zipCode }}</td></tr></tbody></table></div></div></div></div>
+  <div class="max-w-5xl mx-auto mb-8 text-center">
+    <h2 class="text-4xl font-bold text-sage-900 tracking-tight">Addresses</h2>
+    <p class="mt-2 text-sm text-stone-600">Structured address records overview</p>
+  </div>
+
+  <div class="flex justify-center">
+    <div class="w-full max-w-5xl">
+      <div class="overflow-hidden rounded-2xl border border-stone-200 shadow-sm bg-white">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-stone-100 text-sage-900 border-b border-stone-200">
+              <tr>
+                <th class="p-4 text-left font-semibold">ID</th>
+                <th class="p-4 text-left font-semibold">Street</th>
+                <th class="p-4 text-left font-semibold">City</th>
+                <th class="p-4 text-left font-semibold">State</th>
+                <th class="p-4 text-left font-semibold">Zip Code</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-100">
+              <tr *ngFor="let a of paginated(addressList)" class="hover:bg-stone-50 transition">
+                <td class="p-4 font-medium text-sage-900">{{ a.addressId }}</td>
+                <td class="p-4 text-stone-700 font-medium">{{ a.street }}</td>
+                <td class="p-4 text-stone-700">{{ a.city }}</td>
+                <td class="p-4 text-stone-700">{{ a.state }}</td>
+                <td class="p-4 text-stone-700">{{ a.zipCode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<app-pagination [totalItems]="addressList.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+<app-pagination
+  [totalItems]="addressList.length"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+</app-pagination>

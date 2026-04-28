@@ -14,6 +14,7 @@ export class PetSupplierMappingService {
     const username = 'Shirlly';
     const password = 'Shirl123';
 
+    // encode username and password in base64
     const auth = btoa(username + ':' + password);
 
     return {
@@ -22,14 +23,14 @@ export class PetSupplierMappingService {
       })
     };
   }
-
+// Get suppliers by pet.
   getSuppliersByPet(petId: number) {
     return this.http.get(
       `${this.baseUrl}/pets/${petId}/suppliers`,
       this.getAuthHeaders()
     );
   }
-
+// Assign supplier to pet.
   assignSupplier(petId: number, supplierId: number) {
     return this.http.post(
       `${this.baseUrl}/pets/${petId}/suppliers/${supplierId}`,

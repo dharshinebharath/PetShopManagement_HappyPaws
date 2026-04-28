@@ -1,7 +1,6 @@
 package com.sprint.pet_shop.dto.responseDto;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * Data Transfer Object for returning employee information to the API client.

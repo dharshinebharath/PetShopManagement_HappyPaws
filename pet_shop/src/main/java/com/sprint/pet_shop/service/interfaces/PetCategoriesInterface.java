@@ -5,7 +5,6 @@ import java.util.List;
 import com.sprint.pet_shop.dto.requestDto.PetCategoriesRequestDTO;
 import com.sprint.pet_shop.dto.responseDto.ApiResponse;
 import com.sprint.pet_shop.dto.responseDto.PetCategoriesResponseDTO;
-import com.sprint.pet_shop.entity.PetCategories;
 
 /**
  * Service interface for handling Pet Categories.

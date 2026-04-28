@@ -40,6 +40,8 @@ public class SupplierServiceTest {
 
 	    @InjectMocks
 	    private SupplierService supplierService;
+
+		// Test to check saving supplier successfully.
 	    @Test
 	    void testSaveAll_Positive() {
 	        SupplierRequestDTO dto = new SupplierRequestDTO();
@@ -61,11 +63,13 @@ public class SupplierServiceTest {
 
 	        verify(supplierRepository).saveAll(anyList());
 	    }
+	    // Test to check saving supplier when list is empty.
 	    @Test
 	    void testSaveAll_EmptyList() {
 	        assertThrows(InvalidDataException.class,
 	                () -> supplierService.saveAll(List.of()));
 	    }
+	    // Test to check saving supplier when supplier is duplicate.
 	    @Test
 	    void testSaveAll_DuplicateEmail() {
 	        SupplierRequestDTO dto = new SupplierRequestDTO();
@@ -76,6 +80,7 @@ public class SupplierServiceTest {
 	        assertThrows(DuplicateResourceException.class,
 	                () -> supplierService.saveAll(List.of(dto)));
 	    }
+	    // Test to check getting all suppliers successfully.
 	    @Test
 	    void testGetAll() {
 	        Supplier s = new Supplier();
@@ -91,6 +96,7 @@ public class SupplierServiceTest {
 
 	        verify(supplierRepository).findAll();
 	    }
+		// Test to check getting supplier by ID successfully.
 	    @Test
 	    void testGetSupplierById_NotFound() {
 	        when(supplierRepository.findById(1L)).thenReturn(Optional.empty());

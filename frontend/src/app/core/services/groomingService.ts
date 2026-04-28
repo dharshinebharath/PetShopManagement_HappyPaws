@@ -5,16 +5,12 @@ import { inject, Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-// This service handles the app-side requests and data flow for grooming service.
 export class GroomingService {
 
-// Base URL for the grooming services API
 private baseUrl='http://localhost:8081/api/v1/grooming-services' 
 
-// Constructor for dependency injection
 http:HttpClient=inject(HttpClient);
 
-// Method to get authentication headers
   private getAuthHeaders() {
     const username = 'Dharshine';
     const password = 'Dharsh123';

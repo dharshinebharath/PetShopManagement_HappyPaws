@@ -14,6 +14,7 @@ export class PetFoodMappingService {
     const username = 'Shirlly';
     const password = 'Shirl123';
 
+    // encode username and password in base64
     const auth = btoa(username + ':' + password);
 
     return {
@@ -22,14 +23,14 @@ export class PetFoodMappingService {
       })
     };
   }
-
+// Get food by pet.
   getFoodByPet(petId: number) {
     return this.http.get(
       `${this.baseUrl}/pets/${petId}/food`,
       this.getAuthHeaders()
     );
   }
-
+// Assign food to pet.
   assignFood(petId: number, foodId: number) {
     return this.http.post(
       `${this.baseUrl}/pets/${petId}/food/${foodId}`,
@@ -37,7 +38,7 @@ export class PetFoodMappingService {
       this.getAuthHeaders()
     );
   }
-
+  // Remove food from pet.
   removeFood(petId: number, foodId: number) {
     return this.http.delete(
       `${this.baseUrl}/pets/${petId}/food/${foodId}`,

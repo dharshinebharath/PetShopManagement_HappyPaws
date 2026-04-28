@@ -27,6 +27,7 @@ export class CategoryList {
 
       const id = params['id'];
 
+      // Get category by ID.
       if (id) {
         this.categoryService.getById(Number(id)).subscribe({
           next: (res: any) => {
@@ -50,12 +51,14 @@ export class CategoryList {
             this.router.navigate(['/category/list']);
           }
         });
-
-      } else {
+      }
+      // Load all categories.
+      else {
         this.loadAll();
       }
     });
   }
+
 
   loadAll() {
     this.categoryService.getAll().subscribe({
@@ -72,15 +75,19 @@ export class CategoryList {
       }
     });
   }
+  
+  // Pagination.
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate categories.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Handle page change.
   onPageChange(page: number) {
     this.currentPage = page;
   }

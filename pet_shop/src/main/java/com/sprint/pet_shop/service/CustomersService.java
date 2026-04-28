@@ -41,11 +41,8 @@ public class CustomersService implements CustomersInterface {
 
     private AddressesRepository addressesRepository;
 
-    // =========================
 
     // CREATE
-
-    // =========================
 
     @Override
 
@@ -97,11 +94,8 @@ public class CustomersService implements CustomersInterface {
 
     }
 
-    // =========================
-
     // GET ALL
 
-    // =========================
 
     @Override
 
@@ -119,11 +113,7 @@ public class CustomersService implements CustomersInterface {
 
     }
 
-    // =========================
-
     // GET BY ID
-
-    // =========================
 
     @Override
 
@@ -137,11 +127,7 @@ public class CustomersService implements CustomersInterface {
 
     }
 
-    // =========================
-
     // UPDATE (SIMPLE LIKE GROOMING)
-
-    // =========================
 
     @Override
 
@@ -184,11 +170,7 @@ public class CustomersService implements CustomersInterface {
 
     }
 
-    // =========================
-
     // DELETE
-
-    // =========================
 
     @Override
 
@@ -204,11 +186,7 @@ public class CustomersService implements CustomersInterface {
 
     }
 
-    // =========================
-
     // NO TRANSACTIONS
-
-    // =========================
 
     @Override
 
@@ -226,11 +204,7 @@ public class CustomersService implements CustomersInterface {
 
     }
 
-    // =========================
-
     // DTO MAPPING
-
-    // =========================
 
     private CustomerResponseDTO toDto(Customers customer) {
 

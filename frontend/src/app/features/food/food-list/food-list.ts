@@ -20,7 +20,9 @@ export class FoodList {
 
   foodList: any[] = [];
 
+  // Initialize the component.
   ngOnInit() {
+    // Get food ID from query params.
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
 
@@ -56,6 +58,7 @@ export class FoodList {
     });
   }
 
+  // Load all food items.
   loadAll() {
     this.foodService.getAll().subscribe({
       next: (res: any) => {
@@ -68,15 +71,19 @@ export class FoodList {
       }
     });
   }
+  
+  // Pagination.
   currentPage = 1;
   pageSize = 10;
-
+  
+  // Paginate food items.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;
     return safe.slice(start, start + this.pageSize);
   }
 
+  // Handle page change.
   onPageChange(page: number) {
     this.currentPage = page;
   }

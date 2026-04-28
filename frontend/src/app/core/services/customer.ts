@@ -14,6 +14,7 @@ export class customer {
     const username = 'Revathi';
     const password = 'Reva123';
 
+    // encode username and password in base64
     const auth = btoa(`${username}:${password}`);
 
     return {
@@ -22,18 +23,23 @@ export class customer {
       })
     };
   }
+  // Get all customers.
   getAllCustomers() {
     return this.http.get(this.baseUrl, this.getAuthHeaders());
   }
+  // Get customer by ID.
   getCustomerById(id: string) {
     return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }
+  // Create a new customer.
   addCustomer(data: any) {
     return this.http.post(this.baseUrl, data, this.getAuthHeaders());
   }
+  // Update a customer.
   updateCustomer(id: string, data: any) {
     return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
   }
+  // Delete a customer.
   deleteCustomer(id: string) {
     return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
   }

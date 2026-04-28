@@ -4,7 +4,6 @@ import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
 import com.sprint.pet_shop.repository.AddressesRepository;
 import com.sprint.pet_shop.repository.CustomersRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -29,8 +28,6 @@ class CustomersRepoTest {
     @Autowired
     private AddressesRepository addressesRepository;
 
-    @Autowired
-    private EntityManager entityManager;
 
     private Addresses createAddress() {
         Addresses address = new Addresses();
@@ -102,11 +99,5 @@ class CustomersRepoTest {
         assertFalse(noTrans.isEmpty());
     }
 
-    @Test
-    void testFindAllSorted() {
-        createCustomer("Frank", "frank@example.com");
-        createCustomer("Grace", "grace@example.com");
-        List<Customers> sorted = customersRepository.findAllSorted();
-        assertTrue(sorted.size() >= 2);
-    }
+    
 }

@@ -9,43 +9,45 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
-//  A central hub for handling all exceptions thrown across the application.
-//  Instead of dealing with try-catch blocks everywhere, this class intercepts 
-//  errors and formats them into clean, friendly HTTP responses for the client.
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Catches ResourceNotFoundException and returns a 404 status.
-    // Happens when someone searches for an ID that doesn't exist in our database.
-
+    // NOT FOUND (404)
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, Object>> handleNotFound(ResourceNotFoundException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", 404);
+        response.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
-    // Catches DuplicateResourceException and returns a 400 Bad Request status.
-    // Triggers when there's a conflict, like a duplicate email.
-
+    // DUPLICATE (400)
     @ExceptionHandler(DuplicateResourceException.class)
-    public ResponseEntity<String> handleDuplicate(DuplicateResourceException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> handleDuplicate(DuplicateResourceException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", 400);
+        response.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    // Catches InvalidDataException and returns a 400 Bad Request.
-    // This catches manually thrown validation errors (like negative prices).
-
+    // INVALID DATA (400)
     @ExceptionHandler(InvalidDataException.class)
-    public ResponseEntity<String> handleInvalid(InvalidDataException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Map<String, Object>> handleInvalid(InvalidDataException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", 400);
+        response.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    // Automatically intercepts Bean Validation errors (like @NotBlank failures).
-    // Extracts the specific error message and sends it back to the user.
-
+    // VALIDATION ERRORS (400)
     @ExceptionHandler(HandlerMethodValidationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, Object> handleValidation(HandlerMethodValidationException ex) {
+    public ResponseEntity<Map<String, Object>> handleValidation(HandlerMethodValidationException ex) {
 
         Map<String, Object> response = new HashMap<>();
 
@@ -57,14 +59,17 @@ public class GlobalExceptionHandler {
         response.put("status", 400);
         response.put("errors", errors);
 
-        return response;
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-   
-    // The ultimate fallback handler for any unexpected crashes.
-    // Prevents stack traces from leaking to the client and returns a generic 500 error.
-    
+
+    // GENERAL ERROR (500)
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGeneral(Exception ex) {
-        return new ResponseEntity<>("Something went wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Map<String, Object>> handleGeneral(Exception ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", 500);
+        response.put("message", "Something went wrong!");
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

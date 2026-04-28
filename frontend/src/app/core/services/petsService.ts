@@ -14,6 +14,7 @@ export class PetsService {
     const username = 'Mahakarpagam';
     const password = 'Maha123';
 
+    // encode username and password in base64
     const auth = btoa(`${username}:${password}`);
 
     return {
@@ -34,30 +35,39 @@ export class PetsService {
       }
     };
   }
+  // Get all pets.
 getAll() {
   return this.http.get(this.baseUrl, this.getAuthHeaders());
 }
+// Get pet by ID.
 getById(id: number) {
   return this.http.get(`${this.baseUrl}/${id}`, this.getAuthHeaders());
 }
+
+// Create a new pet.
 create(data: any) {
   return this.http.post(this.baseUrl, data, this.getAuthHeaders());
 }
+
+// Update a pet.
 update(id: number, data: any) {
   return this.http.put(`${this.baseUrl}/${id}`, data, this.getAuthHeaders());
 }
+
+// Delete a pet.
 delete(id: number) {
   return this.http.delete(`${this.baseUrl}/${id}`, this.getAuthHeaders());
 }
-
+// Get pets by category.
 getByCategory(id: number) {
   return this.http.get(`${this.baseUrl}/category/${id}`, this.getFilterAuthHeaders());
 }
-
+// Get pets by breed.
 getByBreed(breed: string) {
   return this.http.get(`${this.baseUrl}/breed/${encodeURIComponent(breed)}`, this.getFilterAuthHeaders());
 }
 
+// Get pets by price range.
 getByPrice(min: number, max: number) {
   return this.http.get(
     `${this.baseUrl}/price?min=${min}&max=${max}`,

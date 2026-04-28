@@ -32,6 +32,7 @@ class AddressesServiceTest {
     private AddressesRequestDTO requestDTO;
     private Addresses address;
 
+    // Setup for testing
     @BeforeEach
     void setUp() {
 
@@ -48,6 +49,7 @@ class AddressesServiceTest {
         address.setState("Tamil Nadu");
         address.setZipCode("600001");
     }
+    // Test to check saving addresses successfully
     @Test
     void saveAddresses_success() {
 
@@ -62,6 +64,7 @@ class AddressesServiceTest {
 
         verify(addressesRepository, times(1)).saveAll(anyList());
     }
+    // Test to check saving addresses when street is empty
     @Test
     void saveAddresses_emptyStreet_throwsException() {
 
@@ -72,6 +75,7 @@ class AddressesServiceTest {
 
         verify(addressesRepository, never()).saveAll(anyList());
     }
+    // Test to check saving addresses when city is empty
     @Test
     void saveAddresses_emptyCity_throwsException() {
 
@@ -82,6 +86,7 @@ class AddressesServiceTest {
 
         verify(addressesRepository, never()).saveAll(anyList());
     }
+    // Test to check getting address by ID successfully
     @Test
     void getAddressById_success() {
 
@@ -96,6 +101,7 @@ class AddressesServiceTest {
 
         verify(addressesRepository).findById(1L);
     }
+    // Test to check getting address by ID when address is not found
     @Test
     void getAddressById_notFound_throwsException() {
 

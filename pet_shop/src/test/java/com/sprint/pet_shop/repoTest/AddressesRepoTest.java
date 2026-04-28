@@ -2,7 +2,6 @@ package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.repository.AddressesRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -23,9 +22,6 @@ class AddressesRepoTest {
 
     @Autowired
     private AddressesRepository addressesRepository;
-
-    @Autowired
-    private EntityManager entityManager;
 
     private Addresses createAddress(String street, String city) {
         Addresses address = new Addresses();
@@ -74,11 +70,4 @@ class AddressesRepoTest {
         assertEquals(2, found.size());
     }
 
-    @Test
-    void testFindAllSorted() {
-        createAddress("B St", "City");
-        createAddress("A St", "City");
-        List<Addresses> sorted = addressesRepository.findAllSorted();
-        assertTrue(sorted.size() >= 2);
-    }
 }

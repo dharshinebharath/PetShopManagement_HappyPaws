@@ -9,9 +9,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './pagination.html',
   styleUrl: './pagination.css',
 })
-// Pagination component
+
 export class PaginationComponent {
-  // Pagination properties
+
   @Input() totalItems = 0;
   @Input() pageSize = 10;
   @Input() currentPage = 1;

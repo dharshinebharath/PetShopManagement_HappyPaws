@@ -5,10 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-// This service is used to authenticate users and authorize their access to the system.
+
 export class AuthService {
 
-  // Constructor for dependency injection
   constructor(private http: HttpClient) {}
 
   // Method to handle user login

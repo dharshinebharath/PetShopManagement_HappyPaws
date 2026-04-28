@@ -1,7 +1,6 @@
 package com.sprint.pet_shop.dto.requestDto;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;

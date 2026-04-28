@@ -2,7 +2,6 @@ package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.PetFood;
 import com.sprint.pet_shop.repository.PetFoodRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -25,8 +24,7 @@ class PetFoodRepoTest {
     @Autowired
     private PetFoodRepository petFoodRepository;
 
-    @Autowired
-    private EntityManager entityManager;
+  
 
     private PetFood createPetFood(String name, String brand) {
         PetFood food = new PetFood();

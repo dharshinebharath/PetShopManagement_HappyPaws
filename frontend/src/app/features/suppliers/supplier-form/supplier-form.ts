@@ -31,9 +31,11 @@ export class SupplierForm {
     addressId: new FormControl<number | null>(null, [Validators.required])
   });
 
+  // Initialize the component.
   ngOnInit() {
     this.loadAddresses();
 
+    // Get supplier ID from query params.
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.supplierId = Number(params['id']);
@@ -65,6 +67,7 @@ export class SupplierForm {
     });
   }
 
+  // Load addresses.
   private loadAddresses() {
     this.addressService.getAll().subscribe({
       next: (res: any) => {
@@ -88,6 +91,7 @@ export class SupplierForm {
       const email = this.form.get('email');
       const addressId = this.form.get('addressId');
 
+      // Check for validation errors.
       if (name?.errors) {
         if (name.errors['required']) errors.push('Supplier name cannot be empty');
         if (name.errors['minlength'] || name.errors['maxlength']) errors.push('Supplier name must be between 2 and 50 characters');
@@ -114,6 +118,7 @@ export class SupplierForm {
 
     const payload = this.form.value;
 
+    // Update an existing supplier.
     if (this.supplierId) {
       this.supplierService.update(this.supplierId, payload).subscribe({
         next: () => {
@@ -125,7 +130,9 @@ export class SupplierForm {
           alert(msg);
         }
       });
-    } else {
+    }
+    // Create a new supplier.
+    else {
       this.supplierService.create([payload]).subscribe({
         next: () => {
           alert('Created successfully');

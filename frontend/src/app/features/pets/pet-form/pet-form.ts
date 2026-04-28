@@ -33,9 +33,11 @@ export class PetForm {
     categoryId: new FormControl<number | null>(null, [Validators.required])
   });
 
+  // Initialize the component.
   ngOnInit() {
     this.loadCategories();
 
+    // Get pet ID from query params.
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.petId = Number(params['id']);
@@ -69,6 +71,7 @@ export class PetForm {
     });
   }
 
+  // Load categories.
   private loadCategories() {
     this.categoryService.getAll().subscribe({
       next: (res: any) => {
@@ -81,6 +84,7 @@ export class PetForm {
     });
   }
 
+  
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -94,6 +98,7 @@ export class PetForm {
       const imageUrl = this.form.get('image_url');
       const categoryId = this.form.get('categoryId');
 
+      // Check for validation errors.
       if (name?.errors) {
         if (name.errors['required']) errors.push('Pet name cannot be empty');
         if (name.errors['minlength'] || name.errors['maxlength']) errors.push('Pet name must be between 2 and 50 characters');
@@ -135,6 +140,7 @@ export class PetForm {
       category_id: Number(this.form.value.categoryId)
     };
 
+    // Update an existing pet.
     if (this.petId !== null && this.petId !== undefined) {
       this.petsService.update(this.petId, payload).subscribe({
         next: () => {
@@ -149,7 +155,9 @@ export class PetForm {
           alert(msg);
         }
       });
-    } else {
+    } 
+    // Create a new pet.
+    else {
       this.petsService.create([payload]).subscribe({
         next: () => {
           alert('Created successfully');

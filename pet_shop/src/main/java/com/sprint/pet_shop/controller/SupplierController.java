@@ -13,12 +13,12 @@ import com.sprint.pet_shop.service.SupplierService;
 
 import jakarta.validation.Valid;
 
-/**
- * REST Controller for vendor and supplier management.
- * Facilitates the addition of new suppliers and linking them to the specific 
- * animals they provide to the shop.
- */
+// REST Controller for vendor and supplier management.
+// Facilitates the addition of new suppliers and linking them to the specific 
+// animals they provide to the shop.
 @RestController
+
+// API endpoints for supplier management.
 @RequestMapping("/api/v1/suppliers")
 public class SupplierController {
 
@@ -27,6 +27,8 @@ public class SupplierController {
     public SupplierController(SupplierService supplierService) {
         this.supplierService = supplierService;
     }
+
+    // POST /api/v1/suppliers - Add new suppliers to the shop.
     @PostMapping
     public ResponseEntity<ApiResponse<List<SupplierResponseDTO>>> saveAll(
             @Valid @RequestBody List<SupplierRequestDTO> suppliers) {
@@ -36,6 +38,8 @@ public class SupplierController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    // GET /api/v1/suppliers - Get all suppliers.
     @GetMapping
     public ResponseEntity<ApiResponse<List<SupplierResponseDTO>>> getAll() {
 
@@ -44,6 +48,8 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
+
+    // GET /api/v1/suppliers/{id} - Get supplier by ID.
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<SupplierResponseDTO>> getById(
             @PathVariable long id) {
@@ -53,6 +59,8 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
+
+    // DELETE /api/v1/suppliers/{id} - Delete supplier by ID.
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> deleteSupplier(
             @PathVariable long id) {
@@ -62,6 +70,8 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
+
+    // PUT /api/v1/suppliers/{id} - Update supplier by ID.
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<SupplierResponseDTO>> updateSupplier(
             @PathVariable long id,
@@ -72,6 +82,8 @@ public class SupplierController {
 
         return ResponseEntity.ok(response);
     }
+    
+    // GET /api/v1/suppliers/pet - Get suppliers by pet name.
     @GetMapping("/pet")
     public ApiResponse<List<SupplierResponseDTO>> getByPet(
             @RequestParam String petName) {

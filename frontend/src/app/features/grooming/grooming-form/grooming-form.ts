@@ -14,16 +14,14 @@ import { GroomingService } from '../../../core/services/groomingService';
 })
 
 export class GroomingForm {
-  // Injecting required services
   groomingService = inject(GroomingService);
   route = inject(ActivatedRoute);
   router = inject(Router);
   cdr = inject(ChangeDetectorRef);
 
-  // Service ID
   serviceId: number | null = null;
   isLoading = true;
-  // Form with validation
+
   form = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
     description: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
@@ -62,7 +60,6 @@ export class GroomingForm {
     });
   }
 
-  // Submit form
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -106,7 +103,9 @@ export class GroomingForm {
           alert(msg);
         }
       });
-    } else {
+    } 
+    // Create a new grooming service.
+    else {
       this.groomingService.create([payload]).subscribe({
         next: () => {
           alert('Created successfully');

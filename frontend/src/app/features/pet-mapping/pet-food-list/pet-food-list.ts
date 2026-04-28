@@ -19,6 +19,7 @@ export class PetFoodList {
   petId: number | null = null;
   foods: any[] = [];
 
+  // Load all foods assigned to a pet.
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
 
@@ -50,6 +51,7 @@ export class PetFoodList {
     });
   }
 
+  // Remove a food from a pet.
   remove(foodId: number) {
     this.service.removeFood(this.petId!, foodId).subscribe({
       next: () => {
@@ -62,6 +64,7 @@ export class PetFoodList {
   currentPage = 1;
   pageSize = 10;
 
+  // Paginate foods.
   paginated<T>(items: T[]): T[] {
     const safe = items || [];
     const start = (this.currentPage - 1) * this.pageSize;

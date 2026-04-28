@@ -1,6 +1,5 @@
 package com.sprint.pet_shop.serviceTest;
 
-
 import com.sprint.pet_shop.dto.requestDto.VaccinationsRequestDTO;
 import com.sprint.pet_shop.entity.Vaccinations;
 import com.sprint.pet_shop.exception.DuplicateResourceException;
@@ -27,113 +26,106 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class VaccinationsServiceTest {
 
-    // Mock the vaccinations repository
-    @Mock
-    private VaccinationsRepository vaccinationsRepository;
+        // Mock the vaccinations repository
+        @Mock
+        private VaccinationsRepository vaccinationsRepository;
 
-    // Inject the vaccinations service
-    @InjectMocks
-    private VaccinationsService vaccinationsService;
+        // Inject the vaccinations service
+        @InjectMocks
+        private VaccinationsService vaccinationsService;
 
-    // Request DTO for vaccinations
-    private VaccinationsRequestDTO requestDTO;
-    // Entity for vaccinations
-    private Vaccinations vaccination;
+        private VaccinationsRequestDTO requestDTO;
 
-    // Setup method for unit tests
-    @BeforeEach
-    void setUp() {
+        private Vaccinations vaccination;
 
-        // Create a request DTO
-        requestDTO = new VaccinationsRequestDTO();
-        requestDTO.setName("Rabies Vaccine");
-        requestDTO.setDescription("Protects against rabies");
-        requestDTO.setPrice(BigDecimal.valueOf(500));
-        requestDTO.setAvailable(true);
+        // Setup method for unit tests
+        @BeforeEach
+        void setUp() {
 
-        // Create an entity
-        vaccination = new Vaccinations();
-        vaccination.setVaccinationId(1L);
-        vaccination.setName("Rabies Vaccine");
-        vaccination.setDescription("Protects against rabies");
-        vaccination.setPrice(BigDecimal.valueOf(500));
-        vaccination.setAvailable(true);
-    }
-    // Test case for successful saving of vaccinations
-    @Test
-    void saveAllVaccinations_success() {
+                requestDTO = new VaccinationsRequestDTO();
+                requestDTO.setName("Rabies Vaccine");
+                requestDTO.setDescription("Protects against rabies");
+                requestDTO.setPrice(BigDecimal.valueOf(500));
+                requestDTO.setAvailable(true);
 
-        // Mock repository methods
-        when(vaccinationsRepository.existsByName("Rabies Vaccine"))
-                .thenReturn(false);
+                vaccination = new Vaccinations();
+                vaccination.setVaccinationId(1L);
+                vaccination.setName("Rabies Vaccine");
+                vaccination.setDescription("Protects against rabies");
+                vaccination.setPrice(BigDecimal.valueOf(500));
+                vaccination.setAvailable(true);
+        }
 
-        when(vaccinationsRepository.saveAll(anyList()))
-                .thenReturn(List.of(vaccination));
+        // Test case for successful saving of vaccinations
+        @Test
+        void saveAllVaccinations_success() {
 
-        var response = vaccinationsService.saveAllVaccinations(List.of(requestDTO));
+                when(vaccinationsRepository.existsByName("Rabies Vaccine"))
+                                .thenReturn(false);
 
-        // Assertions for success
-        assertTrue(response.isSuccess());
-        assertEquals("Vaccinations saved successfully", response.getMessage());
-        assertEquals(1, response.getData().size());
+                when(vaccinationsRepository.saveAll(anyList()))
+                                .thenReturn(List.of(vaccination));
 
-        verify(vaccinationsRepository, times(1)).saveAll(anyList());
-    }
+                var response = vaccinationsService.saveAllVaccinations(List.of(requestDTO));
 
-    // Test case for invalid price
-    @Test
-    void saveAllVaccinations_invalidPrice_throwsException() {
+                assertTrue(response.isSuccess());
+                assertEquals("Vaccinations saved successfully", response.getMessage());
+                assertEquals(1, response.getData().size());
 
-        // Set an invalid price
-        requestDTO.setPrice(BigDecimal.valueOf(-100));
+                verify(vaccinationsRepository, times(1)).saveAll(anyList());
+        }
 
-        assertThrows(InvalidDataException.class,
-                () -> vaccinationsService.saveAllVaccinations(List.of(requestDTO)));
+        // Test case for invalid price
+        @Test
+        void saveAllVaccinations_invalidPrice_throwsException() {
 
-        verify(vaccinationsRepository, never()).saveAll(anyList());
-    }
+                requestDTO.setPrice(BigDecimal.valueOf(-100));
 
-    // Test case for duplicate vaccinations
-    @Test
-    void saveAllVaccinations_duplicate_throwsException() {
+                assertThrows(InvalidDataException.class,
+                                () -> vaccinationsService.saveAllVaccinations(List.of(requestDTO)));
 
-        // Mock repository methods
-        when(vaccinationsRepository.existsByName("Rabies Vaccine"))
-                .thenReturn(true);
+                verify(vaccinationsRepository, never()).saveAll(anyList());
+        }
 
-        assertThrows(DuplicateResourceException.class,
-                () -> vaccinationsService.saveAllVaccinations(List.of(requestDTO)));
+        // Test case for duplicate vaccinations
+        @Test
+        void saveAllVaccinations_duplicate_throwsException() {
 
-        verify(vaccinationsRepository, never()).saveAll(anyList());
-    }
-    // Test case for successful retrieval of a vaccination by ID
-    @Test
-    void getVaccinationById_success() {
+                when(vaccinationsRepository.existsByName("Rabies Vaccine"))
+                                .thenReturn(true);
 
-        // Mock repository methods
-        when(vaccinationsRepository.findById(1L))
-                .thenReturn(Optional.of(vaccination));
+                assertThrows(DuplicateResourceException.class,
+                                () -> vaccinationsService.saveAllVaccinations(List.of(requestDTO)));
 
-        var response = vaccinationsService.getVaccinationsById(1L);
+                verify(vaccinationsRepository, never()).saveAll(anyList());
+        }
 
-        assertTrue(response.isSuccess());
-        assertEquals("Vaccination fetched successfully", response.getMessage());
-        assertEquals("Rabies Vaccine", response.getData().getName());
+        // Test case for successful retrieval of a vaccination by ID
+        @Test
+        void getVaccinationById_success() {
 
-        verify(vaccinationsRepository).findById(1L);
-    }
-    
-    // Test case for vaccination not found
-    @Test
-    void getVaccinationById_notFound_throwsException() {
+                when(vaccinationsRepository.findById(1L))
+                                .thenReturn(Optional.of(vaccination));
 
-        // Mock repository methods
-        when(vaccinationsRepository.findById(99L))
-                .thenReturn(Optional.empty());
+                var response = vaccinationsService.getVaccinationsById(1L);
 
-        assertThrows(ResourceNotFoundException.class,
-                () -> vaccinationsService.getVaccinationsById(99L));
+                assertTrue(response.isSuccess());
+                assertEquals("Vaccination fetched successfully", response.getMessage());
+                assertEquals("Rabies Vaccine", response.getData().getName());
 
-        verify(vaccinationsRepository).findById(99L);
-    }
+                verify(vaccinationsRepository).findById(1L);
+        }
+
+        // Test case for vaccination not found
+        @Test
+        void getVaccinationById_notFound_throwsException() {
+
+                when(vaccinationsRepository.findById(99L))
+                                .thenReturn(Optional.empty());
+
+                assertThrows(ResourceNotFoundException.class,
+                                () -> vaccinationsService.getVaccinationsById(99L));
+
+                verify(vaccinationsRepository).findById(99L);
+        }
 }

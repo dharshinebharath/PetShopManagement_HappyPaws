@@ -10,10 +10,9 @@ import { VaccinationService } from '../../../core/services/vaccinationService';
   imports: [FormsModule, RouterModule],
   templateUrl: './vaccination-dashboard.html'
 })
-// Logic for vaccination dashboard
+
 export class VaccinationDashboard {
 
-  // Injecting required services
   router = inject(Router);
   vaccinationService = inject(VaccinationService);
 

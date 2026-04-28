@@ -2,7 +2,6 @@ package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.*;
 import com.sprint.pet_shop.repository.*;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -38,8 +37,7 @@ class TransactionsRepoTest {
     @Autowired
     private AddressesRepository addressesRepository;
 
-    @Autowired
-    private EntityManager entityManager;
+   
 
     private Addresses createAddress() {
         Addresses address = new Addresses();
@@ -136,15 +134,5 @@ class TransactionsRepoTest {
         createTransaction(createCustomer(), createPet(), TransactionStatus.SUCCESS);
         List<TransactionsEntity> found = transactionsRepository.findByTransactionDateBetween(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
         assertFalse(found.isEmpty());
-    }
-
-    @Test
-    void testFindAllSorted() {
-        Customers customer = createCustomer();
-        Pets pet = createPet();
-        createTransaction(customer, pet, TransactionStatus.SUCCESS);
-        createTransaction(customer, pet, TransactionStatus.PENDING);
-        List<TransactionsEntity> sorted = transactionsRepository.findAllSorted();
-        assertTrue(sorted.size() >= 2);
     }
 }

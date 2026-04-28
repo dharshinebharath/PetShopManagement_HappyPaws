@@ -2,7 +2,6 @@ package com.sprint.pet_shop.repoTest;
 
 import com.sprint.pet_shop.entity.GroomingServices;
 import com.sprint.pet_shop.repository.GroomingServicesRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -11,6 +10,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,8 +26,6 @@ class GroomingServicesRepoTest {
     @Autowired
     private GroomingServicesRepository groomingServicesRepository;
 
-    @Autowired
-    private EntityManager entityManager;
 
     private GroomingServices createGroomingService(String name, BigDecimal price) {
         GroomingServices service = new GroomingServices();
@@ -80,14 +79,23 @@ class GroomingServicesRepoTest {
         createGroomingService("Service B", new BigDecimal("150.00"));
         List<GroomingServices> found = groomingServicesRepository.findServicesByPriceRange(new BigDecimal("30.00"), new BigDecimal("50.00"));
         assertFalse(found.isEmpty());
-        assertTrue(found.stream().allMatch(s -> s.getPrice().compareTo(new BigDecimal("50.00")) <= 0));
-    }
+        assertTrue(
+                found.stream().allMatch(
+                        s -> s.getPrice().compareTo(new BigDecimal("30.00")) >= 0 &&
+                                s.getPrice().compareTo(new BigDecimal("50.00")) <= 0));    }
 
     @Test
     void testFindAllSorted() {
         createGroomingService("Service C", new BigDecimal("10.00"));
         createGroomingService("Service D", new BigDecimal("20.00"));
         List<GroomingServices> sorted = groomingServicesRepository.findAllSorted();
-        assertTrue(sorted.size() >= 2);
+        List<Long> ids = sorted.stream()
+        .map(GroomingServices::getServiceId)
+        .toList();
+
+        List<Long> sortedIds = new ArrayList<>(ids);
+        Collections.sort(sortedIds);
+
+        assertEquals(sortedIds, ids);
     }
 }

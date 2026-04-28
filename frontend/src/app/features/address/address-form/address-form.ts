@@ -15,11 +15,13 @@ export class AddressForm {
   addressService = inject(AddressService);
   route = inject(ActivatedRoute);
   router = inject(Router);
+
   cdr = inject(ChangeDetectorRef);
 
   addressId: number | null = null;
   isLoading = true;
 
+  // Reactive form for address validation.
   form = new FormGroup({
     street: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
     city: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
@@ -27,11 +29,14 @@ export class AddressForm {
     zipCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5}$')])
   });
 
+  // Initialize the component.
   ngOnInit() {
+    // Get address id from query params.
     this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.addressId = Number(params['id']);
 
+        
         this.addressService.getById(this.addressId).subscribe({
           next: (res: any) => {
             const data = res.data;
@@ -53,6 +58,7 @@ export class AddressForm {
           }
         });
       } else {
+        // Set loading to false when address is not found.
         this.isLoading = false;
       }
     });
@@ -68,6 +74,7 @@ export class AddressForm {
       const state = this.form.get('state');
       const zipCode = this.form.get('zipCode');
 
+      // Validate each field.
       if (street?.errors) {
         if (street.errors['required']) errors.push('Street cannot be empty');
         if (street.errors['minlength'] || street.errors['maxlength']) errors.push('Street must be between 2 and 50 characters');
@@ -89,6 +96,7 @@ export class AddressForm {
       return;
     }
 
+    
     const payload = {
       street: this.form.value.street,
       city: this.form.value.city,
@@ -96,6 +104,7 @@ export class AddressForm {
       zipCode: this.form.value.zipCode
     };
 
+    // Update an existing address.
     if (this.addressId !== null && this.addressId !== undefined) {
       this.addressService.update(this.addressId, payload).subscribe({
         next: () => {
@@ -107,7 +116,9 @@ export class AddressForm {
           alert(msg);
         }
       });
-    } else {
+    } 
+    // Create a new address.
+    else {
       this.addressService.create([payload]).subscribe({
         next: () => {
           alert('Address created successfully');
