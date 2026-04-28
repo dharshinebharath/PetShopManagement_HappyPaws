@@ -45,12 +45,18 @@ public class EmployeesServiceTest {
 	    void testSaveAll_Positive() {
 	        EmployeesRequestDTO dto = new EmployeesRequestDTO();
 	        dto.setFirstName("John");
+	        dto.setLastName("Doe");
+	        dto.setPosition("Staff");
+	        dto.setHireDate(java.time.LocalDate.now());
+	        dto.setPhoneNumber("9876543210");
 	        dto.setEmail("john@gmail.com");
+	        dto.setAddressId(1L);
 
 	        Employees saved = new Employees();
 	        saved.setEmployeeId(1L);
 	        saved.setFirstName("John");
 
+	        when(addressesRepository.findById(1L)).thenReturn(Optional.of(new com.sprint.pet_shop.entity.Addresses()));
 	        when(employeesRepository.existsByEmail("john@gmail.com")).thenReturn(false);
 	        when(employeesRepository.saveAll(anyList())).thenReturn(List.of(saved));
 
@@ -72,7 +78,13 @@ public class EmployeesServiceTest {
 	    @Test
 	    void testSaveAll_DuplicateEmail() {
 	        EmployeesRequestDTO dto = new EmployeesRequestDTO();
+	        dto.setFirstName("John");
+	        dto.setLastName("Doe");
+	        dto.setPosition("Staff");
+	        dto.setHireDate(java.time.LocalDate.now());
+	        dto.setPhoneNumber("9876543210");
 	        dto.setEmail("john@gmail.com");
+	        dto.setAddressId(1L);
 
 	        when(employeesRepository.existsByEmail("john@gmail.com")).thenReturn(true);
 
@@ -85,7 +97,7 @@ public class EmployeesServiceTest {
 	        Employees emp = new Employees();
 	        emp.setEmployeeId(1L);
 
-	        when(employeesRepository.findAll()).thenReturn(List.of(emp));
+	        when(employeesRepository.findAllByOrderByEmployeeIdAsc()).thenReturn(List.of(emp));
 
 	        ApiResponse<List<EmployeesResponseDTO>> response =
 	                employeesService.getAll();
@@ -93,7 +105,7 @@ public class EmployeesServiceTest {
 	        assertTrue(response.isSuccess());
 	        assertEquals(1, response.getData().size());
 
-	        verify(employeesRepository).findAll();
+	        verify(employeesRepository).findAllByOrderByEmployeeIdAsc();
 	    }
 		// Test to check getting employee by ID when employee is not found.
 	    @Test

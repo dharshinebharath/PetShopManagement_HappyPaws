@@ -40,14 +40,14 @@ class AddressesServiceTest {
         requestDTO.setStreet("Anna Nagar");
         requestDTO.setCity("Chennai");
         requestDTO.setState("Tamil Nadu");
-        requestDTO.setZipCode("600001");
+        requestDTO.setZipCode("60000");
 
         address = new Addresses();
         address.setAddressId(1L);
         address.setStreet("Anna Nagar");
         address.setCity("Chennai");
         address.setState("Tamil Nadu");
-        address.setZipCode("600001");
+        address.setZipCode("60000");
     }
     // Test to check saving addresses successfully
     @Test

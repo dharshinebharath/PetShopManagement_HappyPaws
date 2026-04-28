@@ -56,6 +56,8 @@ class PetsServiceTest {
         pet.setBreed("Labrador");
         pet.setAge(2);
         pet.setPrice(new BigDecimal("10000"));
+        pet.setDescription("Friendly puppy");
+        pet.setImage_url("http://example.com/pet.jpg");
         pet.setCategory(category);
 
         dto = new PetsRequestDTO();
@@ -63,6 +65,8 @@ class PetsServiceTest {
         dto.setBreed("Labrador");
         dto.setAge(2);
         dto.setPrice(new BigDecimal("10000"));
+        dto.setDescription("Friendly puppy");
+        dto.setImage_url("http://example.com/pet.jpg");
         dto.setCategory_id(1L);
     }
 

@@ -70,6 +70,7 @@ class GroomingServicesServiceTest {
 
         GroomingServicesRequestDTO dto = new GroomingServicesRequestDTO();
         dto.setName("Bath");
+        dto.setDescription("Test");
         dto.setPrice(BigDecimal.valueOf(500));
         dto.setAvailable(true);
 
@@ -87,6 +88,7 @@ class GroomingServicesServiceTest {
 
         GroomingServicesRequestDTO dto = new GroomingServicesRequestDTO();
         dto.setName("Bath");
+        dto.setDescription("Test");
         dto.setPrice(BigDecimal.valueOf(-100));
         dto.setAvailable(true);
 

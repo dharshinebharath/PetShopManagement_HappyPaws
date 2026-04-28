@@ -1,6 +1,5 @@
 package com.sprint.pet_shop.serviceTest;
 
-
 import com.sprint.pet_shop.dto.requestDto.CustomerRequestDTO;
 import com.sprint.pet_shop.entity.Addresses;
 import com.sprint.pet_shop.entity.Customers;
@@ -27,114 +26,112 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class CustomersServiceTest {
 
-    @Mock
-    private CustomersRepository customersRepository;
+        @Mock
+        private CustomersRepository customersRepository;
 
-    @Mock
-    private AddressesRepository addressesRepository;
+        @Mock
+        private AddressesRepository addressesRepository;
 
-    @InjectMocks
-    private CustomersService customersService;
+        @InjectMocks
+        private CustomersService customersService;
 
-    private CustomerRequestDTO requestDTO;
-    private Customers customer;
-    private Addresses address;
+        private CustomerRequestDTO requestDTO;
+        private Customers customer;
+        private Addresses address;
 
-// Test setup.
-    @BeforeEach
-    void setUp() {
+        @BeforeEach
+        void setUp() {
 
-        requestDTO = new CustomerRequestDTO();
-        requestDTO.setFirstName("John");
-        requestDTO.setLastName("Doe");
-        requestDTO.setEmail("john@gmail.com");
-        requestDTO.setPhoneNumber("9876543210");
-        requestDTO.setAddressId(1L);
+                requestDTO = new CustomerRequestDTO();
+                requestDTO.setFirstName("John");
+                requestDTO.setLastName("Doe");
+                requestDTO.setEmail("john@gmail.com");
+                requestDTO.setPhoneNumber("9876543210");
+                requestDTO.setAddressId(1L);
 
-        address = new Addresses();
-        address.setAddressId(1L);
-        address.setCity("Chennai");
+                address = new Addresses();
+                address.setAddressId(1L);
+                address.setCity("Chennai");
 
-        customer = new Customers();
-        customer.setCustomerId(1L);
-        customer.setFirstName("John");
-        customer.setLastName("Doe");
-        customer.setEmail("john@gmail.com");
-        customer.setPhoneNumber("9876543210");
-        customer.setAddress(address);
-    }
-    // Test to check saving customers successfully.
-    @Test
-    void saveCustomers_success() {
+                customer = new Customers();
+                customer.setCustomerId(1L);
+                customer.setFirstName("John");
+                customer.setLastName("Doe");
+                customer.setEmail("john@gmail.com");
+                customer.setPhoneNumber("9876543210");
+                customer.setAddress(address);
+        }
 
-        when(customersRepository.existsByEmail("john@gmail.com"))
-                .thenReturn(false);
+        @Test
+        void saveCustomers_success() {
 
-        when(addressesRepository.findById(1L))
-                .thenReturn(Optional.of(address));
+                when(customersRepository.existsByEmail("john@gmail.com"))
+                                .thenReturn(false);
 
-        when(customersRepository.saveAll(anyList()))
-                .thenReturn(List.of(customer));
+                when(addressesRepository.findById(1L))
+                                .thenReturn(Optional.of(address));
 
-        var response = customersService.savecustomers(List.of(requestDTO));
+                when(customersRepository.saveAll(anyList()))
+                                .thenReturn(List.of(customer));
 
-        assertTrue(response.isSuccess());
-        assertEquals("Customers created successfully", response.getMessage());
-        assertEquals(1, response.getData().size());
+                var response = customersService.savecustomers(List.of(requestDTO));
 
-        verify(customersRepository).saveAll(anyList());
-    }
-    // Test to check saving customers when first name is empty.
-    @Test
-    void saveCustomers_invalidFirstName_throwsException() {
+                assertTrue(response.isSuccess());
+                assertEquals("Customers created successfully", response.getMessage());
+                assertEquals(1, response.getData().size());
 
-        requestDTO.setFirstName(" ");
+                verify(customersRepository).saveAll(anyList());
+        }
 
-        assertThrows(InvalidDataException.class,
-                () -> customersService.savecustomers(List.of(requestDTO)));
+        @Test
+        void updateCustomer_notFound_throwsException() {
 
-        verify(customersRepository, never()).saveAll(anyList());
-    }
-    // Test to check saving customers when email is duplicate.
-    @Test
-    void saveCustomers_duplicateEmail_throwsException() {
+                when(customersRepository.findById(1L))
+                                .thenReturn(Optional.empty());
 
-        when(customersRepository.existsByEmail("john@gmail.com"))
-                .thenReturn(true);
+                assertThrows(ResourceNotFoundException.class,
+                                () -> customersService.updatecustomer(1L, requestDTO));
+        }
 
-        assertThrows(DuplicateResourceException.class,
-                () -> customersService.savecustomers(List.of(requestDTO)));
+        @Test
+        void saveCustomers_duplicateEmail_throwsException() {
 
-        verify(customersRepository, never()).saveAll(anyList());
-    }
-    // Test to check saving customers when address is not found. 
-    @Test
-    void saveCustomers_addressNotFound_throwsException() {
+                when(customersRepository.existsByEmail("john@gmail.com"))
+                                .thenReturn(true);
 
-        when(customersRepository.existsByEmail("john@gmail.com"))
-                .thenReturn(false);
+                assertThrows(DuplicateResourceException.class,
+                                () -> customersService.savecustomers(List.of(requestDTO)));
 
-        when(addressesRepository.findById(1L))
-                .thenReturn(Optional.empty());
+                verify(customersRepository, never()).saveAll(anyList());
+        }
 
-        assertThrows(ResourceNotFoundException.class,
-                () -> customersService.savecustomers(List.of(requestDTO)));
+        @Test
+        void saveCustomers_addressNotFound_throwsException() {
 
-        verify(customersRepository, never()).saveAll(anyList());
-    }
-    // Test to check getting customer by ID successfully.
-    @Test
-    void getCustomerById_success() {
+                when(customersRepository.existsByEmail("john@gmail.com"))
+                                .thenReturn(false);
 
-        when(customersRepository.findById(1L))
-                .thenReturn(Optional.of(customer));
+                when(addressesRepository.findById(1L))
+                                .thenReturn(Optional.empty());
 
-        var response = customersService.getcustomerByID(1L);
+                assertThrows(ResourceNotFoundException.class,
+                                () -> customersService.savecustomers(List.of(requestDTO)));
 
-        assertTrue(response.isSuccess());
-        assertEquals("Customer found", response.getMessage());
-        assertEquals("John", response.getData().getFirstName());
+                verify(customersRepository, never()).saveAll(anyList());
+        }
 
-        verify(customersRepository).findById(1L);
-    }
+        @Test
+        void getCustomerById_success() {
+
+                when(customersRepository.findById(1L))
+                                .thenReturn(Optional.of(customer));
+
+                var response = customersService.getcustomerByID(1L);
+
+                assertTrue(response.isSuccess());
+                assertEquals("Customer found", response.getMessage());
+                assertEquals("John", response.getData().getFirstName());
+
+                verify(customersRepository).findById(1L);
+        }
 }

@@ -45,13 +45,17 @@ public class SupplierServiceTest {
 	    @Test
 	    void testSaveAll_Positive() {
 	        SupplierRequestDTO dto = new SupplierRequestDTO();
-	        dto.setName("ABC");
+	        dto.setName("ABC Suppliers");
+	        dto.setContactPerson("John Doe");
+	        dto.setPhoneNumber("9876543210");
 	        dto.setEmail("abc@gmail.com");
+	        dto.setAddressId(1L);
 
 	        Supplier saved = new Supplier();
 	        saved.setSupplierId(1L);
 	        saved.setName("ABC");
 
+	        when(addressesRepository.findById(1L)).thenReturn(Optional.of(new com.sprint.pet_shop.entity.Addresses()));
 	        when(supplierRepository.existsByEmail("abc@gmail.com")).thenReturn(false);
 	        when(supplierRepository.saveAll(anyList())).thenReturn(List.of(saved));
 
@@ -73,7 +77,11 @@ public class SupplierServiceTest {
 	    @Test
 	    void testSaveAll_DuplicateEmail() {
 	        SupplierRequestDTO dto = new SupplierRequestDTO();
+	        dto.setName("ABC Suppliers");
+	        dto.setContactPerson("John Doe");
+	        dto.setPhoneNumber("9876543210");
 	        dto.setEmail("abc@gmail.com");
+	        dto.setAddressId(1L);
 
 	        when(supplierRepository.existsByEmail("abc@gmail.com")).thenReturn(true);
 
@@ -86,7 +94,7 @@ public class SupplierServiceTest {
 	        Supplier s = new Supplier();
 	        s.setSupplierId(1L);
 
-	        when(supplierRepository.findAll()).thenReturn(List.of(s));
+	        when(supplierRepository.findAllSorted()).thenReturn(List.of(s));
 
 	        ApiResponse<List<SupplierResponseDTO>> response =
 	                supplierService.getAll();
@@ -94,7 +102,7 @@ public class SupplierServiceTest {
 	        assertTrue(response.isSuccess());
 	        assertEquals(1, response.getData().size());
 
-	        verify(supplierRepository).findAll();
+	        verify(supplierRepository).findAllSorted();
 	    }
 		// Test to check getting supplier by ID successfully.
 	    @Test

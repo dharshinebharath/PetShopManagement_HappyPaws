@@ -30,121 +30,120 @@ import com.sprint.pet_shop.service.TransactionsService;
 @ExtendWith(MockitoExtension.class)
 class TransactionsServiceTest {
 
-    @Mock
-    private TransactionsRepository transactionsRepository;
+        @Mock
+        private TransactionsRepository transactionsRepository;
 
-    @Mock
-    private CustomersRepository customersRepository;
+        @Mock
+        private CustomersRepository customersRepository;
 
-    @Mock
-    private PetsRepository petsRepository;
+        @Mock
+        private PetsRepository petsRepository;
 
-    @InjectMocks
-    private TransactionsService transactionsService;
+        @InjectMocks
+        private TransactionsService transactionsService;
 
-    private TransactionsRequestDTO requestDTO;
-    private TransactionsEntity transaction;
-    private Customers customer;
-    private Pets pet;
+        private TransactionsRequestDTO requestDTO;
+        private TransactionsEntity transaction;
+        private Customers customer;
+        private Pets pet;
 
-    // Test to check saving transaction successfully.
-    @BeforeEach
-    void setUp() {
+        @BeforeEach
+        void setUp() {
 
-        customer = new Customers();
-        customer.setCustomerId(1L);
+                customer = new Customers();
+                customer.setCustomerId(1L);
 
-        pet = new Pets();
-        pet.setPet_id(1L);
+                pet = new Pets();
+                pet.setPet_id(1L);
 
-        requestDTO = new TransactionsRequestDTO();
-        requestDTO.setCustomerId(1L);
-        requestDTO.setPetId(1L);
-        requestDTO.setAmount(new BigDecimal("500"));
-        requestDTO.setTransactionDate(LocalDate.now());
-        requestDTO.setTransactionStatus(TransactionStatus.SUCCESS);
+                requestDTO = new TransactionsRequestDTO();
+                requestDTO.setCustomerId(1L);
+                requestDTO.setPetId(1L);
+                requestDTO.setAmount(new BigDecimal("500"));
+                requestDTO.setTransactionDate(LocalDate.now());
+                requestDTO.setTransactionStatus(TransactionStatus.SUCCESS);
 
-        transaction = new TransactionsEntity();
-        transaction.setTransactionId(1L);
-        transaction.setCustomer(customer);
-        transaction.setPet(pet);
-        transaction.setAmount(new BigDecimal("500"));
-        transaction.setTransactionStatus(TransactionStatus.SUCCESS);
-    }
+                transaction = new TransactionsEntity();
+                transaction.setTransactionId(1L);
+                transaction.setCustomer(customer);
+                transaction.setPet(pet);
+                transaction.setAmount(new BigDecimal("500"));
+                transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+        }
 
-    // SAVE SUCCESS
-    @Test
-    void saveTransaction_success() {
+        // SAVE SUCCESS
+        @Test
+        void saveTransaction_success() {
 
-        when(customersRepository.findById(1L))
-                .thenReturn(Optional.of(customer));
+                when(customersRepository.findById(1L))
+                                .thenReturn(Optional.of(customer));
 
-        when(petsRepository.findById(1L))
-                .thenReturn(Optional.of(pet));
+                when(petsRepository.findById(1L))
+                                .thenReturn(Optional.of(pet));
 
-        when(transactionsRepository.save(any()))
-                .thenReturn(transaction);
+                when(transactionsRepository.save(any()))
+                                .thenReturn(transaction);
 
-        var response = transactionsService.save(requestDTO);
+                var response = transactionsService.save(requestDTO);
 
-        assertTrue(response.isSuccess());
-        assertEquals("Transaction saved successfully", response.getMessage());
+                assertTrue(response.isSuccess());
+                assertEquals("Transaction saved successfully", response.getMessage());
 
-        verify(transactionsRepository, times(1)).save(any());
-    }
+                verify(transactionsRepository, times(1)).save(any());
+        }
 
-    // CUSTOMER NOT FOUND
-    @Test
-    void saveTransaction_customerNotFound() {
+        // CUSTOMER NOT FOUND
+        @Test
+        void saveTransaction_customerNotFound() {
 
-        when(customersRepository.findById(1L))
-                .thenReturn(Optional.empty());
+                when(customersRepository.findById(1L))
+                                .thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class,
-                () -> transactionsService.save(requestDTO));
+                assertThrows(ResourceNotFoundException.class,
+                                () -> transactionsService.save(requestDTO));
 
-        verify(transactionsRepository, never()).save(any());
-    }
+                verify(transactionsRepository, never()).save(any());
+        }
 
-    // PET NOT FOUND
-    @Test
-    void saveTransaction_petNotFound() {
+        // PET NOT FOUND
+        @Test
+        void saveTransaction_petNotFound() {
 
-        when(customersRepository.findById(1L))
-                .thenReturn(Optional.of(customer));
+                when(customersRepository.findById(1L))
+                                .thenReturn(Optional.of(customer));
 
-        when(petsRepository.findById(1L))
-                .thenReturn(Optional.empty());
+                when(petsRepository.findById(1L))
+                                .thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class,
-                () -> transactionsService.save(requestDTO));
+                assertThrows(ResourceNotFoundException.class,
+                                () -> transactionsService.save(requestDTO));
 
-        verify(transactionsRepository, never()).save(any());
-    }
+                verify(transactionsRepository, never()).save(any());
+        }
 
-    // INVALID DATA
-    @Test
-    void saveTransaction_invalidData() {
+        // INVALID DATA
+        @Test
+        void saveTransaction_invalidData() {
 
-        requestDTO.setCustomerId(null);
+                requestDTO.setCustomerId(null);
 
-        assertThrows(InvalidDataException.class,
-                () -> transactionsService.save(requestDTO));
+                assertThrows(InvalidDataException.class,
+                                () -> transactionsService.save(requestDTO));
 
-        verify(transactionsRepository, never()).save(any());
-    }
+                verify(transactionsRepository, never()).save(any());
+        }
 
-    // GET BY ID (SUCCESS)
-    @Test
-    void getTransactionById() {
+        // GET BY ID (SUCCESS)
+        @Test
+        void getTransactionById() {
 
-        // SUCCESS
-        when(transactionsRepository.findById(1L))
-                .thenReturn(Optional.of(transaction));
+                // SUCCESS
+                when(transactionsRepository.findById(1L))
+                                .thenReturn(Optional.of(transaction));
 
-        var response = transactionsService.getById(1L);
-        assertTrue(response.isSuccess());
-        assertEquals("Transaction found", response.getMessage());
-        verify(transactionsRepository).findById(1L);
-    }
+                var response = transactionsService.getById(1L);
+                assertTrue(response.isSuccess());
+                assertEquals("Transaction fetched successfully", response.getMessage());
+                verify(transactionsRepository).findById(1L);
+        }
 }
