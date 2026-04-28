@@ -9,7 +9,7 @@
 
         <table class="w-full max-w-3xl bg-slate-800 rounded-2xl shadow overflow-hidden border border-slate-700">
 
-            
+
             <thead class="bg-slate-700 text-cyan-400">
                 <tr>
                     <th class="p-3">Employee ID</th>
@@ -18,26 +18,21 @@
                 </tr>
             </thead>
 
-            
+
             <tbody class="divide-y divide-slate-700">
-              @for (e of paginated(employees); track e.employeeId) {
+                @for (e of paginated(employees); track e.employeeId) {
                 <tr class="hover:bg-slate-700 transition">
-                  <td class="p-3 text-center text-slate-300">{{ e.employeeId }}</td>
-                  <td class="p-3 text-center text-slate-300">{{ e.firstName }}</td>
-                  <td class="p-3 text-center text-slate-300">{{ e.position }}</td>
+                    <td class="p-3 text-center text-slate-300">{{ e.employeeId }}</td>
+                    <td class="p-3 text-center text-slate-300">{{ e.firstName }}</td>
+                    <td class="p-3 text-center text-slate-300">{{ e.position }}</td>
                 </tr>
-              } @empty {
+                } @empty {
                 <tr>
-                  <td colspan="3" class="p-4 text-center text-slate-300 text-lg">No employees assigned</td>
+                    <td colspan="3" class="p-4 text-center text-slate-300 text-lg">No employees assigned</td>
                 </tr>
-              }
+                }
             </tbody>
 
-</div>
-<app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
-
-
-
-
-
-
+    </div>
+    <app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"></app-pagination>

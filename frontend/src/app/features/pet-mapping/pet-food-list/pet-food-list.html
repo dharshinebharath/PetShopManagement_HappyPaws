@@ -18,21 +18,18 @@
             </thead>
             <tbody class="divide-y divide-stone-100">
               @for (f of paginated(foods); track f.foodId) {
-                <tr class="hover:bg-stone-50 transition">
-                  <td class="p-4 font-medium text-sage-900">{{ f.foodId }}</td>
-                  <td class="p-4 text-stone-700 font-medium">{{ f.name }}</td>
-                </tr>
+              <tr class="hover:bg-stone-50 transition">
+                <td class="p-4 font-medium text-sage-900">{{ f.foodId }}</td>
+                <td class="p-4 text-stone-700 font-medium">{{ f.name }}</td>
+              </tr>
               } @empty {
-                <tr>
-                  <td colspan="2" class="p-4 text-center text-stone-600 text-lg">No food assigned</td>
-                </tr>
+              <tr>
+                <td colspan="2" class="p-4 text-center text-stone-600 text-lg">No food assigned</td>
+              </tr>
               }
             </tbody>
-</div>
+        </div>
 
-<app-pagination
-  [totalItems]="foods.length"
-  [pageSize]="pageSize"
-  [currentPage]="currentPage"
-  (pageChange)="onPageChange($event)">
-</app-pagination>
+        <app-pagination [totalItems]="foods.length" [pageSize]="pageSize" [currentPage]="currentPage"
+          (pageChange)="onPageChange($event)">
+        </app-pagination>

@@ -19,24 +19,20 @@
             </thead>
 
             <tbody class="divide-y divide-slate-700">
-              @for (e of paginated(employees); track e.employeeId) {
+                @for (e of paginated(employees); track e.employeeId) {
                 <tr class="hover:bg-slate-700 transition">
-                  <td class="p-3 text-center text-slate-300">{{ e.employeeId }}</td>
-                  <td class="p-3 text-center text-slate-300">{{ e.firstName }}</td>
-                  <td class="p-3 text-center text-slate-300">{{ e.position }}</td>
-                  <td class="p-3 text-center text-slate-300">{{ e.hireDate }}</td>
+                    <td class="p-3 text-center text-slate-300">{{ e.employeeId }}</td>
+                    <td class="p-3 text-center text-slate-300">{{ e.firstName }}</td>
+                    <td class="p-3 text-center text-slate-300">{{ e.position }}</td>
+                    <td class="p-3 text-center text-slate-300">{{ e.hireDate }}</td>
                 </tr>
-              } @empty {
+                } @empty {
                 <tr>
-                  <td colspan="4" class="p-4 text-center text-slate-300 text-lg">No data found</td>
+                    <td colspan="4" class="p-4 text-center text-slate-300 text-lg">No data found</td>
                 </tr>
-              }
+                }
             </tbody>
 
-</div>
-<app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage" (pageChange)="onPageChange($event)"></app-pagination>
-
-
-
-
-
+    </div>
+    <app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"></app-pagination>
