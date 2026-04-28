@@ -28,8 +28,13 @@
               </tr>
               }
             </tbody>
+          </table>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <app-pagination [totalItems]="foods.length" [pageSize]="pageSize" [currentPage]="currentPage"
-          (pageChange)="onPageChange($event)">
-        </app-pagination>
+<app-pagination [totalItems]="foods.length" [pageSize]="pageSize" [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+</app-pagination>

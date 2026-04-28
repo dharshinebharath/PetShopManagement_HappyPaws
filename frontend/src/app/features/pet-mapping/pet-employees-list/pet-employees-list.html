@@ -32,7 +32,8 @@
                 </tr>
                 }
             </tbody>
-
+        </table>
     </div>
-    <app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage"
-        (pageChange)="onPageChange($event)"></app-pagination>
+</div>
+<app-pagination [totalItems]="employees.length" [pageSize]="pageSize" [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)"></app-pagination>

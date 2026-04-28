@@ -50,12 +50,16 @@
               </tr>
               }
             </tbody>
-
+          </table>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-        <div class="mt-6 flex justify-center">
-          <app-pagination [totalItems]="pets.length" [pageSize]="pageSize" [currentPage]="currentPage"
-            (pageChange)="onPageChange($event)">
-          </app-pagination>
-        </div>
+<div class="mt-6 flex justify-center">
+  <app-pagination [totalItems]="pets.length" [pageSize]="pageSize" [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+</div>
