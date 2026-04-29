@@ -54,16 +54,16 @@ export class PetGroomingList {
     });
   }
 
-  // Remove grooming service
-  remove(serviceId: number) {
-    this.service.removeGrooming(this.petId!, serviceId).subscribe({
-      next: () => {
-        alert('Removed successfully');
-        this.load();
-      },
-      error: () => alert('Delete failed')
-    });
-  }
+  // // Remove grooming service
+  // remove(serviceId: number) {
+  //   this.service.removeGrooming(this.petId!, serviceId).subscribe({
+  //     next: () => {
+  //       alert('Removed successfully');
+  //       this.load();
+  //     },
+  //     error: () => alert('Delete failed')
+  //   });
+  // }
   // Pagination properties
   currentPage = 1;
   pageSize = 10;

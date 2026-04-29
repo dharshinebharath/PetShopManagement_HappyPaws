@@ -173,12 +173,7 @@ public class CustomersService implements CustomersInterface {
             throw new InvalidDataException("Address ID is required");
         }
 
-        if (dto.getEmail() != null && !existing.getEmail().equalsIgnoreCase(dto.getEmail())) {
-            if (customersRepository.existsByEmail(dto.getEmail())) {
-                throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
-            }
-            throw new InvalidDataException("Email cannot be updated");
-        }
+        
 
         existing.setFirstName(dto.getFirstName());
 

@@ -50,16 +50,18 @@ export class PetVaccinationList {
       }
     });
   }
-  // Method to remove a vaccination for a pet
-  remove(vaccinationId: number) {
-    this.service.removeVaccination(this.petId!, vaccinationId).subscribe({
-      next: () => {
-        alert('Removed successfully');
-        this.load();
-      },
-      error: () => alert('Delete failed')
-    });
-  }
+  // // Method to remove a vaccination for a pet
+  // remove(vaccinationId: number) {
+  //   this.service.removeVaccination(this.petId!, vaccinationId).subscribe({
+  //     next: () => {
+  //       alert('Removed successfully');
+  //       this.load();
+  //     },
+  //     error: () => alert('Delete failed')
+  //   });
+  // }
+
+  
   // Pagination properties
   currentPage = 1;
   pageSize = 10;

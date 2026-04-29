@@ -273,14 +273,7 @@ public class PetsService implements PetsInterface {
 			throw new InvalidDataException("Category ID is required");
 		}
 
-		if (!existing.getName().equalsIgnoreCase(dto.getName()) || !existing.getBreed().equalsIgnoreCase(dto.getBreed())) {
-			boolean exists = petsRepository.findAllSorted().stream()
-			        .anyMatch(p -> p.getName().equalsIgnoreCase(dto.getName()) && 
-			                       p.getBreed().equalsIgnoreCase(dto.getBreed()));
-			if (exists) {
-			    throw new DuplicateResourceException("Pet already exists with name: " + dto.getName() + " and breed: " + dto.getBreed());
-			}
-		}
+	
 
 		existing.setName(dto.getName());
 		existing.setBreed(dto.getBreed());

@@ -222,12 +222,6 @@ public class EmployeesService implements EmployeesInterface {
             throw new InvalidDataException("Address ID is required");
         }
 
-        if (!existing.getEmail().equalsIgnoreCase(dto.getEmail())) {
-            if (employeesRepository.existsByEmail(dto.getEmail())) {
-                throw new DuplicateResourceException("Email already exists: " + dto.getEmail());
-            }
-        }
-
         if (dto.getFirstName() != null) {
             existing.setFirstName(dto.getFirstName());
         }

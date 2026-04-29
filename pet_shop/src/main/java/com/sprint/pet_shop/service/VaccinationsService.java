@@ -158,11 +158,6 @@ public class VaccinationsService implements VaccinationsInterface {
             throw new InvalidDataException("Price must be positive");
         }
 
-        if (!existing.getName().equalsIgnoreCase(dto.getName())) {
-            if (vaccinationsRepository.existsByName(dto.getName())) {
-                throw new DuplicateResourceException("Vaccination Service already exists: " + dto.getName());
-            }
-        }
 
         existing.setName(dto.getName());
         existing.setDescription(dto.getDescription());

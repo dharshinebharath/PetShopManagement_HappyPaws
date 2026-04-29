@@ -158,11 +158,6 @@ public class GroomingServicesService implements GroomingServicesInterface {
 	        throw new InvalidDataException("Price must be positive");
 	    }
 
-	    if (!existing.getName().equalsIgnoreCase(dto.getName())) {
-	        if (groomingServicesRepository.existsByName(dto.getName())) {
-	            throw new DuplicateResourceException("Grooming Service already exists: " + dto.getName());
-	        }
-	    }
 
 	    existing.setName(dto.getName());
 	    existing.setDescription(dto.getDescription());

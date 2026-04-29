@@ -76,15 +76,6 @@ public class TransactionsService implements TransactionsInterface {
         Pets pet = petsRepository.findById(dto.getPetId())
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + dto.getPetId()));
 
-        boolean duplicate = transactionsRepository.findAllSorted().stream()
-                .anyMatch(t -> t.getCustomer().getCustomerId().equals(dto.getCustomerId()) &&
-                               t.getPet().getPet_id().equals(dto.getPetId()) &&
-                               t.getTransactionDate().equals(dto.getTransactionDate()) &&
-                               t.getAmount().compareTo(dto.getAmount()) == 0);
-
-        if (duplicate) {
-            throw new DuplicateResourceException("Duplicate transaction found");
-        }
 
         TransactionsEntity entity = new TransactionsEntity();
         entity.setTransactionDate(dto.getTransactionDate());

@@ -135,12 +135,6 @@ public class PetFoodService implements PetFoodInterface {
             throw new InvalidDataException("Price must be positive");
         }
 
-        if (!existing.getName().equalsIgnoreCase(dto.getName()) || !existing.getBrand().equalsIgnoreCase(dto.getBrand())) {
-            if (petFoodRepository.existsByNameAndBrand(dto.getName(), dto.getBrand())) {
-                throw new DuplicateResourceException("Food already exists: " + dto.getName() + " (" + dto.getBrand() + ")");
-            }
-        }
-
         existing.setName(dto.getName());
         existing.setBrand(dto.getBrand());
         existing.setType(dto.getType());

@@ -24,7 +24,7 @@ public class AddressesService implements AddressesInterface {
     @Autowired
     private AddressesRepository addressesRepository;
 
-    //Saving addresses to the database
+    // Saving addresses to the database
     @Override
     public ApiResponse<List<AddressesResponseDTO>> saveaddresses(List<AddressesRequestDTO> addresses) {
 
@@ -46,15 +46,6 @@ public class AddressesService implements AddressesInterface {
                 throw new InvalidDataException("Zip code must be 5 digits");
             }
 
-            boolean duplicate = addressesRepository.findAllSorted().stream()
-                    .anyMatch(a -> a.getStreet().equalsIgnoreCase(dto.getStreet()) &&
-                                   a.getCity().equalsIgnoreCase(dto.getCity()) &&
-                                   a.getState().equalsIgnoreCase(dto.getState()) &&
-                                   a.getZipCode().equalsIgnoreCase(dto.getZipCode()));
-            
-            if (duplicate) {
-                throw new DuplicateResourceException("Address already exists");
-            }
             Addresses entity = new Addresses();
             entity.setStreet(dto.getStreet());
             entity.setCity(dto.getCity());
@@ -82,6 +73,7 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Addresses fetched successfully", true, data);
     }
+
     // Retrieving addresses by ID from the database
     @Override
     public ApiResponse<AddressesResponseDTO> getaddressesByID(long id) {
@@ -91,6 +83,7 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Address found", true, toDto(address));
     }
+
     // Retrieving all addresses by city from the database
     @Override
     public ApiResponse<List<AddressesResponseDTO>> getAddressesByCity(String city) {
@@ -124,6 +117,7 @@ public class AddressesService implements AddressesInterface {
 
         return new ApiResponse<>("Address deleted successfully", true, "Deleted ID: " + id);
     }
+
     // Updating addresses in the database
     @Override
     public ApiResponse<AddressesResponseDTO> updateaddress(long id, AddressesRequestDTO updatedaddress) {
@@ -147,16 +141,6 @@ public class AddressesService implements AddressesInterface {
             throw new InvalidDataException("Zip code must be 5 digits");
         }
 
-        boolean duplicate = addressesRepository.findAllSorted().stream()
-                .anyMatch(a -> a.getAddressId() != id &&
-                               a.getStreet().equalsIgnoreCase(updatedaddress.getStreet()) &&
-                               a.getCity().equalsIgnoreCase(updatedaddress.getCity()) &&
-                               a.getState().equalsIgnoreCase(updatedaddress.getState()) &&
-                               a.getZipCode().equalsIgnoreCase(updatedaddress.getZipCode()));
-        
-        if (duplicate) {
-            throw new DuplicateResourceException("Address already exists");
-        }
 
         existing.setCity(updatedaddress.getCity());
         existing.setState(updatedaddress.getState());
@@ -179,4 +163,3 @@ public class AddressesService implements AddressesInterface {
         return dto;
     }
 }
-

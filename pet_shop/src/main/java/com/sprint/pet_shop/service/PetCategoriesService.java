@@ -120,13 +120,7 @@ public class PetCategoriesService implements PetCategoriesInterface{
             throw new InvalidDataException("Category name cannot be empty or null");
         }
 
-        if (!existing.getName().equalsIgnoreCase(dto.getName())) {
-            boolean exists = petCategoryRepository.findAllSorted().stream()
-                    .anyMatch(c -> c.getName().equalsIgnoreCase(dto.getName()));
-            if (exists) {
-                throw new DuplicateResourceException("Category already exists: " + dto.getName());
-            }
-        }
+       
 
         existing.setName(dto.getName());
 

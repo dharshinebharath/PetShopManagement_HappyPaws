@@ -190,11 +190,6 @@ public class SupplierService implements SupplierInterface {
             throw new InvalidDataException("Address ID is required");
         }
 
-        if (dto.getEmail() != null &&
-        	    supplierRepository.existsByEmail(dto.getEmail()) &&
-        	    !existing.getEmail().equalsIgnoreCase(dto.getEmail())) {
-        	    throw new DuplicateResourceException("Supplier with email " + dto.getEmail() + " already exists");
-        	}
 
         if (dto.getName() != null) {
             existing.setName(dto.getName());
